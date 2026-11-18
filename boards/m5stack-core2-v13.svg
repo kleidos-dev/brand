@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-12.0 -6.0 78 74" width="78mm" height="74mm" shape-rendering="geometricPrecision" font-family="Inter, Helvetica, Arial, sans-serif">
+<title>M5Stack Core2 v1.3: front mockup (1 SVG unit = 1 mm)</title>
+<defs>
+<filter id="shadow_m5stack-core2-v13" x="-10%" y="-10%" width="120%" height="120%">
+<feDropShadow dx="0.3" dy="0.6" stdDeviation="0.6" flood-opacity="0.28"/>
+</filter>
+<linearGradient id="case_m5stack-core2-v13" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="54" y2="54">
+<stop offset="0%" stop-color="#fdfdfd"/>
+<stop offset="100%" stop-color="#f1f1f3"/>
+</linearGradient>
+<linearGradient id="edge_m5stack-core2-v13" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="54" y2="54">
+<stop offset="0%" stop-color="#ffffff"/>
+<stop offset="100%" stop-color="#d6d6da"/>
+</linearGradient>
+<linearGradient id="glare_m5stack-core2-v13" gradientUnits="userSpaceOnUse" x1="1.5" y1="1.5" x2="20.57" y2="28.36">
+<stop offset="0%" stop-color="#ffffff" stop-opacity="0.635"/>
+<stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+</linearGradient>
+<radialGradient id="screen_m5stack-core2-v13" cx="50%" cy="20%" r="85%">
+<stop offset="0%" stop-color="#1a2336"/>
+<stop offset="100%" stop-color="#05060c"/>
+</radialGradient>
+</defs>
+<rect x="0" y="0" width="54" height="54" rx="5" ry="5" fill="url(#case_m5stack-core2-v13)" stroke="#a8a8ac" stroke-width="0.2" filter="url(#shadow_m5stack-core2-v13)"/>
+<rect x="0.2" y="0.2" width="53.6" height="53.6" rx="4.8" ry="4.8" fill="none" stroke="url(#edge_m5stack-core2-v13)" stroke-width="0.4"/>
+<rect x="1.5" y="1.5" width="51" height="51" rx="3.6" ry="3.6" fill="#030304"/>
+<rect x="1.5" y="1.5" width="51" height="51" rx="3.6" ry="3.6" fill="url(#glare_m5stack-core2-v13)"/>
+<rect x="6.71" y="11.72" width="40.86" height="30.6" rx="0.28" ry="0.28" fill="#000000"/>
+<rect x="6.75" y="11.72" width="40.8" height="30.6" rx="0.15" ry="0.15" fill="url(#screen_m5stack-core2-v13)"/>
+<rect id="screen-active" x="6.75" y="11.72" width="40.8" height="30.6" fill="none" data-resolution="320x240"/>
+<circle cx="13.54" cy="45.11" r="1.04" fill="none" stroke="#6b645f" stroke-width="0.19"/>
+<circle cx="27.04" cy="45.11" r="1.04" fill="none" stroke="#6b645f" stroke-width="0.19"/>
+<circle cx="40.51" cy="45.11" r="1.04" fill="none" stroke="#6b645f" stroke-width="0.19"/>
+<circle cx="11.27" cy="46.32" r="0.31" fill="#0d0d0f"/>
+<g id="hotspots" display="none">
+<circle id="hs-TouchA" cx="13.55" cy="44.87" r="2.55" data-face="front" data-w="13.6" data-h="5.1"/>
+<circle id="hs-TouchB" cx="27.15" cy="44.87" r="2.55" data-face="front" data-w="13.6" data-h="5.1"/>
+<circle id="hs-TouchC" cx="40.75" cy="44.87" r="2.55" data-face="front" data-w="13.6" data-h="5.1"/>
+</g>
+<g id="annotations">
+<text x="27" y="-3.0" font-size="1.8" fill="#7d7d80" text-anchor="middle">54 mm</text>
+<text x="-7.5" y="27" font-size="1.8" fill="#7d7d80" text-anchor="middle" transform="rotate(-90 -7.5 27)">54 mm</text>
+<text x="27" y="62.5" font-size="2.6" fill="#2c2c30" text-anchor="middle" font-weight="700">M5Stack Core2 v1.3</text>
+</g>
+</svg>

@@ -1,0 +1,36 @@
+{
+  "$comment": "The lockups' numbers, in ems of the name's lettering (E). tools/kleidos_brand/logo.py draws every file under logo/svg/ from these and from mark.svg.",
+  "lettering": {
+    "text": "Kleidos",
+    "family": "Mona Sans",
+    "axes": {"wdth": 112.5, "wght": 650, "opsz": 72},
+    "tracking_em": -0.02
+  },
+  "horizontal": {
+    "status": "settled",
+    "source": "the organization profile's banner: a 58 px mark beside a 44 px name, 14 px apart",
+    "mark_side_em": 1.32,
+    "baseline_below_mark_center_em": 0.364,
+    "lettering_origin_after_mark_em": 0.32
+  },
+  "stacked": {
+    "status": "settled",
+    "source": "drawn here and approved by the owner on 2026-11-17",
+    "mark_side_em": 2.6,
+    "cap_top_below_mark_em": 0.3
+  },
+  "inks": {
+    "for-dark": "social.ink",
+    "for-light": "social.light.ink"
+  },
+  "grounds": {
+    "on-dark": "social.ground",
+    "on-light": "social.light.ground"
+  },
+  "png_heights": {
+    "mark": [64, 256, 1024],
+    "lockup-horizontal": [128, 512],
+    "lockup-stacked": [512, 1024],
+    "lettering": [64, 256]
+  }
+}

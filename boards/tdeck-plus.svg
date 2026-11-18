@@ -1,0 +1,339 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-12.0 -6.0 97.14 134.98" width="97.14mm" height="134.98mm" shape-rendering="geometricPrecision" font-family="Inter, Helvetica, Arial, sans-serif">
+<title>LILYGO T-Deck Plus: front mockup (1 SVG unit = 1 mm)</title>
+<defs>
+<filter id="shadow_tdeck-plus" x="-10%" y="-10%" width="120%" height="120%">
+<feDropShadow dx="0.3" dy="0.6" stdDeviation="0.6" flood-opacity="0.28"/>
+</filter>
+<linearGradient id="case_tdeck-plus" x1="0" y1="0" x2="0" y2="1">
+<stop offset="0%" stop-color="#525357"/>
+<stop offset="100%" stop-color="#36373b"/>
+</linearGradient>
+<linearGradient id="rim_tdeck-plus" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="0" y2="114.98">
+<stop offset="0%" stop-color="#6a6b6f"/>
+<stop offset="20%" stop-color="#86878b"/>
+<stop offset="75%" stop-color="#6c6d71"/>
+<stop offset="90%" stop-color="#38393c"/>
+<stop offset="100%" stop-color="#242427"/>
+</linearGradient>
+<linearGradient id="plate_edge_tdeck-plus" x1="0" y1="0" x2="0" y2="1">
+<stop offset="0%" stop-color="#b4b5bb"/>
+<stop offset="100%" stop-color="#6f7075"/>
+</linearGradient>
+<linearGradient id="key_tdeck-plus" x1="0" y1="0" x2="0" y2="1">
+<stop offset="0%" stop-color="#66686f"/>
+<stop offset="100%" stop-color="#45474d"/>
+</linearGradient>
+<linearGradient id="band_tdeck-plus" gradientUnits="userSpaceOnUse" x1="3.95" y1="0" x2="69.2" y2="0">
+<stop offset="0%" stop-color="#46474b"/>
+<stop offset="30%" stop-color="#202124"/>
+<stop offset="42%" stop-color="#141416"/>
+<stop offset="60%" stop-color="#151517"/>
+<stop offset="80%" stop-color="#323336"/>
+<stop offset="100%" stop-color="#4a4b4f"/>
+</linearGradient>
+<linearGradient id="window_tdeck-plus" gradientUnits="userSpaceOnUse" x1="3.95" y1="0" x2="69.2" y2="0">
+<stop offset="0%" stop-color="#b0b0b6"/>
+<stop offset="30%" stop-color="#8e8e94"/>
+<stop offset="50%" stop-color="#838389"/>
+<stop offset="75%" stop-color="#8e8e94"/>
+<stop offset="100%" stop-color="#b4b4ba"/>
+</linearGradient>
+<radialGradient id="screen_tdeck-plus" cx="50%" cy="20%" r="85%">
+<stop offset="0%" stop-color="#15171d"/>
+<stop offset="100%" stop-color="#050608"/>
+</radialGradient>
+<radialGradient id="wall_tdeck-plus" cx="50%" cy="20%" r="85%">
+<stop offset="0%" stop-color="#3a4a6a"/>
+<stop offset="100%" stop-color="#0c0e16"/>
+</radialGradient>
+<radialGradient id="ball_tdeck-plus" cx="50%" cy="20%" r="85%">
+<stop offset="0%" stop-color="#3c3d40"/>
+<stop offset="100%" stop-color="#101113"/>
+</radialGradient>
+</defs>
+<path d="M 12.82,0 L 60.37,0 62.12,0.15 63.72,0.5 64.69,0.83 65.67,1.26 66.48,1.69 67.37,2.26 68.24,2.94 68.92,3.55 70.02,4.8 70.54,5.53 71.02,6.31 71.44,7.13 71.81,8.01 72.24,9.39 72.5,10.78 72.6,12.12 72.6,12.95 73.14,13.4 73.14,62.4 72.6,62.85 72.6,99.18 72.44,101.01 72.08,102.71 71.54,104.27 70.91,105.54 70.08,106.81 69.15,107.93 67.94,109.06 66.48,110.15 64.9,111.08 62.92,111.99 61.09,112.66 58.52,113.39 56.55,113.82 54.37,114.19 50.7,114.62 48.04,114.82 44.87,114.95 42.98,114.95 41.97,114.98 37.78,114.98 35.28,114.95 28.96,114.61 23.9,114.22 20.59,113.84 17.71,113.36 14.99,112.79 12.28,112.04 10.31,111.36 9.07,110.85 7.95,110.32 6.92,109.76 6.02,109.2 4.71,108.21 4.08,107.65 3.49,107.03 2.92,106.35 2.45,105.68 2.02,104.95 1.65,104.18 1.32,103.35 1.11,102.62 0.8,101.07 0.65,99.12 0.65,62.85 0,62.4 0,13.4 0.65,12.95 0.65,12.18 0.75,10.83 0.94,9.76 1.24,8.61 1.66,7.48 2.08,6.6 2.75,5.48 3.28,4.75 4.15,3.72 4.66,3.24 5.4,2.63 6.43,1.9 7.25,1.43 8.56,0.84 9.53,0.5 10.45,0.27 11.48,0.1 Z" fill="url(#case_tdeck-plus)" stroke="#0a0a0c" stroke-width="0.2" filter="url(#shadow_tdeck-plus)"/>
+<path d="M 12.89,1.2 L 60.29,1.2 61.839,1.333 63.222,1.635 64.025,1.908 64.879,2.283 65.575,2.653 66.348,3.148 67.122,3.753 67.705,4.276 68.709,5.417 69.169,6.063 69.606,6.772 69.988,7.519 70.325,8.319 70.725,9.603 70.966,10.892 71.06,12.152 71.06,99.077 70.921,100.663 70.62,102.085 70.172,103.38 69.658,104.417 68.954,105.493 68.167,106.441 67.105,107.433 65.783,108.42 64.335,109.272 62.466,110.131 60.729,110.767 58.239,111.475 56.332,111.891 54.208,112.251 50.591,112.675 47.974,112.872 44.847,113 42.963,113 41.953,113.03 37.787,113.03 35.317,113 29.034,112.662 24.008,112.275 20.749,111.901 17.921,111.43 15.262,110.872 12.626,110.143 10.728,109.488 9.554,109.005 8.5,108.506 7.541,107.985 6.735,107.483 5.532,106.574 5.004,106.105 4.504,105.579 4.023,105.005 3.645,104.467 3.3,103.881 3.001,103.259 2.739,102.6 2.586,102.067 2.322,100.748 2.19,99.029 2.19,12.212 2.284,10.938 2.46,9.947 2.739,8.879 3.127,7.836 3.505,7.043 4.122,6.012 4.594,5.361 5.386,4.424 5.805,4.03 6.466,3.484 7.39,2.83 8.073,2.438 9.241,1.912 10.062,1.625 10.829,1.433 11.703,1.289 Z" fill="#161618" stroke="url(#rim_tdeck-plus)" stroke-width="0.85"/>
+<path d="M 12.889,2.15 L 60.291,2.15 61.842,2.283 63.22,2.584 64.012,2.854 64.851,3.222 65.526,3.581 66.27,4.057 67.011,4.636 67.549,5.119 68.496,6.194 68.91,6.776 69.307,7.421 69.65,8.09 69.945,8.793 70.304,9.943 70.516,11.078 70.6,12.206 70.6,62.15 2.65,62.15 2.65,12.265 2.735,11.116 2.889,10.251 3.137,9.298 3.483,8.369 3.815,7.672 4.383,6.723 4.81,6.134 5.553,5.255 5.927,4.903 6.559,4.383 7.451,3.75 8.106,3.375 9.255,2.857 10.065,2.573 10.827,2.383 11.7,2.239 Z" fill="#111113"/>
+<path d="M 70.17,62.15 L 70.17,99.133 70.02,100.85 69.689,102.41 69.202,103.818 68.651,104.929 67.925,106.04 67.137,106.989 66.106,107.951 64.847,108.892 63.491,109.69 61.727,110.501 60.094,111.098 57.709,111.776 55.891,112.173 53.852,112.519 50.317,112.933 47.768,113.125 44.709,113.25 42.836,113.25 41.826,113.28 37.698,113.28 35.277,113.251 29.053,112.916 24.082,112.533 20.901,112.168 18.153,111.71 15.581,111.171 13.042,110.468 11.229,109.842 10.125,109.388 9.132,108.919 8.23,108.428 7.482,107.963 6.327,107.09 5.827,106.645 5.337,106.13 4.855,105.555 4.465,105 4.1,104.38 3.778,103.709 3.488,102.982 3.309,102.358 3.022,100.922 2.88,99.079 2.88,62.15 Z" fill="url(#plate_edge_tdeck-plus)"/>
+<path d="M 69.3,62.15 L 69.3,99.11 69.155,100.771 68.839,102.264 68.376,103.6 67.861,104.638 67.181,105.678 66.456,106.552 65.501,107.444 64.325,108.322 63.061,109.065 61.385,109.836 59.833,110.404 57.522,111.061 55.766,111.444 53.783,111.78 50.304,112.188 47.8,112.376 44.785,112.5 42.918,112.5 41.908,112.53 37.805,112.53 35.416,112.501 29.231,112.169 24.295,111.788 21.166,111.429 18.472,110.98 15.959,110.453 13.489,109.77 11.74,109.166 10.692,108.735 9.751,108.29 8.9,107.827 8.217,107.402 7.126,106.578 6.68,106.181 6.233,105.712 5.789,105.182 5.435,104.678 5.099,104.107 4.799,103.482 4.529,102.803 4.364,102.23 4.088,100.848 3.95,99.058 3.95,62.15 Z" fill="#2a2b2e"/>
+<path d="M 3.95 73.75 H 69.2 V 98.9 H 62.55 V 104.95 Q 62.55 105.45 62.05 105.45 H 11.55 Q 11.05 105.45 11.05 104.95 V 98.9 H 3.95 Z" fill="url(#window_tdeck-plus)"/>
+<rect x="3.95" y="62.15" width="65.25" height="11.6" rx="0" ry="0" fill="url(#band_tdeck-plus)"/>
+<rect x="29.33" y="5.6" width="15.17" height="1.23" rx="0.615" ry="0.615" fill="#77787c"/>
+<rect x="32.58" y="5.7" width="8.14" height="1.03" rx="0.5" ry="0.5" fill="#2a2a2d"/>
+<g class="legend" data-mark="lilygo-glass" data-plane="glass">
+<text x="30.33" y="12.71" font-size="4.15" fill="#cfd2d8" text-anchor="middle" font-weight="300">L</text>
+<text x="32.15" y="12.71" font-size="4.15" fill="#cfd2d8" text-anchor="middle" font-weight="300">I</text>
+<text x="34" y="12.71" font-size="4.15" fill="#cfd2d8" text-anchor="middle" font-weight="300">L</text>
+<text x="36.85" y="12.71" font-size="4.15" fill="#cfd2d8" text-anchor="middle" font-weight="300">Y</text>
+<text x="39.8" y="12.71" font-size="4.15" fill="#cfd2d8" text-anchor="middle" font-weight="300">G</text>
+<text x="42.8" y="12.71" font-size="4.15" fill="#cfd2d8" text-anchor="middle" font-weight="300">O</text>
+</g>
+<rect x="7.06" y="15.78" width="59.14" height="44.44" rx="0" ry="0" fill="url(#screen_tdeck-plus)" stroke="#040406" stroke-width="0.15"/>
+<rect id="screen-active" x="7.83" y="16.4" width="57.6" height="43.2" fill="none" data-resolution="320x240"/>
+<g class="legend" data-mark="band-print" data-plane="plate">
+<path d="M 4.05 67.89 H 9.31 L 11.845 64.51" stroke="#dcdde2" stroke-width="0.32" fill="none" stroke-linejoin="miter"/>
+<path d="M 4.05 68.73 H 9.73 L 12.895 64.51" stroke="#dcdde2" stroke-width="0.32" fill="none" stroke-linejoin="miter"/>
+<path d="M 4.05 69.47 H 10.43 L 14.15 64.51 H 25.38 L 26.55 66.06 H 28.22" stroke="#dcdde2" stroke-width="0.32" fill="none" stroke-linejoin="miter"/>
+<path d="M 12.14 69.08 L 11.46 69.93" stroke="#dcdde2" stroke-width="0.32" fill="none" stroke-linejoin="miter"/>
+<path d="M 12.99 69.08 L 12.31 69.93" stroke="#dcdde2" stroke-width="0.32" fill="none" stroke-linejoin="miter"/>
+<path d="M 13.84 69.08 L 13.16 69.93" stroke="#dcdde2" stroke-width="0.32" fill="none" stroke-linejoin="miter"/>
+<path d="M 14.477 65.13 L 17.277 65.13 L 18.57 67.48 L 17.277 69.83 L 14.477 69.83 L 15.77 67.48 Z" fill="#bcbfc5"/>
+<path d="M 18.308 65.13 L 21.108 65.13 L 22.4 67.48 L 21.108 69.83 L 18.308 69.83 L 19.6 67.48 Z" fill="#bcbfc5"/>
+<path d="M 22.137 65.13 L 24.938 65.13 L 26.23 67.48 L 24.938 69.83 L 22.137 69.83 L 23.43 67.48 Z" fill="#bcbfc5"/>
+<path d="M 69.1 67.89 H 66.65 L 64.115 64.51" stroke="#dcdde2" stroke-width="0.32" fill="none" stroke-linejoin="miter"/>
+<path d="M 69.1 68.73 H 66.23 L 63.065 64.51" stroke="#dcdde2" stroke-width="0.32" fill="none" stroke-linejoin="miter"/>
+<path d="M 69.1 69.47 H 65.53 L 61.81 64.51 H 50.58 L 49.41 66.06 H 47.74" stroke="#dcdde2" stroke-width="0.32" fill="none" stroke-linejoin="miter"/>
+<path d="M 63.82 69.08 L 64.5 69.93" stroke="#dcdde2" stroke-width="0.32" fill="none" stroke-linejoin="miter"/>
+<path d="M 62.97 69.08 L 63.65 69.93" stroke="#dcdde2" stroke-width="0.32" fill="none" stroke-linejoin="miter"/>
+<path d="M 62.12 69.08 L 62.8 69.93" stroke="#dcdde2" stroke-width="0.32" fill="none" stroke-linejoin="miter"/>
+<path d="M 61.482 65.13 L 58.682 65.13 L 57.39 67.48 L 58.682 69.83 L 61.482 69.83 L 60.19 67.48 Z" fill="#bcbfc5"/>
+<path d="M 57.652 65.13 L 54.852 65.13 L 53.56 67.48 L 54.852 69.83 L 57.652 69.83 L 56.36 67.48 Z" fill="#bcbfc5"/>
+<path d="M 53.822 65.13 L 51.022 65.13 L 49.73 67.48 L 51.022 69.83 L 53.822 69.83 L 52.53 67.48 Z" fill="#bcbfc5"/>
+</g>
+<circle cx="37.97" cy="67.85" r="5.15" fill="#202124" stroke="#4a4b4f" stroke-width="0.3"/>
+<circle cx="37.97" cy="67.85" r="4.1" fill="none" stroke="#808184" stroke-width="1.3"/>
+<circle cx="37.97" cy="67.85" r="4" fill="none" stroke="#b6b7b9" stroke-width="0.5"/>
+<circle cx="37.97" cy="67.85" r="3.32" fill="#1a1b1d"/>
+<circle cx="37.97" cy="67.85" r="2.85" fill="none" stroke="#e4e5e3" stroke-width="0.7"/>
+<circle cx="37.97" cy="67.85" r="2.48" fill="url(#ball_tdeck-plus)"/>
+<circle cx="37.77" cy="67.35" r="0.35" fill="#ffffff" opacity="0.35"/>
+<rect x="5.41" y="75.16" width="5.19" height="6.43" rx="1" ry="1" fill="url(#key_tdeck-plus)" stroke="#141416" stroke-width="0.28"/>
+<g class="legend" data-key="Q">
+<text x="0" y="0" transform="translate(8.005 80.29) scale(0.88 1)" font-size="3.2" fill="#f2f3f5" text-anchor="middle" font-weight="500">Q</text>
+<text x="7.005" y="77.27" font-size="2" fill="#f2f3f5" text-anchor="middle" font-weight="500">#</text>
+</g>
+<rect x="11.81" y="75.16" width="5.19" height="6.43" rx="1" ry="1" fill="url(#key_tdeck-plus)" stroke="#141416" stroke-width="0.28"/>
+<g class="legend" data-key="W">
+<text x="0" y="0" transform="translate(14.405 80.29) scale(0.88 1)" font-size="3.2" fill="#f2f3f5" text-anchor="middle" font-weight="500">W</text>
+<text x="13.855" y="77.27" font-size="2" fill="#f2f3f5" text-anchor="middle" font-weight="500">1</text>
+</g>
+<rect x="18.21" y="75.16" width="5.19" height="6.43" rx="1" ry="1" fill="url(#key_tdeck-plus)" stroke="#141416" stroke-width="0.28"/>
+<g class="legend" data-key="E">
+<text x="0" y="0" transform="translate(20.805 80.29) scale(0.88 1)" font-size="3.2" fill="#f2f3f5" text-anchor="middle" font-weight="500">E</text>
+<text x="20.255" y="77.27" font-size="2" fill="#f2f3f5" text-anchor="middle" font-weight="500">2</text>
+</g>
+<rect x="24.61" y="75.16" width="5.19" height="6.43" rx="1" ry="1" fill="url(#key_tdeck-plus)" stroke="#141416" stroke-width="0.28"/>
+<g class="legend" data-key="R">
+<text x="0" y="0" transform="translate(27.205 80.29) scale(0.88 1)" font-size="3.2" fill="#f2f3f5" text-anchor="middle" font-weight="500">R</text>
+<text x="26.655" y="77.27" font-size="2" fill="#f2f3f5" text-anchor="middle" font-weight="500">3</text>
+</g>
+<rect x="31.01" y="75.16" width="5.19" height="6.43" rx="1" ry="1" fill="url(#key_tdeck-plus)" stroke="#141416" stroke-width="0.28"/>
+<g class="legend" data-key="T">
+<text x="0" y="0" transform="translate(33.605 80.29) scale(0.88 1)" font-size="3.2" fill="#f2f3f5" text-anchor="middle" font-weight="500">T</text>
+<text x="33.055" y="77.27" font-size="2" fill="#f2f3f5" text-anchor="middle" font-weight="500">(</text>
+</g>
+<rect x="37.41" y="75.16" width="5.19" height="6.43" rx="1" ry="1" fill="url(#key_tdeck-plus)" stroke="#141416" stroke-width="0.28"/>
+<g class="legend" data-key="Y">
+<text x="0" y="0" transform="translate(40.005 80.29) scale(0.88 1)" font-size="3.2" fill="#f2f3f5" text-anchor="middle" font-weight="500">Y</text>
+<text x="40.855" y="77.27" font-size="2" fill="#f2f3f5" text-anchor="middle" font-weight="500">)</text>
+</g>
+<rect x="43.81" y="75.16" width="5.19" height="6.43" rx="1" ry="1" fill="url(#key_tdeck-plus)" stroke="#141416" stroke-width="0.28"/>
+<g class="legend" data-key="U">
+<text x="0" y="0" transform="translate(46.405 80.29) scale(0.88 1)" font-size="3.2" fill="#f2f3f5" text-anchor="middle" font-weight="500">U</text>
+<text x="46.955" y="77.27" font-size="2" fill="#f2f3f5" text-anchor="middle" font-weight="500">_</text>
+</g>
+<rect x="50.21" y="75.16" width="5.19" height="6.43" rx="1" ry="1" fill="url(#key_tdeck-plus)" stroke="#141416" stroke-width="0.28"/>
+<g class="legend" data-key="I">
+<text x="0" y="0" transform="translate(52.805 80.29) scale(0.88 1)" font-size="3.2" fill="#f2f3f5" text-anchor="middle" font-weight="500">I</text>
+<text x="53.355" y="77.27" font-size="2" fill="#f2f3f5" text-anchor="middle" font-weight="500">-</text>
+</g>
+<rect x="56.61" y="75.16" width="5.19" height="6.43" rx="1" ry="1" fill="url(#key_tdeck-plus)" stroke="#141416" stroke-width="0.28"/>
+<g class="legend" data-key="O">
+<text x="0" y="0" transform="translate(59.205 80.29) scale(0.88 1)" font-size="3.2" fill="#f2f3f5" text-anchor="middle" font-weight="500">O</text>
+<text x="59.755" y="77.27" font-size="2" fill="#f2f3f5" text-anchor="middle" font-weight="500">+</text>
+</g>
+<rect x="63.01" y="75.16" width="5.19" height="6.43" rx="1" ry="1" fill="url(#key_tdeck-plus)" stroke="#141416" stroke-width="0.28"/>
+<g class="legend" data-key="P">
+<text x="0" y="0" transform="translate(65.605 80.29) scale(0.88 1)" font-size="3.2" fill="#f2f3f5" text-anchor="middle" font-weight="500">P</text>
+<text x="66.155" y="77.27" font-size="2" fill="#f2f3f5" text-anchor="middle" font-weight="500">@</text>
+</g>
+<rect x="5.41" y="83.01" width="5.19" height="6.43" rx="1" ry="1" fill="url(#key_tdeck-plus)" stroke="#141416" stroke-width="0.28"/>
+<g class="legend" data-key="A">
+<text x="0" y="0" transform="translate(7.555 88.14) scale(0.88 1)" font-size="3.2" fill="#f2f3f5" text-anchor="middle" font-weight="500">A</text>
+<text x="7.055" y="85.12" font-size="2" fill="#f2f3f5" text-anchor="middle" font-weight="500">*</text>
+</g>
+<rect x="11.81" y="83.01" width="5.19" height="6.43" rx="1" ry="1" fill="url(#key_tdeck-plus)" stroke="#141416" stroke-width="0.28"/>
+<g class="legend" data-key="S">
+<text x="0" y="0" transform="translate(13.955 88.14) scale(0.88 1)" font-size="3.2" fill="#f2f3f5" text-anchor="middle" font-weight="500">S</text>
+<text x="13.455" y="85.12" font-size="2" fill="#f2f3f5" text-anchor="middle" font-weight="500">4</text>
+</g>
+<rect x="18.21" y="83.01" width="5.19" height="6.43" rx="1" ry="1" fill="url(#key_tdeck-plus)" stroke="#141416" stroke-width="0.28"/>
+<g class="legend" data-key="D">
+<text x="0" y="0" transform="translate(20.355 88.14) scale(0.88 1)" font-size="3.2" fill="#f2f3f5" text-anchor="middle" font-weight="500">D</text>
+<text x="19.855" y="85.12" font-size="2" fill="#f2f3f5" text-anchor="middle" font-weight="500">5</text>
+</g>
+<rect x="24.61" y="83.01" width="5.19" height="6.43" rx="1" ry="1" fill="url(#key_tdeck-plus)" stroke="#141416" stroke-width="0.28"/>
+<g class="legend" data-key="F">
+<text x="0" y="0" transform="translate(26.755 88.14) scale(0.88 1)" font-size="3.2" fill="#f2f3f5" text-anchor="middle" font-weight="500">F</text>
+<text x="26.255" y="85.12" font-size="2" fill="#f2f3f5" text-anchor="middle" font-weight="500">6</text>
+</g>
+<rect x="31.01" y="83.01" width="5.19" height="6.43" rx="1" ry="1" fill="url(#key_tdeck-plus)" stroke="#141416" stroke-width="0.28"/>
+<g class="legend" data-key="G">
+<text x="0" y="0" transform="translate(33.155 88.14) scale(0.88 1)" font-size="3.2" fill="#f2f3f5" text-anchor="middle" font-weight="500">G</text>
+<text x="32.655" y="85.12" font-size="2" fill="#f2f3f5" text-anchor="middle" font-weight="500">/</text>
+</g>
+<rect x="37.41" y="83.01" width="5.19" height="6.43" rx="1" ry="1" fill="url(#key_tdeck-plus)" stroke="#141416" stroke-width="0.28"/>
+<g class="legend" data-key="H">
+<text x="0" y="0" transform="translate(40.205 88.14) scale(0.88 1)" font-size="3.2" fill="#f2f3f5" text-anchor="middle" font-weight="500">H</text>
+<text x="40.655" y="85.12" font-size="2" fill="#f2f3f5" text-anchor="middle" font-weight="500">:</text>
+</g>
+<rect x="43.81" y="83.01" width="5.19" height="6.43" rx="1" ry="1" fill="url(#key_tdeck-plus)" stroke="#141416" stroke-width="0.28"/>
+<g class="legend" data-key="J">
+<text x="0" y="0" transform="translate(46.255 88.14) scale(0.88 1)" font-size="3.2" fill="#f2f3f5" text-anchor="middle" font-weight="500">J</text>
+<text x="47.055" y="85.12" font-size="2" fill="#f2f3f5" text-anchor="middle" font-weight="500">;</text>
+</g>
+<rect x="50.21" y="83.01" width="5.19" height="6.43" rx="1" ry="1" fill="url(#key_tdeck-plus)" stroke="#141416" stroke-width="0.28"/>
+<g class="legend" data-key="K">
+<text x="0" y="0" transform="translate(53.005 88.14) scale(0.88 1)" font-size="3.2" fill="#f2f3f5" text-anchor="middle" font-weight="500">K</text>
+<text x="53.455" y="85.62" font-size="2" fill="#f2f3f5" text-anchor="middle" font-weight="500">’</text>
+</g>
+<rect x="56.61" y="83.01" width="5.19" height="6.43" rx="1" ry="1" fill="url(#key_tdeck-plus)" stroke="#141416" stroke-width="0.28"/>
+<g class="legend" data-key="L">
+<text x="0" y="0" transform="translate(59.405 88.14) scale(0.88 1)" font-size="3.2" fill="#f2f3f5" text-anchor="middle" font-weight="500">L</text>
+<text x="60.155" y="85.62" font-size="2" fill="#f2f3f5" text-anchor="middle" font-weight="500">”</text>
+</g>
+<rect x="63.01" y="83.01" width="5.19" height="6.43" rx="1" ry="1" fill="url(#key_tdeck-plus)" stroke="#141416" stroke-width="0.28"/>
+<g class="legend" data-key="backspace">
+<path d="M 64.485 87.595 L 65.005 86.57 H 66.725 V 88.62 H 65.005 Z" stroke="#f2f3f5" fill="none" stroke-linejoin="round" stroke-width="0.2"/>
+<path d="M 65.405 87.02 L 66.255 88.17 M 66.255 87.02 L 65.405 88.17" stroke="#f2f3f5" fill="none" stroke-linejoin="round" stroke-width="0.3"/>
+</g>
+<rect x="5.41" y="90.86" width="5.19" height="6.43" rx="1" ry="1" fill="url(#key_tdeck-plus)" stroke="#141416" stroke-width="0.28"/>
+<g class="legend" data-key="alt">
+<text x="7.555" y="95.72" font-size="2.9" fill="#f2f3f5" text-anchor="middle" font-weight="500">alt</text>
+</g>
+<rect x="11.81" y="90.86" width="5.19" height="6.43" rx="1" ry="1" fill="url(#key_tdeck-plus)" stroke="#141416" stroke-width="0.28"/>
+<g class="legend" data-key="Z">
+<text x="0" y="0" transform="translate(14.405 95.99) scale(0.88 1)" font-size="3.2" fill="#f2f3f5" text-anchor="middle" font-weight="500">Z</text>
+<text x="13.835" y="92.97" font-size="2" fill="#f2f3f5" text-anchor="middle" font-weight="500">7</text>
+</g>
+<rect x="18.21" y="90.86" width="5.19" height="6.43" rx="1" ry="1" fill="url(#key_tdeck-plus)" stroke="#141416" stroke-width="0.28"/>
+<g class="legend" data-key="X">
+<text x="0" y="0" transform="translate(20.805 95.99) scale(0.88 1)" font-size="3.2" fill="#f2f3f5" text-anchor="middle" font-weight="500">X</text>
+<text x="20.235" y="92.97" font-size="2" fill="#f2f3f5" text-anchor="middle" font-weight="500">8</text>
+</g>
+<rect x="24.61" y="90.86" width="5.19" height="6.43" rx="1" ry="1" fill="url(#key_tdeck-plus)" stroke="#141416" stroke-width="0.28"/>
+<g class="legend" data-key="C">
+<text x="0" y="0" transform="translate(27.205 95.99) scale(0.88 1)" font-size="3.2" fill="#f2f3f5" text-anchor="middle" font-weight="500">C</text>
+<text x="26.635" y="92.97" font-size="2" fill="#f2f3f5" text-anchor="middle" font-weight="500">9</text>
+</g>
+<rect x="31.01" y="90.86" width="5.19" height="6.43" rx="1" ry="1" fill="url(#key_tdeck-plus)" stroke="#141416" stroke-width="0.28"/>
+<g class="legend" data-key="V">
+<text x="0" y="0" transform="translate(33.605 95.99) scale(0.88 1)" font-size="3.2" fill="#f2f3f5" text-anchor="middle" font-weight="500">V</text>
+<text x="33.035" y="92.97" font-size="2" fill="#f2f3f5" text-anchor="middle" font-weight="500">?</text>
+</g>
+<rect x="37.41" y="90.86" width="5.19" height="6.43" rx="1" ry="1" fill="url(#key_tdeck-plus)" stroke="#141416" stroke-width="0.28"/>
+<g class="legend" data-key="B">
+<text x="0" y="0" transform="translate(40.005 95.99) scale(0.88 1)" font-size="3.2" fill="#f2f3f5" text-anchor="middle" font-weight="500">B</text>
+<text x="40.665" y="92.97" font-size="2" fill="#f2f3f5" text-anchor="middle" font-weight="500">!</text>
+</g>
+<rect x="43.81" y="90.86" width="5.19" height="6.43" rx="1" ry="1" fill="url(#key_tdeck-plus)" stroke="#141416" stroke-width="0.28"/>
+<g class="legend" data-key="N">
+<text x="0" y="0" transform="translate(46.405 95.99) scale(0.88 1)" font-size="3.2" fill="#f2f3f5" text-anchor="middle" font-weight="500">N</text>
+<text x="47.065" y="92.97" font-size="2" fill="#f2f3f5" text-anchor="middle" font-weight="500">,</text>
+</g>
+<rect x="50.21" y="90.86" width="5.19" height="6.43" rx="1" ry="1" fill="url(#key_tdeck-plus)" stroke="#141416" stroke-width="0.28"/>
+<g class="legend" data-key="M">
+<text x="0" y="0" transform="translate(52.805 95.99) scale(0.88 1)" font-size="3.2" fill="#f2f3f5" text-anchor="middle" font-weight="500">M</text>
+<text x="53.465" y="92.97" font-size="2" fill="#f2f3f5" text-anchor="middle" font-weight="500">.</text>
+</g>
+<rect x="56.61" y="90.86" width="5.19" height="6.43" rx="1" ry="1" fill="url(#key_tdeck-plus)" stroke="#141416" stroke-width="0.28"/>
+<g class="legend" data-key="dollar">
+<text x="0" y="0" transform="translate(59.205 95.99) scale(0.88 1)" font-size="3.2" fill="#f2f3f5" text-anchor="middle" font-weight="500">$</text>
+<path d="M 58.955 92.14 H 59.305 L 59.755 91.74 V 92.99 L 59.305 92.59 H 58.955 Z" fill="#f2f3f5"/>
+<path d="M 60.055 91.97 Q 60.305 92.37 60.055 92.77 M 60.325 91.72 Q 60.705 92.37 60.325 93.02" stroke="#f2f3f5" fill="none" stroke-linejoin="round" stroke-width="0.16"/>
+</g>
+<rect x="63.01" y="90.86" width="5.19" height="6.43" rx="1" ry="1" fill="url(#key_tdeck-plus)" stroke="#141416" stroke-width="0.28"/>
+<g class="legend" data-key="enter">
+<path d="M 66.355 94.17 V 95.67 H 65.155" stroke="#f2f3f5" fill="none" stroke-linejoin="round" stroke-width="0.42"/>
+<path d="M 64.605 95.67 L 65.255 95.07 L 65.255 96.27 Z" fill="#f2f3f5"/>
+</g>
+<rect x="11.74" y="98.79" width="6.47" height="5.21" rx="1" ry="1" fill="url(#key_tdeck-plus)" stroke="#141416" stroke-width="0.28"/>
+<g class="legend" data-key="shift-left">
+<path d="M 14.205 100.4 L 14.955 101.35 H 14.605 V 102.5 H 13.805 V 101.35 H 13.455 Z" fill="#f2f3f5"/>
+</g>
+<rect x="19.69" y="98.79" width="6.62" height="5.21" rx="1" ry="1" fill="url(#key_tdeck-plus)" stroke="#141416" stroke-width="0.28"/>
+<g class="legend" data-key="mic">
+<text x="21.07" y="101.05" font-size="2" fill="#f2f3f5" text-anchor="middle" font-weight="500">0</text>
+<rect x="22.15" y="100.6" width="0.9" height="1.5" rx="0.45" ry="0.45" fill="#f2f3f5"/>
+<path d="M 21.8 101.4 Q 21.8 102.45 22.6 102.45 Q 23.4 102.45 23.4 101.4" stroke="#f2f3f5" fill="none" stroke-linejoin="round" stroke-width="0.25"/>
+<path d="M 22.42 102.45 H 22.78 V 102.65 H 23.2 V 102.9 H 22 V 102.65 H 22.42 Z" fill="#f2f3f5"/>
+</g>
+<rect x="27.89" y="98.79" width="17.92" height="5.21" rx="1" ry="1" fill="url(#key_tdeck-plus)" stroke="#141416" stroke-width="0.28"/>
+<g class="legend" data-key="space">
+<path d="M 32.72 100.4 V 101.7 H 39.73 V 100.4" stroke="#f2f3f5" stroke-width="0.28" fill="none"/>
+</g>
+<rect x="47.39" y="98.79" width="6.57" height="5.21" rx="1" ry="1" fill="url(#key_tdeck-plus)" stroke="#141416" stroke-width="0.28"/>
+<g class="legend" data-key="sym">
+<text x="0" y="0" transform="translate(50.575 102) scale(0.92 1)" font-size="2.4" fill="#f2f3f5" text-anchor="middle" font-weight="500">sym</text>
+</g>
+<rect x="55.19" y="98.79" width="6.67" height="5.21" rx="1" ry="1" fill="url(#key_tdeck-plus)" stroke="#141416" stroke-width="0.28"/>
+<g class="legend" data-key="shift-right">
+<path d="M 58.205 101.15 L 58.955 102.1 H 58.605 V 103.25 H 57.805 V 102.1 H 57.455 Z" fill="#f2f3f5"/>
+</g>
+<g class="legend" data-mark="bottom-print" data-plane="plate">
+<circle cx="7.82" cy="101.72" r="1.45" fill="none" stroke="#dcdde2" stroke-width="0.3"/>
+<circle cx="66" cy="101.78" r="1.45" fill="none" stroke="#dcdde2" stroke-width="0.3"/>
+<circle cx="12.28" cy="106.94" r="0.5" fill="none" stroke="#dcdde2" stroke-width="0.25"/>
+<path d="M 12.62 107.31 L 13.45 108.21 H 27.55" stroke="#dcdde2" stroke-width="0.28" fill="none"/>
+<path d="M 28.42 107.47 L 29.65 108.17 L 28.42 108.87 Z" fill="#dcdde2"/>
+<circle cx="61.92" cy="106.94" r="0.5" fill="none" stroke="#dcdde2" stroke-width="0.25"/>
+<path d="M 61.58 107.31 L 60.75 108.21 H 46.65" stroke="#dcdde2" stroke-width="0.28" fill="none"/>
+<path d="M 45.78 107.47 L 44.55 108.17 L 45.78 108.87 Z" fill="#dcdde2"/>
+<text x="0" y="0" transform="translate(32 109.54) scale(0.93 1)" font-size="3.35" fill="#e9eaed" text-anchor="middle" font-weight="800">L</text>
+<text x="0" y="0" transform="translate(33.35 109.54) scale(0.93 1)" font-size="3.35" fill="#e9eaed" text-anchor="middle" font-weight="800">I</text>
+<text x="0" y="0" transform="translate(34.93 109.54) scale(0.93 1)" font-size="3.35" fill="#e9eaed" text-anchor="middle" font-weight="800">L</text>
+<text x="0" y="0" transform="translate(36.75 109.54) scale(0.93 1)" font-size="3.35" fill="#e9eaed" text-anchor="middle" font-weight="800">Y</text>
+<text x="0" y="0" transform="translate(39 109.54) scale(0.93 1)" font-size="3.35" fill="#e9eaed" text-anchor="middle" font-weight="800">G</text>
+<text x="0" y="0" transform="translate(41.55 109.54) scale(0.93 1)" font-size="3.35" fill="#e9eaed" text-anchor="middle" font-weight="800">O</text>
+<text x="43.57" y="108.14" font-size="2.2" fill="#e9eaed" text-anchor="middle" font-weight="600">®</text>
+</g>
+<g class="legend" data-mark="round-marks" data-plane="plate-marks">
+<circle cx="7.82" cy="101.72" r="1" fill="#dcdde2"/>
+<path d="M 7.325 100.62 L 8.315 102.82" stroke="#2f3033" stroke-width="0.32" fill="none"/>
+<circle cx="66" cy="101.78" r="1" fill="#dcdde2"/>
+<path d="M 66.495 100.68 L 65.505 102.88" stroke="#2f3033" stroke-width="0.32" fill="none"/>
+</g>
+<g id="hotspots" display="none">
+<circle id="hs-key-Q" cx="8.005" cy="78.375" r="2.735" data-face="front" data-w="5.47" data-h="6.71" data-label="Q"/>
+<circle id="hs-key-W" cx="14.405" cy="78.375" r="2.735" data-face="front" data-w="5.47" data-h="6.71" data-label="W"/>
+<circle id="hs-key-E" cx="20.805" cy="78.375" r="2.735" data-face="front" data-w="5.47" data-h="6.71" data-label="E"/>
+<circle id="hs-key-R" cx="27.205" cy="78.375" r="2.735" data-face="front" data-w="5.47" data-h="6.71" data-label="R"/>
+<circle id="hs-key-T" cx="33.605" cy="78.375" r="2.735" data-face="front" data-w="5.47" data-h="6.71" data-label="T"/>
+<circle id="hs-key-Y" cx="40.005" cy="78.375" r="2.735" data-face="front" data-w="5.47" data-h="6.71" data-label="Y"/>
+<circle id="hs-key-U" cx="46.405" cy="78.375" r="2.735" data-face="front" data-w="5.47" data-h="6.71" data-label="U"/>
+<circle id="hs-key-I" cx="52.805" cy="78.375" r="2.735" data-face="front" data-w="5.47" data-h="6.71" data-label="I"/>
+<circle id="hs-key-O" cx="59.205" cy="78.375" r="2.735" data-face="front" data-w="5.47" data-h="6.71" data-label="O"/>
+<circle id="hs-key-P" cx="65.605" cy="78.375" r="2.735" data-face="front" data-w="5.47" data-h="6.71" data-label="P"/>
+<circle id="hs-key-A" cx="8.005" cy="86.225" r="2.735" data-face="front" data-w="5.47" data-h="6.71" data-label="A"/>
+<circle id="hs-key-S" cx="14.405" cy="86.225" r="2.735" data-face="front" data-w="5.47" data-h="6.71" data-label="S"/>
+<circle id="hs-key-D" cx="20.805" cy="86.225" r="2.735" data-face="front" data-w="5.47" data-h="6.71" data-label="D"/>
+<circle id="hs-key-F" cx="27.205" cy="86.225" r="2.735" data-face="front" data-w="5.47" data-h="6.71" data-label="F"/>
+<circle id="hs-key-G" cx="33.605" cy="86.225" r="2.735" data-face="front" data-w="5.47" data-h="6.71" data-label="G"/>
+<circle id="hs-key-H" cx="40.005" cy="86.225" r="2.735" data-face="front" data-w="5.47" data-h="6.71" data-label="H"/>
+<circle id="hs-key-J" cx="46.405" cy="86.225" r="2.735" data-face="front" data-w="5.47" data-h="6.71" data-label="J"/>
+<circle id="hs-key-K" cx="52.805" cy="86.225" r="2.735" data-face="front" data-w="5.47" data-h="6.71" data-label="K"/>
+<circle id="hs-key-L" cx="59.205" cy="86.225" r="2.735" data-face="front" data-w="5.47" data-h="6.71" data-label="L"/>
+<circle id="hs-key-backspace" cx="65.605" cy="86.225" r="2.735" data-face="front" data-w="5.47" data-h="6.71" data-label="backspace"/>
+<circle id="hs-key-alt" cx="8.005" cy="94.075" r="2.735" data-face="front" data-w="5.47" data-h="6.71" data-label="alt"/>
+<circle id="hs-key-Z" cx="14.405" cy="94.075" r="2.735" data-face="front" data-w="5.47" data-h="6.71" data-label="Z"/>
+<circle id="hs-key-X" cx="20.805" cy="94.075" r="2.735" data-face="front" data-w="5.47" data-h="6.71" data-label="X"/>
+<circle id="hs-key-C" cx="27.205" cy="94.075" r="2.735" data-face="front" data-w="5.47" data-h="6.71" data-label="C"/>
+<circle id="hs-key-V" cx="33.605" cy="94.075" r="2.735" data-face="front" data-w="5.47" data-h="6.71" data-label="V"/>
+<circle id="hs-key-B" cx="40.005" cy="94.075" r="2.735" data-face="front" data-w="5.47" data-h="6.71" data-label="B"/>
+<circle id="hs-key-N" cx="46.405" cy="94.075" r="2.735" data-face="front" data-w="5.47" data-h="6.71" data-label="N"/>
+<circle id="hs-key-M" cx="52.805" cy="94.075" r="2.735" data-face="front" data-w="5.47" data-h="6.71" data-label="M"/>
+<circle id="hs-key-dollar" cx="59.205" cy="94.075" r="2.735" data-face="front" data-w="5.47" data-h="6.71" data-label="$"/>
+<circle id="hs-key-enter" cx="65.605" cy="94.075" r="2.735" data-face="front" data-w="5.47" data-h="6.71" data-label="enter"/>
+<circle id="hs-key-shift-left" cx="14.975" cy="101.395" r="2.745" data-face="front" data-w="6.75" data-h="5.49" data-label="shift"/>
+<circle id="hs-key-mic" cx="23" cy="101.395" r="2.745" data-face="front" data-w="6.9" data-h="5.49" data-label="mic"/>
+<circle id="hs-key-space" cx="36.85" cy="101.395" r="2.745" data-face="front" data-w="18.2" data-h="5.49" data-label="space"/>
+<circle id="hs-key-sym" cx="50.675" cy="101.395" r="2.745" data-face="front" data-w="6.85" data-h="5.49" data-label="sym"/>
+<circle id="hs-key-shift-right" cx="58.525" cy="101.395" r="2.745" data-face="front" data-w="6.95" data-h="5.49" data-label="shift"/>
+<circle id="hs-Trackball" cx="37.97" cy="67.85" r="2.48" data-face="front" data-w="4.96" data-h="4.96"/>
+</g>
+<g id="annotations">
+<text x="36.57" y="-3.0" font-size="1.8" fill="#7d7d80" text-anchor="middle">73.14 mm</text>
+<text x="-7.5" y="57.49" font-size="1.8" fill="#7d7d80" text-anchor="middle" transform="rotate(-90 -7.5 57.49)">114.98 mm</text>
+<text x="36.57" y="123.48" font-size="2.6" fill="#2c2c30" text-anchor="middle" font-weight="700">LILYGO T-Deck Plus</text>
+</g>
+</svg>

@@ -1,0 +1,48 @@
+# AGENTS.md — brand
+
+Rules for any agent changing this repository. [README.md](README.md) says what it holds and how it is built.
+
+## What is where
+
+- `logo/src/mark.svg`: the mark, the only drawing kept by hand. `logo/src/lockups.json`: the lockups' numbers. `logo/src/small-mark.json`: the small mark's sizes and pixel rules (owner, 2026-11-18: under 24 px, the ring and a solid body in the ring's color with the keyhole cut out; from 24 px, the full mark). `logo/svg/`, `logo/png/`: generated.
+- `fonts/`: the upstream font files, unmodified, with `VERSIONS.md` (pins) and each family's `OFL.txt`.
+- `tokens/tokens.json`: the one file of values. `tokens/dist/`: generated. `tokens/mirror.json`: written by `tools/sync_from_kleidos.py --record`.
+- `colors/`: the palette's page and sheet, generated from the tokens.
+- `about/`: `facts.json` and the texts held to it.
+- `boards/`: byte copies of the nine fronts of the `boards` repository (`<board>/svg/front.svg`, MIT) and `boards.json`, each copy's digest and the commit it was taken at, written by `tools/sync_from_boards.py --copy`. Never edit a copy here; `tools/kleidos_brand/boards.py` draws them into an image at one scale.
+- `press-kit/src/`: one SVG template per layout and `press.json` (the words, the images made from each layout, the screens). `press-kit/svg/`, `press-kit/images/` and the enlarged files of `press-kit/screens/`: generated. The native captures in `press-kit/screens/` are byte copies of the firmware repository's. `press-kit/photos/`: the owner's photographs, each full-resolution file written once by `kleidos_brand.photos.clean` from the camera's file (listed in `press.json`, with credit and alt texts), and its narrower copies, generated.
+- `tools/kleidos_brand/`: the builders and checks as one package, which `social` imports from its submodule; keep what both repositories need there. `tools/build.py`, `tools/check.py`, `tools/sync_from_kleidos.py`, `tools/sync_from_boards.py`: the commands. `tests/`: their tests.
+- `exports.json`: the record of what each picture was drawn from, written by the builder.
+- `.github/commit-check/` and `.github/workflows/commit-check*.yml`: this repository's copy of the commit-message gate, written by the `agents` repository's `sync_commit_check.py`; change the skill's files there, never the copy.
+
+## Checks before you commit
+
+```sh
+.venv/bin/python tools/build.py --check             # after any change to a source, on the exporting machine
+.venv/bin/python tools/check.py
+.venv/bin/python -m pytest tests
+.venv/bin/reuse lint
+.venv/bin/python tools/sync_from_kleidos.py --check <checkout of the firmware repository>   # when tokens, the mark, the fonts or copied words changed
+.venv/bin/python tools/sync_from_boards.py --check <checkout of the boards repository>      # when a front changed there
+```
+
+Regenerate what the builder owns (`.venv/bin/python tools/build.py`) instead of editing it, commit the regenerated files with the change that caused them, and **look at every image you produced** before committing it, small sizes and both grounds included. CI (`.github/workflows/check.yml`) runs `reuse lint`, `tools/check.py`, the tests, and the builder's static and tolerant checks.
+
+## Rules
+
+- **The mark is always whole.** The keyhole inside its ring, at any size, in every file. No ringless glyph, no redrawn or recolored copy: a file shows the mark as a `<g class="mark">` holding the five shapes of `logo/src/mark.svg`, as the one-ink mark the builder derives from them, or, under 24 px, as the small mark (`<g class="mark mark-small">`) the builder fits from them to one of the sizes of `logo/src/small-mark.json`. `tools/check.py` refuses anything else.
+- **True colors, tokens only.** Every color in a source or an image is a token's value. No opacity, tint, gradient, shadow or filter. A new color is a new token first. Two things keep their own colors, because they are pictures of something real: a screen capture keeps its pixels, and a board front (`boards/`) keeps its case's true colors, gradients included, as the boards repository draws it; only its drop shadow is left out.
+- **No live text in anything published.** Words are outlines, made by `tools/kleidos_brand/lettering.py` from the pinned fonts. The name is the one lettering path and is never retyped.
+- **Fonts stay unmodified.** Only the pinned upstream files are in the tree. Never save a subset, an instance or a converted copy: it would be a Modified Version under the OFL, and Mona Sans reserves its name.
+- **Licenses.** The artwork authored here (the mark, the lockups, the press images and their templates and words, the screen captures, the palette's sheet) is GPL-3.0-or-later, the firmware's license. What is more useful to everyone as MIT is MIT: the tokens and their generated files, the tooling (`tools/`, `tests/`, the CI, the commit-message gate, the pins), the texts under `about/` and the two fact sheets, and the board fronts copied from `boards` (owner, 2026-11-17). `REUSE.toml` draws the line file by file; a new file takes the license of what it is. Third-party material keeps its own license, which must be approved by the OSI. No Creative Commons license, no custom terms, no "all rights reserved". A license tag stands alone on its line. A new kind of file is covered by `REUSE.toml` in the same change, and a new third-party source gets its notice in `NOTICE.md`. The GPL here carries two additional terms, 7(e) (no trademark rights) and 7(c) (a modified version is marked as changed and does not misrepresent its origin), and one additional permission, the press permission. The name and the mark: `TRADEMARKS.md`, whose wording changes only with the owner's yes.
+- **Boards come from `boards`, as copies.** The fronts under `boards/` are byte copies held to `boards/boards.json`; a new or changed front is copied with `tools/sync_from_boards.py --copy`, never drawn or edited here, and the images are built again and looked at. A board drawing anywhere else in the tree is refused (`tools/check.py`). The fronts keep what is printed on the products, the makers' marks included, as the boards repository draws them; those marks are their owners' (`NOTICE.md`).
+- **No capture that shows another company's mark**, and no vendor file of any kind. A photograph is the owner's own, given for publication, and shows the boards as they are, their makers' print included; it goes in only through `kleidos_brand.photos.clean`, with no metadata segment (`tools/check.py` reads every one), and its README says when its screens show an earlier build.
+- **Facts are public facts.** `about/facts.json` holds only what a public page of the project already states, or what the owner has given for publication (the value's `source` then says so), with `as_of` on what ages. The texts say nothing about unpublished work. Never print the registered-trademark sign beside the name.
+- **Spanish** never says "vault" or "bóveda": the container is "llavero", its content "tus contraseñas".
+- **The mark's inner glyph is a keyhole**: "keyhole" in English and «cerradura» in Spanish, never "key" or «llave». The texts use those words for the Greek word behind the name, an encryption key and the FIDO2 security key Kleidos is not, never for the glyph.
+- **The vendors** are written "M5Stack" and "LILYGO" (owner, 2026-11-18), as `about/facts.json` lists them; the board fronts under `boards/` keep the boards repository's print until it changes there.
+- **Not only the StickS3.** Where boards or their screens appear, the other boards appear too.
+- **Nothing private**: no home-directory path, private address, hardware address, serial port, host name, token or key, no value or name of a private setting, and no e-mail address but mail@kleidos.dev (the contact) and jmrplens@kleidos.dev (the supplier in `REUSE.toml`).
+- **English** in every file but the Spanish texts. **Markdown prose is never hard-wrapped**: one line per paragraph and per list item; code, tables and fenced blocks keep their own layout.
+- **Commits:** signed, under the project identity set locally in this clone, imperative English subject of at most 72 columns (aim for 50), a blank second line, body wrapped at 72 columns, no AI attribution lines. Never `--no-verify`, never a force push to `main`. Install the hook once per clone: `pre-commit install --hook-type commit-msg`.
+- **Nothing is published without the owner's yes.** Published at https://github.com/kleidos-dev/brand; `main` only moves forward (squashed once, on publication), by pull request. `social` pins a commit of this repository: after that squash, re-pin it last.

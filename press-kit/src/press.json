@@ -1,0 +1,105 @@
+{
+  "$comment": "The press images: which are made from each layout, and their words. The words are the site's own (the keys of site/strings/<lang>.json under 'from'); tools/sync_from_kleidos.py holds them to it. A layout's line breaks must join back into the words.",
+  "default_lang": "en",
+  "langs": ["en", "es"],
+  "from": {
+    "eyebrow": "home.eyebrow",
+    "title": "fleet.hero.title",
+    "title_accent": "fleet.hero.title_accent"
+  },
+  "words": {
+    "en": {
+      "eyebrow": "Hardware password manager",
+      "title": "Your passwords, on a board you already own.",
+      "title_accent": "already own",
+      "address": "kleidos.dev",
+      "screens_caption": "The unlock screen, on five of the boards Kleidos runs on.",
+      "boards_caption": "The nine boards Kleidos runs on, at one scale, on their unlock screen."
+    },
+    "es": {
+      "eyebrow": "Gestor de contraseñas por hardware",
+      "title": "Tus contraseñas, en una placa que ya tienes.",
+      "title_accent": "ya tienes",
+      "address": "kleidos.dev",
+      "screens_caption": "La pantalla de desbloqueo, en cinco de las placas en las que funciona Kleidos.",
+      "boards_caption": "Las nueve placas en las que funciona Kleidos, a una misma escala, en su pantalla de desbloqueo."
+    }
+  },
+  "lines": {
+    "hero-16x9": {
+      "title": {
+        "en": ["Your passwords, on a board", "you already own."],
+        "es": ["Tus contraseñas, en una placa", "que ya tienes."]
+      }
+    },
+    "hero-1x1": {
+      "title": {
+        "en": ["Your passwords,", "on a board you", "already own."],
+        "es": ["Tus contraseñas,", "en una placa", "que ya tienes."]
+      }
+    },
+    "boards-16x9": {
+      "title": {
+        "en": ["Your passwords, on a board", "you already own."],
+        "es": ["Tus contraseñas, en una placa", "que ya tienes."]
+      }
+    },
+    "boards-4x5": {
+      "title": {
+        "en": ["Your passwords,", "on a board you", "already own."],
+        "es": ["Tus contraseñas,", "en una placa", "que ya tienes."]
+      },
+      "boards_caption": {
+        "en": ["The nine boards Kleidos runs on,", "at one scale, on their unlock screen."],
+        "es": ["Las nueve placas en las que funciona Kleidos,", "a una misma escala, en su pantalla de desbloqueo."]
+      }
+    }
+  },
+  "images": [
+    {"file": "kleidos-16x9", "layout": "hero-16x9", "theme": "dark", "copies": [1920],
+     "what": "the lockup, the eyebrow, the hero line and the address, on the dark ground"},
+    {"file": "kleidos-16x9-light", "layout": "hero-16x9", "theme": "light", "copies": [1920],
+     "what": "the same on white"},
+    {"file": "kleidos-1x1", "layout": "hero-1x1", "theme": "dark",
+     "what": "the stacked lockup, the hero line and the address, on the dark ground"},
+    {"file": "kleidos-1x1-light", "layout": "hero-1x1", "theme": "light",
+     "what": "the same on white"},
+    {"file": "kleidos-screens-16x9", "layout": "screens-16x9", "theme": "dark", "copies": [1920],
+     "what": "the unlock screen of five boards, real captures at a whole multiple of their own pixels"},
+    {"file": "kleidos-boards-16x9", "layout": "boards-16x9", "theme": "dark", "copies": [1920],
+     "what": "the nine boards at one scale on one shelf, each on its unlock screen, under the lockup and the hero line, on the dark ground"},
+    {"file": "kleidos-boards-16x9-light", "layout": "boards-16x9", "theme": "light", "copies": [1920],
+     "what": "the same on white"},
+    {"file": "kleidos-boards-4x5", "layout": "boards-4x5", "theme": "dark",
+     "what": "the nine boards at one scale on two shelves, each on its unlock screen, under the lockup and the hero line, on the dark ground"},
+    {"file": "kleidos-boards-4x5-light", "layout": "boards-4x5", "theme": "light",
+     "what": "the same on white"}
+  ],
+  "screens_note": "Real captures of the firmware's unlock screen, taken over one demo set of entries (committed to the firmware repository on 2026-10-20) and published on kleidos.dev. Each native file is a byte copy of the firmware repository's file under 'from'; 'scale' is the enlarged copy's whole multiple.",
+  "screens": {
+    "sticks3": {"name": "M5StickS3", "from": "site/media-src/screens/pin-sticks3.png", "size": [135, 240], "scale": 8},
+    "m5stickc-plus2": {"name": "M5StickC Plus2", "from": "site/media-src/screens/pin-m5stickc_plus2.png", "size": [135, 240], "scale": 8},
+    "m5stickc-plus1": {"name": "M5StickC Plus 1.1", "from": "site/media-src/screens/pin-m5stickc_plus1.png", "size": [135, 240], "scale": 8},
+    "m5stickc-plus-se": {"name": "M5StickC Plus SE", "from": "site/media-src/screens/pin-m5stickc_plus_se.png", "size": [135, 240], "scale": 8},
+    "coreink": {"name": "M5Stack CoreInk", "from": "site/media-src/screens/pin-m5core_ink.png", "size": [200, 200], "scale": 6},
+    "cardputer": {"name": "M5Stack Cardputer ADV", "from": "site/media-src/screens/pin-cardputer.png", "size": [240, 135], "scale": 8},
+    "tdeck-plus": {"name": "LILYGO T-Deck Plus", "from": "site/media-src/screens/pin-tdeck.png", "size": [320, 240], "scale": 6},
+    "cores3-se": {"name": "M5Stack CoreS3 SE", "from": "site/media-src/screens/pin-cores3_se.png", "size": [320, 240], "scale": 6},
+    "m5stack-core2-v13": {"name": "M5Stack Core2 v1.3", "from": "site/media-src/screens/pin-core2_v13.png", "size": [320, 240], "scale": 6}
+  },
+  "photos_note": "The owner's own photographs, given for publication. Each file under press-kit/photos/ is written once by kleidos_brand.photos.clean from the camera's file, which is not kept: upright, sRGB, every metadata segment gone. four-boards then had classic corrections only, nothing generated: white balance taken from the white cases, exposure and contrast raised slightly, a light unsharp mask and a 3 % crop on each edge to 4:3. The narrower copies are built from it.",
+  "photos": {
+    "four-boards": {
+      "file": "kleidos-photo-four-boards",
+      "size": [2800, 2100],
+      "copies": [1920, 1200],
+      "given": "2026-11-18",
+      "credit": "Photo: José M. Requena Plens",
+      "what": "four boards on a wooden table, each running an earlier build of Kleidos: the M5Stack Cardputer ADV and the M5Stack Core2 v1.3 on the list of credentials, the M5StickS3 on one credential, the LILYGO T-Deck Plus asking for the passphrase",
+      "alt": {
+        "en": "Four boards running Kleidos on a wooden table: an M5Stack Cardputer ADV and an M5Stack Core2 v1.3 showing the list of credentials, an M5StickS3 showing one credential's details, and a LILYGO T-Deck Plus asking for the passphrase. The screens show an earlier build of Kleidos.",
+        "es": "Cuatro placas con Kleidos sobre una mesa de madera: una M5Stack Cardputer ADV y una M5Stack Core2 v1.3 con la lista de credenciales, una M5StickS3 con los datos de una credencial y una LILYGO T-Deck Plus que pide la contraseña de desbloqueo. Las pantallas son de una versión anterior de Kleidos."
+      }
+    }
+  }
+}

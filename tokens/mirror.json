@@ -1,0 +1,12 @@
+{
+  "$comment": "Written by tools/sync_from_kleidos.py --record: the digests of the firmware repository's files this repository mirrors, as last compared. Do not edit.",
+  "files": {
+    ".claude/skills/kleidos-design-system/assets/tokens.json": "4d40fb2eb03f70c0583ab4fb76d54b9f21fc1610e90158d94fc4f1f32dc78192",
+    "src/ui/core/theme.h": "34207133cc2fb27de6eecd95032fe4036c9213f306a326f3b9a2a70f14a3e354",
+    "site/assets/style.css": "a6ed8bee74c6a60cdc7f31404fa2c6d764a6ec7f2c3427ab3f571af3206535f7",
+    "docs/design/handoff/assets/logo-full.svg": "17d2f638d3778697b01e3ea51368adbfe36f104d05e106c470e8c7e931892ba8",
+    "assets/fonts/VERSIONS.md": "398556e17811c3d0a3cb8dbce5b0cb82403a31a84f8fe1dd8165fc7763fbfc71",
+    "site/strings/en.json": "d250655277f2e78a598eed2eee27bb8206e3eeaf91c2bd3ec223daac0e822934",
+    "site/strings/es.json": "5887b9a99547e2370bc1973bb2d671f6096c67684c828fcabe0767ecb5d5c1ab"
+  }
+}

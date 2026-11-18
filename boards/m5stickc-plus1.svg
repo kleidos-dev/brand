@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-12.0 -6.0 48 68" width="48mm" height="68mm" shape-rendering="geometricPrecision" font-family="Inter, Helvetica, Arial, sans-serif">
+<title>M5StickC Plus 1.1: front mockup (1 SVG unit = 1 mm)</title>
+<defs>
+<filter id="shadow_m5stickc-plus1" x="-10%" y="-10%" width="120%" height="120%">
+<feDropShadow dx="0.3" dy="0.6" stdDeviation="0.6" flood-opacity="0.28"/>
+</filter>
+<linearGradient id="case_m5stickc-plus1" x1="0" y1="0" x2="0" y2="1">
+<stop offset="0%" stop-color="#fe3d1e"/>
+<stop offset="100%" stop-color="#fc3a1b"/>
+</linearGradient>
+<radialGradient id="screen_m5stickc-plus1" cx="50%" cy="20%" r="85%">
+<stop offset="0%" stop-color="#101015"/>
+<stop offset="100%" stop-color="#020203"/>
+</radialGradient>
+</defs>
+<rect x="0" y="0" width="24" height="48" rx="3" ry="3" fill="url(#case_m5stickc-plus1)" stroke="#e2301a" stroke-width="0.25" filter="url(#shadow_m5stickc-plus1)"/>
+<defs>
+<linearGradient id="plus_wall_m5stickc-plus1" gradientUnits="userSpaceOnUse" x1="0" y1="2.935" x2="0" y2="29.045">
+<stop offset="0%" stop-color="#fa2705"/>
+<stop offset="100%" stop-color="#ee1c06"/>
+</linearGradient>
+</defs>
+<rect x="3.97" y="2.935" width="16.06" height="26.11" rx="0.86" ry="0.86" fill="url(#plus_wall_m5stickc-plus1)"/>
+<rect x="4.49" y="3.455" width="15.02" height="25.07" rx="0.36" ry="0.36" fill="#050506"/>
+<rect x="4.57" y="3.535" width="14.86" height="24.91" rx="0.22" ry="0.22" fill="url(#screen_m5stickc-plus1)"/>
+<rect id="screen-active" x="4.57" y="3.535" width="14.86" height="24.91" fill="none" data-resolution="135x240"/>
+<path d="M 4.608 41.49 V 35.093 A 1.6 1.6 0 0 1 6.208 33.493 H 17.834 A 1.6 1.6 0 0 1 19.434 35.093 V 41.49 A 0.3005 0.3005 0 0 1 18.833 41.49 V 35.095 A 1 1 0 0 0 17.833 34.095 H 6.209 A 1 1 0 0 0 5.209 35.095 V 41.49 A 0.3005 0.3005 0 0 1 4.608 41.49 Z" fill="none" stroke="#ff4b2e" stroke-width="0.14" stroke-linejoin="round"/>
+<path d="M 4.608 41.49 V 35.093 A 1.6 1.6 0 0 1 6.208 33.493 H 17.834 A 1.6 1.6 0 0 1 19.434 35.093 V 41.49 A 0.3005 0.3005 0 0 1 18.833 41.49 V 35.095 A 1 1 0 0 0 17.833 34.095 H 6.209 A 1 1 0 0 0 5.209 35.095 V 41.49 A 0.3005 0.3005 0 0 1 4.608 41.49 Z" fill="#c41b0c"/>
+<path d="M 4.909 41.61 V 35.094 A 1.3 1.3 0 0 1 6.209 33.794 H 17.834 A 1.3 1.3 0 0 1 19.134 35.094 V 41.61" stroke="#820000" stroke-width="0.28" stroke-linecap="round" fill="none"/>
+<path d="M 6.439 42.38 L 6.439 35.25 L 7.31 35.25 L 9.428 38.11 L 11.55 35.25 L 12.417 35.25 L 12.417 42.38 L 11.58 42.38 L 11.58 36.95 L 9.428 39.73 L 7.277 36.95 L 7.277 42.38 Z" fill="#fb2307" stroke="#c41a05" stroke-width="0.08" stroke-linejoin="miter"/>
+<path d="M 13.203 35.239 H 17.659 V 36.083 H 14.055 V 37.842 H 15.49 A 2.2715 2.2715 0 0 1 15.49 42.385 H 13.203 V 41.554 H 15.49 A 1.44 1.44 0 0 0 15.49 38.674 H 13.203 Z" fill="#fb2307" stroke="#c41a05" stroke-width="0.08" stroke-linejoin="miter"/>
+<rect x="-0.55" y="35.97" width="0.7" height="5.22" rx="0.25" ry="0.25" fill="#2a2a2d"/>
+<rect x="23.85" y="13.96" width="0.7" height="3.69" rx="0.25" ry="0.25" fill="#2a2a2d"/>
+<g id="hotspots" display="none">
+<circle id="hs-BtnA" cx="12.049" cy="38.812" r="3.573" data-face="front" data-w="11.22" data-h="7.146" data-label="M5"/>
+<circle id="hs-BtnB" cx="24" cy="15.805" r="0.35" data-face="right" data-w="0.7" data-h="3.69"/>
+<circle id="hs-Power" cx="0" cy="38.58" r="0.35" data-face="left" data-w="0.7" data-h="5.22"/>
+</g>
+<g id="annotations">
+<text x="-1.05" y="39.08" font-size="1.4" fill="#7d7d80" text-anchor="end" font-weight="400">Power</text>
+<text x="25.85" y="16.305" font-size="1.4" fill="#7d7d80" text-anchor="start" font-weight="400">BtnB</text>
+<text x="12" y="-3.0" font-size="1.8" fill="#7d7d80" text-anchor="middle">24 mm</text>
+<text x="-7.5" y="24" font-size="1.8" fill="#7d7d80" text-anchor="middle" transform="rotate(-90 -7.5 24)">48 mm</text>
+<text x="12" y="56.5" font-size="2.6" fill="#2c2c30" text-anchor="middle" font-weight="700">M5StickC Plus 1.1</text>
+</g>
+</svg>
