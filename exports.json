@@ -1,6 +1,6 @@
 {
   "$comment": "Written by tools/build.py: the bytes of each picture and of what it was drawn from. Do not edit; run the builder.",
-  "chromium": "153.0.8010.12",
+  "chromium": "159.0.8154.6",
   "files": {
     "logo/png/kleidos-mark-64.png": {
       "sha256": "784a41aaa2bcff432ae1b13634c9469f308dde397d0670c0f52f5406bf4dfff1",
