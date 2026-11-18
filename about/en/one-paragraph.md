@@ -1,0 +1,1 @@
+Kleidos is free firmware that turns one of the small ESP32 boards it runs on, from M5Stack and LILYGO, into a hardware password manager. Your passwords stay encrypted on the board, which types the one you pick into your computer or phone over Bluetooth, and only after you have unlocked it on the board itself.

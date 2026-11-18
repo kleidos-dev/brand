@@ -1,0 +1,26 @@
+# SPDX-License-Identifier: MIT
+#
+# What the builders and the checks run, pinned. Nothing here is copied into
+# the tree. Install into a virtual environment, then fetch the browser the
+# images are drawn with:
+#   python3 -m venv .venv
+#   .venv/bin/pip install -r requirements.txt
+#   .venv/bin/python -m playwright install chromium
+# Python 3.14 (.python-version).
+
+# The lettering and every word in an image: shaped with HarfBuzz, outlined
+# with fontTools from the pinned fonts (tools/kleidos_brand/lettering.py)
+fonttools==4.68.0
+uharfbuzz==0.57.0
+
+# Drawing: Chromium through Playwright, then Pillow from pixels alone
+# (tools/kleidos_brand/raster.py, png.py). The versions the first social
+# pack was drawn with, so its images can be reproduced.
+playwright==1.63.0
+pillow==13.0.0
+
+# Checks
+pytest==9.2.0
+reuse==6.3.0
+# reuse needs one module that detects a file's encoding
+charset-normalizer==3.5.2

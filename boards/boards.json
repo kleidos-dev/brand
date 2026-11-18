@@ -1,0 +1,53 @@
+{
+  "$comment": "The board fronts under boards/: byte copies of the boards repository's <board>/svg/front.svg, under its MIT License, at the commit below. Written by tools/sync_from_boards.py --copy; do not edit.",
+  "repository": "https://github.com/kleidos-dev/boards",
+  "commit": "5e1e99527715cdbc9c9ed0ad61d2c5316e536cbe",
+  "license": "MIT",
+  "boards": {
+    "sticks3": {
+      "name": "M5StickS3",
+      "from": "sticks3/svg/front.svg",
+      "sha256": "0c893adb838469d0a5b503130061349feaeeb0d6064d1d62e8a69fa03c2c855f"
+    },
+    "m5stickc-plus2": {
+      "name": "M5StickC Plus2",
+      "from": "m5stickc-plus2/svg/front.svg",
+      "sha256": "170040d38f2c50673eb334000859a443728ca72bcc36b6045c2c99739c0d7c0d"
+    },
+    "m5stickc-plus1": {
+      "name": "M5StickC Plus 1.1",
+      "from": "m5stickc-plus1/svg/front.svg",
+      "sha256": "4ce11832f7ef5bbb27a1433876c2b089653f676599afc89fea0e6ddbfb0e9071"
+    },
+    "m5stickc-plus-se": {
+      "name": "M5StickC Plus SE",
+      "from": "m5stickc-plus-se/svg/front.svg",
+      "sha256": "34ec8bc51f51f1a4e3fcccdf89cab657dc89985ccbecc2037b9989187873db38"
+    },
+    "coreink": {
+      "name": "M5Stack CoreInk",
+      "from": "coreink/svg/front.svg",
+      "sha256": "edce2ac26f6821820b2771396ba0b4286592b30563acf706c839dcff1e6cf292"
+    },
+    "cores3-se": {
+      "name": "M5Stack CoreS3 SE",
+      "from": "cores3-se/svg/front.svg",
+      "sha256": "3ee6a8ee427f20096cbb91bbc27c45206758be2c01bcae98e24b1c5e1f175545"
+    },
+    "m5stack-core2-v13": {
+      "name": "M5Stack Core2 v1.3",
+      "from": "m5stack-core2-v13/svg/front.svg",
+      "sha256": "ac4cbd3e8f91d643dbe987fb9c4ff164a363edd486a1ae95be4bf388ab153fa2"
+    },
+    "cardputer": {
+      "name": "M5Stack Cardputer ADV",
+      "from": "cardputer/svg/front.svg",
+      "sha256": "38b711a307e4ca32a3b07e5955346c43e6e2912d90b5d2770384d47ec15dd127"
+    },
+    "tdeck-plus": {
+      "name": "LILYGO T-Deck Plus",
+      "from": "tdeck-plus/svg/front.svg",
+      "sha256": "068a289dd46121f4dcaa92046ab38bcf75ee735ae514d6a1831f95b636f6286c"
+    }
+  }
+}

@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-12.0 -6.0 78 74" width="78mm" height="74mm" shape-rendering="geometricPrecision" font-family="Inter, Helvetica, Arial, sans-serif">
+<title>M5Stack CoreS3 SE: front mockup (1 SVG unit = 1 mm)</title>
+<defs>
+<filter id="shadow_cores3-se" x="-10%" y="-10%" width="120%" height="120%">
+<feDropShadow dx="0.3" dy="0.6" stdDeviation="0.6" flood-opacity="0.28"/>
+</filter>
+<linearGradient id="case_cores3-se" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="54" y2="54">
+<stop offset="0%" stop-color="#e4e4e6"/>
+<stop offset="100%" stop-color="#cacacd"/>
+</linearGradient>
+<linearGradient id="edge_cores3-se" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="54" y2="54">
+<stop offset="0%" stop-color="#f4f4f6"/>
+<stop offset="100%" stop-color="#b2b2b7"/>
+</linearGradient>
+<linearGradient id="glare_cores3-se" gradientUnits="userSpaceOnUse" x1="1.47" y1="1.47" x2="21.6" y2="20.2">
+<stop offset="0%" stop-color="#ffffff" stop-opacity="0.66"/>
+<stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+</linearGradient>
+<radialGradient id="screen_cores3-se" cx="50%" cy="20%" r="85%">
+<stop offset="0%" stop-color="#1a2336"/>
+<stop offset="100%" stop-color="#05060c"/>
+</radialGradient>
+</defs>
+<rect x="0" y="0" width="54" height="54" rx="5" ry="5" fill="url(#case_cores3-se)" stroke="#98989d" stroke-width="0.2" filter="url(#shadow_cores3-se)"/>
+<rect x="0.2" y="0.2" width="53.6" height="53.6" rx="4.8" ry="4.8" fill="none" stroke="url(#edge_cores3-se)" stroke-width="0.4"/>
+<rect x="1.47" y="1.47" width="51.06" height="51.06" rx="3.53" ry="3.53" fill="#0a0a0c"/>
+<rect x="6.2" y="11.3" width="41.6" height="31.4" rx="0.1" ry="0.1" fill="#000000"/>
+<rect x="1.47" y="1.47" width="51.06" height="51.06" rx="3.53" ry="3.53" fill="url(#glare_cores3-se)"/>
+<rect x="6.6" y="11.7" width="40.8" height="30.6" rx="0" ry="0" fill="url(#screen_cores3-se)"/>
+<rect id="screen-active" x="6.6" y="11.7" width="40.8" height="30.6" fill="none" data-resolution="320x240"/>
+<path d="M 22.12 45.58 L 21.432 46.37 L 22.12 47.16" fill="none" stroke="#b8493e" stroke-width="0.18" stroke-linejoin="miter" stroke-linecap="butt"/>
+<path d="M 31.88 45.58 L 32.568 46.37 L 31.88 47.16" fill="none" stroke="#b8493e" stroke-width="0.18" stroke-linejoin="miter" stroke-linecap="butt"/>
+<path d="M 18.41 45.58 L 17.722 46.37 L 18.41 47.16" fill="none" stroke="#b8493e" stroke-width="0.18" stroke-linejoin="miter" stroke-linecap="butt"/>
+<path d="M 35.59 45.58 L 36.278 46.37 L 35.59 47.16" fill="none" stroke="#b8493e" stroke-width="0.18" stroke-linejoin="miter" stroke-linecap="butt"/>
+<circle cx="27" cy="46.4" r="1.29" fill="none" stroke="#b8493e" stroke-width="0.28"/>
+<circle cx="13.07" cy="47.22" r="0.62" fill="#000000" stroke="#36363a" stroke-width="0.08"/>
+<circle cx="40.93" cy="47.22" r="0.62" fill="#000000" stroke="#36363a" stroke-width="0.08"/>
+<g id="hotspots" display="none">
+<circle id="hs-TouchA" cx="13.4" cy="44.85" r="2.55" data-face="front" data-w="13.6" data-h="5.1"/>
+<circle id="hs-TouchB" cx="27" cy="44.85" r="2.55" data-face="front" data-w="13.6" data-h="5.1"/>
+<circle id="hs-TouchC" cx="40.6" cy="44.85" r="2.55" data-face="front" data-w="13.6" data-h="5.1"/>
+</g>
+<g id="annotations">
+<text x="27" y="-3.0" font-size="1.8" fill="#7d7d80" text-anchor="middle">54 mm</text>
+<text x="-7.5" y="27" font-size="1.8" fill="#7d7d80" text-anchor="middle" transform="rotate(-90 -7.5 27)">54 mm</text>
+<text x="27" y="62.5" font-size="2.6" fill="#2c2c30" text-anchor="middle" font-weight="700">M5Stack CoreS3 SE</text>
+</g>
+</svg>

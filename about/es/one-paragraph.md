@@ -1,0 +1,1 @@
+Kleidos es un firmware libre y gratuito que convierte una de las placas ESP32 pequeñas en las que funciona, de M5Stack y LILYGO, en un gestor de contraseñas por hardware. Tus contraseñas se quedan cifradas en la placa, que escribe por Bluetooth en tu ordenador o tu móvil la que elijas, y solo después de que la hayas desbloqueado en la propia placa.

@@ -1,0 +1,151 @@
+{
+  "$comment": "What may be said about Kleidos, each value one a public page already states or the owner has given for publication (its source then says so). A value that ages carries as_of. The texts under about/ and press-kit/ are held to this file by tools/check.py.",
+  "as_of": "2026-11-17",
+  "name": {
+    "written": "Kleidos",
+    "rule": "A capital K and nothing else in capitals.",
+    "never": ["KLEIDOS", "KleidOS", "Kleidos OS", "kleidos"],
+    "exceptions": "The address kleidos.dev and the names of files and repositories are lower case.",
+    "origin": {
+      "greek": "κλειδός",
+      "en": "From the Ancient Greek κλειδός (kleidós), \"of the key\", the genitive of κλείς (kleís), key: a name meant to be pronounceable in any language and to say what the project is.",
+      "es": "Del griego antiguo κλειδός (kleidós), «de la llave», genitivo de κλείς (kleís), «llave»: un nombre pensado para pronunciarse en cualquier idioma y para decir qué es el proyecto.",
+      "source": "The owner's account, 2026-11-17: a name pronounceable in any language that says what the project is, derived from Greek.",
+      "references": [
+        "https://lsj.gr/wiki/κλείς",
+        "https://en.wiktionary.org/wiki/κλείς",
+        "https://en.wiktionary.org/wiki/κλειδί",
+        "https://en.wiktionary.org/wiki/clavis",
+        "https://en.wiktionary.org/wiki/clavicle"
+      ]
+    },
+    "pronunciation": {
+      "confirmed": true,
+      "source": "The owner, 2026-11-17: two syllables, the stress on the e of the diphthong ei.",
+      "ipa": "/ˈklei̯.dos/",
+      "guide": {"en": "KLAY-dos", "es": "kléi-dos"},
+      "en": "KLAY-dos (/ˈklei̯.dos/): two syllables, the stress on the first. It is the project's own pronunciation; the Ancient Greek genitive, kleidós, stresses the last syllable.",
+      "es": "«kléi-dos» (/ˈklei̯.dos/): dos sílabas, con el acento en la primera. Es la pronunciación propia del proyecto; el genitivo griego, kleidós, lleva el acento en la última.",
+      "$note": "Confirmed, so each name-and-history page and each fact sheet prints the guide of its language and the IPA; while confirmed is false, no text prints either (tools/check.py)."
+    },
+    "former": {
+      "written": "StickPass",
+      "en": "The name the project was going to carry while it was meant only for the M5Stick boards.",
+      "es": "El nombre que iba a llevar el proyecto mientras estaba pensado solo para las placas M5Stick.",
+      "source": "The owner's account, 2026-11-17."
+    }
+  },
+  "history": {
+    "source": "The owner's account, 2026-11-17.",
+    "as_of": "2026-11-17",
+    "$note": "Each event's said phrase is the one every history text writes; tools/check.py holds name-and-history.md and the fact sheet to it.",
+    "events": [
+      {
+        "when": "2022",
+        "said": {"en": "2022", "es": "2022"},
+        "en": "First attempts; the project is started and set aside more than once in the years that follow.",
+        "es": "Primeros intentos; el proyecto se empieza y se aparca más de una vez en los años siguientes."
+      },
+      {
+        "when": "2026-04",
+        "said": {"en": "April 2026", "es": "abril de 2026"},
+        "en": "Development starts.",
+        "es": "Empieza el desarrollo."
+      },
+      {
+        "when": "2026-06/2026-07",
+        "said": {"en": "June and July 2026", "es": "junio y julio de 2026"},
+        "en": "The first working versions.",
+        "es": "Las primeras versiones que funcionan."
+      },
+      {
+        "when": "2026-11-17",
+        "said": {"en": "2026-11-17", "es": "17 de noviembre de 2026"},
+        "en": "Still in development and not released: the firmware has to be solid before it is offered to the community.",
+        "es": "Sigue en desarrollo y sin publicar: el firmware tiene que ser sólido antes de ofrecérselo a la comunidad."
+      }
+    ]
+  },
+  "kind": {
+    "en": "free firmware that turns a small ESP32 board into a hardware password manager",
+    "es": "un firmware libre y gratuito que convierte una placa ESP32 pequeña en un gestor de contraseñas por hardware"
+  },
+  "license": {
+    "spdx": "GPL-3.0-or-later",
+    "name": "GNU General Public License, version 3 or any later version",
+    "source": "private until the repository is opened, a step on the roadmap"
+  },
+  "price": "Nothing to pay the project and no account to open; you buy the board from whoever sells it.",
+  "creator": {
+    "name": "José M. Requena Plens",
+    "name_ascii": "Jose M. Requena Plens",
+    "full_name": "José Manuel Requena Plens",
+    "url": "https://github.com/jmrplens"
+  },
+  "contact": {
+    "email": "mail@kleidos.dev",
+    "openpgp_fingerprint": "94765B19FB505392C68AED600535C714FCEF3BC3"
+  },
+  "links": {
+    "site": "https://kleidos.dev",
+    "site_es": "https://kleidos.dev/es/",
+    "security": "https://kleidos.dev/security/",
+    "roadmap": "https://kleidos.dev/roadmap/",
+    "github": "https://github.com/kleidos-dev",
+    "youtube": "https://www.youtube.com/@kleidos",
+    "makertube": "https://makertube.net/c/kleidos"
+  },
+  "vendors": ["M5Stack", "LILYGO"],
+  "independent": {
+    "en": "Kleidos is an independent project, not affiliated with M5Stack or LILYGO. Product names are their owners' trademarks.",
+    "es": "Kleidos es un proyecto independiente, sin relación con M5Stack ni con LILYGO. Los nombres de producto son marcas de sus propietarios."
+  },
+  "boards": {
+    "ESP32-S3": ["M5StickS3", "M5Stack Cardputer ADV", "LILYGO T-Deck Plus", "M5Stack CoreS3 SE"],
+    "ESP32": ["M5StickC Plus2", "M5StickC Plus 1.1", "M5StickC Plus SE", "M5Stack CoreInk", "M5Stack Core2 v1.3"]
+  },
+  "status": {
+    "en": "In development. Not released: there is nothing to download yet.",
+    "es": "En desarrollo. Sin publicar: todavía no hay nada que descargar.",
+    "as_of": "2026-11-17",
+    "see": "https://kleidos.dev/roadmap/"
+  },
+  "how": {
+    "link": {
+      "en": "A Bluetooth LE keyboard: it sends keystrokes and reads nothing",
+      "es": "Un teclado Bluetooth LE: envía pulsaciones y no lee nada"
+    },
+    "server": {"en": "None", "es": "Ninguno"},
+    "encryption": {
+      "en": "AES-256-CBC + HMAC-SHA256, its key derived from your PIN or passphrase by PBKDF2-SHA256",
+      "es": "AES-256-CBC + HMAC-SHA256, con la clave derivada de tu PIN o tu contraseña de desbloqueo mediante PBKDF2-SHA256"
+    },
+    "capacity": {
+      "en": "90 to 500 credentials and 30 to 50 two-factor (TOTP) codes, depending on the board",
+      "es": "De 90 a 500 credenciales y de 30 a 50 códigos 2FA (TOTP), según la placa",
+      "as_of": "2026-11-17"
+    }
+  },
+  "not": {
+    "en": [
+      "Not released: there is nothing to download or install yet (as of 2026-11-17).",
+      "Not a product you buy: it is firmware for a board you buy from whoever sells it. The project sells nothing.",
+      "Not a FIDO2 or U2F security key: it is a password manager, and it does no FIDO2, U2F, PIV or OpenPGP.",
+      "Not made, sponsored or endorsed by M5Stack or LILYGO.",
+      "Not a keylogger and not a keyboard you type on: it sends keystrokes and reads nothing.",
+      "Not audited by anybody independent."
+    ],
+    "es": [
+      "No está publicado: todavía no hay nada que descargar ni instalar (a 17 de noviembre de 2026).",
+      "No es un producto que se compre: es un firmware para una placa que compras a quien la venda. El proyecto no vende nada.",
+      "No es una llave de seguridad FIDO2 ni U2F: es un gestor de contraseñas, y no hace FIDO2, U2F, PIV ni OpenPGP.",
+      "No lo fabrican, patrocinan ni avalan M5Stack ni LILYGO.",
+      "No registra pulsaciones ni es un teclado en el que escribas: envía pulsaciones y no lee nada.",
+      "No lo ha auditado nadie independiente."
+    ]
+  },
+  "mark": {
+    "registered_trademark": false,
+    "terms": "TRADEMARKS.md"
+  }
+}

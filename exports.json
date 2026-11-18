@@ -1,0 +1,1596 @@
+{
+  "$comment": "Written by tools/build.py: the bytes of each picture and of what it was drawn from. Do not edit; run the builder.",
+  "chromium": "153.0.8010.12",
+  "files": {
+    "logo/png/kleidos-mark-64.png": {
+      "sha256": "784a41aaa2bcff432ae1b13634c9469f308dde397d0670c0f52f5406bf4dfff1",
+      "bytes": 2149,
+      "size": [
+        64,
+        64
+      ],
+      "drawn_from": "242b87f3bf16015b6b9d366fbc05a050b9a20116157c096ed9dc09ad9fcea699",
+      "inputs": {
+        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
+        "tokens/tokens.json": "68e595d90b2dd2cf2b5d50a0b5cb4de7a4a987a5f3e7c3385905c934a39462ed",
+        "fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435"
+      }
+    },
+    "logo/png/kleidos-mark-256.png": {
+      "sha256": "a7dd65680971f9a7960a7420427fdc1f1df8c1be15be22208f5ae4e52afe4300",
+      "bytes": 9794,
+      "size": [
+        256,
+        256
+      ],
+      "drawn_from": "242b87f3bf16015b6b9d366fbc05a050b9a20116157c096ed9dc09ad9fcea699",
+      "inputs": {
+        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
+        "tokens/tokens.json": "68e595d90b2dd2cf2b5d50a0b5cb4de7a4a987a5f3e7c3385905c934a39462ed",
+        "fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435"
+      }
+    },
+    "logo/png/kleidos-mark-1024.png": {
+      "sha256": "23360e271663b2a588dca0d9bd5347e1d91ade8a3b52fcd5429e01b731047063",
+      "bytes": 45103,
+      "size": [
+        1024,
+        1024
+      ],
+      "drawn_from": "242b87f3bf16015b6b9d366fbc05a050b9a20116157c096ed9dc09ad9fcea699",
+      "inputs": {
+        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
+        "tokens/tokens.json": "68e595d90b2dd2cf2b5d50a0b5cb4de7a4a987a5f3e7c3385905c934a39462ed",
+        "fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435"
+      }
+    },
+    "logo/png/kleidos-mark-ink-dark-64.png": {
+      "sha256": "753c0775efbaf94c3ab4ed2ebcd40965650750cb014251f3e6e39e47f54b946b",
+      "bytes": 2214,
+      "size": [
+        64,
+        64
+      ],
+      "drawn_from": "acd229558672ca342f99906e5418ea4581d367e16269cf758b073a9a567a0573",
+      "inputs": {
+        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
+        "tokens/tokens.json": "68e595d90b2dd2cf2b5d50a0b5cb4de7a4a987a5f3e7c3385905c934a39462ed",
+        "fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435"
+      }
+    },
+    "logo/png/kleidos-mark-ink-dark-256.png": {
+      "sha256": "c1dbb2d8512c6e01f39da119f151158f73c5f1b72dc2db71090c26f545067fae",
+      "bytes": 11173,
+      "size": [
+        256,
+        256
+      ],
+      "drawn_from": "acd229558672ca342f99906e5418ea4581d367e16269cf758b073a9a567a0573",
+      "inputs": {
+        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
+        "tokens/tokens.json": "68e595d90b2dd2cf2b5d50a0b5cb4de7a4a987a5f3e7c3385905c934a39462ed",
+        "fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435"
+      }
+    },
+    "logo/png/kleidos-mark-ink-dark-1024.png": {
+      "sha256": "e6175a3b09a58f6abf97d37e449a31f3b3aa277d4de59c88d9838ea189facdf7",
+      "bytes": 51956,
+      "size": [
+        1024,
+        1024
+      ],
+      "drawn_from": "acd229558672ca342f99906e5418ea4581d367e16269cf758b073a9a567a0573",
+      "inputs": {
+        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
+        "tokens/tokens.json": "68e595d90b2dd2cf2b5d50a0b5cb4de7a4a987a5f3e7c3385905c934a39462ed",
+        "fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435"
+      }
+    },
+    "logo/png/kleidos-mark-ink-light-64.png": {
+      "sha256": "95dd149b5e9f87696fafc546ebeb93ae44a6500defd69a6182ab97c826740f88",
+      "bytes": 2310,
+      "size": [
+        64,
+        64
+      ],
+      "drawn_from": "b99ac53b26cb4db4a04dec63c97231179ac53b3f5842bf4a386dd490c01371bb",
+      "inputs": {
+        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
+        "tokens/tokens.json": "68e595d90b2dd2cf2b5d50a0b5cb4de7a4a987a5f3e7c3385905c934a39462ed",
+        "fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435"
+      }
+    },
+    "logo/png/kleidos-mark-ink-light-256.png": {
+      "sha256": "d7488c636cd5eb77fcf9bb3764a4be57e1fb36a878b1ebc3f50646b18472dcb5",
+      "bytes": 11023,
+      "size": [
+        256,
+        256
+      ],
+      "drawn_from": "b99ac53b26cb4db4a04dec63c97231179ac53b3f5842bf4a386dd490c01371bb",
+      "inputs": {
+        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
+        "tokens/tokens.json": "68e595d90b2dd2cf2b5d50a0b5cb4de7a4a987a5f3e7c3385905c934a39462ed",
+        "fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435"
+      }
+    },
+    "logo/png/kleidos-mark-ink-light-1024.png": {
+      "sha256": "a015cba37ab4ec54b0134ef5576237d4eb5c664893915330abafbafc84be7073",
+      "bytes": 51508,
+      "size": [
+        1024,
+        1024
+      ],
+      "drawn_from": "b99ac53b26cb4db4a04dec63c97231179ac53b3f5842bf4a386dd490c01371bb",
+      "inputs": {
+        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
+        "tokens/tokens.json": "68e595d90b2dd2cf2b5d50a0b5cb4de7a4a987a5f3e7c3385905c934a39462ed",
+        "fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435"
+      }
+    },
+    "logo/png/kleidos-mark-on-dark-64.png": {
+      "sha256": "729c8a472d1b41149986dc6cf8acf8737d04f44bfcf29ebd211c29ca5f9e9a02",
+      "bytes": 1049,
+      "size": [
+        64,
+        64
+      ],
+      "drawn_from": "4a74030866a7bbd42c94d6d6f0c145dcf4fe8465a8e1ac5ba45d28991ec14126",
+      "inputs": {
+        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
+        "tokens/tokens.json": "68e595d90b2dd2cf2b5d50a0b5cb4de7a4a987a5f3e7c3385905c934a39462ed",
+        "fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435"
+      }
+    },
+    "logo/png/kleidos-mark-on-dark-256.png": {
+      "sha256": "d5563753f09d761a4b6e27ba1c292cf1b0c24f0ab3bdd6c40fac3a5931f9ff6d",
+      "bytes": 6057,
+      "size": [
+        256,
+        256
+      ],
+      "drawn_from": "4a74030866a7bbd42c94d6d6f0c145dcf4fe8465a8e1ac5ba45d28991ec14126",
+      "inputs": {
+        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
+        "tokens/tokens.json": "68e595d90b2dd2cf2b5d50a0b5cb4de7a4a987a5f3e7c3385905c934a39462ed",
+        "fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435"
+      }
+    },
+    "logo/png/kleidos-mark-on-dark-1024.png": {
+      "sha256": "886deddcc07caac65cf79a50a34ea9053799b6ed49e4a326b6c64f5ff66ef9eb",
+      "bytes": 28247,
+      "size": [
+        1024,
+        1024
+      ],
+      "drawn_from": "4a74030866a7bbd42c94d6d6f0c145dcf4fe8465a8e1ac5ba45d28991ec14126",
+      "inputs": {
+        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
+        "tokens/tokens.json": "68e595d90b2dd2cf2b5d50a0b5cb4de7a4a987a5f3e7c3385905c934a39462ed",
+        "fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435"
+      }
+    },
+    "logo/png/kleidos-mark-on-light-64.png": {
+      "sha256": "e3a175ec584602a7f067dd8d0fb8ab763f686fda6292409503d946acd684b358",
+      "bytes": 996,
+      "size": [
+        64,
+        64
+      ],
+      "drawn_from": "f29c02c678865308ad3b06ed216e3d519a4f0ee75d819f64f26905832817ff6f",
+      "inputs": {
+        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
+        "tokens/tokens.json": "68e595d90b2dd2cf2b5d50a0b5cb4de7a4a987a5f3e7c3385905c934a39462ed",
+        "fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435"
+      }
+    },
+    "logo/png/kleidos-mark-on-light-256.png": {
+      "sha256": "d7cde82220fffaea29510eb63f0de8b78bac5dd9d3a76b0b19fefc3d5121109e",
+      "bytes": 5176,
+      "size": [
+        256,
+        256
+      ],
+      "drawn_from": "f29c02c678865308ad3b06ed216e3d519a4f0ee75d819f64f26905832817ff6f",
+      "inputs": {
+        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
+        "tokens/tokens.json": "68e595d90b2dd2cf2b5d50a0b5cb4de7a4a987a5f3e7c3385905c934a39462ed",
+        "fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435"
+      }
+    },
+    "logo/png/kleidos-mark-on-light-1024.png": {
+      "sha256": "09b133beaa8dd6c430913762b9c46bd5f706c1922f32ffe5be8ac277b889ec97",
+      "bytes": 23848,
+      "size": [
+        1024,
+        1024
+      ],
+      "drawn_from": "f29c02c678865308ad3b06ed216e3d519a4f0ee75d819f64f26905832817ff6f",
+      "inputs": {
+        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
+        "tokens/tokens.json": "68e595d90b2dd2cf2b5d50a0b5cb4de7a4a987a5f3e7c3385905c934a39462ed",
+        "fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435"
+      }
+    },
+    "logo/png/kleidos-lockup-horizontal-for-dark-128.png": {
+      "sha256": "7e5391e29b34bcc43f3416d00f899bd3723516a3d8c1fc65d54c920173ea29dc",
+      "bytes": 13608,
+      "size": [
+        506,
+        128
+      ],
+      "drawn_from": "278ec5bd520427fd499c6ad2840bda6120c928e5b385904264e353acf14a1634",
+      "inputs": {
+        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
+        "tokens/tokens.json": "68e595d90b2dd2cf2b5d50a0b5cb4de7a4a987a5f3e7c3385905c934a39462ed",
+        "fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435"
+      }
+    },
+    "logo/png/kleidos-lockup-horizontal-for-dark-512.png": {
+      "sha256": "987ac0b2910e7a90b25a76e06594961972b893dbf8f3cd1509e50e8eaedeb164",
+      "bytes": 62601,
+      "size": [
+        2023,
+        512
+      ],
+      "drawn_from": "278ec5bd520427fd499c6ad2840bda6120c928e5b385904264e353acf14a1634",
+      "inputs": {
+        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
+        "tokens/tokens.json": "68e595d90b2dd2cf2b5d50a0b5cb4de7a4a987a5f3e7c3385905c934a39462ed",
+        "fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435"
+      }
+    },
+    "logo/png/kleidos-lockup-horizontal-for-light-128.png": {
+      "sha256": "3a1a00f18f23490bdaf320bcef1197d5d0353c6afeabbd5977bc15d8d4b0d950",
+      "bytes": 13618,
+      "size": [
+        506,
+        128
+      ],
+      "drawn_from": "30abdf52a320115814581a73d00631d49ee58b6c5645963bda3a0b839c0a5457",
+      "inputs": {
+        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
+        "tokens/tokens.json": "68e595d90b2dd2cf2b5d50a0b5cb4de7a4a987a5f3e7c3385905c934a39462ed",
+        "fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435"
+      }
+    },
+    "logo/png/kleidos-lockup-horizontal-for-light-512.png": {
+      "sha256": "a40363c2f2261ad256f297ac28bfc3d035ce722d5c7d2ca2be241ac305b259aa",
+      "bytes": 62403,
+      "size": [
+        2023,
+        512
+      ],
+      "drawn_from": "30abdf52a320115814581a73d00631d49ee58b6c5645963bda3a0b839c0a5457",
+      "inputs": {
+        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
+        "tokens/tokens.json": "68e595d90b2dd2cf2b5d50a0b5cb4de7a4a987a5f3e7c3385905c934a39462ed",
+        "fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435"
+      }
+    },
+    "logo/png/kleidos-lockup-horizontal-ink-dark-128.png": {
+      "sha256": "2e9d2182d4c0d595bae527867fb30f4db379d4210d90a94c2112aaa5ab0fad9b",
+      "bytes": 13998,
+      "size": [
+        506,
+        128
+      ],
+      "drawn_from": "4bde53e4024589ff6b1c118a9b9e627873a9e928c68ffec788442a8d51d07921",
+      "inputs": {
+        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
+        "tokens/tokens.json": "68e595d90b2dd2cf2b5d50a0b5cb4de7a4a987a5f3e7c3385905c934a39462ed",
+        "fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435"
+      }
+    },
+    "logo/png/kleidos-lockup-horizontal-ink-dark-512.png": {
+      "sha256": "b0aa47409f81e39b1d59f96ea426e22bdcc514abd9dc85f546d293ec0a68d4f9",
+      "bytes": 64298,
+      "size": [
+        2023,
+        512
+      ],
+      "drawn_from": "4bde53e4024589ff6b1c118a9b9e627873a9e928c68ffec788442a8d51d07921",
+      "inputs": {
+        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
+        "tokens/tokens.json": "68e595d90b2dd2cf2b5d50a0b5cb4de7a4a987a5f3e7c3385905c934a39462ed",
+        "fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435"
+      }
+    },
+    "logo/png/kleidos-lockup-horizontal-ink-light-128.png": {
+      "sha256": "af8f08ce536f713b3d119fa0219f26aae3ba675ea0024c886db16ab341114136",
+      "bytes": 13926,
+      "size": [
+        506,
+        128
+      ],
+      "drawn_from": "a74a50c7cfde48365558b2d4269eb4d3032967470665d597b633c9d9f2b7331f",
+      "inputs": {
+        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
+        "tokens/tokens.json": "68e595d90b2dd2cf2b5d50a0b5cb4de7a4a987a5f3e7c3385905c934a39462ed",
+        "fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435"
+      }
+    },
+    "logo/png/kleidos-lockup-horizontal-ink-light-512.png": {
+      "sha256": "8119b369071d027ff1c9b4229701b2561ff2a8c0359a03ef7c078978ad735958",
+      "bytes": 64596,
+      "size": [
+        2023,
+        512
+      ],
+      "drawn_from": "a74a50c7cfde48365558b2d4269eb4d3032967470665d597b633c9d9f2b7331f",
+      "inputs": {
+        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
+        "tokens/tokens.json": "68e595d90b2dd2cf2b5d50a0b5cb4de7a4a987a5f3e7c3385905c934a39462ed",
+        "fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435"
+      }
+    },
+    "logo/png/kleidos-lockup-horizontal-on-dark-128.png": {
+      "sha256": "4038f838766060e1f5743010d3d83206506ae7384e75f786cf72dc1db97c263a",
+      "bytes": 7232,
+      "size": [
+        317,
+        128
+      ],
+      "drawn_from": "930078e08725158bc85ad4366e4da74975cc9ab251908035dde3d1a3ab34085c",
+      "inputs": {
+        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
+        "tokens/tokens.json": "68e595d90b2dd2cf2b5d50a0b5cb4de7a4a987a5f3e7c3385905c934a39462ed",
+        "fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435"
+      }
+    },
+    "logo/png/kleidos-lockup-horizontal-on-dark-512.png": {
+      "sha256": "c46c6e9938b491f9997f73baedaf41ab09d9b83dc9edbb56b24aa872dc111f38",
+      "bytes": 32530,
+      "size": [
+        1268,
+        512
+      ],
+      "drawn_from": "930078e08725158bc85ad4366e4da74975cc9ab251908035dde3d1a3ab34085c",
+      "inputs": {
+        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
+        "tokens/tokens.json": "68e595d90b2dd2cf2b5d50a0b5cb4de7a4a987a5f3e7c3385905c934a39462ed",
+        "fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435"
+      }
+    },
+    "logo/png/kleidos-lockup-horizontal-on-light-128.png": {
+      "sha256": "9e3e73967887db4c527151006bd6b51a0502b90caf0dbe7bf6a6b07683e7e2b5",
+      "bytes": 6797,
+      "size": [
+        317,
+        128
+      ],
+      "drawn_from": "7455eb2bc4d60867048a3e7edcc4e23250b63f64e4338444eb12d8192d321988",
+      "inputs": {
+        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
+        "tokens/tokens.json": "68e595d90b2dd2cf2b5d50a0b5cb4de7a4a987a5f3e7c3385905c934a39462ed",
+        "fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435"
+      }
+    },
+    "logo/png/kleidos-lockup-horizontal-on-light-512.png": {
+      "sha256": "5f82e1b348a7e9f657a25f898764be1436dcc76671b8f47a42e666c03de30744",
+      "bytes": 30302,
+      "size": [
+        1268,
+        512
+      ],
+      "drawn_from": "7455eb2bc4d60867048a3e7edcc4e23250b63f64e4338444eb12d8192d321988",
+      "inputs": {
+        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
+        "tokens/tokens.json": "68e595d90b2dd2cf2b5d50a0b5cb4de7a4a987a5f3e7c3385905c934a39462ed",
+        "fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435"
+      }
+    },
+    "logo/png/kleidos-lockup-stacked-for-dark-512.png": {
+      "sha256": "cf04797a62315f813ba06601f0800bde164596c6b0f8be3e88630b1f5a1f8e6c",
+      "bytes": 26557,
+      "size": [
+        508,
+        512
+      ],
+      "drawn_from": "474644044392bb3d47e46b40aced35b0d2b062d3379f4f9f9dcbd2193404245d",
+      "inputs": {
+        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
+        "tokens/tokens.json": "68e595d90b2dd2cf2b5d50a0b5cb4de7a4a987a5f3e7c3385905c934a39462ed",
+        "fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435"
+      }
+    },
+    "logo/png/kleidos-lockup-stacked-for-dark-1024.png": {
+      "sha256": "8a157410f8fdfbd0d3f174fc4b1333700f153233642c894606f0879fd8334d1e",
+      "bytes": 57065,
+      "size": [
+        1017,
+        1024
+      ],
+      "drawn_from": "474644044392bb3d47e46b40aced35b0d2b062d3379f4f9f9dcbd2193404245d",
+      "inputs": {
+        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
+        "tokens/tokens.json": "68e595d90b2dd2cf2b5d50a0b5cb4de7a4a987a5f3e7c3385905c934a39462ed",
+        "fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435"
+      }
+    },
+    "logo/png/kleidos-lockup-stacked-for-light-512.png": {
+      "sha256": "6cc4b57e0a884a770f6abfb5e0f8c0a7d241a0fbbfccd7846ecf157333ceb1f8",
+      "bytes": 26520,
+      "size": [
+        508,
+        512
+      ],
+      "drawn_from": "3a8334f3859af5312eb3af91e3c5961bbf9adc2fe92639aaf31b27753edfccce",
+      "inputs": {
+        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
+        "tokens/tokens.json": "68e595d90b2dd2cf2b5d50a0b5cb4de7a4a987a5f3e7c3385905c934a39462ed",
+        "fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435"
+      }
+    },
+    "logo/png/kleidos-lockup-stacked-for-light-1024.png": {
+      "sha256": "25b1164b0209a1542c0a2836eb53ad6efcccdd67fafff53b8d90972f64366e9a",
+      "bytes": 56942,
+      "size": [
+        1017,
+        1024
+      ],
+      "drawn_from": "3a8334f3859af5312eb3af91e3c5961bbf9adc2fe92639aaf31b27753edfccce",
+      "inputs": {
+        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
+        "tokens/tokens.json": "68e595d90b2dd2cf2b5d50a0b5cb4de7a4a987a5f3e7c3385905c934a39462ed",
+        "fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435"
+      }
+    },
+    "logo/png/kleidos-lockup-stacked-ink-dark-512.png": {
+      "sha256": "3d49da5863b52ef8ea96207bb87240f7fe18e8a2d27a487b601cbc8bcb1146e2",
+      "bytes": 28422,
+      "size": [
+        508,
+        512
+      ],
+      "drawn_from": "26b2e764365cd84e774ac86fe10f563ad5e63e1185daac4b201266c9ea7f0376",
+      "inputs": {
+        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
+        "tokens/tokens.json": "68e595d90b2dd2cf2b5d50a0b5cb4de7a4a987a5f3e7c3385905c934a39462ed",
+        "fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435"
+      }
+    },
+    "logo/png/kleidos-lockup-stacked-ink-dark-1024.png": {
+      "sha256": "fbf2f4a84c081078aaf88a63f6c5be7bcba27b68abbdd0cdfb874b244465b2ed",
+      "bytes": 61483,
+      "size": [
+        1017,
+        1024
+      ],
+      "drawn_from": "26b2e764365cd84e774ac86fe10f563ad5e63e1185daac4b201266c9ea7f0376",
+      "inputs": {
+        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
+        "tokens/tokens.json": "68e595d90b2dd2cf2b5d50a0b5cb4de7a4a987a5f3e7c3385905c934a39462ed",
+        "fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435"
+      }
+    },
+    "logo/png/kleidos-lockup-stacked-ink-light-512.png": {
+      "sha256": "47b2fd87161c14a56beaa31b5fe5a0cdf7f7929fe06db7d64239dd86c9897fb4",
+      "bytes": 28177,
+      "size": [
+        508,
+        512
+      ],
+      "drawn_from": "e145ef5d1cb5f3cb8a8ff4a609290be0f604188496f73e62bda75032776d58d3",
+      "inputs": {
+        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
+        "tokens/tokens.json": "68e595d90b2dd2cf2b5d50a0b5cb4de7a4a987a5f3e7c3385905c934a39462ed",
+        "fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435"
+      }
+    },
+    "logo/png/kleidos-lockup-stacked-ink-light-1024.png": {
+      "sha256": "fc0b29bd2a7441c6194654c858e6c5b6b5e44b9733fe5d6cc08b9c54e80c40e3",
+      "bytes": 61203,
+      "size": [
+        1017,
+        1024
+      ],
+      "drawn_from": "e145ef5d1cb5f3cb8a8ff4a609290be0f604188496f73e62bda75032776d58d3",
+      "inputs": {
+        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
+        "tokens/tokens.json": "68e595d90b2dd2cf2b5d50a0b5cb4de7a4a987a5f3e7c3385905c934a39462ed",
+        "fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435"
+      }
+    },
+    "logo/png/kleidos-lockup-stacked-on-dark-512.png": {
+      "sha256": "86c4d8c50ff6d9c4df0c2efd2586d1cc0edf8e9e14dd2e77b7b8f703e6355d0c",
+      "bytes": 18093,
+      "size": [
+        510,
+        512
+      ],
+      "drawn_from": "754b9262b7a3b36eee8d7ed859f0129327417ec7d3d34f84c35061b113d324e6",
+      "inputs": {
+        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
+        "tokens/tokens.json": "68e595d90b2dd2cf2b5d50a0b5cb4de7a4a987a5f3e7c3385905c934a39462ed",
+        "fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435"
+      }
+    },
+    "logo/png/kleidos-lockup-stacked-on-dark-1024.png": {
+      "sha256": "80c90189de9e4337dcfc05a502e3b927001b3261b8d825c254df38af64072950",
+      "bytes": 38426,
+      "size": [
+        1020,
+        1024
+      ],
+      "drawn_from": "754b9262b7a3b36eee8d7ed859f0129327417ec7d3d34f84c35061b113d324e6",
+      "inputs": {
+        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
+        "tokens/tokens.json": "68e595d90b2dd2cf2b5d50a0b5cb4de7a4a987a5f3e7c3385905c934a39462ed",
+        "fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435"
+      }
+    },
+    "logo/png/kleidos-lockup-stacked-on-light-512.png": {
+      "sha256": "33b356f90cf5d1314e5b14e3755cc7dda7f477dad4154ee748167e196d37fa7b",
+      "bytes": 16411,
+      "size": [
+        510,
+        512
+      ],
+      "drawn_from": "67c14c3e5694b4e638f8e820e133cc6f26a2d8181a5e3483779eec2caae65363",
+      "inputs": {
+        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
+        "tokens/tokens.json": "68e595d90b2dd2cf2b5d50a0b5cb4de7a4a987a5f3e7c3385905c934a39462ed",
+        "fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435"
+      }
+    },
+    "logo/png/kleidos-lockup-stacked-on-light-1024.png": {
+      "sha256": "ffee324b56f5be6a9fdc5c6e5fc813511c8260d92b0e2cee7dcac3c39fd45501",
+      "bytes": 35016,
+      "size": [
+        1020,
+        1024
+      ],
+      "drawn_from": "67c14c3e5694b4e638f8e820e133cc6f26a2d8181a5e3483779eec2caae65363",
+      "inputs": {
+        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
+        "tokens/tokens.json": "68e595d90b2dd2cf2b5d50a0b5cb4de7a4a987a5f3e7c3385905c934a39462ed",
+        "fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435"
+      }
+    },
+    "logo/png/kleidos-lettering-for-dark-64.png": {
+      "sha256": "b546231b6ceb0026f3e5f97046b2db0fcb53ed9b4491b0f999f7f2721aa5cb86",
+      "bytes": 7131,
+      "size": [
+        295,
+        64
+      ],
+      "drawn_from": "950b9f7a43eaffdca3b7b3e376a16169e00418943264883444c3d36dded345e4",
+      "inputs": {
+        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
+        "tokens/tokens.json": "68e595d90b2dd2cf2b5d50a0b5cb4de7a4a987a5f3e7c3385905c934a39462ed",
+        "fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435"
+      }
+    },
+    "logo/png/kleidos-lettering-for-dark-256.png": {
+      "sha256": "ae09d038821d43bdb018912715acb3af847dc713ffe208a2551a2a38aebe2103",
+      "bytes": 31802,
+      "size": [
+        1178,
+        256
+      ],
+      "drawn_from": "950b9f7a43eaffdca3b7b3e376a16169e00418943264883444c3d36dded345e4",
+      "inputs": {
+        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
+        "tokens/tokens.json": "68e595d90b2dd2cf2b5d50a0b5cb4de7a4a987a5f3e7c3385905c934a39462ed",
+        "fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435"
+      }
+    },
+    "logo/png/kleidos-lettering-for-light-64.png": {
+      "sha256": "164a35acdca04b1ab7bf9bba1ed71f55b4cacbb7421c299cf318f91989d3c023",
+      "bytes": 7160,
+      "size": [
+        295,
+        64
+      ],
+      "drawn_from": "43544670e8774b9de820454d848d9c755c528177be224bcf1e0bc7a2f92ad93b",
+      "inputs": {
+        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
+        "tokens/tokens.json": "68e595d90b2dd2cf2b5d50a0b5cb4de7a4a987a5f3e7c3385905c934a39462ed",
+        "fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435"
+      }
+    },
+    "logo/png/kleidos-lettering-for-light-256.png": {
+      "sha256": "f60c6e249a51fe13a02e0f6679712531e2d6659c2c54e24249d9c7b6bc658f35",
+      "bytes": 31651,
+      "size": [
+        1178,
+        256
+      ],
+      "drawn_from": "43544670e8774b9de820454d848d9c755c528177be224bcf1e0bc7a2f92ad93b",
+      "inputs": {
+        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
+        "tokens/tokens.json": "68e595d90b2dd2cf2b5d50a0b5cb4de7a4a987a5f3e7c3385905c934a39462ed",
+        "fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435"
+      }
+    },
+    "colors/palette.png": {
+      "sha256": "430c381bcfbaf804188a03760eb4476782212b7494f2b4e98c5c11eb0411aba8",
+      "bytes": 199212,
+      "size": [
+        2444,
+        2222
+      ],
+      "drawn_from": "adba7a0d0d1cff549fd98c03eb8b9a66f2bb40b2cefe33b16795ed11578fb895",
+      "inputs": {
+        "tokens/tokens.json": "68e595d90b2dd2cf2b5d50a0b5cb4de7a4a987a5f3e7c3385905c934a39462ed",
+        "fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435",
+        "fonts/mona-sans/MonaSansMonoVF[wght].ttf": "e1d0ba93b9abf682de1bd67d20b58d312fab5d0cbe8fe012e2b1ab7687b42219"
+      }
+    },
+    "press-kit/images/kleidos-16x9.png": {
+      "sha256": "2a9a3122f9b6b5aeafd50de1c1d1b8d5cc8a66f40c0e983e632d9de6896d524a",
+      "bytes": 191699,
+      "size": [
+        3840,
+        2160
+      ],
+      "drawn_from": "547ddbced212bbe7c2c9b15f9fc1276a4087c2cdc48bb71981aa34a4b270f3c6",
+      "inputs": {
+        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
+        "tokens/tokens.json": "68e595d90b2dd2cf2b5d50a0b5cb4de7a4a987a5f3e7c3385905c934a39462ed",
+        "fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435",
+        "fonts/mona-sans/MonaSansMonoVF[wght].ttf": "e1d0ba93b9abf682de1bd67d20b58d312fab5d0cbe8fe012e2b1ab7687b42219",
+        "press-kit/src/press.json": "8b266a23f3999b4d4b8655d32eb250acc7bf3b5b8da1a0b5c9b198acce1dfa90",
+        "press-kit/src/hero-16x9.svg": "999a790714aeeab691314f929d5e453a237fcb53edce1a36e5f1b8a66c48c9c5"
+      }
+    },
+    "press-kit/images/kleidos-16x9-1920.png": {
+      "sha256": "61ab60e28385b7d978f1a54e842c0866c58a8af50fcae4d3349fab6ded24c06b",
+      "bytes": 87278,
+      "size": [
+        1920,
+        1080
+      ],
+      "drawn_from": "547ddbced212bbe7c2c9b15f9fc1276a4087c2cdc48bb71981aa34a4b270f3c6",
+      "inputs": {
+        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
+        "tokens/tokens.json": "68e595d90b2dd2cf2b5d50a0b5cb4de7a4a987a5f3e7c3385905c934a39462ed",
+        "fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435",
+        "fonts/mona-sans/MonaSansMonoVF[wght].ttf": "e1d0ba93b9abf682de1bd67d20b58d312fab5d0cbe8fe012e2b1ab7687b42219",
+        "press-kit/src/press.json": "8b266a23f3999b4d4b8655d32eb250acc7bf3b5b8da1a0b5c9b198acce1dfa90",
+        "press-kit/src/hero-16x9.svg": "999a790714aeeab691314f929d5e453a237fcb53edce1a36e5f1b8a66c48c9c5"
+      }
+    },
+    "press-kit/images/kleidos-16x9-es.png": {
+      "sha256": "23b055d02023dd722467596b46049d7609beab35789576ea75cbc734ab3dfaa3",
+      "bytes": 185310,
+      "size": [
+        3840,
+        2160
+      ],
+      "drawn_from": "ff32ce2f7424976f4af1408d8f676a8b86ae8457e8fc3dca4aaac8c467098892",
+      "inputs": {
+        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
+        "tokens/tokens.json": "68e595d90b2dd2cf2b5d50a0b5cb4de7a4a987a5f3e7c3385905c934a39462ed",
+        "fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435",
+        "fonts/mona-sans/MonaSansMonoVF[wght].ttf": "e1d0ba93b9abf682de1bd67d20b58d312fab5d0cbe8fe012e2b1ab7687b42219",
+        "press-kit/src/press.json": "8b266a23f3999b4d4b8655d32eb250acc7bf3b5b8da1a0b5c9b198acce1dfa90",
+        "press-kit/src/hero-16x9.svg": "999a790714aeeab691314f929d5e453a237fcb53edce1a36e5f1b8a66c48c9c5"
+      }
+    },
+    "press-kit/images/kleidos-16x9-es-1920.png": {
+      "sha256": "505933805cb249f814f5dee47f6f05204971c45d9280da980306b7e8e0087a54",
+      "bytes": 85631,
+      "size": [
+        1920,
+        1080
+      ],
+      "drawn_from": "ff32ce2f7424976f4af1408d8f676a8b86ae8457e8fc3dca4aaac8c467098892",
+      "inputs": {
+        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
+        "tokens/tokens.json": "68e595d90b2dd2cf2b5d50a0b5cb4de7a4a987a5f3e7c3385905c934a39462ed",
+        "fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435",
+        "fonts/mona-sans/MonaSansMonoVF[wght].ttf": "e1d0ba93b9abf682de1bd67d20b58d312fab5d0cbe8fe012e2b1ab7687b42219",
+        "press-kit/src/press.json": "8b266a23f3999b4d4b8655d32eb250acc7bf3b5b8da1a0b5c9b198acce1dfa90",
+        "press-kit/src/hero-16x9.svg": "999a790714aeeab691314f929d5e453a237fcb53edce1a36e5f1b8a66c48c9c5"
+      }
+    },
+    "press-kit/images/kleidos-16x9-light.png": {
+      "sha256": "58d01dbf2c3b18b59510a0255ba8df9fb14ea0ee70aee43b790fb2efa76ee325",
+      "bytes": 188474,
+      "size": [
+        3840,
+        2160
+      ],
+      "drawn_from": "8d030ed58cd47305f348a14875e6e81efb967b74e6195c4d6e0d3fd4ddc633d0",
+      "inputs": {
+        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
+        "tokens/tokens.json": "68e595d90b2dd2cf2b5d50a0b5cb4de7a4a987a5f3e7c3385905c934a39462ed",
+        "fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435",
+        "fonts/mona-sans/MonaSansMonoVF[wght].ttf": "e1d0ba93b9abf682de1bd67d20b58d312fab5d0cbe8fe012e2b1ab7687b42219",
+        "press-kit/src/press.json": "8b266a23f3999b4d4b8655d32eb250acc7bf3b5b8da1a0b5c9b198acce1dfa90",
+        "press-kit/src/hero-16x9.svg": "999a790714aeeab691314f929d5e453a237fcb53edce1a36e5f1b8a66c48c9c5"
+      }
+    },
+    "press-kit/images/kleidos-16x9-light-1920.png": {
+      "sha256": "e85f2486b97879e14f363f6947f42ad04dd817c7d4d18be7b516c97e69eceacb",
+      "bytes": 85748,
+      "size": [
+        1920,
+        1080
+      ],
+      "drawn_from": "8d030ed58cd47305f348a14875e6e81efb967b74e6195c4d6e0d3fd4ddc633d0",
+      "inputs": {
+        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
+        "tokens/tokens.json": "68e595d90b2dd2cf2b5d50a0b5cb4de7a4a987a5f3e7c3385905c934a39462ed",
+        "fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435",
+        "fonts/mona-sans/MonaSansMonoVF[wght].ttf": "e1d0ba93b9abf682de1bd67d20b58d312fab5d0cbe8fe012e2b1ab7687b42219",
+        "press-kit/src/press.json": "8b266a23f3999b4d4b8655d32eb250acc7bf3b5b8da1a0b5c9b198acce1dfa90",
+        "press-kit/src/hero-16x9.svg": "999a790714aeeab691314f929d5e453a237fcb53edce1a36e5f1b8a66c48c9c5"
+      }
+    },
+    "press-kit/images/kleidos-16x9-light-es.png": {
+      "sha256": "0664dc25290dcb93a1219c71b719a8ab8b60a4453795fc123135d6498b7a58ba",
+      "bytes": 182062,
+      "size": [
+        3840,
+        2160
+      ],
+      "drawn_from": "f8729347e44ccbe833814a9af4e7e0173b807ff85e9627b8dcdf1f2b9bd5d37c",
+      "inputs": {
+        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
+        "tokens/tokens.json": "68e595d90b2dd2cf2b5d50a0b5cb4de7a4a987a5f3e7c3385905c934a39462ed",
+        "fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435",
+        "fonts/mona-sans/MonaSansMonoVF[wght].ttf": "e1d0ba93b9abf682de1bd67d20b58d312fab5d0cbe8fe012e2b1ab7687b42219",
+        "press-kit/src/press.json": "8b266a23f3999b4d4b8655d32eb250acc7bf3b5b8da1a0b5c9b198acce1dfa90",
+        "press-kit/src/hero-16x9.svg": "999a790714aeeab691314f929d5e453a237fcb53edce1a36e5f1b8a66c48c9c5"
+      }
+    },
+    "press-kit/images/kleidos-16x9-light-es-1920.png": {
+      "sha256": "750f8dc7728ad2c7b7adff7aa30a1cf7c67afce3a85f7359be14102b7a976cf2",
+      "bytes": 84022,
+      "size": [
+        1920,
+        1080
+      ],
+      "drawn_from": "f8729347e44ccbe833814a9af4e7e0173b807ff85e9627b8dcdf1f2b9bd5d37c",
+      "inputs": {
+        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
+        "tokens/tokens.json": "68e595d90b2dd2cf2b5d50a0b5cb4de7a4a987a5f3e7c3385905c934a39462ed",
+        "fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435",
+        "fonts/mona-sans/MonaSansMonoVF[wght].ttf": "e1d0ba93b9abf682de1bd67d20b58d312fab5d0cbe8fe012e2b1ab7687b42219",
+        "press-kit/src/press.json": "8b266a23f3999b4d4b8655d32eb250acc7bf3b5b8da1a0b5c9b198acce1dfa90",
+        "press-kit/src/hero-16x9.svg": "999a790714aeeab691314f929d5e453a237fcb53edce1a36e5f1b8a66c48c9c5"
+      }
+    },
+    "press-kit/images/kleidos-1x1.png": {
+      "sha256": "bdfa8c60737eaa25d95f08065fc813cf3c63d42a444ccbbffb0acba5fcc20983",
+      "bytes": 155406,
+      "size": [
+        2160,
+        2160
+      ],
+      "drawn_from": "59de48b984fd3674e641559110cec5dbb501eed5fd185033b3c5647f055d4ea9",
+      "inputs": {
+        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
+        "tokens/tokens.json": "68e595d90b2dd2cf2b5d50a0b5cb4de7a4a987a5f3e7c3385905c934a39462ed",
+        "fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435",
+        "fonts/mona-sans/MonaSansMonoVF[wght].ttf": "e1d0ba93b9abf682de1bd67d20b58d312fab5d0cbe8fe012e2b1ab7687b42219",
+        "press-kit/src/press.json": "8b266a23f3999b4d4b8655d32eb250acc7bf3b5b8da1a0b5c9b198acce1dfa90",
+        "press-kit/src/hero-1x1.svg": "4c1c736b19d4ba29066d1e97f9971d08ca8e6472541135880552d50d51ef8b56"
+      }
+    },
+    "press-kit/images/kleidos-1x1-es.png": {
+      "sha256": "7cf6e8b0136cc354eda110efdd6ea6f436f7db77af04658d905c09cd246c31d2",
+      "bytes": 151930,
+      "size": [
+        2160,
+        2160
+      ],
+      "drawn_from": "bfe24d73c2c074a37163cd60fcd34fe9b74a55096f54a7422bf2666e56da8d03",
+      "inputs": {
+        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
+        "tokens/tokens.json": "68e595d90b2dd2cf2b5d50a0b5cb4de7a4a987a5f3e7c3385905c934a39462ed",
+        "fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435",
+        "fonts/mona-sans/MonaSansMonoVF[wght].ttf": "e1d0ba93b9abf682de1bd67d20b58d312fab5d0cbe8fe012e2b1ab7687b42219",
+        "press-kit/src/press.json": "8b266a23f3999b4d4b8655d32eb250acc7bf3b5b8da1a0b5c9b198acce1dfa90",
+        "press-kit/src/hero-1x1.svg": "4c1c736b19d4ba29066d1e97f9971d08ca8e6472541135880552d50d51ef8b56"
+      }
+    },
+    "press-kit/images/kleidos-1x1-light.png": {
+      "sha256": "9c6f7aac25890bf3435d5426d9b7b60b70ffe3aaff03695a3ca16fcd6470dc2c",
+      "bytes": 150825,
+      "size": [
+        2160,
+        2160
+      ],
+      "drawn_from": "a8d8528b7b759abbc4213729b38b5e14d9b55719aae4f4e40bef0031d21bf6f8",
+      "inputs": {
+        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
+        "tokens/tokens.json": "68e595d90b2dd2cf2b5d50a0b5cb4de7a4a987a5f3e7c3385905c934a39462ed",
+        "fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435",
+        "fonts/mona-sans/MonaSansMonoVF[wght].ttf": "e1d0ba93b9abf682de1bd67d20b58d312fab5d0cbe8fe012e2b1ab7687b42219",
+        "press-kit/src/press.json": "8b266a23f3999b4d4b8655d32eb250acc7bf3b5b8da1a0b5c9b198acce1dfa90",
+        "press-kit/src/hero-1x1.svg": "4c1c736b19d4ba29066d1e97f9971d08ca8e6472541135880552d50d51ef8b56"
+      }
+    },
+    "press-kit/images/kleidos-1x1-light-es.png": {
+      "sha256": "7424011ff03f91844d986ffe2d2250e3a63706dd9b4f0ee2ee2f9baa42344e99",
+      "bytes": 147460,
+      "size": [
+        2160,
+        2160
+      ],
+      "drawn_from": "abbedb45e082d5f816200143afa53d43c10df3c1815c1bb725f5a1e5ab4701ac",
+      "inputs": {
+        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
+        "tokens/tokens.json": "68e595d90b2dd2cf2b5d50a0b5cb4de7a4a987a5f3e7c3385905c934a39462ed",
+        "fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435",
+        "fonts/mona-sans/MonaSansMonoVF[wght].ttf": "e1d0ba93b9abf682de1bd67d20b58d312fab5d0cbe8fe012e2b1ab7687b42219",
+        "press-kit/src/press.json": "8b266a23f3999b4d4b8655d32eb250acc7bf3b5b8da1a0b5c9b198acce1dfa90",
+        "press-kit/src/hero-1x1.svg": "4c1c736b19d4ba29066d1e97f9971d08ca8e6472541135880552d50d51ef8b56"
+      }
+    },
+    "press-kit/images/kleidos-screens-16x9.png": {
+      "sha256": "dd7cf85c8fb22dbc0ba45c982c795085f16b7e4fa6c73b8ebd9527e8f7bdd189",
+      "bytes": 168459,
+      "size": [
+        3840,
+        2160
+      ],
+      "drawn_from": "4de7578c7b6e46cc5ced3c6d993c2059c01ac254daafee4b521f0c88d5483f7e",
+      "inputs": {
+        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
+        "tokens/tokens.json": "68e595d90b2dd2cf2b5d50a0b5cb4de7a4a987a5f3e7c3385905c934a39462ed",
+        "fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435",
+        "fonts/mona-sans/MonaSansMonoVF[wght].ttf": "e1d0ba93b9abf682de1bd67d20b58d312fab5d0cbe8fe012e2b1ab7687b42219",
+        "press-kit/src/press.json": "8b266a23f3999b4d4b8655d32eb250acc7bf3b5b8da1a0b5c9b198acce1dfa90",
+        "press-kit/src/screens-16x9.svg": "1d840a218009b5c2c950560a91168b36781ee0987f6a2bd95ce94cc99077d8a6",
+        "press-kit/screens/kleidos-screen-m5stickc-plus2.png": "80f170e144bd88c8e1af234305419ad51c44addfdb4c1252e408ef11688bf996",
+        "press-kit/screens/kleidos-screen-coreink.png": "78cc9bf8a31b9e653f9c4fb9103e37ca74409e4d496dc63ef39615660a45275c",
+        "press-kit/screens/kleidos-screen-cardputer.png": "280637e53867d7f1886188e866acca6b93752de9cca3978f16190b373be7b4ad",
+        "press-kit/screens/kleidos-screen-tdeck-plus.png": "e413748d412d687e5a4a6f84fa6022a4cbc49a6bf1b14286042c8ad8ed040b5f",
+        "press-kit/screens/kleidos-screen-cores3-se.png": "b9c566b1af2c831bc3dcfdb57e19f699c1a230af70a06a6ddc3f4aebcda9cb70"
+      }
+    },
+    "press-kit/images/kleidos-screens-16x9-1920.png": {
+      "sha256": "40365be8ea4178f95c0297545df38305a10b924da7c9b8156da058e1ce5bcfff",
+      "bytes": 196770,
+      "size": [
+        1920,
+        1080
+      ],
+      "drawn_from": "4de7578c7b6e46cc5ced3c6d993c2059c01ac254daafee4b521f0c88d5483f7e",
+      "inputs": {
+        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
+        "tokens/tokens.json": "68e595d90b2dd2cf2b5d50a0b5cb4de7a4a987a5f3e7c3385905c934a39462ed",
+        "fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435",
+        "fonts/mona-sans/MonaSansMonoVF[wght].ttf": "e1d0ba93b9abf682de1bd67d20b58d312fab5d0cbe8fe012e2b1ab7687b42219",
+        "press-kit/src/press.json": "8b266a23f3999b4d4b8655d32eb250acc7bf3b5b8da1a0b5c9b198acce1dfa90",
+        "press-kit/src/screens-16x9.svg": "1d840a218009b5c2c950560a91168b36781ee0987f6a2bd95ce94cc99077d8a6",
+        "press-kit/screens/kleidos-screen-m5stickc-plus2.png": "80f170e144bd88c8e1af234305419ad51c44addfdb4c1252e408ef11688bf996",
+        "press-kit/screens/kleidos-screen-coreink.png": "78cc9bf8a31b9e653f9c4fb9103e37ca74409e4d496dc63ef39615660a45275c",
+        "press-kit/screens/kleidos-screen-cardputer.png": "280637e53867d7f1886188e866acca6b93752de9cca3978f16190b373be7b4ad",
+        "press-kit/screens/kleidos-screen-tdeck-plus.png": "e413748d412d687e5a4a6f84fa6022a4cbc49a6bf1b14286042c8ad8ed040b5f",
+        "press-kit/screens/kleidos-screen-cores3-se.png": "b9c566b1af2c831bc3dcfdb57e19f699c1a230af70a06a6ddc3f4aebcda9cb70"
+      }
+    },
+    "press-kit/images/kleidos-screens-16x9-es.png": {
+      "sha256": "37c5474b2dffcf6aef2f8df411207b436a38b87f9b7d2e7176c5f08b5d147552",
+      "bytes": 183431,
+      "size": [
+        3840,
+        2160
+      ],
+      "drawn_from": "a7598e07f8b82fb7dc12bb91101e8b9569a2b533e21bdaeccfdd31f33180fc37",
+      "inputs": {
+        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
+        "tokens/tokens.json": "68e595d90b2dd2cf2b5d50a0b5cb4de7a4a987a5f3e7c3385905c934a39462ed",
+        "fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435",
+        "fonts/mona-sans/MonaSansMonoVF[wght].ttf": "e1d0ba93b9abf682de1bd67d20b58d312fab5d0cbe8fe012e2b1ab7687b42219",
+        "press-kit/src/press.json": "8b266a23f3999b4d4b8655d32eb250acc7bf3b5b8da1a0b5c9b198acce1dfa90",
+        "press-kit/src/screens-16x9.svg": "1d840a218009b5c2c950560a91168b36781ee0987f6a2bd95ce94cc99077d8a6",
+        "press-kit/screens/kleidos-screen-m5stickc-plus2.png": "80f170e144bd88c8e1af234305419ad51c44addfdb4c1252e408ef11688bf996",
+        "press-kit/screens/kleidos-screen-coreink.png": "78cc9bf8a31b9e653f9c4fb9103e37ca74409e4d496dc63ef39615660a45275c",
+        "press-kit/screens/kleidos-screen-cardputer.png": "280637e53867d7f1886188e866acca6b93752de9cca3978f16190b373be7b4ad",
+        "press-kit/screens/kleidos-screen-tdeck-plus.png": "e413748d412d687e5a4a6f84fa6022a4cbc49a6bf1b14286042c8ad8ed040b5f",
+        "press-kit/screens/kleidos-screen-cores3-se.png": "b9c566b1af2c831bc3dcfdb57e19f699c1a230af70a06a6ddc3f4aebcda9cb70"
+      }
+    },
+    "press-kit/images/kleidos-screens-16x9-es-1920.png": {
+      "sha256": "90b653810f76c7230c942c5a94a6f506ac59e466606408a2a63a8f476b17a1e3",
+      "bytes": 210618,
+      "size": [
+        1920,
+        1080
+      ],
+      "drawn_from": "a7598e07f8b82fb7dc12bb91101e8b9569a2b533e21bdaeccfdd31f33180fc37",
+      "inputs": {
+        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
+        "tokens/tokens.json": "68e595d90b2dd2cf2b5d50a0b5cb4de7a4a987a5f3e7c3385905c934a39462ed",
+        "fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435",
+        "fonts/mona-sans/MonaSansMonoVF[wght].ttf": "e1d0ba93b9abf682de1bd67d20b58d312fab5d0cbe8fe012e2b1ab7687b42219",
+        "press-kit/src/press.json": "8b266a23f3999b4d4b8655d32eb250acc7bf3b5b8da1a0b5c9b198acce1dfa90",
+        "press-kit/src/screens-16x9.svg": "1d840a218009b5c2c950560a91168b36781ee0987f6a2bd95ce94cc99077d8a6",
+        "press-kit/screens/kleidos-screen-m5stickc-plus2.png": "80f170e144bd88c8e1af234305419ad51c44addfdb4c1252e408ef11688bf996",
+        "press-kit/screens/kleidos-screen-coreink.png": "78cc9bf8a31b9e653f9c4fb9103e37ca74409e4d496dc63ef39615660a45275c",
+        "press-kit/screens/kleidos-screen-cardputer.png": "280637e53867d7f1886188e866acca6b93752de9cca3978f16190b373be7b4ad",
+        "press-kit/screens/kleidos-screen-tdeck-plus.png": "e413748d412d687e5a4a6f84fa6022a4cbc49a6bf1b14286042c8ad8ed040b5f",
+        "press-kit/screens/kleidos-screen-cores3-se.png": "b9c566b1af2c831bc3dcfdb57e19f699c1a230af70a06a6ddc3f4aebcda9cb70"
+      }
+    },
+    "press-kit/images/kleidos-boards-16x9.png": {
+      "sha256": "c7177beedb95074d26927b604d7b106a7837dafcc71928617239070af4dd08cf",
+      "bytes": 641409,
+      "size": [
+        3840,
+        2160
+      ],
+      "drawn_from": "de94fda3cbaff85b4378d1531f7e3f896d57763df3a585326a9abed94229e691",
+      "inputs": {
+        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
+        "tokens/tokens.json": "68e595d90b2dd2cf2b5d50a0b5cb4de7a4a987a5f3e7c3385905c934a39462ed",
+        "fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435",
+        "fonts/mona-sans/MonaSansMonoVF[wght].ttf": "e1d0ba93b9abf682de1bd67d20b58d312fab5d0cbe8fe012e2b1ab7687b42219",
+        "press-kit/src/press.json": "8b266a23f3999b4d4b8655d32eb250acc7bf3b5b8da1a0b5c9b198acce1dfa90",
+        "press-kit/src/boards-16x9.svg": "590127260e1ad2384d49b20421c26d45705ef4c91189067073d20cacc3ca3cc9",
+        "press-kit/screens/kleidos-screen-sticks3.png": "dcd8457f76e3325008a506cb4ce79262b4e5c2b62dcb88ebba6f5603a6465bfd",
+        "press-kit/screens/kleidos-screen-m5stickc-plus2.png": "80f170e144bd88c8e1af234305419ad51c44addfdb4c1252e408ef11688bf996",
+        "press-kit/screens/kleidos-screen-m5stickc-plus1.png": "80f170e144bd88c8e1af234305419ad51c44addfdb4c1252e408ef11688bf996",
+        "press-kit/screens/kleidos-screen-m5stickc-plus-se.png": "80f170e144bd88c8e1af234305419ad51c44addfdb4c1252e408ef11688bf996",
+        "press-kit/screens/kleidos-screen-coreink.png": "78cc9bf8a31b9e653f9c4fb9103e37ca74409e4d496dc63ef39615660a45275c",
+        "press-kit/screens/kleidos-screen-cores3-se.png": "b9c566b1af2c831bc3dcfdb57e19f699c1a230af70a06a6ddc3f4aebcda9cb70",
+        "press-kit/screens/kleidos-screen-m5stack-core2-v13.png": "9f660bf0984693441bf8575f67c02ea6ef5d64005fcf1d0b99d5ea22e671846a",
+        "press-kit/screens/kleidos-screen-cardputer.png": "280637e53867d7f1886188e866acca6b93752de9cca3978f16190b373be7b4ad",
+        "press-kit/screens/kleidos-screen-tdeck-plus.png": "e413748d412d687e5a4a6f84fa6022a4cbc49a6bf1b14286042c8ad8ed040b5f",
+        "boards/boards.json": "2fc93598d2f55a45e56618cf53496ffc3eb1d1b6c4d17efe6f4937796f2358f1",
+        "boards/sticks3.svg": "0c893adb838469d0a5b503130061349feaeeb0d6064d1d62e8a69fa03c2c855f",
+        "boards/m5stickc-plus2.svg": "170040d38f2c50673eb334000859a443728ca72bcc36b6045c2c99739c0d7c0d",
+        "boards/m5stickc-plus1.svg": "4ce11832f7ef5bbb27a1433876c2b089653f676599afc89fea0e6ddbfb0e9071",
+        "boards/m5stickc-plus-se.svg": "34ec8bc51f51f1a4e3fcccdf89cab657dc89985ccbecc2037b9989187873db38",
+        "boards/coreink.svg": "edce2ac26f6821820b2771396ba0b4286592b30563acf706c839dcff1e6cf292",
+        "boards/cores3-se.svg": "3ee6a8ee427f20096cbb91bbc27c45206758be2c01bcae98e24b1c5e1f175545",
+        "boards/m5stack-core2-v13.svg": "ac4cbd3e8f91d643dbe987fb9c4ff164a363edd486a1ae95be4bf388ab153fa2",
+        "boards/cardputer.svg": "38b711a307e4ca32a3b07e5955346c43e6e2912d90b5d2770384d47ec15dd127",
+        "boards/tdeck-plus.svg": "068a289dd46121f4dcaa92046ab38bcf75ee735ae514d6a1831f95b636f6286c",
+        "fonts/inter/Inter-Regular.ttf": "40d692fce188e4471e2b3cba937be967878f631ad3ebbbdcd587687c7ebe0c82",
+        "fonts/inter/Inter-Medium.ttf": "97ad806f526e41546d46365bb3a393145f75b7b1568913db74549ad8b8dba872",
+        "fonts/inter/Inter-Bold.ttf": "288316099b1e0a47a4716d159098005eef7c0066921f34e3200393dbdb01947f"
+      }
+    },
+    "press-kit/images/kleidos-boards-16x9-1920.png": {
+      "sha256": "0e7008d81106fa560e580d5a22611400389601f0f05d1c20056341927e6b187e",
+      "bytes": 377030,
+      "size": [
+        1920,
+        1080
+      ],
+      "drawn_from": "de94fda3cbaff85b4378d1531f7e3f896d57763df3a585326a9abed94229e691",
+      "inputs": {
+        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
+        "tokens/tokens.json": "68e595d90b2dd2cf2b5d50a0b5cb4de7a4a987a5f3e7c3385905c934a39462ed",
+        "fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435",
+        "fonts/mona-sans/MonaSansMonoVF[wght].ttf": "e1d0ba93b9abf682de1bd67d20b58d312fab5d0cbe8fe012e2b1ab7687b42219",
+        "press-kit/src/press.json": "8b266a23f3999b4d4b8655d32eb250acc7bf3b5b8da1a0b5c9b198acce1dfa90",
+        "press-kit/src/boards-16x9.svg": "590127260e1ad2384d49b20421c26d45705ef4c91189067073d20cacc3ca3cc9",
+        "press-kit/screens/kleidos-screen-sticks3.png": "dcd8457f76e3325008a506cb4ce79262b4e5c2b62dcb88ebba6f5603a6465bfd",
+        "press-kit/screens/kleidos-screen-m5stickc-plus2.png": "80f170e144bd88c8e1af234305419ad51c44addfdb4c1252e408ef11688bf996",
+        "press-kit/screens/kleidos-screen-m5stickc-plus1.png": "80f170e144bd88c8e1af234305419ad51c44addfdb4c1252e408ef11688bf996",
+        "press-kit/screens/kleidos-screen-m5stickc-plus-se.png": "80f170e144bd88c8e1af234305419ad51c44addfdb4c1252e408ef11688bf996",
+        "press-kit/screens/kleidos-screen-coreink.png": "78cc9bf8a31b9e653f9c4fb9103e37ca74409e4d496dc63ef39615660a45275c",
+        "press-kit/screens/kleidos-screen-cores3-se.png": "b9c566b1af2c831bc3dcfdb57e19f699c1a230af70a06a6ddc3f4aebcda9cb70",
+        "press-kit/screens/kleidos-screen-m5stack-core2-v13.png": "9f660bf0984693441bf8575f67c02ea6ef5d64005fcf1d0b99d5ea22e671846a",
+        "press-kit/screens/kleidos-screen-cardputer.png": "280637e53867d7f1886188e866acca6b93752de9cca3978f16190b373be7b4ad",
+        "press-kit/screens/kleidos-screen-tdeck-plus.png": "e413748d412d687e5a4a6f84fa6022a4cbc49a6bf1b14286042c8ad8ed040b5f",
+        "boards/boards.json": "2fc93598d2f55a45e56618cf53496ffc3eb1d1b6c4d17efe6f4937796f2358f1",
+        "boards/sticks3.svg": "0c893adb838469d0a5b503130061349feaeeb0d6064d1d62e8a69fa03c2c855f",
+        "boards/m5stickc-plus2.svg": "170040d38f2c50673eb334000859a443728ca72bcc36b6045c2c99739c0d7c0d",
+        "boards/m5stickc-plus1.svg": "4ce11832f7ef5bbb27a1433876c2b089653f676599afc89fea0e6ddbfb0e9071",
+        "boards/m5stickc-plus-se.svg": "34ec8bc51f51f1a4e3fcccdf89cab657dc89985ccbecc2037b9989187873db38",
+        "boards/coreink.svg": "edce2ac26f6821820b2771396ba0b4286592b30563acf706c839dcff1e6cf292",
+        "boards/cores3-se.svg": "3ee6a8ee427f20096cbb91bbc27c45206758be2c01bcae98e24b1c5e1f175545",
+        "boards/m5stack-core2-v13.svg": "ac4cbd3e8f91d643dbe987fb9c4ff164a363edd486a1ae95be4bf388ab153fa2",
+        "boards/cardputer.svg": "38b711a307e4ca32a3b07e5955346c43e6e2912d90b5d2770384d47ec15dd127",
+        "boards/tdeck-plus.svg": "068a289dd46121f4dcaa92046ab38bcf75ee735ae514d6a1831f95b636f6286c",
+        "fonts/inter/Inter-Regular.ttf": "40d692fce188e4471e2b3cba937be967878f631ad3ebbbdcd587687c7ebe0c82",
+        "fonts/inter/Inter-Medium.ttf": "97ad806f526e41546d46365bb3a393145f75b7b1568913db74549ad8b8dba872",
+        "fonts/inter/Inter-Bold.ttf": "288316099b1e0a47a4716d159098005eef7c0066921f34e3200393dbdb01947f"
+      }
+    },
+    "press-kit/images/kleidos-boards-16x9-es.png": {
+      "sha256": "7628594ba3de9a4ee0fca1f4a9bdc2bb6487be47de32d09f798f7a46527c4d12",
+      "bytes": 651750,
+      "size": [
+        3840,
+        2160
+      ],
+      "drawn_from": "0a464585eb5c25e82b4ad073b979a5231987d0eda0073c74fc58370b714f29f4",
+      "inputs": {
+        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
+        "tokens/tokens.json": "68e595d90b2dd2cf2b5d50a0b5cb4de7a4a987a5f3e7c3385905c934a39462ed",
+        "fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435",
+        "fonts/mona-sans/MonaSansMonoVF[wght].ttf": "e1d0ba93b9abf682de1bd67d20b58d312fab5d0cbe8fe012e2b1ab7687b42219",
+        "press-kit/src/press.json": "8b266a23f3999b4d4b8655d32eb250acc7bf3b5b8da1a0b5c9b198acce1dfa90",
+        "press-kit/src/boards-16x9.svg": "590127260e1ad2384d49b20421c26d45705ef4c91189067073d20cacc3ca3cc9",
+        "press-kit/screens/kleidos-screen-sticks3.png": "dcd8457f76e3325008a506cb4ce79262b4e5c2b62dcb88ebba6f5603a6465bfd",
+        "press-kit/screens/kleidos-screen-m5stickc-plus2.png": "80f170e144bd88c8e1af234305419ad51c44addfdb4c1252e408ef11688bf996",
+        "press-kit/screens/kleidos-screen-m5stickc-plus1.png": "80f170e144bd88c8e1af234305419ad51c44addfdb4c1252e408ef11688bf996",
+        "press-kit/screens/kleidos-screen-m5stickc-plus-se.png": "80f170e144bd88c8e1af234305419ad51c44addfdb4c1252e408ef11688bf996",
+        "press-kit/screens/kleidos-screen-coreink.png": "78cc9bf8a31b9e653f9c4fb9103e37ca74409e4d496dc63ef39615660a45275c",
+        "press-kit/screens/kleidos-screen-cores3-se.png": "b9c566b1af2c831bc3dcfdb57e19f699c1a230af70a06a6ddc3f4aebcda9cb70",
+        "press-kit/screens/kleidos-screen-m5stack-core2-v13.png": "9f660bf0984693441bf8575f67c02ea6ef5d64005fcf1d0b99d5ea22e671846a",
+        "press-kit/screens/kleidos-screen-cardputer.png": "280637e53867d7f1886188e866acca6b93752de9cca3978f16190b373be7b4ad",
+        "press-kit/screens/kleidos-screen-tdeck-plus.png": "e413748d412d687e5a4a6f84fa6022a4cbc49a6bf1b14286042c8ad8ed040b5f",
+        "boards/boards.json": "2fc93598d2f55a45e56618cf53496ffc3eb1d1b6c4d17efe6f4937796f2358f1",
+        "boards/sticks3.svg": "0c893adb838469d0a5b503130061349feaeeb0d6064d1d62e8a69fa03c2c855f",
+        "boards/m5stickc-plus2.svg": "170040d38f2c50673eb334000859a443728ca72bcc36b6045c2c99739c0d7c0d",
+        "boards/m5stickc-plus1.svg": "4ce11832f7ef5bbb27a1433876c2b089653f676599afc89fea0e6ddbfb0e9071",
+        "boards/m5stickc-plus-se.svg": "34ec8bc51f51f1a4e3fcccdf89cab657dc89985ccbecc2037b9989187873db38",
+        "boards/coreink.svg": "edce2ac26f6821820b2771396ba0b4286592b30563acf706c839dcff1e6cf292",
+        "boards/cores3-se.svg": "3ee6a8ee427f20096cbb91bbc27c45206758be2c01bcae98e24b1c5e1f175545",
+        "boards/m5stack-core2-v13.svg": "ac4cbd3e8f91d643dbe987fb9c4ff164a363edd486a1ae95be4bf388ab153fa2",
+        "boards/cardputer.svg": "38b711a307e4ca32a3b07e5955346c43e6e2912d90b5d2770384d47ec15dd127",
+        "boards/tdeck-plus.svg": "068a289dd46121f4dcaa92046ab38bcf75ee735ae514d6a1831f95b636f6286c",
+        "fonts/inter/Inter-Regular.ttf": "40d692fce188e4471e2b3cba937be967878f631ad3ebbbdcd587687c7ebe0c82",
+        "fonts/inter/Inter-Medium.ttf": "97ad806f526e41546d46365bb3a393145f75b7b1568913db74549ad8b8dba872",
+        "fonts/inter/Inter-Bold.ttf": "288316099b1e0a47a4716d159098005eef7c0066921f34e3200393dbdb01947f"
+      }
+    },
+    "press-kit/images/kleidos-boards-16x9-es-1920.png": {
+      "sha256": "805bf9494e8cb2a886785941b64ab184276712c087401df6cb427f1c3d2af009",
+      "bytes": 388718,
+      "size": [
+        1920,
+        1080
+      ],
+      "drawn_from": "0a464585eb5c25e82b4ad073b979a5231987d0eda0073c74fc58370b714f29f4",
+      "inputs": {
+        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
+        "tokens/tokens.json": "68e595d90b2dd2cf2b5d50a0b5cb4de7a4a987a5f3e7c3385905c934a39462ed",
+        "fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435",
+        "fonts/mona-sans/MonaSansMonoVF[wght].ttf": "e1d0ba93b9abf682de1bd67d20b58d312fab5d0cbe8fe012e2b1ab7687b42219",
+        "press-kit/src/press.json": "8b266a23f3999b4d4b8655d32eb250acc7bf3b5b8da1a0b5c9b198acce1dfa90",
+        "press-kit/src/boards-16x9.svg": "590127260e1ad2384d49b20421c26d45705ef4c91189067073d20cacc3ca3cc9",
+        "press-kit/screens/kleidos-screen-sticks3.png": "dcd8457f76e3325008a506cb4ce79262b4e5c2b62dcb88ebba6f5603a6465bfd",
+        "press-kit/screens/kleidos-screen-m5stickc-plus2.png": "80f170e144bd88c8e1af234305419ad51c44addfdb4c1252e408ef11688bf996",
+        "press-kit/screens/kleidos-screen-m5stickc-plus1.png": "80f170e144bd88c8e1af234305419ad51c44addfdb4c1252e408ef11688bf996",
+        "press-kit/screens/kleidos-screen-m5stickc-plus-se.png": "80f170e144bd88c8e1af234305419ad51c44addfdb4c1252e408ef11688bf996",
+        "press-kit/screens/kleidos-screen-coreink.png": "78cc9bf8a31b9e653f9c4fb9103e37ca74409e4d496dc63ef39615660a45275c",
+        "press-kit/screens/kleidos-screen-cores3-se.png": "b9c566b1af2c831bc3dcfdb57e19f699c1a230af70a06a6ddc3f4aebcda9cb70",
+        "press-kit/screens/kleidos-screen-m5stack-core2-v13.png": "9f660bf0984693441bf8575f67c02ea6ef5d64005fcf1d0b99d5ea22e671846a",
+        "press-kit/screens/kleidos-screen-cardputer.png": "280637e53867d7f1886188e866acca6b93752de9cca3978f16190b373be7b4ad",
+        "press-kit/screens/kleidos-screen-tdeck-plus.png": "e413748d412d687e5a4a6f84fa6022a4cbc49a6bf1b14286042c8ad8ed040b5f",
+        "boards/boards.json": "2fc93598d2f55a45e56618cf53496ffc3eb1d1b6c4d17efe6f4937796f2358f1",
+        "boards/sticks3.svg": "0c893adb838469d0a5b503130061349feaeeb0d6064d1d62e8a69fa03c2c855f",
+        "boards/m5stickc-plus2.svg": "170040d38f2c50673eb334000859a443728ca72bcc36b6045c2c99739c0d7c0d",
+        "boards/m5stickc-plus1.svg": "4ce11832f7ef5bbb27a1433876c2b089653f676599afc89fea0e6ddbfb0e9071",
+        "boards/m5stickc-plus-se.svg": "34ec8bc51f51f1a4e3fcccdf89cab657dc89985ccbecc2037b9989187873db38",
+        "boards/coreink.svg": "edce2ac26f6821820b2771396ba0b4286592b30563acf706c839dcff1e6cf292",
+        "boards/cores3-se.svg": "3ee6a8ee427f20096cbb91bbc27c45206758be2c01bcae98e24b1c5e1f175545",
+        "boards/m5stack-core2-v13.svg": "ac4cbd3e8f91d643dbe987fb9c4ff164a363edd486a1ae95be4bf388ab153fa2",
+        "boards/cardputer.svg": "38b711a307e4ca32a3b07e5955346c43e6e2912d90b5d2770384d47ec15dd127",
+        "boards/tdeck-plus.svg": "068a289dd46121f4dcaa92046ab38bcf75ee735ae514d6a1831f95b636f6286c",
+        "fonts/inter/Inter-Regular.ttf": "40d692fce188e4471e2b3cba937be967878f631ad3ebbbdcd587687c7ebe0c82",
+        "fonts/inter/Inter-Medium.ttf": "97ad806f526e41546d46365bb3a393145f75b7b1568913db74549ad8b8dba872",
+        "fonts/inter/Inter-Bold.ttf": "288316099b1e0a47a4716d159098005eef7c0066921f34e3200393dbdb01947f"
+      }
+    },
+    "press-kit/images/kleidos-boards-16x9-light.png": {
+      "sha256": "e2bb49e80a324176a05f3be9980b9c2e762a6e23f1b9e053718bddd6fdcd576e",
+      "bytes": 639842,
+      "size": [
+        3840,
+        2160
+      ],
+      "drawn_from": "afcab2ed9e06fd5b184d9b8cac9d7c142db06dde8e48b37d8848eb73900c99bf",
+      "inputs": {
+        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
+        "tokens/tokens.json": "68e595d90b2dd2cf2b5d50a0b5cb4de7a4a987a5f3e7c3385905c934a39462ed",
+        "fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435",
+        "fonts/mona-sans/MonaSansMonoVF[wght].ttf": "e1d0ba93b9abf682de1bd67d20b58d312fab5d0cbe8fe012e2b1ab7687b42219",
+        "press-kit/src/press.json": "8b266a23f3999b4d4b8655d32eb250acc7bf3b5b8da1a0b5c9b198acce1dfa90",
+        "press-kit/src/boards-16x9.svg": "590127260e1ad2384d49b20421c26d45705ef4c91189067073d20cacc3ca3cc9",
+        "press-kit/screens/kleidos-screen-sticks3.png": "dcd8457f76e3325008a506cb4ce79262b4e5c2b62dcb88ebba6f5603a6465bfd",
+        "press-kit/screens/kleidos-screen-m5stickc-plus2.png": "80f170e144bd88c8e1af234305419ad51c44addfdb4c1252e408ef11688bf996",
+        "press-kit/screens/kleidos-screen-m5stickc-plus1.png": "80f170e144bd88c8e1af234305419ad51c44addfdb4c1252e408ef11688bf996",
+        "press-kit/screens/kleidos-screen-m5stickc-plus-se.png": "80f170e144bd88c8e1af234305419ad51c44addfdb4c1252e408ef11688bf996",
+        "press-kit/screens/kleidos-screen-coreink.png": "78cc9bf8a31b9e653f9c4fb9103e37ca74409e4d496dc63ef39615660a45275c",
+        "press-kit/screens/kleidos-screen-cores3-se.png": "b9c566b1af2c831bc3dcfdb57e19f699c1a230af70a06a6ddc3f4aebcda9cb70",
+        "press-kit/screens/kleidos-screen-m5stack-core2-v13.png": "9f660bf0984693441bf8575f67c02ea6ef5d64005fcf1d0b99d5ea22e671846a",
+        "press-kit/screens/kleidos-screen-cardputer.png": "280637e53867d7f1886188e866acca6b93752de9cca3978f16190b373be7b4ad",
+        "press-kit/screens/kleidos-screen-tdeck-plus.png": "e413748d412d687e5a4a6f84fa6022a4cbc49a6bf1b14286042c8ad8ed040b5f",
+        "boards/boards.json": "2fc93598d2f55a45e56618cf53496ffc3eb1d1b6c4d17efe6f4937796f2358f1",
+        "boards/sticks3.svg": "0c893adb838469d0a5b503130061349feaeeb0d6064d1d62e8a69fa03c2c855f",
+        "boards/m5stickc-plus2.svg": "170040d38f2c50673eb334000859a443728ca72bcc36b6045c2c99739c0d7c0d",
+        "boards/m5stickc-plus1.svg": "4ce11832f7ef5bbb27a1433876c2b089653f676599afc89fea0e6ddbfb0e9071",
+        "boards/m5stickc-plus-se.svg": "34ec8bc51f51f1a4e3fcccdf89cab657dc89985ccbecc2037b9989187873db38",
+        "boards/coreink.svg": "edce2ac26f6821820b2771396ba0b4286592b30563acf706c839dcff1e6cf292",
+        "boards/cores3-se.svg": "3ee6a8ee427f20096cbb91bbc27c45206758be2c01bcae98e24b1c5e1f175545",
+        "boards/m5stack-core2-v13.svg": "ac4cbd3e8f91d643dbe987fb9c4ff164a363edd486a1ae95be4bf388ab153fa2",
+        "boards/cardputer.svg": "38b711a307e4ca32a3b07e5955346c43e6e2912d90b5d2770384d47ec15dd127",
+        "boards/tdeck-plus.svg": "068a289dd46121f4dcaa92046ab38bcf75ee735ae514d6a1831f95b636f6286c",
+        "fonts/inter/Inter-Regular.ttf": "40d692fce188e4471e2b3cba937be967878f631ad3ebbbdcd587687c7ebe0c82",
+        "fonts/inter/Inter-Medium.ttf": "97ad806f526e41546d46365bb3a393145f75b7b1568913db74549ad8b8dba872",
+        "fonts/inter/Inter-Bold.ttf": "288316099b1e0a47a4716d159098005eef7c0066921f34e3200393dbdb01947f"
+      }
+    },
+    "press-kit/images/kleidos-boards-16x9-light-1920.png": {
+      "sha256": "fe71624016a41186ce2951445bac586914a521bc63c343521402a922a9bb2ab9",
+      "bytes": 367640,
+      "size": [
+        1920,
+        1080
+      ],
+      "drawn_from": "afcab2ed9e06fd5b184d9b8cac9d7c142db06dde8e48b37d8848eb73900c99bf",
+      "inputs": {
+        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
+        "tokens/tokens.json": "68e595d90b2dd2cf2b5d50a0b5cb4de7a4a987a5f3e7c3385905c934a39462ed",
+        "fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435",
+        "fonts/mona-sans/MonaSansMonoVF[wght].ttf": "e1d0ba93b9abf682de1bd67d20b58d312fab5d0cbe8fe012e2b1ab7687b42219",
+        "press-kit/src/press.json": "8b266a23f3999b4d4b8655d32eb250acc7bf3b5b8da1a0b5c9b198acce1dfa90",
+        "press-kit/src/boards-16x9.svg": "590127260e1ad2384d49b20421c26d45705ef4c91189067073d20cacc3ca3cc9",
+        "press-kit/screens/kleidos-screen-sticks3.png": "dcd8457f76e3325008a506cb4ce79262b4e5c2b62dcb88ebba6f5603a6465bfd",
+        "press-kit/screens/kleidos-screen-m5stickc-plus2.png": "80f170e144bd88c8e1af234305419ad51c44addfdb4c1252e408ef11688bf996",
+        "press-kit/screens/kleidos-screen-m5stickc-plus1.png": "80f170e144bd88c8e1af234305419ad51c44addfdb4c1252e408ef11688bf996",
+        "press-kit/screens/kleidos-screen-m5stickc-plus-se.png": "80f170e144bd88c8e1af234305419ad51c44addfdb4c1252e408ef11688bf996",
+        "press-kit/screens/kleidos-screen-coreink.png": "78cc9bf8a31b9e653f9c4fb9103e37ca74409e4d496dc63ef39615660a45275c",
+        "press-kit/screens/kleidos-screen-cores3-se.png": "b9c566b1af2c831bc3dcfdb57e19f699c1a230af70a06a6ddc3f4aebcda9cb70",
+        "press-kit/screens/kleidos-screen-m5stack-core2-v13.png": "9f660bf0984693441bf8575f67c02ea6ef5d64005fcf1d0b99d5ea22e671846a",
+        "press-kit/screens/kleidos-screen-cardputer.png": "280637e53867d7f1886188e866acca6b93752de9cca3978f16190b373be7b4ad",
+        "press-kit/screens/kleidos-screen-tdeck-plus.png": "e413748d412d687e5a4a6f84fa6022a4cbc49a6bf1b14286042c8ad8ed040b5f",
+        "boards/boards.json": "2fc93598d2f55a45e56618cf53496ffc3eb1d1b6c4d17efe6f4937796f2358f1",
+        "boards/sticks3.svg": "0c893adb838469d0a5b503130061349feaeeb0d6064d1d62e8a69fa03c2c855f",
+        "boards/m5stickc-plus2.svg": "170040d38f2c50673eb334000859a443728ca72bcc36b6045c2c99739c0d7c0d",
+        "boards/m5stickc-plus1.svg": "4ce11832f7ef5bbb27a1433876c2b089653f676599afc89fea0e6ddbfb0e9071",
+        "boards/m5stickc-plus-se.svg": "34ec8bc51f51f1a4e3fcccdf89cab657dc89985ccbecc2037b9989187873db38",
+        "boards/coreink.svg": "edce2ac26f6821820b2771396ba0b4286592b30563acf706c839dcff1e6cf292",
+        "boards/cores3-se.svg": "3ee6a8ee427f20096cbb91bbc27c45206758be2c01bcae98e24b1c5e1f175545",
+        "boards/m5stack-core2-v13.svg": "ac4cbd3e8f91d643dbe987fb9c4ff164a363edd486a1ae95be4bf388ab153fa2",
+        "boards/cardputer.svg": "38b711a307e4ca32a3b07e5955346c43e6e2912d90b5d2770384d47ec15dd127",
+        "boards/tdeck-plus.svg": "068a289dd46121f4dcaa92046ab38bcf75ee735ae514d6a1831f95b636f6286c",
+        "fonts/inter/Inter-Regular.ttf": "40d692fce188e4471e2b3cba937be967878f631ad3ebbbdcd587687c7ebe0c82",
+        "fonts/inter/Inter-Medium.ttf": "97ad806f526e41546d46365bb3a393145f75b7b1568913db74549ad8b8dba872",
+        "fonts/inter/Inter-Bold.ttf": "288316099b1e0a47a4716d159098005eef7c0066921f34e3200393dbdb01947f"
+      }
+    },
+    "press-kit/images/kleidos-boards-16x9-light-es.png": {
+      "sha256": "cb73916bd626d710a79a5e7263e27f9e4591711219a71972e9b25531311c5b53",
+      "bytes": 649610,
+      "size": [
+        3840,
+        2160
+      ],
+      "drawn_from": "1adf86cb8530d5f7e4c7468c022b86bbe1f5129846306b97cb74c5109f823cf3",
+      "inputs": {
+        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
+        "tokens/tokens.json": "68e595d90b2dd2cf2b5d50a0b5cb4de7a4a987a5f3e7c3385905c934a39462ed",
+        "fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435",
+        "fonts/mona-sans/MonaSansMonoVF[wght].ttf": "e1d0ba93b9abf682de1bd67d20b58d312fab5d0cbe8fe012e2b1ab7687b42219",
+        "press-kit/src/press.json": "8b266a23f3999b4d4b8655d32eb250acc7bf3b5b8da1a0b5c9b198acce1dfa90",
+        "press-kit/src/boards-16x9.svg": "590127260e1ad2384d49b20421c26d45705ef4c91189067073d20cacc3ca3cc9",
+        "press-kit/screens/kleidos-screen-sticks3.png": "dcd8457f76e3325008a506cb4ce79262b4e5c2b62dcb88ebba6f5603a6465bfd",
+        "press-kit/screens/kleidos-screen-m5stickc-plus2.png": "80f170e144bd88c8e1af234305419ad51c44addfdb4c1252e408ef11688bf996",
+        "press-kit/screens/kleidos-screen-m5stickc-plus1.png": "80f170e144bd88c8e1af234305419ad51c44addfdb4c1252e408ef11688bf996",
+        "press-kit/screens/kleidos-screen-m5stickc-plus-se.png": "80f170e144bd88c8e1af234305419ad51c44addfdb4c1252e408ef11688bf996",
+        "press-kit/screens/kleidos-screen-coreink.png": "78cc9bf8a31b9e653f9c4fb9103e37ca74409e4d496dc63ef39615660a45275c",
+        "press-kit/screens/kleidos-screen-cores3-se.png": "b9c566b1af2c831bc3dcfdb57e19f699c1a230af70a06a6ddc3f4aebcda9cb70",
+        "press-kit/screens/kleidos-screen-m5stack-core2-v13.png": "9f660bf0984693441bf8575f67c02ea6ef5d64005fcf1d0b99d5ea22e671846a",
+        "press-kit/screens/kleidos-screen-cardputer.png": "280637e53867d7f1886188e866acca6b93752de9cca3978f16190b373be7b4ad",
+        "press-kit/screens/kleidos-screen-tdeck-plus.png": "e413748d412d687e5a4a6f84fa6022a4cbc49a6bf1b14286042c8ad8ed040b5f",
+        "boards/boards.json": "2fc93598d2f55a45e56618cf53496ffc3eb1d1b6c4d17efe6f4937796f2358f1",
+        "boards/sticks3.svg": "0c893adb838469d0a5b503130061349feaeeb0d6064d1d62e8a69fa03c2c855f",
+        "boards/m5stickc-plus2.svg": "170040d38f2c50673eb334000859a443728ca72bcc36b6045c2c99739c0d7c0d",
+        "boards/m5stickc-plus1.svg": "4ce11832f7ef5bbb27a1433876c2b089653f676599afc89fea0e6ddbfb0e9071",
+        "boards/m5stickc-plus-se.svg": "34ec8bc51f51f1a4e3fcccdf89cab657dc89985ccbecc2037b9989187873db38",
+        "boards/coreink.svg": "edce2ac26f6821820b2771396ba0b4286592b30563acf706c839dcff1e6cf292",
+        "boards/cores3-se.svg": "3ee6a8ee427f20096cbb91bbc27c45206758be2c01bcae98e24b1c5e1f175545",
+        "boards/m5stack-core2-v13.svg": "ac4cbd3e8f91d643dbe987fb9c4ff164a363edd486a1ae95be4bf388ab153fa2",
+        "boards/cardputer.svg": "38b711a307e4ca32a3b07e5955346c43e6e2912d90b5d2770384d47ec15dd127",
+        "boards/tdeck-plus.svg": "068a289dd46121f4dcaa92046ab38bcf75ee735ae514d6a1831f95b636f6286c",
+        "fonts/inter/Inter-Regular.ttf": "40d692fce188e4471e2b3cba937be967878f631ad3ebbbdcd587687c7ebe0c82",
+        "fonts/inter/Inter-Medium.ttf": "97ad806f526e41546d46365bb3a393145f75b7b1568913db74549ad8b8dba872",
+        "fonts/inter/Inter-Bold.ttf": "288316099b1e0a47a4716d159098005eef7c0066921f34e3200393dbdb01947f"
+      }
+    },
+    "press-kit/images/kleidos-boards-16x9-light-es-1920.png": {
+      "sha256": "dcd831409b7cabb0c3dc3f22faaf9a56d4c4eb6155613a7bc768c6e2134d96d9",
+      "bytes": 377179,
+      "size": [
+        1920,
+        1080
+      ],
+      "drawn_from": "1adf86cb8530d5f7e4c7468c022b86bbe1f5129846306b97cb74c5109f823cf3",
+      "inputs": {
+        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
+        "tokens/tokens.json": "68e595d90b2dd2cf2b5d50a0b5cb4de7a4a987a5f3e7c3385905c934a39462ed",
+        "fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435",
+        "fonts/mona-sans/MonaSansMonoVF[wght].ttf": "e1d0ba93b9abf682de1bd67d20b58d312fab5d0cbe8fe012e2b1ab7687b42219",
+        "press-kit/src/press.json": "8b266a23f3999b4d4b8655d32eb250acc7bf3b5b8da1a0b5c9b198acce1dfa90",
+        "press-kit/src/boards-16x9.svg": "590127260e1ad2384d49b20421c26d45705ef4c91189067073d20cacc3ca3cc9",
+        "press-kit/screens/kleidos-screen-sticks3.png": "dcd8457f76e3325008a506cb4ce79262b4e5c2b62dcb88ebba6f5603a6465bfd",
+        "press-kit/screens/kleidos-screen-m5stickc-plus2.png": "80f170e144bd88c8e1af234305419ad51c44addfdb4c1252e408ef11688bf996",
+        "press-kit/screens/kleidos-screen-m5stickc-plus1.png": "80f170e144bd88c8e1af234305419ad51c44addfdb4c1252e408ef11688bf996",
+        "press-kit/screens/kleidos-screen-m5stickc-plus-se.png": "80f170e144bd88c8e1af234305419ad51c44addfdb4c1252e408ef11688bf996",
+        "press-kit/screens/kleidos-screen-coreink.png": "78cc9bf8a31b9e653f9c4fb9103e37ca74409e4d496dc63ef39615660a45275c",
+        "press-kit/screens/kleidos-screen-cores3-se.png": "b9c566b1af2c831bc3dcfdb57e19f699c1a230af70a06a6ddc3f4aebcda9cb70",
+        "press-kit/screens/kleidos-screen-m5stack-core2-v13.png": "9f660bf0984693441bf8575f67c02ea6ef5d64005fcf1d0b99d5ea22e671846a",
+        "press-kit/screens/kleidos-screen-cardputer.png": "280637e53867d7f1886188e866acca6b93752de9cca3978f16190b373be7b4ad",
+        "press-kit/screens/kleidos-screen-tdeck-plus.png": "e413748d412d687e5a4a6f84fa6022a4cbc49a6bf1b14286042c8ad8ed040b5f",
+        "boards/boards.json": "2fc93598d2f55a45e56618cf53496ffc3eb1d1b6c4d17efe6f4937796f2358f1",
+        "boards/sticks3.svg": "0c893adb838469d0a5b503130061349feaeeb0d6064d1d62e8a69fa03c2c855f",
+        "boards/m5stickc-plus2.svg": "170040d38f2c50673eb334000859a443728ca72bcc36b6045c2c99739c0d7c0d",
+        "boards/m5stickc-plus1.svg": "4ce11832f7ef5bbb27a1433876c2b089653f676599afc89fea0e6ddbfb0e9071",
+        "boards/m5stickc-plus-se.svg": "34ec8bc51f51f1a4e3fcccdf89cab657dc89985ccbecc2037b9989187873db38",
+        "boards/coreink.svg": "edce2ac26f6821820b2771396ba0b4286592b30563acf706c839dcff1e6cf292",
+        "boards/cores3-se.svg": "3ee6a8ee427f20096cbb91bbc27c45206758be2c01bcae98e24b1c5e1f175545",
+        "boards/m5stack-core2-v13.svg": "ac4cbd3e8f91d643dbe987fb9c4ff164a363edd486a1ae95be4bf388ab153fa2",
+        "boards/cardputer.svg": "38b711a307e4ca32a3b07e5955346c43e6e2912d90b5d2770384d47ec15dd127",
+        "boards/tdeck-plus.svg": "068a289dd46121f4dcaa92046ab38bcf75ee735ae514d6a1831f95b636f6286c",
+        "fonts/inter/Inter-Regular.ttf": "40d692fce188e4471e2b3cba937be967878f631ad3ebbbdcd587687c7ebe0c82",
+        "fonts/inter/Inter-Medium.ttf": "97ad806f526e41546d46365bb3a393145f75b7b1568913db74549ad8b8dba872",
+        "fonts/inter/Inter-Bold.ttf": "288316099b1e0a47a4716d159098005eef7c0066921f34e3200393dbdb01947f"
+      }
+    },
+    "press-kit/images/kleidos-boards-4x5.png": {
+      "sha256": "c428193f1855afcb79f259592c56ee034a21a5e8832c95fb88bd32db1666b8cb",
+      "bytes": 574246,
+      "size": [
+        2160,
+        2700
+      ],
+      "drawn_from": "1dbe5c5d734a84ab3bda911845e37a6951ef0e77baee149c47074ef4f1a50a85",
+      "inputs": {
+        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
+        "tokens/tokens.json": "68e595d90b2dd2cf2b5d50a0b5cb4de7a4a987a5f3e7c3385905c934a39462ed",
+        "fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435",
+        "fonts/mona-sans/MonaSansMonoVF[wght].ttf": "e1d0ba93b9abf682de1bd67d20b58d312fab5d0cbe8fe012e2b1ab7687b42219",
+        "press-kit/src/press.json": "8b266a23f3999b4d4b8655d32eb250acc7bf3b5b8da1a0b5c9b198acce1dfa90",
+        "press-kit/src/boards-4x5.svg": "384223fa45c4c788744071f3b57376b6e76c3e2907a464f79233a2b71ec21bb6",
+        "press-kit/screens/kleidos-screen-sticks3.png": "dcd8457f76e3325008a506cb4ce79262b4e5c2b62dcb88ebba6f5603a6465bfd",
+        "press-kit/screens/kleidos-screen-m5stickc-plus2.png": "80f170e144bd88c8e1af234305419ad51c44addfdb4c1252e408ef11688bf996",
+        "press-kit/screens/kleidos-screen-m5stickc-plus1.png": "80f170e144bd88c8e1af234305419ad51c44addfdb4c1252e408ef11688bf996",
+        "press-kit/screens/kleidos-screen-m5stickc-plus-se.png": "80f170e144bd88c8e1af234305419ad51c44addfdb4c1252e408ef11688bf996",
+        "press-kit/screens/kleidos-screen-coreink.png": "78cc9bf8a31b9e653f9c4fb9103e37ca74409e4d496dc63ef39615660a45275c",
+        "press-kit/screens/kleidos-screen-cores3-se.png": "b9c566b1af2c831bc3dcfdb57e19f699c1a230af70a06a6ddc3f4aebcda9cb70",
+        "press-kit/screens/kleidos-screen-m5stack-core2-v13.png": "9f660bf0984693441bf8575f67c02ea6ef5d64005fcf1d0b99d5ea22e671846a",
+        "press-kit/screens/kleidos-screen-cardputer.png": "280637e53867d7f1886188e866acca6b93752de9cca3978f16190b373be7b4ad",
+        "press-kit/screens/kleidos-screen-tdeck-plus.png": "e413748d412d687e5a4a6f84fa6022a4cbc49a6bf1b14286042c8ad8ed040b5f",
+        "boards/boards.json": "2fc93598d2f55a45e56618cf53496ffc3eb1d1b6c4d17efe6f4937796f2358f1",
+        "boards/sticks3.svg": "0c893adb838469d0a5b503130061349feaeeb0d6064d1d62e8a69fa03c2c855f",
+        "boards/m5stickc-plus2.svg": "170040d38f2c50673eb334000859a443728ca72bcc36b6045c2c99739c0d7c0d",
+        "boards/m5stickc-plus1.svg": "4ce11832f7ef5bbb27a1433876c2b089653f676599afc89fea0e6ddbfb0e9071",
+        "boards/m5stickc-plus-se.svg": "34ec8bc51f51f1a4e3fcccdf89cab657dc89985ccbecc2037b9989187873db38",
+        "boards/coreink.svg": "edce2ac26f6821820b2771396ba0b4286592b30563acf706c839dcff1e6cf292",
+        "boards/cores3-se.svg": "3ee6a8ee427f20096cbb91bbc27c45206758be2c01bcae98e24b1c5e1f175545",
+        "boards/m5stack-core2-v13.svg": "ac4cbd3e8f91d643dbe987fb9c4ff164a363edd486a1ae95be4bf388ab153fa2",
+        "boards/cardputer.svg": "38b711a307e4ca32a3b07e5955346c43e6e2912d90b5d2770384d47ec15dd127",
+        "boards/tdeck-plus.svg": "068a289dd46121f4dcaa92046ab38bcf75ee735ae514d6a1831f95b636f6286c",
+        "fonts/inter/Inter-Regular.ttf": "40d692fce188e4471e2b3cba937be967878f631ad3ebbbdcd587687c7ebe0c82",
+        "fonts/inter/Inter-Medium.ttf": "97ad806f526e41546d46365bb3a393145f75b7b1568913db74549ad8b8dba872",
+        "fonts/inter/Inter-Bold.ttf": "288316099b1e0a47a4716d159098005eef7c0066921f34e3200393dbdb01947f"
+      }
+    },
+    "press-kit/images/kleidos-boards-4x5-es.png": {
+      "sha256": "1ae9ba3be7e33b41c3461ddbc9e09389e3c4b1c436707dfbf27e7b63db6d5376",
+      "bytes": 584047,
+      "size": [
+        2160,
+        2700
+      ],
+      "drawn_from": "f0dbd1e1b74303a7485d1620141e00896c9ce44985d563b7ada613f46276ce44",
+      "inputs": {
+        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
+        "tokens/tokens.json": "68e595d90b2dd2cf2b5d50a0b5cb4de7a4a987a5f3e7c3385905c934a39462ed",
+        "fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435",
+        "fonts/mona-sans/MonaSansMonoVF[wght].ttf": "e1d0ba93b9abf682de1bd67d20b58d312fab5d0cbe8fe012e2b1ab7687b42219",
+        "press-kit/src/press.json": "8b266a23f3999b4d4b8655d32eb250acc7bf3b5b8da1a0b5c9b198acce1dfa90",
+        "press-kit/src/boards-4x5.svg": "384223fa45c4c788744071f3b57376b6e76c3e2907a464f79233a2b71ec21bb6",
+        "press-kit/screens/kleidos-screen-sticks3.png": "dcd8457f76e3325008a506cb4ce79262b4e5c2b62dcb88ebba6f5603a6465bfd",
+        "press-kit/screens/kleidos-screen-m5stickc-plus2.png": "80f170e144bd88c8e1af234305419ad51c44addfdb4c1252e408ef11688bf996",
+        "press-kit/screens/kleidos-screen-m5stickc-plus1.png": "80f170e144bd88c8e1af234305419ad51c44addfdb4c1252e408ef11688bf996",
+        "press-kit/screens/kleidos-screen-m5stickc-plus-se.png": "80f170e144bd88c8e1af234305419ad51c44addfdb4c1252e408ef11688bf996",
+        "press-kit/screens/kleidos-screen-coreink.png": "78cc9bf8a31b9e653f9c4fb9103e37ca74409e4d496dc63ef39615660a45275c",
+        "press-kit/screens/kleidos-screen-cores3-se.png": "b9c566b1af2c831bc3dcfdb57e19f699c1a230af70a06a6ddc3f4aebcda9cb70",
+        "press-kit/screens/kleidos-screen-m5stack-core2-v13.png": "9f660bf0984693441bf8575f67c02ea6ef5d64005fcf1d0b99d5ea22e671846a",
+        "press-kit/screens/kleidos-screen-cardputer.png": "280637e53867d7f1886188e866acca6b93752de9cca3978f16190b373be7b4ad",
+        "press-kit/screens/kleidos-screen-tdeck-plus.png": "e413748d412d687e5a4a6f84fa6022a4cbc49a6bf1b14286042c8ad8ed040b5f",
+        "boards/boards.json": "2fc93598d2f55a45e56618cf53496ffc3eb1d1b6c4d17efe6f4937796f2358f1",
+        "boards/sticks3.svg": "0c893adb838469d0a5b503130061349feaeeb0d6064d1d62e8a69fa03c2c855f",
+        "boards/m5stickc-plus2.svg": "170040d38f2c50673eb334000859a443728ca72bcc36b6045c2c99739c0d7c0d",
+        "boards/m5stickc-plus1.svg": "4ce11832f7ef5bbb27a1433876c2b089653f676599afc89fea0e6ddbfb0e9071",
+        "boards/m5stickc-plus-se.svg": "34ec8bc51f51f1a4e3fcccdf89cab657dc89985ccbecc2037b9989187873db38",
+        "boards/coreink.svg": "edce2ac26f6821820b2771396ba0b4286592b30563acf706c839dcff1e6cf292",
+        "boards/cores3-se.svg": "3ee6a8ee427f20096cbb91bbc27c45206758be2c01bcae98e24b1c5e1f175545",
+        "boards/m5stack-core2-v13.svg": "ac4cbd3e8f91d643dbe987fb9c4ff164a363edd486a1ae95be4bf388ab153fa2",
+        "boards/cardputer.svg": "38b711a307e4ca32a3b07e5955346c43e6e2912d90b5d2770384d47ec15dd127",
+        "boards/tdeck-plus.svg": "068a289dd46121f4dcaa92046ab38bcf75ee735ae514d6a1831f95b636f6286c",
+        "fonts/inter/Inter-Regular.ttf": "40d692fce188e4471e2b3cba937be967878f631ad3ebbbdcd587687c7ebe0c82",
+        "fonts/inter/Inter-Medium.ttf": "97ad806f526e41546d46365bb3a393145f75b7b1568913db74549ad8b8dba872",
+        "fonts/inter/Inter-Bold.ttf": "288316099b1e0a47a4716d159098005eef7c0066921f34e3200393dbdb01947f"
+      }
+    },
+    "press-kit/images/kleidos-boards-4x5-light.png": {
+      "sha256": "fcb01e72b1b57fa1ddbc980cb468d235d87ee7f1e88161d62d7701601e86d84f",
+      "bytes": 572722,
+      "size": [
+        2160,
+        2700
+      ],
+      "drawn_from": "4d0c22e58a642b42d9fc01730c777b90ce96223fe65fabc10824027092f0cd48",
+      "inputs": {
+        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
+        "tokens/tokens.json": "68e595d90b2dd2cf2b5d50a0b5cb4de7a4a987a5f3e7c3385905c934a39462ed",
+        "fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435",
+        "fonts/mona-sans/MonaSansMonoVF[wght].ttf": "e1d0ba93b9abf682de1bd67d20b58d312fab5d0cbe8fe012e2b1ab7687b42219",
+        "press-kit/src/press.json": "8b266a23f3999b4d4b8655d32eb250acc7bf3b5b8da1a0b5c9b198acce1dfa90",
+        "press-kit/src/boards-4x5.svg": "384223fa45c4c788744071f3b57376b6e76c3e2907a464f79233a2b71ec21bb6",
+        "press-kit/screens/kleidos-screen-sticks3.png": "dcd8457f76e3325008a506cb4ce79262b4e5c2b62dcb88ebba6f5603a6465bfd",
+        "press-kit/screens/kleidos-screen-m5stickc-plus2.png": "80f170e144bd88c8e1af234305419ad51c44addfdb4c1252e408ef11688bf996",
+        "press-kit/screens/kleidos-screen-m5stickc-plus1.png": "80f170e144bd88c8e1af234305419ad51c44addfdb4c1252e408ef11688bf996",
+        "press-kit/screens/kleidos-screen-m5stickc-plus-se.png": "80f170e144bd88c8e1af234305419ad51c44addfdb4c1252e408ef11688bf996",
+        "press-kit/screens/kleidos-screen-coreink.png": "78cc9bf8a31b9e653f9c4fb9103e37ca74409e4d496dc63ef39615660a45275c",
+        "press-kit/screens/kleidos-screen-cores3-se.png": "b9c566b1af2c831bc3dcfdb57e19f699c1a230af70a06a6ddc3f4aebcda9cb70",
+        "press-kit/screens/kleidos-screen-m5stack-core2-v13.png": "9f660bf0984693441bf8575f67c02ea6ef5d64005fcf1d0b99d5ea22e671846a",
+        "press-kit/screens/kleidos-screen-cardputer.png": "280637e53867d7f1886188e866acca6b93752de9cca3978f16190b373be7b4ad",
+        "press-kit/screens/kleidos-screen-tdeck-plus.png": "e413748d412d687e5a4a6f84fa6022a4cbc49a6bf1b14286042c8ad8ed040b5f",
+        "boards/boards.json": "2fc93598d2f55a45e56618cf53496ffc3eb1d1b6c4d17efe6f4937796f2358f1",
+        "boards/sticks3.svg": "0c893adb838469d0a5b503130061349feaeeb0d6064d1d62e8a69fa03c2c855f",
+        "boards/m5stickc-plus2.svg": "170040d38f2c50673eb334000859a443728ca72bcc36b6045c2c99739c0d7c0d",
+        "boards/m5stickc-plus1.svg": "4ce11832f7ef5bbb27a1433876c2b089653f676599afc89fea0e6ddbfb0e9071",
+        "boards/m5stickc-plus-se.svg": "34ec8bc51f51f1a4e3fcccdf89cab657dc89985ccbecc2037b9989187873db38",
+        "boards/coreink.svg": "edce2ac26f6821820b2771396ba0b4286592b30563acf706c839dcff1e6cf292",
+        "boards/cores3-se.svg": "3ee6a8ee427f20096cbb91bbc27c45206758be2c01bcae98e24b1c5e1f175545",
+        "boards/m5stack-core2-v13.svg": "ac4cbd3e8f91d643dbe987fb9c4ff164a363edd486a1ae95be4bf388ab153fa2",
+        "boards/cardputer.svg": "38b711a307e4ca32a3b07e5955346c43e6e2912d90b5d2770384d47ec15dd127",
+        "boards/tdeck-plus.svg": "068a289dd46121f4dcaa92046ab38bcf75ee735ae514d6a1831f95b636f6286c",
+        "fonts/inter/Inter-Regular.ttf": "40d692fce188e4471e2b3cba937be967878f631ad3ebbbdcd587687c7ebe0c82",
+        "fonts/inter/Inter-Medium.ttf": "97ad806f526e41546d46365bb3a393145f75b7b1568913db74549ad8b8dba872",
+        "fonts/inter/Inter-Bold.ttf": "288316099b1e0a47a4716d159098005eef7c0066921f34e3200393dbdb01947f"
+      }
+    },
+    "press-kit/images/kleidos-boards-4x5-light-es.png": {
+      "sha256": "f3b29e4a64786f5e3fc362ad60e7070ad0954f9277a06479fdd5c92c9e6a14ba",
+      "bytes": 582144,
+      "size": [
+        2160,
+        2700
+      ],
+      "drawn_from": "9f7e4e46d1db9185fdbc8f04595542010b5cf327db15be9fcaac88fb986965dd",
+      "inputs": {
+        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
+        "tokens/tokens.json": "68e595d90b2dd2cf2b5d50a0b5cb4de7a4a987a5f3e7c3385905c934a39462ed",
+        "fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435",
+        "fonts/mona-sans/MonaSansMonoVF[wght].ttf": "e1d0ba93b9abf682de1bd67d20b58d312fab5d0cbe8fe012e2b1ab7687b42219",
+        "press-kit/src/press.json": "8b266a23f3999b4d4b8655d32eb250acc7bf3b5b8da1a0b5c9b198acce1dfa90",
+        "press-kit/src/boards-4x5.svg": "384223fa45c4c788744071f3b57376b6e76c3e2907a464f79233a2b71ec21bb6",
+        "press-kit/screens/kleidos-screen-sticks3.png": "dcd8457f76e3325008a506cb4ce79262b4e5c2b62dcb88ebba6f5603a6465bfd",
+        "press-kit/screens/kleidos-screen-m5stickc-plus2.png": "80f170e144bd88c8e1af234305419ad51c44addfdb4c1252e408ef11688bf996",
+        "press-kit/screens/kleidos-screen-m5stickc-plus1.png": "80f170e144bd88c8e1af234305419ad51c44addfdb4c1252e408ef11688bf996",
+        "press-kit/screens/kleidos-screen-m5stickc-plus-se.png": "80f170e144bd88c8e1af234305419ad51c44addfdb4c1252e408ef11688bf996",
+        "press-kit/screens/kleidos-screen-coreink.png": "78cc9bf8a31b9e653f9c4fb9103e37ca74409e4d496dc63ef39615660a45275c",
+        "press-kit/screens/kleidos-screen-cores3-se.png": "b9c566b1af2c831bc3dcfdb57e19f699c1a230af70a06a6ddc3f4aebcda9cb70",
+        "press-kit/screens/kleidos-screen-m5stack-core2-v13.png": "9f660bf0984693441bf8575f67c02ea6ef5d64005fcf1d0b99d5ea22e671846a",
+        "press-kit/screens/kleidos-screen-cardputer.png": "280637e53867d7f1886188e866acca6b93752de9cca3978f16190b373be7b4ad",
+        "press-kit/screens/kleidos-screen-tdeck-plus.png": "e413748d412d687e5a4a6f84fa6022a4cbc49a6bf1b14286042c8ad8ed040b5f",
+        "boards/boards.json": "2fc93598d2f55a45e56618cf53496ffc3eb1d1b6c4d17efe6f4937796f2358f1",
+        "boards/sticks3.svg": "0c893adb838469d0a5b503130061349feaeeb0d6064d1d62e8a69fa03c2c855f",
+        "boards/m5stickc-plus2.svg": "170040d38f2c50673eb334000859a443728ca72bcc36b6045c2c99739c0d7c0d",
+        "boards/m5stickc-plus1.svg": "4ce11832f7ef5bbb27a1433876c2b089653f676599afc89fea0e6ddbfb0e9071",
+        "boards/m5stickc-plus-se.svg": "34ec8bc51f51f1a4e3fcccdf89cab657dc89985ccbecc2037b9989187873db38",
+        "boards/coreink.svg": "edce2ac26f6821820b2771396ba0b4286592b30563acf706c839dcff1e6cf292",
+        "boards/cores3-se.svg": "3ee6a8ee427f20096cbb91bbc27c45206758be2c01bcae98e24b1c5e1f175545",
+        "boards/m5stack-core2-v13.svg": "ac4cbd3e8f91d643dbe987fb9c4ff164a363edd486a1ae95be4bf388ab153fa2",
+        "boards/cardputer.svg": "38b711a307e4ca32a3b07e5955346c43e6e2912d90b5d2770384d47ec15dd127",
+        "boards/tdeck-plus.svg": "068a289dd46121f4dcaa92046ab38bcf75ee735ae514d6a1831f95b636f6286c",
+        "fonts/inter/Inter-Regular.ttf": "40d692fce188e4471e2b3cba937be967878f631ad3ebbbdcd587687c7ebe0c82",
+        "fonts/inter/Inter-Medium.ttf": "97ad806f526e41546d46365bb3a393145f75b7b1568913db74549ad8b8dba872",
+        "fonts/inter/Inter-Bold.ttf": "288316099b1e0a47a4716d159098005eef7c0066921f34e3200393dbdb01947f"
+      }
+    },
+    "press-kit/screens/kleidos-screen-sticks3-8x.png": {
+      "sha256": "090b6daf8d8ea73a15057e6579804ae28da38b147e1143c3671d0e758c1b24f3",
+      "bytes": 18435,
+      "size": [
+        1080,
+        1920
+      ],
+      "drawn_from": "dcd8457f76e3325008a506cb4ce79262b4e5c2b62dcb88ebba6f5603a6465bfd",
+      "inputs": {
+        "press-kit/screens/kleidos-screen-sticks3.png": "dcd8457f76e3325008a506cb4ce79262b4e5c2b62dcb88ebba6f5603a6465bfd",
+        "press-kit/src/press.json": "8b266a23f3999b4d4b8655d32eb250acc7bf3b5b8da1a0b5c9b198acce1dfa90"
+      }
+    },
+    "press-kit/screens/kleidos-screen-m5stickc-plus2-8x.png": {
+      "sha256": "de8afd0b3e538a35d7075acef1e18b7667b2cc46d55033e8288a30a53638270a",
+      "bytes": 18399,
+      "size": [
+        1080,
+        1920
+      ],
+      "drawn_from": "80f170e144bd88c8e1af234305419ad51c44addfdb4c1252e408ef11688bf996",
+      "inputs": {
+        "press-kit/screens/kleidos-screen-m5stickc-plus2.png": "80f170e144bd88c8e1af234305419ad51c44addfdb4c1252e408ef11688bf996",
+        "press-kit/src/press.json": "8b266a23f3999b4d4b8655d32eb250acc7bf3b5b8da1a0b5c9b198acce1dfa90"
+      }
+    },
+    "press-kit/screens/kleidos-screen-m5stickc-plus1-8x.png": {
+      "sha256": "de8afd0b3e538a35d7075acef1e18b7667b2cc46d55033e8288a30a53638270a",
+      "bytes": 18399,
+      "size": [
+        1080,
+        1920
+      ],
+      "drawn_from": "80f170e144bd88c8e1af234305419ad51c44addfdb4c1252e408ef11688bf996",
+      "inputs": {
+        "press-kit/screens/kleidos-screen-m5stickc-plus1.png": "80f170e144bd88c8e1af234305419ad51c44addfdb4c1252e408ef11688bf996",
+        "press-kit/src/press.json": "8b266a23f3999b4d4b8655d32eb250acc7bf3b5b8da1a0b5c9b198acce1dfa90"
+      }
+    },
+    "press-kit/screens/kleidos-screen-m5stickc-plus-se-8x.png": {
+      "sha256": "de8afd0b3e538a35d7075acef1e18b7667b2cc46d55033e8288a30a53638270a",
+      "bytes": 18399,
+      "size": [
+        1080,
+        1920
+      ],
+      "drawn_from": "80f170e144bd88c8e1af234305419ad51c44addfdb4c1252e408ef11688bf996",
+      "inputs": {
+        "press-kit/screens/kleidos-screen-m5stickc-plus-se.png": "80f170e144bd88c8e1af234305419ad51c44addfdb4c1252e408ef11688bf996",
+        "press-kit/src/press.json": "8b266a23f3999b4d4b8655d32eb250acc7bf3b5b8da1a0b5c9b198acce1dfa90"
+      }
+    },
+    "press-kit/screens/kleidos-screen-coreink-6x.png": {
+      "sha256": "8b58ea8f7fd9811f54f92d1800639d242efce02de904e282adcf973186a647e3",
+      "bytes": 8118,
+      "size": [
+        1200,
+        1200
+      ],
+      "drawn_from": "78cc9bf8a31b9e653f9c4fb9103e37ca74409e4d496dc63ef39615660a45275c",
+      "inputs": {
+        "press-kit/screens/kleidos-screen-coreink.png": "78cc9bf8a31b9e653f9c4fb9103e37ca74409e4d496dc63ef39615660a45275c",
+        "press-kit/src/press.json": "8b266a23f3999b4d4b8655d32eb250acc7bf3b5b8da1a0b5c9b198acce1dfa90"
+      }
+    },
+    "press-kit/screens/kleidos-screen-cardputer-8x.png": {
+      "sha256": "50fc82a5651983539131261cb75721cfb3b454b35c6ed0911eb4528804ed6c15",
+      "bytes": 12923,
+      "size": [
+        1920,
+        1080
+      ],
+      "drawn_from": "280637e53867d7f1886188e866acca6b93752de9cca3978f16190b373be7b4ad",
+      "inputs": {
+        "press-kit/screens/kleidos-screen-cardputer.png": "280637e53867d7f1886188e866acca6b93752de9cca3978f16190b373be7b4ad",
+        "press-kit/src/press.json": "8b266a23f3999b4d4b8655d32eb250acc7bf3b5b8da1a0b5c9b198acce1dfa90"
+      }
+    },
+    "press-kit/screens/kleidos-screen-tdeck-plus-6x.png": {
+      "sha256": "f7292880b57e873d00285933c879ef61c7934c1e73714b483f0a3b489df306b1",
+      "bytes": 16588,
+      "size": [
+        1920,
+        1440
+      ],
+      "drawn_from": "e413748d412d687e5a4a6f84fa6022a4cbc49a6bf1b14286042c8ad8ed040b5f",
+      "inputs": {
+        "press-kit/screens/kleidos-screen-tdeck-plus.png": "e413748d412d687e5a4a6f84fa6022a4cbc49a6bf1b14286042c8ad8ed040b5f",
+        "press-kit/src/press.json": "8b266a23f3999b4d4b8655d32eb250acc7bf3b5b8da1a0b5c9b198acce1dfa90"
+      }
+    },
+    "press-kit/screens/kleidos-screen-cores3-se-6x.png": {
+      "sha256": "15e4f5eafc9682217a8f73b30b1cb17f25bbfb8a8a6c69420d497cf84c26c392",
+      "bytes": 20607,
+      "size": [
+        1920,
+        1440
+      ],
+      "drawn_from": "b9c566b1af2c831bc3dcfdb57e19f699c1a230af70a06a6ddc3f4aebcda9cb70",
+      "inputs": {
+        "press-kit/screens/kleidos-screen-cores3-se.png": "b9c566b1af2c831bc3dcfdb57e19f699c1a230af70a06a6ddc3f4aebcda9cb70",
+        "press-kit/src/press.json": "8b266a23f3999b4d4b8655d32eb250acc7bf3b5b8da1a0b5c9b198acce1dfa90"
+      }
+    },
+    "press-kit/screens/kleidos-screen-m5stack-core2-v13-6x.png": {
+      "sha256": "4d9f81d28c8c16f24bedcd270eb9ed70ec7a8ce74e3cd59e54a81f13899a9487",
+      "bytes": 20944,
+      "size": [
+        1920,
+        1440
+      ],
+      "drawn_from": "9f660bf0984693441bf8575f67c02ea6ef5d64005fcf1d0b99d5ea22e671846a",
+      "inputs": {
+        "press-kit/screens/kleidos-screen-m5stack-core2-v13.png": "9f660bf0984693441bf8575f67c02ea6ef5d64005fcf1d0b99d5ea22e671846a",
+        "press-kit/src/press.json": "8b266a23f3999b4d4b8655d32eb250acc7bf3b5b8da1a0b5c9b198acce1dfa90"
+      }
+    },
+    "press-kit/photos/kleidos-photo-four-boards-1920.jpg": {
+      "sha256": "a46ee7b9e6a4fea9f3874e400b0e9f20a840b88942db4d5d478941e6a11c448b",
+      "bytes": 927964,
+      "size": [
+        1920,
+        1440
+      ],
+      "drawn_from": "36b9c9ed30bfd25397063ed824c87ed94d817439adbd14827a11f1b1a79dec4c",
+      "inputs": {
+        "press-kit/photos/kleidos-photo-four-boards.jpg": "36b9c9ed30bfd25397063ed824c87ed94d817439adbd14827a11f1b1a79dec4c",
+        "press-kit/src/press.json": "8b266a23f3999b4d4b8655d32eb250acc7bf3b5b8da1a0b5c9b198acce1dfa90"
+      }
+    },
+    "press-kit/photos/kleidos-photo-four-boards-1200.jpg": {
+      "sha256": "3c403f96a025f1ff6747f65120d471b1d36a76dd38f5c00f25112cf2a4929c6c",
+      "bytes": 415219,
+      "size": [
+        1200,
+        900
+      ],
+      "drawn_from": "36b9c9ed30bfd25397063ed824c87ed94d817439adbd14827a11f1b1a79dec4c",
+      "inputs": {
+        "press-kit/photos/kleidos-photo-four-boards.jpg": "36b9c9ed30bfd25397063ed824c87ed94d817439adbd14827a11f1b1a79dec4c",
+        "press-kit/src/press.json": "8b266a23f3999b4d4b8655d32eb250acc7bf3b5b8da1a0b5c9b198acce1dfa90"
+      }
+    }
+  }
+}

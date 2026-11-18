@@ -1,0 +1,129 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-12.0 -6.0 64 76" width="64mm" height="76mm" shape-rendering="geometricPrecision" font-family="Inter, Helvetica, Arial, sans-serif">
+<title>M5Stack CoreInk: front mockup (1 SVG unit = 1 mm)</title>
+<defs>
+<filter id="shadow_coreink" x="-10%" y="-10%" width="120%" height="120%">
+<feDropShadow dx="0.3" dy="0.6" stdDeviation="0.6" flood-opacity="0.28"/>
+</filter>
+<linearGradient id="case_coreink" x1="0" y1="0" x2="0" y2="1">
+<stop offset="0%" stop-color="#f7f7f5"/>
+<stop offset="100%" stop-color="#e6e6e1"/>
+</linearGradient>
+</defs>
+<path d="M 3 0 H 37 A 3 3 0 0 1 40 3 V 53 A 3 3 0 0 1 37 56 H 3 A 3 3 0 0 1 0 53 V 3 A 3 3 0 0 1 3 0 Z M 1.7 4 a 2.3 2.3 0 1 0 4.6 0 a 2.3 2.3 0 1 0 -4.6 0 Z M 33.7 4 a 2.3 2.3 0 1 0 4.6 0 a 2.3 2.3 0 1 0 -4.6 0 Z M 1.7 52 a 2.3 2.3 0 1 0 4.6 0 a 2.3 2.3 0 1 0 -4.6 0 Z M 33.7 52 a 2.3 2.3 0 1 0 4.6 0 a 2.3 2.3 0 1 0 -4.6 0 Z" fill="url(#case_coreink)" fill-rule="evenodd" stroke="#bcbcb8" stroke-width="0.25" filter="url(#shadow_coreink)"/>
+<defs>
+<linearGradient id="countersink_coreink" x1="0" y1="0" x2="1" y2="1">
+<stop offset="0%" stop-color="#b0b0ac"/>
+<stop offset="45%" stop-color="#d8d8d4"/>
+<stop offset="75%" stop-color="#fbfbfa"/>
+<stop offset="100%" stop-color="#ffffff"/>
+</linearGradient>
+</defs>
+<path d="M 0.85 4 a 3.15 3.15 0 1 0 6.3 0 a 3.15 3.15 0 1 0 -6.3 0 Z M 1.7 4 a 2.3 2.3 0 1 0 4.6 0 a 2.3 2.3 0 1 0 -4.6 0 Z" fill="url(#countersink_coreink)" fill-rule="evenodd"/>
+<circle cx="4" cy="4" r="3.15" fill="none" stroke="#c9c9c5" stroke-width="0.1"/>
+<circle cx="4" cy="4" r="2.3" fill="none" stroke="#8e8e8a" stroke-width="0.14"/>
+<path d="M 32.85 4 a 3.15 3.15 0 1 0 6.3 0 a 3.15 3.15 0 1 0 -6.3 0 Z M 33.7 4 a 2.3 2.3 0 1 0 4.6 0 a 2.3 2.3 0 1 0 -4.6 0 Z" fill="url(#countersink_coreink)" fill-rule="evenodd"/>
+<circle cx="36" cy="4" r="3.15" fill="none" stroke="#c9c9c5" stroke-width="0.1"/>
+<circle cx="36" cy="4" r="2.3" fill="none" stroke="#8e8e8a" stroke-width="0.14"/>
+<path d="M 0.85 52 a 3.15 3.15 0 1 0 6.3 0 a 3.15 3.15 0 1 0 -6.3 0 Z M 1.7 52 a 2.3 2.3 0 1 0 4.6 0 a 2.3 2.3 0 1 0 -4.6 0 Z" fill="url(#countersink_coreink)" fill-rule="evenodd"/>
+<circle cx="4" cy="52" r="3.15" fill="none" stroke="#c9c9c5" stroke-width="0.1"/>
+<circle cx="4" cy="52" r="2.3" fill="none" stroke="#8e8e8a" stroke-width="0.14"/>
+<path d="M 32.85 52 a 3.15 3.15 0 1 0 6.3 0 a 3.15 3.15 0 1 0 -6.3 0 Z M 33.7 52 a 2.3 2.3 0 1 0 4.6 0 a 2.3 2.3 0 1 0 -4.6 0 Z" fill="url(#countersink_coreink)" fill-rule="evenodd"/>
+<circle cx="36" cy="52" r="3.15" fill="none" stroke="#c9c9c5" stroke-width="0.1"/>
+<circle cx="36" cy="52" r="2.3" fill="none" stroke="#8e8e8a" stroke-width="0.14"/>
+<path d="M 9.19 0 V 2.2 Q 9.19 2.9 9.89 2.9 H 30.11 Q 30.81 2.9 30.81 2.2 V 0" fill="none" stroke="#ffffff" stroke-width="0.16" transform="translate(0.1 0.12)"/>
+<path d="M 9.19 0 V 2.2 Q 9.19 2.9 9.89 2.9 H 30.11 Q 30.81 2.9 30.81 2.2 V 0" fill="none" stroke="#9a9a96" stroke-width="0.14"/>
+<defs>
+<clipPath id="window_coreink">
+<rect x="4.96" y="10.695" width="30.23" height="29.54" rx="0.6" ry="0.6" fill="#000"/>
+</clipPath>
+</defs>
+<g clip-path="url(#window_coreink)">
+<polygon points="4.96,10.695 35.19,10.695 33.99,11.66 6.39,11.66" fill="#d3d3cf"/>
+<polygon points="4.96,10.695 6.39,11.66 6.39,39.26 4.96,40.235" fill="#c6c6c2"/>
+<polygon points="35.19,10.695 35.19,40.235 33.99,39.26 33.99,11.66" fill="#fafaf8"/>
+<polygon points="4.96,40.235 6.39,39.26 33.99,39.26 35.19,40.235" fill="#f4f4f2"/>
+</g>
+<rect x="4.96" y="10.695" width="30.23" height="29.54" rx="0.6" ry="0.6" fill="none" stroke="#d9d9d5" stroke-width="0.1"/>
+<rect x="6.34" y="11.61" width="27.7" height="27.7" fill="none" stroke="#a6a6a2" stroke-width="0.1"/>
+<path d="M 6.28 39.26 V 11.55 H 33.99" fill="none" stroke="#85857f" stroke-width="0.22"/>
+<rect x="6.39" y="11.66" width="27.6" height="27.6" fill="#c8c8c4"/>
+<rect id="screen-active" x="6.39" y="11.66" width="27.6" height="27.6" fill="none" data-resolution="200x200"/>
+<defs>
+<linearGradient id="dial_pocket_coreink" x1="0" y1="0" x2="1" y2="0">
+<stop offset="0%" stop-color="#cfcfcb"/>
+<stop offset="55%" stop-color="#bdbdb9"/>
+<stop offset="100%" stop-color="#c9c9c5"/>
+</linearGradient>
+</defs>
+<polygon points="40,9.95 37.53,13.75 37.53,25.75 40,29.6" fill="url(#dial_pocket_coreink)" stroke="#b2b2ae" stroke-width="0.08"/>
+<path d="M 37.92 15.87 L 37.92 15.87 L 38.087 16.342 L 38.547 16.54 L 38.633 17.033 L 39.053 17.304 L 39.056 17.805 L 39.426 18.142 L 39.345 18.637 L 39.653 19.031 L 39.492 19.505 L 39.73 19.945 L 39.492 20.385 L 39.653 20.859 L 39.345 21.253 L 39.426 21.748 L 39.056 22.085 L 39.053 22.586 L 38.633 22.857 L 38.547 23.35 L 38.087 23.548 L 37.92 24.02 L 37.92 24.02 Z" fill="#262628" stroke="#111113" stroke-width="0.08" stroke-linejoin="round"/>
+<line x1="38.12" y1="16.745" x2="38.12" y2="23.145" stroke="#4a4a4e" stroke-width="0.12"/>
+<defs>
+<clipPath id="m5_deboss_coreink"><path d="M 12.32 42.94 L 13.51 42.94 L 16.52 46.81 L 19.54 42.94 L 20.72 42.94 L 20.72 52.81 L 19.54 52.81 L 19.54 45.35 L 16.52 49.2 L 13.51 45.35 L 13.51 52.81 L 12.32 52.81 Z M 21.78 42.94 L 28.19 42.94 L 28.19 44.16 L 22.97 44.16 L 22.97 46.51 L 25.833 46.511 L 26.409 46.717 L 26.937 47.028 L 27.397 47.433 L 27.773 47.917 L 28.051 48.462 L 28.222 49.05 L 28.28 49.66 L 28.222 50.27 L 28.051 50.858 L 27.773 51.403 L 27.397 51.887 L 26.937 52.292 L 26.409 52.603 L 25.833 52.809 L 21.78 52.81 L 21.78 51.72 L 25.885 51.749 L 26.145 51.55 L 26.376 51.316 L 26.572 51.054 L 26.73 50.766 L 26.847 50.46 L 26.921 50.14 L 26.95 49.813 L 26.933 49.486 L 26.871 49.164 L 26.766 48.853 L 26.618 48.56 L 26.431 48.29 L 26.209 48.049 L 25.956 47.841 L 21.78 47.82 Z"/></clipPath>
+</defs>
+<g clip-path="url(#m5_deboss_coreink)" fill="none" stroke-linecap="round">
+<line x1="12.32" y1="42.94" x2="13.51" y2="42.94" stroke="#a5a5a1" stroke-width="0.36" opacity="0.78"/>
+<line x1="13.51" y1="42.94" x2="16.52" y2="46.81" stroke="#ffffff" stroke-width="0.64" opacity="0.14"/>
+<line x1="16.52" y1="46.81" x2="19.54" y2="42.94" stroke="#a5a5a1" stroke-width="0.36" opacity="1.00"/>
+<line x1="19.54" y1="42.94" x2="20.72" y2="42.94" stroke="#a5a5a1" stroke-width="0.36" opacity="0.78"/>
+<line x1="20.72" y1="42.94" x2="20.72" y2="52.81" stroke="#ffffff" stroke-width="0.64" opacity="0.78"/>
+<line x1="20.72" y1="52.81" x2="19.54" y2="52.81" stroke="#ffffff" stroke-width="0.64" opacity="0.78"/>
+<line x1="19.54" y1="52.81" x2="19.54" y2="45.35" stroke="#a5a5a1" stroke-width="0.36" opacity="0.78"/>
+<line x1="19.54" y1="45.35" x2="16.52" y2="49.2" stroke="#ffffff" stroke-width="0.64" opacity="1.00"/>
+<line x1="16.52" y1="49.2" x2="13.51" y2="45.35" stroke="#a5a5a1" stroke-width="0.36" opacity="0.13"/>
+<line x1="13.51" y1="45.35" x2="13.51" y2="52.81" stroke="#ffffff" stroke-width="0.64" opacity="0.78"/>
+<line x1="13.51" y1="52.81" x2="12.32" y2="52.81" stroke="#ffffff" stroke-width="0.64" opacity="0.78"/>
+<line x1="12.32" y1="52.81" x2="12.32" y2="42.94" stroke="#a5a5a1" stroke-width="0.36" opacity="0.78"/>
+<line x1="21.78" y1="42.94" x2="28.19" y2="42.94" stroke="#a5a5a1" stroke-width="0.36" opacity="0.78"/>
+<line x1="28.19" y1="42.94" x2="28.19" y2="44.16" stroke="#ffffff" stroke-width="0.64" opacity="0.78"/>
+<line x1="28.19" y1="44.16" x2="22.97" y2="44.16" stroke="#ffffff" stroke-width="0.64" opacity="0.78"/>
+<line x1="22.97" y1="44.16" x2="22.97" y2="46.51" stroke="#ffffff" stroke-width="0.64" opacity="0.78"/>
+<line x1="22.97" y1="46.51" x2="25.833" y2="46.511" stroke="#a5a5a1" stroke-width="0.36" opacity="0.78"/>
+<line x1="25.833" y1="46.511" x2="26.409" y2="46.717" stroke="#a5a5a1" stroke-width="0.36" opacity="0.47"/>
+<line x1="26.409" y1="46.717" x2="26.937" y2="47.028" stroke="#a5a5a1" stroke-width="0.36" opacity="0.28"/>
+<line x1="26.937" y1="47.028" x2="27.397" y2="47.433" stroke="#a5a5a1" stroke-width="0.36" opacity="0.07"/>
+<line x1="27.397" y1="47.433" x2="27.773" y2="47.917" stroke="#ffffff" stroke-width="0.64" opacity="0.14"/>
+<line x1="27.773" y1="47.917" x2="28.051" y2="48.462" stroke="#ffffff" stroke-width="0.64" opacity="0.34"/>
+<line x1="28.051" y1="48.462" x2="28.222" y2="49.05" stroke="#ffffff" stroke-width="0.64" opacity="0.53"/>
+<line x1="28.222" y1="49.05" x2="28.28" y2="49.66" stroke="#ffffff" stroke-width="0.64" opacity="0.70"/>
+<line x1="28.28" y1="49.66" x2="28.222" y2="50.27" stroke="#ffffff" stroke-width="0.64" opacity="0.85"/>
+<line x1="28.222" y1="50.27" x2="28.051" y2="50.858" stroke="#ffffff" stroke-width="0.64" opacity="0.96"/>
+<line x1="28.051" y1="50.858" x2="27.773" y2="51.403" stroke="#ffffff" stroke-width="0.64" opacity="1.00"/>
+<line x1="27.773" y1="51.403" x2="27.397" y2="51.887" stroke="#ffffff" stroke-width="0.64" opacity="1.00"/>
+<line x1="27.397" y1="51.887" x2="26.937" y2="52.292" stroke="#ffffff" stroke-width="0.64" opacity="1.00"/>
+<line x1="26.937" y1="52.292" x2="26.409" y2="52.603" stroke="#ffffff" stroke-width="0.64" opacity="1.00"/>
+<line x1="26.409" y1="52.603" x2="25.833" y2="52.809" stroke="#ffffff" stroke-width="0.64" opacity="0.99"/>
+<line x1="25.833" y1="52.809" x2="21.78" y2="52.81" stroke="#ffffff" stroke-width="0.64" opacity="0.78"/>
+<line x1="21.78" y1="52.81" x2="21.78" y2="51.72" stroke="#a5a5a1" stroke-width="0.36" opacity="0.78"/>
+<line x1="21.78" y1="51.72" x2="25.885" y2="51.749" stroke="#a5a5a1" stroke-width="0.36" opacity="0.77"/>
+<line x1="25.885" y1="51.749" x2="26.145" y2="51.55" stroke="#a5a5a1" stroke-width="0.36" opacity="1.00"/>
+<line x1="26.145" y1="51.55" x2="26.376" y2="51.316" stroke="#a5a5a1" stroke-width="0.36" opacity="1.00"/>
+<line x1="26.376" y1="51.316" x2="26.572" y2="51.054" stroke="#a5a5a1" stroke-width="0.36" opacity="1.00"/>
+<line x1="26.572" y1="51.054" x2="26.73" y2="50.766" stroke="#a5a5a1" stroke-width="0.36" opacity="1.00"/>
+<line x1="26.73" y1="50.766" x2="26.847" y2="50.46" stroke="#a5a5a1" stroke-width="0.36" opacity="1.00"/>
+<line x1="26.847" y1="50.46" x2="26.921" y2="50.14" stroke="#a5a5a1" stroke-width="0.36" opacity="0.93"/>
+<line x1="26.921" y1="50.14" x2="26.95" y2="49.813" stroke="#a5a5a1" stroke-width="0.36" opacity="0.84"/>
+<line x1="26.95" y1="49.813" x2="26.933" y2="49.486" stroke="#a5a5a1" stroke-width="0.36" opacity="0.74"/>
+<line x1="26.933" y1="49.486" x2="26.871" y2="49.164" stroke="#a5a5a1" stroke-width="0.36" opacity="0.62"/>
+<line x1="26.871" y1="49.164" x2="26.766" y2="48.853" stroke="#a5a5a1" stroke-width="0.36" opacity="0.49"/>
+<line x1="26.766" y1="48.853" x2="26.618" y2="48.56" stroke="#a5a5a1" stroke-width="0.36" opacity="0.34"/>
+<line x1="26.618" y1="48.56" x2="26.431" y2="48.29" stroke="#a5a5a1" stroke-width="0.36" opacity="0.20"/>
+<line x1="26.209" y1="48.049" x2="25.956" y2="47.841" stroke="#ffffff" stroke-width="0.64" opacity="0.11"/>
+<line x1="25.956" y1="47.841" x2="21.78" y2="47.82" stroke="#ffffff" stroke-width="0.64" opacity="0.77"/>
+<line x1="21.78" y1="47.82" x2="21.78" y2="42.94" stroke="#a5a5a1" stroke-width="0.36" opacity="0.78"/>
+</g>
+<g id="hotspots" display="none">
+<circle id="hs-DialUp" cx="38.825" cy="17.895" r="0.905" data-face="right" data-w="1.81" data-h="2.05" data-label="▲"/>
+<circle id="hs-DialMid" cx="38.825" cy="19.945" r="0.905" data-face="right" data-w="1.81" data-h="2.05" data-label="OK"/>
+<circle id="hs-DialDown" cx="38.825" cy="21.995" r="0.905" data-face="right" data-w="1.81" data-h="2.05" data-label="▼"/>
+<circle id="hs-Power" cx="40" cy="41" r="0.35" data-face="right" data-w="0.7" data-h="3.88"/>
+<circle id="hs-BtnEXT" cx="26" cy="0" r="0.35" data-face="top" data-w="5.28" data-h="0.7"/>
+</g>
+<g id="annotations">
+<text x="41.2" y="41.5" font-size="1.4" fill="#7d7d80" text-anchor="start" font-weight="400">Power</text>
+<text x="26" y="-0.6" font-size="1.4" fill="#7d7d80" text-anchor="middle" font-weight="400">BtnEXT</text>
+<text x="20" y="-3.0" font-size="1.8" fill="#7d7d80" text-anchor="middle">40 mm</text>
+<text x="-7.5" y="28" font-size="1.8" fill="#7d7d80" text-anchor="middle" transform="rotate(-90 -7.5 28)">56 mm</text>
+<text x="20" y="64.5" font-size="2.6" fill="#2c2c30" text-anchor="middle" font-weight="700">M5Stack CoreInk</text>
+</g>
+</svg>
