@@ -39,7 +39,7 @@ python3 -m venv .venv
 .venv/bin/python tools/sync_from_boards.py --copy <boards checkout>   # copy the fronts again, with the commit
 ```
 
-Python 3.14. Pictures are drawn by Playwright's Chromium, headless, from SVG files that hold outlines only (no picture depends on an installed font), and re-encoded from their pixels alone. `exports.json` records the browser's version and what each picture was drawn from. The exact comparison is the exporting machine's: another Chromium draws an edge a shade apart, so `--check` refuses to compare under a different version, and CI runs the static and the tolerant checks.
+Python 3.14. Pictures are drawn by Playwright's Chromium, headless, from SVG files that hold outlines only (no picture depends on an installed font), and re-encoded from their pixels alone. The small marks are the exception: each of their pixels is counted from the fit (its alpha is the share of 256 sample points inside the shapes), so their PNG files are the same bytes on every machine. `exports.json` records the browser's version and what each picture was drawn from. The exact comparison is the exporting machine's: another Chromium draws an edge a shade apart, so `--check` refuses to compare under a different version, and CI runs the static and the tolerant checks.
 
 The [`social`](https://github.com/kleidos-dev/social) repository takes this one as a submodule and imports `tools/kleidos_brand/` from it, so both draw with one set of rules, one browser and one encoder.
 

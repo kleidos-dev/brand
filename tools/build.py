@@ -76,15 +76,26 @@ def collect(root: Path = BRAND_ROOT) -> tuple[list[Text], list[Picture]]:
     # --- Logo files ----------------------------------------------------------------------
     for item in logo.build(root):
         texts.append(Text(logo.SVG_DIR / f"{item.stem}.svg", item.svg))
+    shapes, small = mark.shapes(root), mark.small_numbers(root)
     for item, width, height, path in logo.png_plan(root):
+        if item.px and item.paint:
+            # A small mark's pixels are counted, not drawn by the browser: the same bytes on every machine.
+            def draw_small(_: raster.Browser | None, __: dict[str, Any], item: logo.Logo = item) -> bytes:
+                assert item.px and item.paint
+                image = mark.small_pixels(mark.small_fit(shapes, item.px, small), item.paint)
+                return png.encode(png.clean(png.encode(image), flatten=item.ground))
+
+            pictures.append(Picture(path, (width, height), record.sha256(item.svg.encode()), SMALL_INPUTS, draw_small,
+                                    item.what, needs_browser=False))
+            continue
+
         def draw_logo(browser: raster.Browser | None, _: dict[str, Any], item: logo.Logo = item, size: tuple[int, int] = (width, height)) -> bytes:
             assert browser is not None
             return png.encode(png.clean(browser.draw(item.svg, size, item.stem), flatten=item.ground))
 
         box = round(height * item.mark_share)
         what = item.what + (f"; the mark box is {box} px" if box else "")
-        inputs = SMALL_INPUTS if item.px else LOGO_INPUTS
-        pictures.append(Picture(path, (width, height), record.sha256(item.svg.encode()), inputs, draw_logo, what))
+        pictures.append(Picture(path, (width, height), record.sha256(item.svg.encode()), LOGO_INPUTS, draw_logo, what))
 
     # --- The palette ---------------------------------------------------------------------
     sheet, sheet_size = palette.svg(root)

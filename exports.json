@@ -228,8 +228,8 @@
       }
     },
     "logo/png/kleidos-mark-small-16.png": {
-      "sha256": "37adb56fd81958a4e533eb0c057cbe6c51ffdc1d888a7f670d0c54d56afe27a8",
-      "bytes": 445,
+      "sha256": "805eabd4e7106f56fbde2951ea33ab6c8f0d9d0d3a062c902ca32bed980c6c6d",
+      "bytes": 351,
       "size": [
         16,
         16
@@ -242,8 +242,8 @@
       }
     },
     "logo/png/kleidos-mark-small-19.png": {
-      "sha256": "ec6c71c4b77739d7fe1bd177751d1c2f4f700d7dc1ccd35ae2d438f93278eb73",
-      "bytes": 560,
+      "sha256": "455b87b0ea13379ef468b113d69db7b89ad472a37c027da0121b3ae4722a04b4",
+      "bytes": 424,
       "size": [
         19,
         19
@@ -256,8 +256,8 @@
       }
     },
     "logo/png/kleidos-mark-small-21.png": {
-      "sha256": "6431eb865aa2e288e136a2dbcecaeb7d390fb2129d51af1cde3b804f645dd5c0",
-      "bytes": 567,
+      "sha256": "ce3ad58d74bdbe79640f8221e3c8250f7071da6e057ed23a8af1f3f6155b373c",
+      "bytes": 492,
       "size": [
         21,
         21
@@ -270,8 +270,8 @@
       }
     },
     "logo/png/kleidos-mark-small-23.png": {
-      "sha256": "f7c3da857eb2de0e15d96b0f86f8f1746fe1371900a3ca2a619af2fd963c4321",
-      "bytes": 617,
+      "sha256": "248a89ae6cf65f5cd733baf3ce883e7b637457f7f665ca22e62bd6b6818627e2",
+      "bytes": 497,
       "size": [
         23,
         23
@@ -284,8 +284,8 @@
       }
     },
     "logo/png/kleidos-mark-small-ink-dark-16.png": {
-      "sha256": "8f57c28513c1feafeed35404f601c4cbbf6a8364676414a2cd15ff7af2c59c08",
-      "bytes": 548,
+      "sha256": "1495d5ca9788f80931d8b7d6b498f5323fd5fee862ece80c28d70ac99fd58aaf",
+      "bytes": 351,
       "size": [
         16,
         16
@@ -298,8 +298,8 @@
       }
     },
     "logo/png/kleidos-mark-small-ink-dark-19.png": {
-      "sha256": "94c5f7cdc9893c92ee77cab9fbfa849a3ac8b6426028e4e07dfc8819e616c50f",
-      "bytes": 674,
+      "sha256": "73db117ae6a8f066e12a0f7e062efbc69339fe3d721266dc3102d12802bb9ded",
+      "bytes": 441,
       "size": [
         19,
         19
@@ -312,8 +312,8 @@
       }
     },
     "logo/png/kleidos-mark-small-ink-dark-21.png": {
-      "sha256": "867cd76de886a3088878f3895027bf2cff85ac510b4de2a392abf68fabc1bd3d",
-      "bytes": 707,
+      "sha256": "1e26dd93c27da33ebc21c853cded866de63a0fa8b0c8bb5af935321838bd3bd4",
+      "bytes": 535,
       "size": [
         21,
         21
@@ -326,8 +326,8 @@
       }
     },
     "logo/png/kleidos-mark-small-ink-dark-23.png": {
-      "sha256": "dc69b37457e07fe004ddf7696febd2ae296d06e0a0637f1c22cde384c50cbf3c",
-      "bytes": 735,
+      "sha256": "98334a5797054db0ec88a5f33308d088d11a9f815cbeb44f291d142690776620",
+      "bytes": 500,
       "size": [
         23,
         23
@@ -340,8 +340,8 @@
       }
     },
     "logo/png/kleidos-mark-small-ink-light-16.png": {
-      "sha256": "336d63807be9a40ea7b1ee9b379178b027aaa93f6a3692888abb26ef5af2f620",
-      "bytes": 542,
+      "sha256": "f2e8fad4881841bb87d4acf8a84bc9b17cbc35061fc87302cf6049335a9a0132",
+      "bytes": 350,
       "size": [
         16,
         16
@@ -354,8 +354,8 @@
       }
     },
     "logo/png/kleidos-mark-small-ink-light-19.png": {
-      "sha256": "35d4ad4571a45615449cc80db0e3bda727cf42c27a5082602055d666a68cc81e",
-      "bytes": 664,
+      "sha256": "9b02c7eb221bcd68fbe41597199ee7d57f510518b8a82e00839b2edfbd0309c4",
+      "bytes": 427,
       "size": [
         19,
         19
@@ -368,8 +368,8 @@
       }
     },
     "logo/png/kleidos-mark-small-ink-light-21.png": {
-      "sha256": "4fadcb0626984f4e8b1e2c85423042f3319c0823e61a3ae19a8c0ead12d8c00c",
-      "bytes": 686,
+      "sha256": "92b8f34fcc83781bc356cf653b4241a1efe4172c1bab82f6942636c4afe3d59f",
+      "bytes": 486,
       "size": [
         21,
         21
@@ -382,8 +382,8 @@
       }
     },
     "logo/png/kleidos-mark-small-ink-light-23.png": {
-      "sha256": "bd662a9788b9d5c64098cb4ff634c2364ca3b8c4f7a2c4f6053283de2331b8d5",
-      "bytes": 763,
+      "sha256": "8c15b79c0f4978ad562bffd1bec5ab73d2592309fb42d11679ad86568edcd031",
+      "bytes": 501,
       "size": [
         23,
         23
@@ -396,8 +396,8 @@
       }
     },
     "logo/png/kleidos-mark-small-on-dark-16.png": {
-      "sha256": "fe5305904ecf7565973816dcc4a0446465ff7492baa8ab6fb76018a6b04c828a",
-      "bytes": 558,
+      "sha256": "9e4964b18a4b2e02f8b182c5848287667a08c66abe636e14c953e14b98bd59e4",
+      "bytes": 472,
       "size": [
         16,
         16
@@ -410,8 +410,8 @@
       }
     },
     "logo/png/kleidos-mark-small-on-dark-19.png": {
-      "sha256": "cf33743bf8b6b43efe11be39098792d318869e1535dc03c468bfe9d6571190f3",
-      "bytes": 690,
+      "sha256": "200ae61e555d1208fde77f106ed63d943138f810c44ce9eaec6a6652e0a6819a",
+      "bytes": 679,
       "size": [
         19,
         19
@@ -424,8 +424,8 @@
       }
     },
     "logo/png/kleidos-mark-small-on-dark-21.png": {
-      "sha256": "a315b5571310b72c846cb302aa063bb563a6a1fabe5989fe0fa55996a49f458a",
-      "bytes": 723,
+      "sha256": "5631180a2db57bfac850320c8cead26c95c4341f60a24de5a474a51756a3bd03",
+      "bytes": 617,
       "size": [
         21,
         21
@@ -438,8 +438,8 @@
       }
     },
     "logo/png/kleidos-mark-small-on-dark-23.png": {
-      "sha256": "c65f9e8a2f09b94411921fa4aa309386e5b0f911f7920bc7cd7f14982b1196cb",
-      "bytes": 770,
+      "sha256": "edafd112340142f49eeddbbcec11c1277837d012cb547c3a8f4e71e043b1ee82",
+      "bytes": 715,
       "size": [
         23,
         23

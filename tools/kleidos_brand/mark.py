@@ -20,6 +20,7 @@ import math
 import xml.etree.ElementTree as ET
 from dataclasses import dataclass
 from pathlib import Path
+from typing import Any
 
 from . import BRAND_ROOT
 
@@ -191,6 +192,52 @@ def small_shapes(fit: SmallFit, color: str) -> list[Shape]:
             ("stroke", color), ("stroke-width", _n(fit.ring_width)))
     solid = (("d", body + keyhole), ("fill", color), ("fill-rule", "evenodd"))
     return [("circle", ring), ("path", solid)]
+
+
+#: Samples per pixel along each axis when a small mark's coverage is counted.
+SAMPLES = 16
+
+
+def small_pixels(fit: SmallFit, color: str) -> Any:
+    """Return the small mark as an RGBA image of *fit*'s pixels, each pixel's alpha its exact coverage.
+
+    A browser draws an edge a shade apart from one system to the next, and at
+    16 px that shade is a tenth of the picture. These pixels are counted
+    instead: each pixel's alpha is the share of its SAMPLES x SAMPLES sample
+    points that fall inside the shapes ``small_shapes`` draws, the same on
+    every machine.
+    """
+    from PIL import Image  # noqa: PLC0415
+
+    c = fit.ring / 2
+    outer, inner = c**2, (c - fit.ring_width) ** 2
+    radius = fit.body_width / 2
+    top, bottom = c - fit.body_height / 2 + radius, c + fit.body_height / 2 - radius
+    eye_y = c - fit.eye_up
+    half = fit.stem_width / 2
+    foot = eye_y + fit.stem_length + 0.5
+
+    def inside(x: float, y: float) -> bool:
+        if inner <= (x - c) ** 2 + (y - c) ** 2 <= outer:
+            return True
+        if abs(x - c) > radius:
+            return False
+        nearest = min(max(y, top), bottom)
+        if (x - c) ** 2 + (y - nearest) ** 2 > radius**2:
+            return False
+        keyhole = (x - c) ** 2 + (y - eye_y) ** 2 <= fit.eye_radius**2 or (abs(x - c) <= half and eye_y <= y <= foot)
+        return not keyhole
+
+    offsets = [(index + 0.5) / SAMPLES for index in range(SAMPLES)]
+    rgb = tuple(int(color[i : i + 2], 16) for i in (1, 3, 5))
+    image = Image.new("RGBA", (fit.px, fit.px), (*rgb, 0))
+    total = SAMPLES * SAMPLES
+    for row in range(fit.px):
+        for column in range(fit.px):
+            count = sum(inside(column + dx, row + dy) for dy in offsets for dx in offsets)
+            if count:
+                image.putpixel((column, row), (*rgb, (count * 255 + total // 2) // total))
+    return image
 
 
 def small_group(shapes_: list[Shape], indent: str = "  ") -> str:

@@ -33,6 +33,7 @@ class Logo:
     ground: str | None  # the baked ground's color, or None on transparency
     what: str
     px: int | None = None  # a small mark's one size: its file is drawn for that many pixels only
+    paint: str | None = None  # a small mark's one color
 
     @property
     def family(self) -> str:
@@ -91,13 +92,14 @@ def _build(root: Path) -> list[Logo]:
     logos: list[Logo] = []
 
     def add(stem: str, kind: str, width: float, height: float, body: list[str], share: float, what: str,
-            ground: str | None = None, pad: float = 0.0, origin: tuple[float, float] = (0, 0), px: int | None = None) -> None:
+            ground: str | None = None, pad: float = 0.0, origin: tuple[float, float] = (0, 0), px: int | None = None,
+            paint: str | None = None) -> None:
         if ground is not None:
             body = [f'  <rect x="{_number(origin[0] - pad)}" y="{_number(origin[1] - pad)}" width="{_number(width + 2 * pad)}"'
                     f' height="{_number(height + 2 * pad)}" fill="{ground}"/>', *body]
         full_w, full_h = width + 2 * pad, height + 2 * pad
         logos.append(Logo(stem, kind, _svg(full_w, full_h, body, "Kleidos", (origin[0] - pad, origin[1] - pad)),
-                          full_w, full_h, share, ground, what, px))
+                          full_w, full_h, share, ground, what, px, paint))
 
     # --- The mark ------------------------------------------------------------------------
     box, half = mark.BOX, mark.BOX / 2
@@ -121,7 +123,7 @@ def _build(root: Path) -> list[Logo]:
         for px in small["sizes"]:
             fit = mark.small_fit(shapes, px, small)
             add(f"{family}-{px}", "mark-small", px, px, [mark.small_group(mark.small_shapes(fit, paint))], 0.0,
-                what, ground=ground, px=px)
+                what, ground=ground, px=px, paint=paint)
 
     # --- The horizontal lockup -----------------------------------------------------------
     h = numbers["horizontal"]
