@@ -16,7 +16,7 @@ uharfbuzz==0.57.0
 # Drawing: Chromium through Playwright, then Pillow from pixels alone
 # (tools/kleidos_brand/raster.py, png.py). The versions the first social
 # pack was drawn with, so its images can be reproduced.
-playwright==1.63.0
+playwright==1.65.2
 pillow==13.0.0
 
 # Checks
