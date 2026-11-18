@@ -9,8 +9,9 @@ What it holds:
 
 - built:     every generated file is what its sources give, every picture's bytes are the recorded
              ones, and none is stale (tools/build.py --check --static);
-- mark:      every copy of the mark is logo/src/mark.svg's shapes, and the keyhole is never drawn
-             without its ring;
+- mark:      every copy of the mark is logo/src/mark.svg's shapes, or the small mark the builder
+             fits from them at a size logo/src/small-mark.json lists, and the keyhole is never
+             drawn without its ring;
 - sources:   each press template keeps the source rules (layers, plain shapes, token colors, the two
              families, no opacity or filter or picture), carries the lockup the logo files draw, and
              keeps every word and the lockup inside its safe area in every language; each
@@ -58,10 +59,16 @@ def mark_findings(root: Path, files: list[Path]) -> list[str]:
     values = tokens.resolve(tokens.load(root))
     inks = frozenset({values["social.ink"], values["social.light.ink"]})
     shapes = mark.shapes(root)
+    small = mark.small_marks(shapes, {mark.ring_color(shapes), *inks}, root)
     found = []
+    below = mark.small_numbers(root)["below_px"]
+    full = json.loads((root / tokens.TOKENS_JSON).read_text(encoding="utf-8"))["brand"]["logo"]["min-px-on-dark"]["$value"]
+    if below != full or any(px >= below for px in mark.small_numbers(root)["sizes"]):
+        found.append(f"{mark.SMALL_JSON}: the small mark is for sizes under {below} px, and the full mark holds from"
+                     f" {full} px (tokens.json brand.logo.min-px-on-dark); the two agree and every small size is under it")
     for path in files:
         if path.suffix == ".svg":
-            found += mark.findings(root / path, shapes, inks, path.as_posix())
+            found += mark.findings(root / path, shapes, inks, path.as_posix(), small)
     return found
 
 

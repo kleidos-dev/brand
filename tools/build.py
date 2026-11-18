@@ -36,6 +36,7 @@ TOLERANCE = 0.005
 MONA = lettering.FAMILIES["Mona Sans"]
 MONO = lettering.FAMILIES["Mona Sans Mono"]
 LOGO_INPUTS = (mark.MARK_SVG, logo.LOCKUPS_JSON, tokens.TOKENS_JSON, MONA)
+SMALL_INPUTS = (mark.MARK_SVG, mark.SMALL_JSON, tokens.TOKENS_JSON)
 GENERATED_DIRS = (logo.SVG_DIR, logo.PNG_DIR, press.SVG_DIR, press.IMAGES_DIR, Path("tokens/dist"))
 #: How a README table names a language of press.json.
 LANGUAGES = {"en": "English", "es": "Spanish"}
@@ -82,7 +83,8 @@ def collect(root: Path = BRAND_ROOT) -> tuple[list[Text], list[Picture]]:
 
         box = round(height * item.mark_share)
         what = item.what + (f"; the mark box is {box} px" if box else "")
-        pictures.append(Picture(path, (width, height), record.sha256(item.svg.encode()), LOGO_INPUTS, draw_logo, what))
+        inputs = SMALL_INPUTS if item.px else LOGO_INPUTS
+        pictures.append(Picture(path, (width, height), record.sha256(item.svg.encode()), inputs, draw_logo, what))
 
     # --- The palette ---------------------------------------------------------------------
     sheet, sheet_size = palette.svg(root)
@@ -176,7 +178,17 @@ def blocks(root: Path, pictures: list[Picture], files: dict[str, Any]) -> dict[P
         if picture.path.parent == logo.PNG_DIR:
             by_stem.setdefault(picture.path.stem.rsplit("-", 1)[0], []).append(picture)
     logo_rows = ["| File | What it is | SVG | PNG, by height in pixels |", "| --- | --- | --- | --- |"]
+    listed: set[str] = set()
     for item in logos:
+        if item.px:
+            if item.family in listed:
+                continue
+            listed.add(item.family)
+            sizes = [other for other in logos if other.family == item.family]
+            svgs = ", ".join(f"[{other.px}](svg/{other.stem}.svg)" for other in sizes)
+            copies = ", ".join(f"[{other.px}](png/{other.stem}.png)" for other in sizes)
+            logo_rows.append(f"| `{item.family}-<px>` | {item.what} | {svgs} | {copies} |")
+            continue
         copies = ", ".join(f"[{picture.size[1]}](png/{picture.path.name})" for picture in by_stem.get(item.stem, []))
         logo_rows.append(f"| `{item.stem}` | {item.what} | [svg](svg/{item.stem}.svg) | {copies} |")
 

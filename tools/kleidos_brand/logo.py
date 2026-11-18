@@ -25,13 +25,19 @@ class Logo:
     """One logo file: its stem, its SVG, its box and what its PNG copies are."""
 
     stem: str
-    kind: str  # "mark", "lockup-horizontal", "lockup-stacked", "lettering"
+    kind: str  # "mark", "mark-small", "lockup-horizontal", "lockup-stacked", "lettering"
     svg: str
     width: float
     height: float
     mark_share: float  # the mark box's side as a share of the file's height; 0 without a mark
     ground: str | None  # the baked ground's color, or None on transparency
     what: str
+    px: int | None = None  # a small mark's one size: its file is drawn for that many pixels only
+
+    @property
+    def family(self) -> str:
+        """Return the stem without a small mark's size: what the README lists it under."""
+        return self.stem.removesuffix(f"-{self.px}") if self.px else self.stem
 
 
 def _number(value: float) -> str:
@@ -62,7 +68,7 @@ _BUILT: dict[tuple[bytes, ...], list[Logo]] = {}
 
 def build(root: Path = BRAND_ROOT) -> list[Logo]:
     """Return every logo file, in the order the README lists them."""
-    sources = (LOCKUPS_JSON, mark.MARK_SVG, tokens.TOKENS_JSON, lettering.FAMILIES["Mona Sans"])
+    sources = (LOCKUPS_JSON, mark.MARK_SVG, mark.SMALL_JSON, tokens.TOKENS_JSON, lettering.FAMILIES["Mona Sans"])
     key = tuple(hashlib.sha256((root / source).read_bytes()).digest() for source in sources)
     if key not in _BUILT:
         _BUILT[key] = _build(root)
@@ -85,13 +91,13 @@ def _build(root: Path) -> list[Logo]:
     logos: list[Logo] = []
 
     def add(stem: str, kind: str, width: float, height: float, body: list[str], share: float, what: str,
-            ground: str | None = None, pad: float = 0.0, origin: tuple[float, float] = (0, 0)) -> None:
+            ground: str | None = None, pad: float = 0.0, origin: tuple[float, float] = (0, 0), px: int | None = None) -> None:
         if ground is not None:
             body = [f'  <rect x="{_number(origin[0] - pad)}" y="{_number(origin[1] - pad)}" width="{_number(width + 2 * pad)}"'
                     f' height="{_number(height + 2 * pad)}" fill="{ground}"/>', *body]
         full_w, full_h = width + 2 * pad, height + 2 * pad
         logos.append(Logo(stem, kind, _svg(full_w, full_h, body, "Kleidos", (origin[0] - pad, origin[1] - pad)),
-                          full_w, full_h, share, ground, what))
+                          full_w, full_h, share, ground, what, px))
 
     # --- The mark ------------------------------------------------------------------------
     box, half = mark.BOX, mark.BOX / 2
@@ -104,6 +110,18 @@ def _build(root: Path) -> list[Logo]:
         add(f"kleidos-mark-{name}", "mark", box, box, [mark.group(shapes)], 0.5,
             f"the mark on its {'dark tile' if name == 'on-dark' else 'white tile'} ({ground}), clear space included",
             ground=ground, pad=half, origin=(-half, -half))
+
+    # --- The small mark, one file per size ------------------------------------------------
+    small = mark.small_numbers(root)
+    color = mark.ring_color(shapes)
+    families = [("kleidos-mark-small", color, None, "the small mark, in color, on transparency, for a dark ground"),
+                *((f"kleidos-mark-small-{name}", ink, None, f"the small mark in one ink ({ink})") for name, ink in one_ink.items()),
+                ("kleidos-mark-small-on-dark", color, grounds["on-dark"], f"the small mark on its dark tile ({grounds['on-dark']})")]
+    for family, paint, ground, what in families:
+        for px in small["sizes"]:
+            fit = mark.small_fit(shapes, px, small)
+            add(f"{family}-{px}", "mark-small", px, px, [mark.small_group(mark.small_shapes(fit, paint))], 0.0,
+                what, ground=ground, px=px)
 
     # --- The horizontal lockup -----------------------------------------------------------
     h = numbers["horizontal"]
@@ -167,6 +185,9 @@ def png_plan(root: Path = BRAND_ROOT) -> list[tuple[Logo, int, int, Path]]:
     heights = json.loads((root / LOCKUPS_JSON).read_text(encoding="utf-8"))["png_heights"]
     plan = []
     for logo in build(root):
+        if logo.px:
+            plan.append((logo, logo.px, logo.px, PNG_DIR / f"{logo.stem}.png"))
+            continue
         for height in heights[logo.kind]:
             width = round(height * logo.width / logo.height)
             plan.append((logo, width, height, PNG_DIR / f"{logo.stem}-{height}.png"))

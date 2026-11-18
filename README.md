@@ -10,7 +10,7 @@ The identity of [Kleidos](https://kleidos.dev), free firmware that turns a small
 
 | Folder | What it holds |
 | --- | --- |
-| [`logo/`](logo/) | The mark (a keyhole inside its ring, always whole), the horizontal and stacked lockups, the name's lettering; as SVG and PNG, for dark and light grounds, in color and in one ink; the rules of use |
+| [`logo/`](logo/) | The mark (a keyhole inside its ring, always whole), its small version for sizes under 24 px, the horizontal and stacked lockups, the name's lettering; as SVG and PNG, for dark and light grounds, in color and in one ink; the rules of use |
 | [`fonts/`](fonts/) | Mona Sans and Mona Sans Mono (the brand and the web), Inter and JetBrains Mono (the device), unmodified, with their licenses and pins |
 | [`tokens/`](tokens/) | `tokens.json`, the one file of values, and what is generated from it: a flat color list and a stylesheet |
 | [`colors/`](colors/) | The palette with each color's role, its values for screen and print, and measured contrast |
@@ -21,7 +21,7 @@ The identity of [Kleidos](https://kleidos.dev), free firmware that turns a small
 
 ## Building
 
-Every image and every generated file comes from a few sources: `logo/src/mark.svg` (the only drawing kept by hand), `logo/src/lockups.json`, `tokens/tokens.json`, the fonts, the templates and words under `press-kit/src/`, the screen captures, the photographs and the board fronts under `boards/`.
+Every image and every generated file comes from a few sources: `logo/src/mark.svg` (the only drawing kept by hand), `logo/src/lockups.json`, `logo/src/small-mark.json`, `tokens/tokens.json`, the fonts, the templates and words under `press-kit/src/`, the screen captures, the photographs and the board fronts under `boards/`.
 
 ```sh
 python3 -m venv .venv

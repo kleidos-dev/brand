@@ -1,0 +1,12 @@
+<!--
+  SPDX-FileCopyrightText: 2026 José M. Requena Plens <mail@kleidos.dev>
+  SPDX-License-Identifier: GPL-3.0-or-later
+  Additional terms under section 7 of the GNU GPL version 3: TRADEMARKS.md
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 21 21" width="21" height="21" role="img">
+  <title>Kleidos</title>
+  <g class="mark mark-small">
+    <circle cx="10.5" cy="10.5" r="10" fill="none" stroke="#0c0f13" stroke-width="1"/>
+    <path fill="#0c0f13" fill-rule="evenodd" d="M7 7.5A3.5 3.5 0 0 1 14 7.5V13.5A3.5 3.5 0 0 1 7 13.5ZM11 10.999A1.58 1.58 0 1 0 10 10.999V13H11Z"/>
+  </g>
+</svg>

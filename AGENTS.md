@@ -4,7 +4,7 @@ Rules for any agent changing this repository. [README.md](README.md) says what i
 
 ## What is where
 
-- `logo/src/mark.svg`: the mark, the only drawing kept by hand. `logo/src/lockups.json`: the lockups' numbers. `logo/svg/`, `logo/png/`: generated.
+- `logo/src/mark.svg`: the mark, the only drawing kept by hand. `logo/src/lockups.json`: the lockups' numbers. `logo/src/small-mark.json`: the small mark's sizes and pixel rules (owner, 2026-11-18: under 24 px, the ring and a solid body in the ring's color with the keyhole cut out; from 24 px, the full mark). `logo/svg/`, `logo/png/`: generated.
 - `fonts/`: the upstream font files, unmodified, with `VERSIONS.md` (pins) and each family's `OFL.txt`.
 - `tokens/tokens.json`: the one file of values. `tokens/dist/`: generated. `tokens/mirror.json`: written by `tools/sync_from_kleidos.py --record`.
 - `colors/`: the palette's page and sheet, generated from the tokens.
@@ -30,7 +30,7 @@ Regenerate what the builder owns (`.venv/bin/python tools/build.py`) instead of 
 
 ## Rules
 
-- **The mark is always whole.** The keyhole inside its ring, at any size, in every file. No ringless glyph, no redrawn or recolored copy: a file shows the mark as a `<g class="mark">` holding the five shapes of `logo/src/mark.svg`, or as the one-ink mark the builder derives from them. `tools/check.py` refuses anything else.
+- **The mark is always whole.** The keyhole inside its ring, at any size, in every file. No ringless glyph, no redrawn or recolored copy: a file shows the mark as a `<g class="mark">` holding the five shapes of `logo/src/mark.svg`, as the one-ink mark the builder derives from them, or, under 24 px, as the small mark (`<g class="mark mark-small">`) the builder fits from them to one of the sizes of `logo/src/small-mark.json`. `tools/check.py` refuses anything else.
 - **True colors, tokens only.** Every color in a source or an image is a token's value. No opacity, tint, gradient, shadow or filter. A new color is a new token first. Two things keep their own colors, because they are pictures of something real: a screen capture keeps its pixels, and a board front (`boards/`) keeps its case's true colors, gradients included, as the boards repository draws it; only its drop shadow is left out.
 - **No live text in anything published.** Words are outlines, made by `tools/kleidos_brand/lettering.py` from the pinned fonts. The name is the one lettering path and is never retyped.
 - **Fonts stay unmodified.** Only the pinned upstream files are in the tree. Never save a subset, an instance or a converted copy: it would be a Modified Version under the OFL, and Mona Sans reserves its name.

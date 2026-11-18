@@ -113,7 +113,7 @@ def test_every_committed_picture_is_recorded_and_within_its_limits() -> None:
 def test_every_logo_has_its_png_copies_and_every_press_image_both_languages() -> None:
     names = {path.name for path in (ROOT / logo.PNG_DIR).iterdir()}
     for item in logo.build(ROOT):
-        assert any(name.startswith(f"{item.stem}-") for name in names), item.stem
+        assert any(name.startswith(f"{item.stem}-") or name == f"{item.stem}.png" for name in names), item.stem
     images = {image.stem: image for image in press.images(ROOT)}
     for stem in ("kleidos-16x9", "kleidos-16x9-light", "kleidos-1x1", "kleidos-1x1-light", "kleidos-screens-16x9",
                  "kleidos-boards-16x9", "kleidos-boards-16x9-light", "kleidos-boards-4x5", "kleidos-boards-4x5-light"):
@@ -125,6 +125,20 @@ def test_every_logo_has_its_png_copies_and_every_press_image_both_languages() ->
         assert [placed.slug for placed in images[stem].fronts] == boards.order(ROOT), "every board, in the site's order"
         assert not images[stem].publish_svg
     assert len({plate.board for plate in images["kleidos-screens-16x9"].plates}) >= 5, "not only one board's screen"
+
+
+def test_the_small_marks_keyhole_is_a_hole() -> None:
+    from PIL import Image
+
+    with Image.open(ROOT / logo.PNG_DIR / "kleidos-mark-small-21.png") as opened:
+        pixels = opened.convert("RGBA")
+    assert pixels.size == (21, 21)
+    assert pixels.getpixel((10, 9))[3] == 0, "the eye shows the ground"
+    assert pixels.getpixel((10, 11))[3] == 0, "and so does the stem"
+    assert pixels.getpixel((7, 9)) == (0, 210, 255, 255), "the body is solid in the ring's color"
+    assert pixels.getpixel((10, 0))[3] > 128 and pixels.getpixel((10, 1))[3] == 0, "the ring is one pixel, on the file's edge"
+    with Image.open(ROOT / logo.PNG_DIR / "kleidos-mark-small-on-dark-21.png") as opened:
+        assert opened.convert("RGB").getpixel((10, 9)) == (10, 12, 15), "on its tile, the keyhole is the tile"
 
 
 def test_the_archive_is_the_same_bytes_twice(tree: Path) -> None:

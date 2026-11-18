@@ -103,6 +103,49 @@ def test_a_one_ink_mark_in_another_ink_is_refused(tree: Path) -> None:
     assert found(tree, "kleidos-mark-ink-dark.svg", "not one of the inks")
 
 
+def test_the_small_mark_is_fitted_from_the_marks_numbers() -> None:
+    from kleidos_brand import mark
+
+    shapes, numbers = mark.shapes(ROOT), mark.small_numbers(ROOT)
+    fits = {px: mark.small_fit(shapes, px, numbers) for px in numbers["sizes"]}
+    assert all(px < numbers["below_px"] for px in fits)
+    # 19 and 21 px are the fits the owner approved on 2026-11-18, pixel for pixel.
+    for px in (19, 21):
+        fit = fits[px]
+        assert (fit.ring, fit.body_width, fit.body_height, fit.eye_up, fit.stem_width, fit.stem_length) == (px, 7, 13, 1, 1, 3)
+    assert fits[16].ring == 15, "an even size draws its ring one pixel narrower, so the keyhole stands on one column"
+    for fit in fits.values():
+        assert fit.ring % 2 == fit.body_width % 2 == fit.body_height % 2 == 1
+        assert fit.body_width >= 3 + 2 and fit.body_height <= fit.ring - 4
+    ring, body = mark.small_shapes(fits[21], "#00D2FF")
+    assert ring[0] == "circle" and dict(ring[1])["stroke"] == "#00D2FF"
+    assert dict(body[1])["fill-rule"] == "evenodd" and dict(body[1])["d"].count("Z") == 2, "the keyhole is a hole in the body"
+
+
+def test_a_recolored_small_mark_is_refused(tree: Path) -> None:
+    path = tree / "logo/svg/kleidos-mark-small-21.svg"
+    path.write_text(path.read_text(encoding="utf-8").replace('fill="#00D2FF"', 'fill="#0f3460"'), encoding="utf-8")
+    assert found(tree, "kleidos-mark-small-21.svg", "its small mark is not one the builder fits")
+
+
+def test_a_small_mark_redrawn_off_its_pixels_is_refused(tree: Path) -> None:
+    edit(tree / "logo/svg/kleidos-mark-small-21.svg", 'r="10"', 'r="9.5"')
+    assert found(tree, "kleidos-mark-small-21.svg", "its small mark is not one the builder fits")
+
+
+def test_a_small_keyhole_without_its_ring_is_refused(tree: Path) -> None:
+    drawing = (tree / "logo/svg/kleidos-mark-small-19.svg").read_text(encoding="utf-8")
+    body = next(line.strip() for line in drawing.splitlines() if line.strip().startswith("<path"))
+    planted(tree, "notes/small-keyhole.svg").write_text(
+        SVG_HEADER + f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 19 19">{body}</svg>\n', encoding="utf-8")
+    assert found(tree, "notes/small-keyhole.svg", "outside a <g class=")
+
+
+def test_the_small_mark_ends_where_the_full_mark_holds(tree: Path) -> None:
+    edit(tree / "logo/src/small-mark.json", '"below_px": 24', '"below_px": 32')
+    assert found(tree, "small-mark.json", "the two agree")
+
+
 # --- Generated files ---------------------------------------------------------------------
 
 
