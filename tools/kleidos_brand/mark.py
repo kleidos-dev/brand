@@ -93,7 +93,7 @@ class SmallFit:
     """The small mark at one size, in whole pixels: what ``small_shapes`` draws."""
 
     px: int  # the file's side
-    ring: int  # the ring's outer diameter: px, or px - 1 at an even size
+    ring: int  # the ring's outer diameter: the file's side
     ring_width: float
     body_width: int
     body_height: int
@@ -148,7 +148,7 @@ def small_fit(mark: list[Shape], px: int, numbers: dict) -> SmallFit:
     ring_r, ring_w = float(parts["ring"]["r"]), float(parts["ring"]["stroke-width"])
     line = float(parts["body_line"]["stroke-width"])
     body_w, body_h = float(parts["body"]["width"]) + line, float(parts["body"]["height"]) + line
-    ring = px if px % 2 else px - 1
+    ring = px
     unit = ring / (2 * ring_r + ring_w)
     width = max(_odd_near(body_w * unit), pixels["eye"] + 2 * pixels["wall"])
     height = min(_odd_near(width * body_h / body_w), ring - 2 * pixels["ring"] - 2 * pixels["gap"])
@@ -202,7 +202,7 @@ def small_pixels(fit: SmallFit, color: str) -> Any:
     """Return the small mark as an RGBA image of *fit*'s pixels, each pixel's alpha its exact coverage.
 
     A browser draws an edge a shade apart from one system to the next, and at
-    16 px that shade is a tenth of the picture. These pixels are counted
+    19 px that shade is a large share of the picture. These pixels are counted
     instead: each pixel's alpha is the share of its SAMPLES x SAMPLES sample
     points that fall inside the shapes ``small_shapes`` draws, the same on
     every machine.

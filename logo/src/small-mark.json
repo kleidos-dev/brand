@@ -1,9 +1,9 @@
 {
-  "$comment": "The small mark: the ring and a solid body in the ring's color, the keyhole (eye and stem) cut out of it, fitted to whole pixels for a mark drawn under below_px pixels (owner, 2026-11-18). tools/kleidos_brand/mark.py fits it from mark.svg's numbers and these; tools/kleidos_brand/logo.py draws one file per size.",
+  "$comment": "The small mark: the ring and a solid body in the ring's color, the keyhole (eye and stem) cut out of it, fitted to whole pixels for a mark drawn under below_px pixels (owner, 2026-11-18). The sizes are odd, so the keyhole stands on one pixel column; the smallest is 19 px, and nothing smaller is drawn (owner, 2026-11-18). tools/kleidos_brand/mark.py fits it from mark.svg's numbers and these; tools/kleidos_brand/logo.py draws one file per size.",
   "below_px": 24,
-  "sizes": [16, 19, 21, 23],
+  "sizes": [19, 21, 23],
   "pixels": {
-    "$comment": "Whole pixels at every small size. The ring is one pixel wide; the eye is a 3-pixel dot whose corners a circle of eye_radius softens; the stem is one pixel wide; the body keeps at least wall pixels of solid either side of the eye, and gap pixels between it and the ring. An even size draws its mark one pixel narrower, in the file's top-left corner, so the keyhole stands on one pixel column.",
+    "$comment": "Whole pixels at every small size. The ring is one pixel wide; the eye is a 3-pixel dot whose corners a circle of eye_radius softens; the stem is one pixel wide; the body keeps at least wall pixels of solid either side of the eye, and gap pixels between it and the ring.",
     "ring": 1,
     "eye": 3,
     "eye_radius": 1.58,

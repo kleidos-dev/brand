@@ -113,7 +113,7 @@ def test_the_small_mark_is_fitted_from_the_marks_numbers() -> None:
     for px in (19, 21):
         fit = fits[px]
         assert (fit.ring, fit.body_width, fit.body_height, fit.eye_up, fit.stem_width, fit.stem_length) == (px, 7, 13, 1, 1, 3)
-    assert fits[16].ring == 15, "an even size draws its ring one pixel narrower, so the keyhole stands on one column"
+    assert min(fits) == 19, "nothing smaller than 19 px is drawn (owner, 2026-11-18)"
     for fit in fits.values():
         assert fit.ring % 2 == fit.body_width % 2 == fit.body_height % 2 == 1
         assert fit.body_width >= 3 + 2 and fit.body_height <= fit.ring - 4
@@ -144,6 +144,11 @@ def test_a_small_keyhole_without_its_ring_is_refused(tree: Path) -> None:
 def test_the_small_mark_ends_where_the_full_mark_holds(tree: Path) -> None:
     edit(tree / "logo/src/small-mark.json", '"below_px": 24', '"below_px": 32')
     assert found(tree, "small-mark.json", "the two agree")
+
+
+def test_an_even_small_size_is_refused(tree: Path) -> None:
+    edit(tree / "logo/src/small-mark.json", '"sizes": [19, 21, 23]', '"sizes": [19, 20, 21, 23]')
+    assert found(tree, "small-mark.json", "every small size is odd")
 
 
 # --- Generated files ---------------------------------------------------------------------

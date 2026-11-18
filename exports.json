@@ -227,20 +227,6 @@
         "fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435"
       }
     },
-    "logo/png/kleidos-mark-small-16.png": {
-      "sha256": "805eabd4e7106f56fbde2951ea33ab6c8f0d9d0d3a062c902ca32bed980c6c6d",
-      "bytes": 351,
-      "size": [
-        16,
-        16
-      ],
-      "drawn_from": "337dac447eba86c9e7ae741af697f3a13483e48b0df4851d74edac96a3db7c69",
-      "inputs": {
-        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
-        "logo/src/small-mark.json": "9e26b6b43bd0bd0793595a6209993813ef24b3b8c18a0c62f8bc0ccb1381f08c",
-        "tokens/tokens.json": "02adc61017345c669b22aebcccda5713fd31c72f88936ae8964014dfe9ca5c96"
-      }
-    },
     "logo/png/kleidos-mark-small-19.png": {
       "sha256": "455b87b0ea13379ef468b113d69db7b89ad472a37c027da0121b3ae4722a04b4",
       "bytes": 424,
@@ -251,7 +237,7 @@
       "drawn_from": "b3bdd13336a0f09c57c68aafaf5fd4fda61b774f5f278dcd5d6d7ce69083b32b",
       "inputs": {
         "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
-        "logo/src/small-mark.json": "9e26b6b43bd0bd0793595a6209993813ef24b3b8c18a0c62f8bc0ccb1381f08c",
+        "logo/src/small-mark.json": "09bad5101382474bde10aa4da610252f19fba1ce54554b067102234db5defbf3",
         "tokens/tokens.json": "02adc61017345c669b22aebcccda5713fd31c72f88936ae8964014dfe9ca5c96"
       }
     },
@@ -265,7 +251,7 @@
       "drawn_from": "517ede9f03102af6ad19fb9986d8b21b1ad000dbc2f908a4a04ce232bb6ad30c",
       "inputs": {
         "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
-        "logo/src/small-mark.json": "9e26b6b43bd0bd0793595a6209993813ef24b3b8c18a0c62f8bc0ccb1381f08c",
+        "logo/src/small-mark.json": "09bad5101382474bde10aa4da610252f19fba1ce54554b067102234db5defbf3",
         "tokens/tokens.json": "02adc61017345c669b22aebcccda5713fd31c72f88936ae8964014dfe9ca5c96"
       }
     },
@@ -279,21 +265,7 @@
       "drawn_from": "1f085e60729f52bd71774fe8bd5bcb29c15f4aca63e54e89910313fa62132987",
       "inputs": {
         "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
-        "logo/src/small-mark.json": "9e26b6b43bd0bd0793595a6209993813ef24b3b8c18a0c62f8bc0ccb1381f08c",
-        "tokens/tokens.json": "02adc61017345c669b22aebcccda5713fd31c72f88936ae8964014dfe9ca5c96"
-      }
-    },
-    "logo/png/kleidos-mark-small-ink-dark-16.png": {
-      "sha256": "1495d5ca9788f80931d8b7d6b498f5323fd5fee862ece80c28d70ac99fd58aaf",
-      "bytes": 351,
-      "size": [
-        16,
-        16
-      ],
-      "drawn_from": "cd385872716cc416e4f620a77cf734cd5fca7f1999a41ef693efe6b2fb451e0a",
-      "inputs": {
-        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
-        "logo/src/small-mark.json": "9e26b6b43bd0bd0793595a6209993813ef24b3b8c18a0c62f8bc0ccb1381f08c",
+        "logo/src/small-mark.json": "09bad5101382474bde10aa4da610252f19fba1ce54554b067102234db5defbf3",
         "tokens/tokens.json": "02adc61017345c669b22aebcccda5713fd31c72f88936ae8964014dfe9ca5c96"
       }
     },
@@ -307,7 +279,7 @@
       "drawn_from": "8006c0c1594dff3184f8f2cec7dc4429369caf400eec5046384ecd92c7afa507",
       "inputs": {
         "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
-        "logo/src/small-mark.json": "9e26b6b43bd0bd0793595a6209993813ef24b3b8c18a0c62f8bc0ccb1381f08c",
+        "logo/src/small-mark.json": "09bad5101382474bde10aa4da610252f19fba1ce54554b067102234db5defbf3",
         "tokens/tokens.json": "02adc61017345c669b22aebcccda5713fd31c72f88936ae8964014dfe9ca5c96"
       }
     },
@@ -321,7 +293,7 @@
       "drawn_from": "d05f689cef573d07170e3d8c850747dab7d4f1fe8981527f90cb8d2e4de71d26",
       "inputs": {
         "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
-        "logo/src/small-mark.json": "9e26b6b43bd0bd0793595a6209993813ef24b3b8c18a0c62f8bc0ccb1381f08c",
+        "logo/src/small-mark.json": "09bad5101382474bde10aa4da610252f19fba1ce54554b067102234db5defbf3",
         "tokens/tokens.json": "02adc61017345c669b22aebcccda5713fd31c72f88936ae8964014dfe9ca5c96"
       }
     },
@@ -335,21 +307,7 @@
       "drawn_from": "7d0219050fa0aa45b7edd43390eae026e8b2d7882c882c874124748c1ef41070",
       "inputs": {
         "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
-        "logo/src/small-mark.json": "9e26b6b43bd0bd0793595a6209993813ef24b3b8c18a0c62f8bc0ccb1381f08c",
-        "tokens/tokens.json": "02adc61017345c669b22aebcccda5713fd31c72f88936ae8964014dfe9ca5c96"
-      }
-    },
-    "logo/png/kleidos-mark-small-ink-light-16.png": {
-      "sha256": "f2e8fad4881841bb87d4acf8a84bc9b17cbc35061fc87302cf6049335a9a0132",
-      "bytes": 350,
-      "size": [
-        16,
-        16
-      ],
-      "drawn_from": "67849b4b497fbb05e9b01c55263f9d0d192d2414e8a26c0d075e6c0c7397b136",
-      "inputs": {
-        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
-        "logo/src/small-mark.json": "9e26b6b43bd0bd0793595a6209993813ef24b3b8c18a0c62f8bc0ccb1381f08c",
+        "logo/src/small-mark.json": "09bad5101382474bde10aa4da610252f19fba1ce54554b067102234db5defbf3",
         "tokens/tokens.json": "02adc61017345c669b22aebcccda5713fd31c72f88936ae8964014dfe9ca5c96"
       }
     },
@@ -363,7 +321,7 @@
       "drawn_from": "523a80a3573a7c6ee36936c64538e5f7601793a0ad0b3897b4a9ee3d2d6f16ab",
       "inputs": {
         "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
-        "logo/src/small-mark.json": "9e26b6b43bd0bd0793595a6209993813ef24b3b8c18a0c62f8bc0ccb1381f08c",
+        "logo/src/small-mark.json": "09bad5101382474bde10aa4da610252f19fba1ce54554b067102234db5defbf3",
         "tokens/tokens.json": "02adc61017345c669b22aebcccda5713fd31c72f88936ae8964014dfe9ca5c96"
       }
     },
@@ -377,7 +335,7 @@
       "drawn_from": "86bb1c7a07730cf095dc7aabf3cb1ff68247fb5096e40d322c19e681faf1b27c",
       "inputs": {
         "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
-        "logo/src/small-mark.json": "9e26b6b43bd0bd0793595a6209993813ef24b3b8c18a0c62f8bc0ccb1381f08c",
+        "logo/src/small-mark.json": "09bad5101382474bde10aa4da610252f19fba1ce54554b067102234db5defbf3",
         "tokens/tokens.json": "02adc61017345c669b22aebcccda5713fd31c72f88936ae8964014dfe9ca5c96"
       }
     },
@@ -391,21 +349,7 @@
       "drawn_from": "c7faf43ee984a303d73d4d7e4a01105d34769c96de12e843ec7f69d2d4769e4c",
       "inputs": {
         "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
-        "logo/src/small-mark.json": "9e26b6b43bd0bd0793595a6209993813ef24b3b8c18a0c62f8bc0ccb1381f08c",
-        "tokens/tokens.json": "02adc61017345c669b22aebcccda5713fd31c72f88936ae8964014dfe9ca5c96"
-      }
-    },
-    "logo/png/kleidos-mark-small-on-dark-16.png": {
-      "sha256": "9e4964b18a4b2e02f8b182c5848287667a08c66abe636e14c953e14b98bd59e4",
-      "bytes": 472,
-      "size": [
-        16,
-        16
-      ],
-      "drawn_from": "89d84bcd05e2d7475ec9a1ae5795580a45ef7b9e5abaadcabfc51498d0fca021",
-      "inputs": {
-        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
-        "logo/src/small-mark.json": "9e26b6b43bd0bd0793595a6209993813ef24b3b8c18a0c62f8bc0ccb1381f08c",
+        "logo/src/small-mark.json": "09bad5101382474bde10aa4da610252f19fba1ce54554b067102234db5defbf3",
         "tokens/tokens.json": "02adc61017345c669b22aebcccda5713fd31c72f88936ae8964014dfe9ca5c96"
       }
     },
@@ -419,7 +363,7 @@
       "drawn_from": "3bec0591d418005adb6dcb5503b4dabb3d937b39c74b1037ae2f9edf1c5607dd",
       "inputs": {
         "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
-        "logo/src/small-mark.json": "9e26b6b43bd0bd0793595a6209993813ef24b3b8c18a0c62f8bc0ccb1381f08c",
+        "logo/src/small-mark.json": "09bad5101382474bde10aa4da610252f19fba1ce54554b067102234db5defbf3",
         "tokens/tokens.json": "02adc61017345c669b22aebcccda5713fd31c72f88936ae8964014dfe9ca5c96"
       }
     },
@@ -433,7 +377,7 @@
       "drawn_from": "98f3263ce5dabf65be4307df72b529d5f95a9ac52b1d5a3e569c181db62b50cb",
       "inputs": {
         "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
-        "logo/src/small-mark.json": "9e26b6b43bd0bd0793595a6209993813ef24b3b8c18a0c62f8bc0ccb1381f08c",
+        "logo/src/small-mark.json": "09bad5101382474bde10aa4da610252f19fba1ce54554b067102234db5defbf3",
         "tokens/tokens.json": "02adc61017345c669b22aebcccda5713fd31c72f88936ae8964014dfe9ca5c96"
       }
     },
@@ -447,7 +391,7 @@
       "drawn_from": "4c0a843a995a9e0234e2ef24df5a1aceb29bcedaadc74071acd8a6fb7f50ae55",
       "inputs": {
         "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
-        "logo/src/small-mark.json": "9e26b6b43bd0bd0793595a6209993813ef24b3b8c18a0c62f8bc0ccb1381f08c",
+        "logo/src/small-mark.json": "09bad5101382474bde10aa4da610252f19fba1ce54554b067102234db5defbf3",
         "tokens/tokens.json": "02adc61017345c669b22aebcccda5713fd31c72f88936ae8964014dfe9ca5c96"
       }
     },

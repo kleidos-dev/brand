@@ -63,9 +63,9 @@ def mark_findings(root: Path, files: list[Path]) -> list[str]:
     found = []
     below = mark.small_numbers(root)["below_px"]
     full = json.loads((root / tokens.TOKENS_JSON).read_text(encoding="utf-8"))["brand"]["logo"]["min-px-on-dark"]["$value"]
-    if below != full or any(px >= below for px in mark.small_numbers(root)["sizes"]):
+    if below != full or any(px >= below or px % 2 == 0 for px in mark.small_numbers(root)["sizes"]):
         found.append(f"{mark.SMALL_JSON}: the small mark is for sizes under {below} px, and the full mark holds from"
-                     f" {full} px (tokens.json brand.logo.min-px-on-dark); the two agree and every small size is under it")
+                     f" {full} px (tokens.json brand.logo.min-px-on-dark); the two agree, and every small size is odd and under it")
     for path in files:
         if path.suffix == ".svg":
             found += mark.findings(root / path, shapes, inks, path.as_posix(), small)
