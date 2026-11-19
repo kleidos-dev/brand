@@ -1,3 +1,13 @@
+<!-- BEGIN GENERATED: banner (kleidos-dev/social, tools/sync_readme_banners.py); do not edit by hand -->
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset=".github/readme/banner-dark.svg">
+  <source media="(prefers-color-scheme: light)" srcset=".github/readme/banner-light.svg">
+  <img src=".github/readme/banner-light.svg" width="100%" alt="Kleidos Brand: The logo, type, colors, tokens and press kit.">
+</picture>
+
+<!-- END GENERATED: banner -->
+
 # brand
 
 The identity of [Kleidos](https://kleidos.dev), free firmware that turns a small ESP32 board into a hardware password manager: its logo, its typefaces, its colors, the tokens the site and the device are styled with, what may be said about the project, and a press kit.
