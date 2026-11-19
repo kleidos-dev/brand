@@ -9,7 +9,7 @@ from pathlib import Path
 
 import build
 import pytest
-from kleidos_brand import boards, logo, photos, png, press, record
+from kleidos_brand import boards, logo, photos, png, press, record, records
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -76,9 +76,12 @@ def test_every_photograph_is_clean_and_listed() -> None:
     data = press.load(ROOT)
     assert data["photos"], "the press kit has a photograph"
     for photo in data["photos"].values():
-        whole = (ROOT / photos.PHOTOS_DIR / f"{photo['file']}.jpg").read_bytes()
-        assert photos.findings(photo["file"], whole, tuple(photo["size"])) == []
-        assert set(photos.markers(whole)) <= photos.ALLOWED_MARKERS
+        path = photos.PHOTOS_DIR / f"{photo['file']}.jpg"
+        whole = (ROOT / path).read_bytes()
+        about = records.photo(photo, path, tuple(photo["size"]))
+        assert photos.findings(photo["file"], whole, tuple(photo["size"]), meta=about) == []
+        assert set(photos.markers(whole)) <= photos.ALLOWED_MARKERS | photos.METADATA_MARKERS
+        assert photos.findings(photo["file"], photos.bare(whole), tuple(photo["size"])) == [], "without its record, only pixels and tables"
         assert set(photo["alt"]) == set(data["langs"]) and photo["credit"]
 
 
@@ -106,8 +109,11 @@ def test_every_committed_picture_is_recorded_and_within_its_limits() -> None:
         data = (ROOT / item.path).read_bytes()
         assert (photos.size(data) if item.path.suffix == ".jpg" else png.size(data)) == item.size, item.path
         assert hashlib.sha256(data).hexdigest() == recorded["files"][item.path.as_posix()]["sha256"]
-        if item.path.parts[0] == "press-kit":
-            assert len(data) < press.BYTE_LIMIT, item.path
+        if item.limit is not None:
+            assert len(data) < item.limit, item.path
+        elif item.path.parts[0] == "press-kit":
+            # A capture and the full-resolution photograph are kept as they are, with no limit of their own.
+            assert item.path.parent in (press.SCREENS_DIR, photos.PHOTOS_DIR) and not item.row, item.path
 
 
 def test_every_logo_has_its_png_copies_and_every_press_image_both_languages() -> None:

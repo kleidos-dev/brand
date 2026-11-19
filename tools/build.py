@@ -4,7 +4,8 @@
 
     tools/build.py                    regenerate the tokens' files, the logo files, the palette,
                                       the press images, the photographs' narrower copies, the
-                                      record and the pages' tables
+                                      metadata of every published picture, the record and the
+                                      pages' tables
     tools/build.py --check            draw everything again and fail on any difference, pixel for
                                       pixel; refused under a browser other than the recorded one
     tools/build.py --check --static   what needs no browser: every text file, every table, and each
@@ -15,10 +16,17 @@
 The exact comparison belongs to the machine that exported: Chromium draws an
 edge a shade apart from one version or system to the next. The static check
 and the tolerant one run anywhere, and CI runs both.
+
+Every published SVG and picture carries the record of what it is
+(``kleidos_brand.meta``, made by ``kleidos_brand.records``): written here, in
+the profile's fixed order, never by hand. The screen captures and the
+full-resolution photograph are not drawn again: the builder writes their
+metadata on them and leaves their pixels' bytes as they are.
 """
 from __future__ import annotations
 
 import argparse
+import dataclasses
 import sys
 import zipfile
 from collections.abc import Callable
@@ -28,7 +36,7 @@ from typing import Any
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-from kleidos_brand import BRAND_ROOT, boards, lettering, logo, mark, palette, photos, png, press, raster, record, tokens  # noqa: E402
+from kleidos_brand import BRAND_ROOT, boards, lettering, logo, mark, meta, palette, photos, png, press, raster, record, records, tokens  # noqa: E402
 
 #: The share of pixels that may differ by more than a shade under another browser.
 TOLERANCE = 0.005
@@ -44,10 +52,11 @@ LANGUAGES = {"en": "English", "es": "Spanish"}
 
 @dataclass(frozen=True)
 class Text:
-    """A generated text file and what it must hold."""
+    """A generated text file and what it must hold; a published SVG also has its metadata record."""
 
     path: Path
     content: str
+    meta: meta.MediaMeta | None = None
 
 
 @dataclass(frozen=True)
@@ -62,6 +71,13 @@ class Picture:
     what: str
     limit: int | None = None
     needs_browser: bool = True
+    meta: meta.MediaMeta | None = None
+    row: bool = True  # listed in its page's generated table; a capture or the full photograph has its own row
+
+
+def stamped_svg(path: Path, svg: str, record_: meta.MediaMeta) -> Text:
+    """Return a published SVG with its record's title, description and metadata."""
+    return Text(path, meta.svg_stamp(svg, record_, meta.svg_slug(path.stem)), record_)
 
 
 def collect(root: Path = BRAND_ROOT) -> tuple[list[Text], list[Picture]]:
@@ -74,51 +90,88 @@ def collect(root: Path = BRAND_ROOT) -> tuple[list[Text], list[Picture]]:
     pictures: list[Picture] = []
 
     # --- Logo files ----------------------------------------------------------------------
+    published: dict[str, Text] = {}
     for item in logo.build(root):
-        texts.append(Text(logo.SVG_DIR / f"{item.stem}.svg", item.svg))
+        svg_path = logo.SVG_DIR / f"{item.stem}.svg"
+        published[item.stem] = stamped_svg(svg_path, item.svg, records.logo(item, svg_path))
+        texts.append(published[item.stem])
     shapes, small = mark.shapes(root), mark.small_numbers(root)
     for item, width, height, path in logo.png_plan(root):
+        svg = published[item.stem].content
+        about = records.logo(item, path, (width, height), records.url(published[item.stem].path))
         if item.px and item.paint:
             # A small mark's pixels are counted, not drawn by the browser: the same bytes on every machine.
-            def draw_small(_: raster.Browser | None, __: dict[str, Any], item: logo.Logo = item) -> bytes:
+            def draw_small(_: raster.Browser | None, __: dict[str, Any], item: logo.Logo = item, about: meta.MediaMeta = about) -> bytes:
                 assert item.px and item.paint
                 image = mark.small_pixels(mark.small_fit(shapes, item.px, small), item.paint)
-                return png.encode(png.clean(png.encode(image), flatten=item.ground))
+                return png.encode(png.clean(png.encode(image), flatten=item.ground), about)
 
-            pictures.append(Picture(path, (width, height), record.sha256(item.svg.encode()), SMALL_INPUTS, draw_small,
-                                    item.what, needs_browser=False))
+            pictures.append(Picture(path, (width, height), record.sha256(svg.encode()), SMALL_INPUTS, draw_small,
+                                    item.what, needs_browser=False, meta=about))
             continue
 
-        def draw_logo(browser: raster.Browser | None, _: dict[str, Any], item: logo.Logo = item, size: tuple[int, int] = (width, height)) -> bytes:
+        def draw_logo(browser: raster.Browser | None, _: dict[str, Any], item: logo.Logo = item, size: tuple[int, int] = (width, height),
+                      svg: str = svg, about: meta.MediaMeta = about) -> bytes:
             assert browser is not None
-            return png.encode(png.clean(browser.draw(item.svg, size, item.stem), flatten=item.ground))
+            return png.encode(png.clean(browser.draw(svg, size, item.stem), flatten=item.ground), about)
 
         box = round(height * item.mark_share)
         what = item.what + (f"; the mark box is {box} px" if box else "")
-        pictures.append(Picture(path, (width, height), record.sha256(item.svg.encode()), LOGO_INPUTS, draw_logo, what))
+        pictures.append(Picture(path, (width, height), record.sha256(svg.encode()), LOGO_INPUTS, draw_logo, what, meta=about))
 
     # --- The palette ---------------------------------------------------------------------
-    sheet, sheet_size = palette.svg(root)
+    bare_sheet, sheet_size = palette.svg(root)
     ground = tokens.resolve(loaded)["social.ground"]
-    texts.append(Text(palette.PALETTE_SVG, sheet))
+    sheet_text = stamped_svg(palette.PALETTE_SVG, bare_sheet, records.palette(palette.PALETTE_SVG))
+    sheet = sheet_text.content
+    texts.append(sheet_text)
+    sheet_meta = records.palette(palette.PALETTE_PNG, sheet_size, records.url(palette.PALETTE_SVG))
 
     def draw_palette(browser: raster.Browser | None, _: dict[str, Any]) -> bytes:
         assert browser is not None
-        return png.encode(png.clean(browser.draw(sheet, sheet_size, "palette"), flatten=ground))
+        return png.encode(png.clean(browser.draw(sheet, sheet_size, "palette"), flatten=ground), sheet_meta)
 
     pictures.append(Picture(palette.PALETTE_PNG, sheet_size, record.sha256(sheet.encode()), (tokens.TOKENS_JSON, MONA, MONO),
-                            draw_palette, "the swatch sheet"))
+                            draw_palette, "the swatch sheet", meta=sheet_meta))
 
     # --- Press images --------------------------------------------------------------------
     data = press.load(root)
+    # --- The screen captures and the photograph: their pixels kept, their metadata written -------
+    # First in the list: the press images and the enlarged screens record these files' digests.
+    for board, screen in data["screens"].items():
+        native = press.SCREENS_DIR / f"kleidos-screen-{board}.png"
+        size = tuple(screen["size"])
+        about = records.screen(screen, native, size, source=meta.FIRMWARE_REPO_URL)
+
+        def stamp_screen(_: raster.Browser | None, __: dict[str, Any], native: Path = native, about: meta.MediaMeta = about) -> bytes:
+            return png.stamp((root / native).read_bytes(), about)
+
+        pictures.append(Picture(native, size, record.sha256(png.bare((root / native).read_bytes())), (press.PRESS_JSON,), stamp_screen,
+                                f"the {screen['name']}'s unlock screen, as captured", needs_browser=False, meta=about, row=False))
+    for photo in data.get("photos", {}).values():
+        whole = photos.PHOTOS_DIR / f"{photo['file']}.jpg"
+        about = records.photo(photo, whole, tuple(photo["size"]))
+
+        def stamp_photo(_: raster.Browser | None, __: dict[str, Any], whole: Path = whole, about: meta.MediaMeta = about) -> bytes:
+            return photos.stamp((root / whole).read_bytes(), about)
+
+        pictures.append(Picture(whole, tuple(photo["size"]), record.sha256(photos.bare((root / whole).read_bytes())), (press.PRESS_JSON,),
+                                stamp_photo, f"{photo['what']}, at full resolution", needs_browser=False, meta=about, row=False))
+
+    entries = {entry["file"]: entry for entry in data["images"]}
     for image in press.images(root):
+        entry = entries[image.stem.removesuffix(f"-{image.lang}") if image.lang != data["default_lang"] else image.stem]
+        svg_path = press.SVG_DIR / f"{image.stem}.svg"
         if image.publish_svg:
-            texts.append(Text(press.SVG_DIR / f"{image.stem}.svg", image.svg))
+            published_press = stamped_svg(svg_path, image.svg, records.press(image, entry, svg_path))
+            texts.append(published_press)
+            image = dataclasses.replace(image, svg=published_press.content)
         screens = tuple(press.SCREENS_DIR / f"kleidos-screen-{plate.board}.png" for plate in image.plates)
         screens += tuple(boards.screen_path(placed.slug) for placed in image.fronts)
         lineup = tuple(path for path in boards.inputs(root) if path not in screens) if image.fronts else ()
         inputs = (*LOGO_INPUTS, MONO, press.PRESS_JSON, press.SRC_DIR / f"{image.layout}.svg", *screens, *lineup)
-        source = record.sha256(image.svg.encode() + b"".join((root / screen).read_bytes() for screen in screens))
+        # A capture's metadata is not part of what an image is drawn from: its pixels' chunks are.
+        source = record.sha256(image.svg.encode() + b"".join(png.bare((root / screen).read_bytes()) for screen in screens))
         what = image.what + ("" if image.lang == data["default_lang"] else f", in {LANGUAGES.get(image.lang, image.lang)}")
 
         def full(browser: raster.Browser | None, cache: dict[str, Any], image: press.Image = image) -> Any:
@@ -128,18 +181,22 @@ def collect(root: Path = BRAND_ROOT) -> tuple[list[Text], list[Picture]]:
                 cache[image.stem] = press.paste_screens(image, drawn, root)
             return cache[image.stem]
 
+        full_path = image.png_paths()[0][0]
         for index, (path, size) in enumerate(image.png_paths()):
+            upstream = (records.url(svg_path) if image.publish_svg else None) if index == 0 else records.url(full_path)
+            about = records.press(image, entry, path, size, upstream)
+
             def draw_press(browser: raster.Browser | None, cache: dict[str, Any], image: press.Image = image,
-                           size: tuple[int, int] = size, whole: bool = index == 0) -> bytes:
+                           size: tuple[int, int] = size, whole: bool = index == 0, about: meta.MediaMeta = about) -> bytes:
                 if whole:
-                    return png.encode(full(browser, cache, image))
+                    return png.encode(full(browser, cache, image), about)
                 if image.plates or image.fronts:
-                    return png.encode(press.narrowed(full(browser, cache, image), size))
+                    return png.encode(press.narrowed(full(browser, cache, image), size), about)
                 assert browser is not None
-                return png.encode(png.clean(browser.draw(image.svg, size, f"{image.stem}-{size[0]}"), flatten=image.ground))
+                return png.encode(png.clean(browser.draw(image.svg, size, f"{image.stem}-{size[0]}"), flatten=image.ground), about)
 
             copy_note = "" if index == 0 else f", {size[0]} px wide"
-            pictures.append(Picture(path, size, source, inputs, draw_press, what + copy_note, press.BYTE_LIMIT))
+            pictures.append(Picture(path, size, source, inputs, draw_press, what + copy_note, press.BYTE_LIMIT, meta=about))
 
     # --- Screens, enlarged ---------------------------------------------------------------
     for board, screen in data["screens"].items():
@@ -147,31 +204,40 @@ def collect(root: Path = BRAND_ROOT) -> tuple[list[Text], list[Picture]]:
         scale = screen["scale"]
         size = (screen["size"][0] * scale, screen["size"][1] * scale)
 
-        def draw_screen(_: raster.Browser | None, __: dict[str, Any], native: Path = native, scale: int = scale) -> bytes:
-            return png.encode(press.enlarged_screen((root / native).read_bytes(), scale))
+        enlarged = press.SCREENS_DIR / f"kleidos-screen-{board}-{scale}x.png"
+        about = records.screen(screen, enlarged, size, scale, records.url(native))
 
-        pictures.append(Picture(press.SCREENS_DIR / f"kleidos-screen-{board}-{scale}x.png", size, record.file_sha256(root / native),
+        def draw_screen(_: raster.Browser | None, __: dict[str, Any], native: Path = native, scale: int = scale,
+                        about: meta.MediaMeta = about) -> bytes:
+            return png.encode(press.enlarged_screen((root / native).read_bytes(), scale), about)
+
+        pictures.append(Picture(enlarged, size, record.sha256(png.bare((root / native).read_bytes())),
                                 (native, press.PRESS_JSON), draw_screen,
-                                f"the {screen['name']}'s unlock screen at {scale} times its own pixels", press.BYTE_LIMIT, False))
+                                f"the {screen['name']}'s unlock screen at {scale} times its own pixels", press.BYTE_LIMIT, False, about))
 
     # --- Photographs, narrower -----------------------------------------------------------
     for photo in data.get("photos", {}).values():
         whole = photos.PHOTOS_DIR / f"{photo['file']}.jpg"
         width, height = photo["size"]
         for copy_width in photo.get("copies", ()):
-            def draw_photo(_: raster.Browser | None, __: dict[str, Any], whole: Path = whole, copy_width: int = copy_width) -> bytes:
-                return photos.narrowed((root / whole).read_bytes(), copy_width)
+            narrow = photos.PHOTOS_DIR / f"{photo['file']}-{copy_width}.jpg"
+            narrow_size = (copy_width, round(copy_width * height / width))
+            about = records.photo(photo, narrow, narrow_size, records.url(whole))
 
-            pictures.append(Picture(photos.PHOTOS_DIR / f"{photo['file']}-{copy_width}.jpg", (copy_width, round(copy_width * height / width)),
-                                    record.file_sha256(root / whole), (whole, press.PRESS_JSON), draw_photo,
-                                    f"the same, {copy_width} px wide", press.BYTE_LIMIT, False))
+            def draw_photo(_: raster.Browser | None, __: dict[str, Any], whole: Path = whole, copy_width: int = copy_width,
+                           about: meta.MediaMeta = about) -> bytes:
+                return photos.narrowed((root / whole).read_bytes(), copy_width, about)
+
+            pictures.append(Picture(narrow, narrow_size, record.sha256(photos.bare((root / whole).read_bytes())), (whole, press.PRESS_JSON),
+                                    draw_photo, f"the same, {copy_width} px wide", press.BYTE_LIMIT, False, about))
     return texts, pictures
 
 
-def picture_findings(name: str, data: bytes, size: tuple[int, int] | None = None, limit: int | None = None) -> list[str]:
-    """Return what is wrong with a published picture, a PNG or a photograph's JPEG."""
+def picture_findings(name: str, data: bytes, size: tuple[int, int] | None = None, limit: int | None = None,
+                     about: meta.MediaMeta | None = None) -> list[str]:
+    """Return what is wrong with a published picture, a PNG or a photograph's JPEG, its metadata included."""
     check = photos.findings if name.endswith(".jpg") else png.findings
-    return check(name, data, size, limit)
+    return check(name, data, size, limit, about)
 
 
 # --- The pages' generated tables ---------------------------------------------------------
@@ -216,7 +282,7 @@ def blocks(root: Path, pictures: list[Picture], files: dict[str, Any]) -> dict[P
         screen_rows.append(f"| [`{native.name}`](screens/{native.name}) | {screen['size'][0]} x {screen['size'][1]} |"
                            f" {record.human_bytes((root / native).stat().st_size)} | the {screen['name']}'s unlock screen, as captured |")
     for picture in pictures:
-        if picture.path.parts[0] != "press-kit":
+        if picture.path.parts[0] != "press-kit" or not picture.row:
             continue
         row = f"| [`{picture.path.name}`]({picture.path.relative_to('press-kit').as_posix()}) | {picture.size[0]} x {picture.size[1]} | {weight(picture.path)} | {picture.what} |"
         if picture.path.parent == press.IMAGES_DIR:
@@ -284,7 +350,7 @@ def write(root: Path = BRAND_ROOT) -> int:
                 "inputs": {path.as_posix(): record.file_sha256(root / path) for path in picture.inputs},
             }
         version = browser.version
-    (root / record.EXPORTS_JSON).write_text(record.dump({"chromium": version, "files": files}), encoding="utf-8")
+    (root / record.EXPORTS_JSON).write_text(record.dump({"chromium": version, "meta_profile": meta.META_PROFILE, "files": files}), encoding="utf-8")
     for page in pages(root, pictures, files):
         (root / page.path).write_text(page.content, encoding="utf-8")
     print(f"wrote {len(texts)} text files and {len(pictures)} pictures, drawn with Chromium {version}")
@@ -300,6 +366,8 @@ def static_findings(root: Path = BRAND_ROOT) -> list[str]:
     recorded = record.load(root)
     files = recorded.get("files", {})
     found = []
+    if files and recorded.get("meta_profile") != meta.META_PROFILE:
+        found.append(f"exports.json: the pictures carry metadata profile {recorded.get('meta_profile')!r}, not {meta.META_PROFILE!r}; run tools/build.py")
     for text in [*texts, *pages(root, pictures, files)]:
         path = root / text.path
         if not path.is_file():
@@ -316,7 +384,7 @@ def static_findings(root: Path = BRAND_ROOT) -> list[str]:
             found.append(f"{name}: missing; run tools/build.py")
             continue
         data = path.read_bytes()
-        found += picture_findings(name, data, picture.size, picture.limit)
+        found += picture_findings(name, data, picture.size, picture.limit, picture.meta)
         if entry is None:
             found.append(f"{name}: exports.json has no record of it; run tools/build.py")
             continue

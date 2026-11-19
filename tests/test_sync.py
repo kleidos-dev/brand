@@ -3,12 +3,11 @@
 from __future__ import annotations
 
 import json
-import shutil
 from pathlib import Path
 
 import pytest
 import sync_from_kleidos as sync
-from kleidos_brand import mark, press, public_tree, tokens
+from kleidos_brand import mark, png, press, public_tree, tokens
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -60,7 +59,8 @@ def firmware(tmp_path: Path) -> Path:
         write(base / sync.STRINGS.format(lang=lang), json.dumps(strings))
     for board, screen in data["screens"].items():
         (base / screen["from"]).parent.mkdir(parents=True, exist_ok=True)
-        shutil.copyfile(ROOT / press.SCREENS_DIR / f"kleidos-screen-{board}.png", base / screen["from"])
+        # The firmware's master as it holds it: the same pixels, without the metadata written here.
+        (base / screen["from"]).write_bytes(png.bare((ROOT / press.SCREENS_DIR / f"kleidos-screen-{board}.png").read_bytes()))
     assert values["brand.signal"] == "#00d2ff"
     return base
 
@@ -102,3 +102,18 @@ def test_changed_words_a_changed_mark_and_a_changed_pin_are_reported(firmware: P
     assert any("words.es.title" in line for line in found)
     assert any("logo/src/mark.svg" in line for line in found)
     assert any("Inter-Regular.ttf" in line for line in found)
+
+
+def test_a_capture_is_held_to_its_master_pixels_not_its_bytes(firmware: Path) -> None:
+    from PIL import Image
+
+    data = press.load(ROOT)
+    board, screen = next(iter(data["screens"].items()))
+    master = firmware / screen["from"]
+    assert master.read_bytes() != (ROOT / press.SCREENS_DIR / f"kleidos-screen-{board}.png").read_bytes(), "the copy here carries metadata"
+    assert sync.other_findings(firmware, None, ROOT) == []
+    with Image.open(master) as opened:
+        moved = opened.convert("RGBA")
+    moved.putpixel((0, 0), (255, 0, 255, 255))
+    moved.save(master, "PNG")
+    assert any(f"kleidos-screen-{board}.png" in line and "pixels" in line for line in sync.other_findings(firmware, None, ROOT))

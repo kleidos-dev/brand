@@ -5,6 +5,7 @@
 -->
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 3840 2160" width="3840" height="2160">
   <title>Kleidos press image, 16:9: the nine boards at one scale on one shelf, each showing its unlock screen, under the lockup and the hero line; the builder draws the boards in place of the shelf's box</title>
+  <desc>The layout of the 16:9 press images of the nine boards at one scale in one row; the builder draws the board fronts and pastes each unlock screen.</desc>
   <g id="ground">
     <rect x="0" y="0" width="3840" height="2160" fill="#0a0c0f"/>
   </g>

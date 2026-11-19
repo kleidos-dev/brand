@@ -4,6 +4,8 @@
   Additional terms under section 7 of the GNU GPL version 3: TRADEMARKS.md
 -->
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="-50 -50 100 100" width="100" height="100">
+  <title>Kleidos mark: a keyhole inside a ring</title>
+  <desc>The source drawing of the Kleidos mark, from which every logo file is built: a keyhole inside a ring.</desc>
   <circle cx="0" cy="0" r="42" fill="none" stroke="#00D2FF" stroke-width="3"/>
   <rect x="-14" y="-28" width="28" height="56" rx="14" fill="#0F3460"/>
   <rect x="-14" y="-28" width="28" height="56" rx="14" fill="none" stroke="#00D2FF" stroke-width="2.5"/>

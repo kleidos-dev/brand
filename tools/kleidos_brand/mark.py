@@ -44,10 +44,18 @@ def _shape(element: ET.Element) -> Shape:
     return tag_name(element), tuple(sorted(element.attrib.items()))
 
 
+#: What a drawing holds that is not drawn: its title, its description, its metadata.
+UNDRAWN = frozenset({"title", "desc", "metadata"})
+
+
+def _drawn(element: ET.Element) -> list[ET.Element]:
+    return [child for child in element if isinstance(child.tag, str) and tag_name(child) not in UNDRAWN]
+
+
 def shapes(root: Path = BRAND_ROOT) -> list[Shape]:
-    """Return the mark's shapes as ``logo/src/mark.svg`` draws them, in order."""
+    """Return the mark's shapes as ``logo/src/mark.svg`` draws them, in order (its title and description are not shapes)."""
     tree = ET.parse(root / MARK_SVG).getroot()
-    return [_shape(child) for child in tree if isinstance(child.tag, str)]
+    return [_shape(child) for child in _drawn(tree)]
 
 
 def ink_shapes(mark: list[Shape], ink: str) -> list[Shape]:
@@ -300,7 +308,7 @@ def findings(svg: Path, mark: list[Shape], inks: frozenset[str], name: str | Non
     found: list[str] = []
     geometry = [(tag, tuple(pair for pair in attributes if pair[0] not in ("fill", "stroke"))) for tag, attributes in mark]
     # Where the body may stand: inside a mark group, or in the file that is the mark's own drawing.
-    is_source = [_shape(child) for child in root if isinstance(child.tag, str)] == mark
+    is_source = [_shape(child) for child in _drawn(root)] == mark
     in_group = {id(child) for group in root.iter() if tag_name(group) == "g" and "mark" in group.get("class", "").split()
                 for child in group}
     body = body_size(mark)

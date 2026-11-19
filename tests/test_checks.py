@@ -170,7 +170,7 @@ def test_a_file_nothing_generates_is_refused(tree: Path) -> None:
     assert found(tree, "logo/png/kleidos-mark-48.png", "nothing generates it")
 
 
-def test_a_photograph_with_metadata_is_refused(tree: Path) -> None:
+def test_a_photograph_with_camera_data_is_refused(tree: Path) -> None:
     from PIL import Image
 
     path = tree / "press-kit/photos/kleidos-photo-four-boards.jpg"
@@ -180,7 +180,20 @@ def test_a_photograph_with_metadata_is_refused(tree: Path) -> None:
         buffer = io.BytesIO()
         photo.save(buffer, "JPEG", quality=88, exif=exif.tobytes())
     path.write_bytes(buffer.getvalue())
-    assert found(tree, "kleidos-photo-four-boards.jpg", "APP1 (EXIF or XMP)")
+    assert found(tree, "kleidos-photo-four-boards.jpg", "M005", "EXIF")
+
+
+def test_a_photograph_with_a_comment_or_another_record_is_refused(tree: Path) -> None:
+    path = tree / "press-kit/photos/kleidos-photo-four-boards-1200.jpg"
+    data = path.read_bytes()
+    tables = data.index(b"\xff\xdb")
+    comment = b"\xff\xfe" + (2 + len(b"a note")).to_bytes(2, "big") + b"a note"
+    path.write_bytes(data[:tables] + comment + data[tables:])
+    assert found(tree, "kleidos-photo-four-boards-1200.jpg", "COM (a comment)")
+    title = b"Four boards running Kleidos, photograph"
+    assert data.count(title) == 2, "the title is in the XMP packet and in its IIM twin"
+    path.write_bytes(data.replace(title, title.replace(b"photograph", b"photogrXph"), 1))
+    assert found(tree, "kleidos-photo-four-boards-1200.jpg", "M002", "XMP")
 
 
 def test_a_photograph_nothing_lists_is_refused(tree: Path) -> None:
@@ -210,6 +223,40 @@ def test_a_picture_with_a_text_chunk_is_refused(tree: Path) -> None:
         picture.save(buffer, "PNG", pnginfo=note)
     path.write_bytes(buffer.getvalue())
     assert found(tree, "kleidos-screen-coreink.png", "tEXt")
+    assert found(tree, "kleidos-screen-coreink.png", "M005", "Software")
+
+
+def test_a_picture_with_a_time_or_a_changed_text_is_refused(tree: Path) -> None:
+    import zlib
+
+    path = tree / "logo/png/kleidos-mark-256.png"
+    data = path.read_bytes()
+    stamp = b"tIME" + bytes([7, 234, 11, 19, 1, 2, 3])
+    clock = (7).to_bytes(4, "big") + stamp + zlib.crc32(stamp).to_bytes(4, "big")
+    path.write_bytes(data[:33] + clock + data[33:])
+    assert found(tree, "logo/png/kleidos-mark-256.png", "M005", "tIME")
+    title = b"Kleidos mark, in color, 256 px"
+    assert title in data
+    # The same chunk, one word changed and its CRC made again: well-formed, but not what the record gives.
+    at = data.index(b"tEXtTitle\x00" + title)
+    length = int.from_bytes(data[at - 4 : at], "big")
+    assert length == len(b"Title\x00" + title)
+    chunk = b"tEXtTitle\x00" + title.replace(b"256 px", b"257 px")
+    path.write_bytes(data[:at] + chunk + zlib.crc32(chunk).to_bytes(4, "big") + data[at + 8 + length :])
+    assert found(tree, "logo/png/kleidos-mark-256.png", "M002", "Title")
+
+
+def test_a_private_value_or_a_miswritten_vendor_in_a_record_is_refused(tree: Path) -> None:
+    press_json = tree / "press-kit/src/press.json"
+    edit(press_json, "on a dark ground.\",", f"on a dark ground, from {HOME_PATH}.\",")
+    edit(press_json, "on a white ground.\",", "on a white ground, by Lilygo.\",")
+    assert found(tree, "press-kit/images/kleidos-16x9.png", "M004", "a local path")
+    assert found(tree, "press-kit/images/kleidos-16x9-light.png", "M010")
+
+
+def test_a_media_file_with_no_record_is_refused(tree: Path) -> None:
+    shutil.copyfile(tree / "colors/palette.png", planted(tree, "about/palette-copy.png"))
+    assert found(tree, "about/palette-copy.png", "M008")
 
 
 def test_a_generated_svg_without_its_header_is_refused(tree: Path) -> None:

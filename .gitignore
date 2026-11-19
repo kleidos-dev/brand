@@ -6,3 +6,6 @@ __pycache__/
 .DS_Store
 # Build output that is not committed: the press-kit archive
 /dist/
+
+# The private deny-list of the metadata check (tools/kleidos_brand/meta.py): kept out of the tree
+tools/deny-local.txt

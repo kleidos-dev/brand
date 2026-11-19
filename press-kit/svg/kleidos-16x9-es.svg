@@ -3,8 +3,32 @@
   SPDX-License-Identifier: GPL-3.0-or-later
   Additional terms under section 7 of the GNU GPL version 3: TRADEMARKS.md
 -->
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 3840 2160" width="3840" height="2160">
-  <title>Kleidos press image, 16:9: the lockup, the eyebrow, the hero line and the address</title>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 3840 2160" width="3840" height="2160" role="img" aria-labelledby="kl-kleidos-16x9-es-t kl-kleidos-16x9-es-d" lang="es">
+  <title id="kl-kleidos-16x9-es-t">Imagen de prensa de Kleidos: logotipo y lema, 16:9, oscura</title>
+  <desc id="kl-kleidos-16x9-es-d">El logotipo de Kleidos, la etiqueta «Gestor de contraseñas por hardware», la frase «Tus contraseñas, en una placa que ya tienes.» y la dirección kleidos.dev, sobre fondo oscuro.</desc>
+  <!-- REUSE-IgnoreStart -->
+  <metadata id="kl-kleidos-16x9-es-m">
+    <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+             xmlns:dc="http://purl.org/dc/elements/1.1/"
+             xmlns:cc="http://creativecommons.org/ns#"
+             xmlns:Iptc4xmpExt="http://iptc.org/std/Iptc4xmpExt/2008-02-29/">
+      <cc:Work rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+        <dc:title><rdf:Alt><rdf:li xml:lang="x-default">Kleidos press image: logo and tagline, 16:9, dark</rdf:li><rdf:li xml:lang="es">Imagen de prensa de Kleidos: logotipo y lema, 16:9, oscura</rdf:li></rdf:Alt></dc:title>
+        <dc:description><rdf:Alt><rdf:li xml:lang="x-default">The Kleidos logo, the label 'Hardware password manager', the line 'Your passwords, on a board you already own.' and the address kleidos.dev, on a dark ground.</rdf:li><rdf:li xml:lang="es">El logotipo de Kleidos, la etiqueta «Gestor de contraseñas por hardware», la frase «Tus contraseñas, en una placa que ya tienes.» y la dirección kleidos.dev, sobre fondo oscuro.</rdf:li></rdf:Alt></dc:description>
+        <dc:creator><cc:Agent><dc:title>José M. Requena Plens</dc:title></cc:Agent></dc:creator>
+        <dc:publisher><cc:Agent><dc:title>Kleidos</dc:title></cc:Agent></dc:publisher>
+        <dc:rights><cc:Agent><dc:title>© 2026 José M. Requena Plens. GPL-3.0-or-later.</dc:title></cc:Agent></dc:rights>
+        <dc:identifier>https://github.com/kleidos-dev/brand/blob/main/press-kit/svg/kleidos-16x9-es.svg</dc:identifier>
+        <dc:language>es</dc:language>
+        <dc:subject><rdf:Bag><rdf:li>Kleidos</rdf:li><rdf:li>hardware password manager</rdf:li><rdf:li>open source</rdf:li><rdf:li>press kit</rdf:li><rdf:li>press image</rdf:li></rdf:Bag></dc:subject>
+        <Iptc4xmpExt:DigitalSourceType rdf:resource="http://cv.iptc.org/newscodes/digitalsourcetype/digitalCreation"/>
+        <cc:license rdf:resource="https://spdx.org/licenses/GPL-3.0-or-later.html"/>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <!-- REUSE-IgnoreEnd -->
   <g id="ground">
     <rect x="0" y="0" width="3840" height="2160" fill="#0a0c0f" />
   </g>
