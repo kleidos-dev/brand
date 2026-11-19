@@ -13,6 +13,12 @@
                                       picture's bytes against the record of what it was drawn from
     tools/build.py --check --tolerant draw again under any browser and fail on gross drift only
     tools/build.py --zip              write dist/kleidos-press-kit.zip (not committed)
+    tools/build.py --kicad            also export the KiCad kit's fixture with kicad-cli and draw its
+                                      previews (kicad/preview/); without it they are kept as they are
+
+The KiCad kit's previews are the one kind of picture that needs KiCad: they
+are drawn again only with ``--kicad`` (writing or checking), and the static
+check holds them to their sources like every other picture.
 
 The exact comparison belongs to the machine that exported: Chromium draws an
 edge a shade apart from one version or system to the next. The static check
@@ -37,7 +43,8 @@ from typing import Any
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-from kleidos_brand import BRAND_ROOT, boards, lettering, logo, mark, meta, palette, photos, png, press, raster, record, records, tokens, webp  # noqa: E402
+from kleidos_brand import (BRAND_ROOT, boards, kicad, kicad_preview, lettering, logo, mark, meta, palette, photos, png, press, raster,  # noqa: E402
+                           record, records, tokens, webp)
 
 #: The share of pixels that may differ by more than a shade under another browser.
 TOLERANCE = 0.005
@@ -46,7 +53,7 @@ MONA = lettering.FAMILIES["Mona Sans"]
 MONO = lettering.FAMILIES["Mona Sans Mono"]
 LOGO_INPUTS = (mark.MARK_SVG, logo.LOCKUPS_JSON, tokens.TOKENS_JSON, MONA)
 SMALL_INPUTS = (mark.MARK_SVG, mark.SMALL_JSON, tokens.TOKENS_JSON)
-GENERATED_DIRS = (logo.SVG_DIR, logo.PNG_DIR, logo.WEBP_DIR, press.SVG_DIR, press.IMAGES_DIR, Path("tokens/dist"))
+GENERATED_DIRS = (logo.SVG_DIR, logo.PNG_DIR, logo.WEBP_DIR, press.SVG_DIR, press.IMAGES_DIR, Path("tokens/dist"), kicad.PREVIEW_DIR)
 #: How a README table names a language of press.json.
 LANGUAGES = {"en": "English", "es": "Spanish"}
 
@@ -76,6 +83,7 @@ class Picture:
     row: bool = True  # listed in its page's generated table; a capture or the full photograph has its own row
     copy_of: Path | None = None  # an opaque or WebP copy: the published file it is made from
     lossless: bool = False  # a lossless WebP copy: it decodes to its copy_of's pixels exactly
+    needs_kicad: bool = False  # drawn from a kicad-cli export: drawn again only with --kicad
 
 
 def webp_path(path: Path) -> Path:
@@ -95,6 +103,7 @@ def collect(root: Path = BRAND_ROOT) -> tuple[list[Text], list[Picture]]:
     texts = [
         Text(tokens.FLAT_JSON, tokens.flat_json(loaded)),
         Text(tokens.TOKENS_CSS, tokens.css(loaded)),
+        *(Text(path, content) for path, content in kicad.texts(root).items()),
     ]
     pictures: list[Picture] = []
 
@@ -239,6 +248,18 @@ def collect(root: Path = BRAND_ROOT) -> tuple[list[Text], list[Picture]]:
 
             pictures.append(Picture(narrow, narrow_size, record.sha256(photos.bare((root / whole).read_bytes())), (whole, press.PRESS_JSON),
                                     draw_photo, f"the same, {copy_width} px wide", press.BYTE_LIMIT, False, about))
+    # --- The KiCad kit's previews --------------------------------------------------------
+    # (Not named ``ground``: draw_palette reads that name when it runs.)
+    for kicad_ground in kicad.load(root)["grounds"]:
+        preview = kicad_preview.path(kicad_ground)
+        about = records.kicad_preview(kicad_ground, preview, kicad_preview.SIZE)
+
+        def draw_kicad(browser: raster.Browser | None, _: dict[str, Any], side: str = kicad_ground, about: meta.MediaMeta = about) -> bytes:
+            assert browser is not None
+            return png.encode(kicad_preview.draw(side, browser, root), about)
+
+        pictures.append(Picture(preview, kicad_preview.SIZE, kicad_preview.source(kicad_ground, root), kicad_preview.inputs(kicad_ground, root),
+                                draw_kicad, f"the KiCad kit's fixture on the {kicad_ground} ground", meta=about, row=False, needs_kicad=True))
     pictures += opaque_copies(root, pictures)
     pictures += webp_copies(root, pictures, data)
     return texts, pictures
@@ -400,9 +421,10 @@ def stale(root: Path, texts: list[Text], pictures: list[Picture]) -> list[Path]:
     return found
 
 
-def write(root: Path = BRAND_ROOT) -> int:
-    """Regenerate every file and the record."""
+def write(root: Path = BRAND_ROOT, with_kicad: bool = False) -> int:
+    """Regenerate every file and the record; the KiCad previews only *with_kicad*, kept as recorded otherwise."""
     texts, pictures = collect(root)
+    kept = record.load(root).get("files", {})
     for text in texts:
         (root / text.path).parent.mkdir(parents=True, exist_ok=True)
         (root / text.path).write_text(text.content, encoding="utf-8")
@@ -413,6 +435,11 @@ def write(root: Path = BRAND_ROOT) -> int:
     cache: dict[str, Any] = {}
     with raster.Browser() as browser:
         for picture in pictures:
+            if picture.needs_kicad and not with_kicad:
+                if picture.path.as_posix() in kept and (root / picture.path).is_file():
+                    files[picture.path.as_posix()] = kept[picture.path.as_posix()]
+                    continue
+                raise SystemExit(f"{picture.path}: missing; run tools/build.py --kicad (kicad-cli 10.0.8)")
             data = picture.draw(browser, cache)
             (root / picture.path).parent.mkdir(parents=True, exist_ok=True)
             (root / picture.path).write_bytes(data)
@@ -478,8 +505,8 @@ def static_findings(root: Path = BRAND_ROOT) -> list[str]:
     return found
 
 
-def drawn_findings(root: Path = BRAND_ROOT, tolerant: bool = False) -> list[str]:
-    """Return every picture that, drawn again, is not the committed one."""
+def drawn_findings(root: Path = BRAND_ROOT, tolerant: bool = False, with_kicad: bool = False) -> list[str]:
+    """Return every picture that, drawn again, is not the committed one; the KiCad previews only *with_kicad*."""
     _, pictures = collect(root)
     recorded = record.load(root)
     found = []
@@ -507,6 +534,8 @@ def drawn_findings(root: Path = BRAND_ROOT, tolerant: bool = False) -> list[str]
                 if count != 0:
                     how = "is another size" if count is None else f"differs from {picture.copy_of.name} in {count} pixels"
                     found.append(f"{picture.path}: a lossless copy that {how}; run tools/build.py")
+                continue
+            if picture.needs_kicad and not with_kicad:
                 continue
             again, kept = picture.draw(browser, cache), path.read_bytes()
             if tolerant:
@@ -552,15 +581,16 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--static", action="store_true", help="with --check: only what needs no browser")
     parser.add_argument("--tolerant", action="store_true", help="with --check: draw again and fail on gross drift only")
     parser.add_argument("--zip", action="store_true", help="write dist/kleidos-press-kit.zip")
+    parser.add_argument("--kicad", action="store_true", help="also export the KiCad kit's previews with kicad-cli (writing or checking)")
     args = parser.parse_args(argv)
     if args.zip:
         print(f"wrote {write_zip().relative_to(BRAND_ROOT)}")
         return 0
     if not args.check:
-        return write()
+        return write(with_kicad=args.kicad)
     found = static_findings()
     if not args.static:
-        found += drawn_findings(tolerant=args.tolerant)
+        found += drawn_findings(tolerant=args.tolerant, with_kicad=args.kicad)
     for line in found:
         print(line)
     if found:

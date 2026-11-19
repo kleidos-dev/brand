@@ -4,8 +4,8 @@
 
 Everything in this repository is the work of José M. Requena Plens, except the font files under `fonts/` (below). It is under one of two licenses:
 
-- **GNU General Public License, version 3 or any later version** (GPL-3.0-or-later), the firmware's license: the artwork. The mark, the lockups and their PNG files, the press images, their templates and words, the screen captures, the photographs, the palette's page and sheet, and the pages about them.
-- **MIT License**: what is more useful to everyone under a permissive license. The tokens and the files generated from them (`tokens/`), the code, the checks and their tests (`tools/`, `tests/`), the CI and the commit-message gate (`.github/`), the pins and the configuration files, the texts that describe the project (`about/`, `press-kit/en/fact-sheet.md`, `press-kit/es/fact-sheet.md`), so anyone may quote them freely, and the board fronts under `boards/` (below).
+- **GNU General Public License, version 3 or any later version** (GPL-3.0-or-later), the firmware's license: the artwork. The mark, the lockups and their PNG files, the KiCad drawing sheets that embed the mark and their previews, the press images, their templates and words, the screen captures, the photographs, the palette's page and sheet, and the pages about them.
+- **MIT License**: what is more useful to everyone under a permissive license. The tokens and the files generated from them (`tokens/`), the KiCad kit's numbers, themes, helper and fixture (`kicad/`, below), the code, the checks and their tests (`tools/`, `tests/`), the CI and the commit-message gate (`.github/`), the pins and the configuration files, the texts that describe the project (`about/`, `press-kit/en/fact-sheet.md`, `press-kit/es/fact-sheet.md`), so anyone may quote them freely, and the board fronts under `boards/` (below).
 
 `REUSE.toml` states it file by file and `LICENSES/` holds the three license texts. All three licenses here are approved by the Open Source Initiative; nothing in this repository is under any other license.
 
@@ -16,6 +16,10 @@ Kleidos is not a registered trademark. Under section 7(e) of the GNU GPL version
 ## The board fronts
 
 `boards/<board>.svg` are byte copies of the nine `<board>/svg/front.svg` drawings of the project's `boards` repository (<https://github.com/kleidos-dev/boards>), the work of the same author, licensed there under the MIT License; `boards/boards.json` records the commit they were taken at and each file's SHA-256. They are kept under that license here, with the same copyright line (`LICENSES/MIT.txt`). The line-up images under `press-kit/images/kleidos-boards-*` are drawn from them, with each board's own unlock screen on its panel: the images are GPL-3.0-or-later like the rest of the press kit, and the drawings in them stay available under the MIT License from those files. The boards themselves are M5Stack's and LILYGO's products; the legends printed on them, the makers' marks included (M5, LILYGO, CARDPUTER and the like), are drawn as the products show them so that each one can be recognised, and remain their owners' marks.
+
+## The KiCad kit
+
+`kicad/` holds the Kleidos KiCad style (`kicad/README.md`). Its two drawing sheets, `kicad/kleidos-dark.kicad_wks` and `kicad/kleidos-light.kicad_wks`, embed the mark as `logo/png/kleidos-mark-1024.png` and `logo/png/kleidos-mark-ink-dark-1024.png`, byte for byte: they are artwork, GPL-3.0-or-later, as are the previews under `kicad/preview/`. The style's numbers, the two color themes, the helper `kicad/kleidos_kicad.py` and the fixture are under the MIT License. The boards and meter repositories carry byte copies of the kit; a schematic drawn with it keeps its own repository's license and shows the mark placed unchanged under the press permission of `TRADEMARKS.md`.
 
 ## Fonts
 
@@ -29,7 +33,7 @@ The name's lettering and every word in a generated image are glyph outlines or r
 
 ## What is not here
 
-- No board model, back drawing, schematic or icon: only the nine fronts above, copied from the `boards` repository.
+- No board model, back drawing, schematic or icon: only the nine fronts above, copied from the `boards` repository. The KiCad kit's fixture is a small sheet of its own, no board's.
 - No capture that shows another company's mark. The screens in the press kit are the firmware's unlock screen, which shows none.
 - No photograph but the owner's own, under `press-kit/photos/`, with every metadata segment removed. It shows the boards as they are, their makers' print included (M5, LILYGO, CARDPUTER and the like), and their screens show an earlier build of Kleidos over demo entries named after well-known services; those names and marks remain their owners'.
 - No vendor file of any kind.

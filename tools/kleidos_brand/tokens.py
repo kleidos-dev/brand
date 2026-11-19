@@ -24,7 +24,7 @@ HEX = re.compile(r"#[0-9a-fA-F]{6}")
 ALIAS = re.compile(r"\{([A-Za-z0-9_.-]+)\}")
 
 #: The groups whose opaque colors go into the flat file, in file order.
-FLAT_GROUPS = ("brand", "social", "web.dark", "web.light", "device.dark", "device.eink")
+FLAT_GROUPS = ("brand", "social", "web.dark", "web.light", "device.dark", "device.eink", "schematic")
 
 #: The nine type roles of the site and the seven parts each one declares.
 TYPE_PARTS = (("size", ""), ("lh", "-lh"), ("track", "-track"), ("face", "-face"),

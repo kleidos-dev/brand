@@ -20,6 +20,9 @@ What it holds:
 - fonts:     only the pinned upstream files, byte for byte, and no font inside an SVG;
 - boards:    each front under boards/ is the byte copy boards/boards.json records, and a line-up
              can draw it;
+- kicad:     every color of a KiCad theme is a token's value; each drawing sheet embeds its logo
+             file's bytes, unchanged, once, and names no font and no color; the helper, the README
+             and the fixture are there (kleidos_brand.kicad);
 - licenses:  every declaration (an SPDX tag, a REUSE.toml identifier, a text in LICENSES/) is
              GPL-3.0-or-later, MIT or OFL-1.1; prose may name any license, a declaration may not;
 - texts:     the Spanish term rule, the texts' agreement with about/facts.json (the name's
@@ -50,10 +53,11 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 import build  # noqa: E402
-from kleidos_brand import BRAND_ROOT, SVG_HEADER, boards, logo, mark, meta, palette, photos, png, press, public_tree, svg_rules, tokens  # noqa: E402
+from kleidos_brand import BRAND_ROOT, SVG_HEADER, boards, kicad, logo, mark, meta, palette, photos, png, press, public_tree, svg_rules, tokens  # noqa: E402
 
 ALLOWED_LICENSES = frozenset({"GPL-3.0-or-later", "MIT", "OFL-1.1"})
-PICTURE_DIRS = ("logo/png", "logo/webp", "colors", "press-kit/images", "press-kit/screens", photos.PHOTOS_DIR.as_posix())
+PICTURE_DIRS = ("logo/png", "logo/webp", "colors", "press-kit/images", "press-kit/screens", photos.PHOTOS_DIR.as_posix(),
+                kicad.PREVIEW_DIR.as_posix())
 SPANISH_BANNED = re.compile(r"\b(?:vault|vaults|b[oó]veda|b[oó]vedas)\b", re.I)
 URL = re.compile(r"https?://[^\s<>)\"'`]+")
 MISWRITTEN = re.compile(r"KLEIDOS|KleidOS|Kleidos OS")
@@ -354,6 +358,7 @@ def findings(root: Path = BRAND_ROOT) -> list[str]:
     found += license_findings(root, files)
     found += text_findings(root)
     found += boards.findings(root)
+    found += kicad.findings(root)
     found += public_tree.findings(root, files, PICTURE_DIRS, board_dirs=(boards.BOARDS_DIR.as_posix(),))
     try:
         found += metadata_findings(root, files)

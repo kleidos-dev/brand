@@ -218,3 +218,15 @@ def photo(photo_: dict[str, Any], path: str | Path, size: tuple[int, int], sourc
     return _record(path, "Four boards running Kleidos, photograph", _sentence(photo_["what"]), photo_["alt"]["en"],
                    ("photograph", *boards, "M5Stack", "LILYGO"), "digitalCapture", size,
                    trademarks=(meta.TRADEMARK_NOTE_M5, meta.TRADEMARK_NOTE_LILYGO, meta.TRADEMARK_NOTE_KLEIDOS), source_url=source)
+
+
+def kicad_preview(ground: str, path: str | Path, size: tuple[int, int] | None = None) -> meta.MediaMeta:
+    """Return the record of a preview of the KiCad kit: its fixture drawn on *ground* with that ground's sheet and theme."""
+    page = "dark" if ground == "dark" else "white"
+    return _record(path, f"Kleidos KiCad style, {ground} ground",
+                   f"The Kleidos KiCad kit's fixture drawn with its {ground} drawing sheet and color theme: one page that exercises"
+                   " every rule of the style, with the Kleidos mark in the title block.",
+                   f"A one-page KiCad schematic in the Kleidos style on a {page} page: cyan connections, labelled nets, a"
+                   " legend table, and the title block with the Kleidos mark",
+                   ("KiCad", "schematic", "drawing sheet", "color theme", "brand"), "digitalCreation", size,
+                   trademarks=(meta.TRADEMARK_NOTE_KLEIDOS,))

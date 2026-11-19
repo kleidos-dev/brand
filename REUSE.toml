@@ -5,7 +5,8 @@ SPDX-PackageDownloadLocation = "https://github.com/kleidos-dev/brand"
 
 # The artwork: the mark, the lockups and their PNG files, the palette's sheet,
 # the press images, their templates and their words, the screen captures, the
-# photographs, and the pages about them. GPL-3.0-or-later, the firmware's
+# photographs, the KiCad drawing sheets that embed the mark and their
+# previews, and the pages about them. GPL-3.0-or-later, the firmware's
 # license.
 #
 # Three things this file cannot express, all stated in TRADEMARKS.md:
@@ -29,8 +30,10 @@ SPDX-License-Identifier = "GPL-3.0-or-later"
 # What is more useful to everyone under the MIT License: the tokens and what
 # is generated from them, the tooling (the builders, the checks, their tests,
 # the CI, the commit-message gate copied from the agents repository, the
-# pins), and the texts that describe the project (about/ and the fact
-# sheets), so anyone can reuse and quote them freely.
+# pins), the texts that describe the project (about/ and the fact
+# sheets), so anyone can reuse and quote them freely, and the KiCad kit's
+# numbers, themes, helper and fixture. The kit's two drawing sheets and its
+# previews hold the mark: they stay under the artwork's line above.
 [[annotations]]
 path = [
   "tokens/**",
@@ -45,6 +48,13 @@ path = [
   "about/**",
   "press-kit/en/fact-sheet.md",
   "press-kit/es/fact-sheet.md",
+  "kicad/README.md",
+  "kicad/src/**",
+  "kicad/style.json",
+  "kicad/kleidos-dark.json",
+  "kicad/kleidos-light.json",
+  "kicad/kleidos_kicad.py",
+  "kicad/fixture/**",
 ]
 precedence = "override"
 SPDX-FileCopyrightText = "2026 José M. Requena Plens <mail@kleidos.dev>"
