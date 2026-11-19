@@ -9,3 +9,6 @@ __pycache__/
 
 # The private deny-list of the metadata check (tools/kleidos_brand/meta.py): kept out of the tree
 tools/deny-local.txt
+
+# KiCad writes a project's local settings beside it on every run
+*.kicad_prl

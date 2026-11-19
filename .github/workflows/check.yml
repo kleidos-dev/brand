@@ -50,3 +50,20 @@ jobs:
       # place, a picture not redrawn) fails here.
       - name: The pictures, drawn again, within tolerance
         run: python tools/build.py --check --tolerant
+
+  # The KiCad kit through the KiCad that boards and the meter export with
+  # (10.0.8): the fixture on each ground, ERC clean, both exports written with
+  # the theme found and one wire width, so a drawing sheet or a theme KiCad
+  # cannot read never merges. Standard library only: the image's own Python.
+  kicad:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    container:
+      image: kicad/kicad:10.0.8
+      options: --user root
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: The kit's fixture, exported on each ground
+        run: python3 tools/check_kicad.py
