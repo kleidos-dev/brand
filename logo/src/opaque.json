@@ -1,0 +1,15 @@
+{
+  "$comment": "The opaque copies of the logo PNG files that stand on transparency. Each is the transparent file flattened on one ground, with no clear space added: white for a variant made for a light ground, black for one made for a dark ground. tools/kleidos_brand/logo.py reads it.",
+  "grounds": {
+    "white": "social.light.ground",
+    "black": "social.plate"
+  },
+  "variants": {
+    "for-light": "white",
+    "ink-dark": "white",
+    "for-dark": "black",
+    "ink-light": "black",
+    "color": "black"
+  },
+  "why_color_is_black": "The mark in color, alone or small, has no ground in its name. Its ring is 1.80:1 on white, under the 3:1 the rules of use ask of the color mark's ground, and the small mark in color is drawn for a dark ground; on black the ring and the body both hold, so its opaque copy is on black."
+}

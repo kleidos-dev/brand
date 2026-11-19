@@ -16,8 +16,10 @@ from typing import Any
 from . import BRAND_ROOT, SVG_HEADER, lettering, mark, tokens
 
 LOCKUPS_JSON = Path("logo/src/lockups.json")
+OPAQUE_JSON = Path("logo/src/opaque.json")
 SVG_DIR = Path("logo/svg")
 PNG_DIR = Path("logo/png")
+WEBP_DIR = Path("logo/webp")
 
 
 @dataclass(frozen=True)
@@ -180,6 +182,48 @@ def _build(root: Path) -> list[Logo]:
             [_lettering_path(line, -ink_x0, ink_y1, ink)], 0.0,
             f"the name alone, {name.replace('-', ' a ')} ground, for a layout where the mark already stands nearby")
     return logos
+
+
+@dataclass(frozen=True)
+class Opaque:
+    """The opaque copy of a logo PNG that stands on transparency: what it copies, its ground and its path."""
+
+    item: Logo
+    source: Path  # the PNG on transparency it is flattened from
+    width: int
+    height: int
+    ground: str  # "white" or "black"
+    color: str  # the ground's #rrggbb
+    path: Path
+
+    @property
+    def family(self) -> str:
+        """Return the copy's name without its height: what the README lists it under."""
+        return f"{self.item.family}-opaque-{self.ground}"
+
+
+#: The variants a logo file's name may end with; a file named for none of them is in color.
+VARIANTS = ("for-light", "for-dark", "ink-dark", "ink-light")
+
+
+def variant(family: str) -> str:
+    """Return the variant a logo file's name ends with, or ``color``."""
+    return next((name for name in VARIANTS if family.endswith(f"-{name}")), "color")
+
+
+def opaque_plan(root: Path = BRAND_ROOT) -> list[Opaque]:
+    """Return the opaque copy of every logo PNG on transparency, on the ground ``logo/src/opaque.json`` gives its variant."""
+    numbers = json.loads((root / OPAQUE_JSON).read_text(encoding="utf-8"))
+    values = tokens.resolve(tokens.load(root))
+    plan = []
+    for item, width, height, path in png_plan(root):
+        if item.ground is not None:
+            continue
+        ground = numbers["variants"][variant(item.family)]
+        size = item.px or height
+        plan.append(Opaque(item, path, width, height, ground, values[numbers["grounds"][ground]],
+                           PNG_DIR / f"{item.family}-opaque-{ground}-{size}.png"))
+    return plan
 
 
 def png_plan(root: Path = BRAND_ROOT) -> list[tuple[Logo, int, int, Path]]:

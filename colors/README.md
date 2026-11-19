@@ -4,6 +4,8 @@ Two colors make the mark: `signal`, the cyan of its ring and keyhole, and `selec
 
 ![The Kleidos palette](palette.png)
 
+The sheet is also [`palette.svg`](palette.svg) and, lossless, [`palette.webp`](palette.webp).
+
 ## Rules
 
 - True colors: a color is used at its value, never tinted, shaded or made translucent. Where a hairline is wanted, `social.rule` is the one computed color (the ink at 16 % over the ground, as a solid).

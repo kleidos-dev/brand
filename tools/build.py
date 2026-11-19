@@ -2,10 +2,11 @@
 # SPDX-License-Identifier: MIT
 """Build everything this repository generates, or check that what is committed is what the sources give.
 
-    tools/build.py                    regenerate the tokens' files, the logo files, the palette,
-                                      the press images, the photographs' narrower copies, the
-                                      metadata of every published picture, the record and the
-                                      pages' tables
+    tools/build.py                    regenerate the tokens' files, the logo files (with their
+                                      opaque copies), the palette, the press images, the
+                                      photographs' narrower copies, the WebP copy of every PNG
+                                      and JPEG file, the metadata of every published picture,
+                                      the record and the pages' tables
     tools/build.py --check            draw everything again and fail on any difference, pixel for
                                       pixel; refused under a browser other than the recorded one
     tools/build.py --check --static   what needs no browser: every text file, every table, and each
@@ -36,7 +37,7 @@ from typing import Any
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-from kleidos_brand import BRAND_ROOT, boards, lettering, logo, mark, meta, palette, photos, png, press, raster, record, records, tokens  # noqa: E402
+from kleidos_brand import BRAND_ROOT, boards, lettering, logo, mark, meta, palette, photos, png, press, raster, record, records, tokens, webp  # noqa: E402
 
 #: The share of pixels that may differ by more than a shade under another browser.
 TOLERANCE = 0.005
@@ -45,7 +46,7 @@ MONA = lettering.FAMILIES["Mona Sans"]
 MONO = lettering.FAMILIES["Mona Sans Mono"]
 LOGO_INPUTS = (mark.MARK_SVG, logo.LOCKUPS_JSON, tokens.TOKENS_JSON, MONA)
 SMALL_INPUTS = (mark.MARK_SVG, mark.SMALL_JSON, tokens.TOKENS_JSON)
-GENERATED_DIRS = (logo.SVG_DIR, logo.PNG_DIR, press.SVG_DIR, press.IMAGES_DIR, Path("tokens/dist"))
+GENERATED_DIRS = (logo.SVG_DIR, logo.PNG_DIR, logo.WEBP_DIR, press.SVG_DIR, press.IMAGES_DIR, Path("tokens/dist"))
 #: How a README table names a language of press.json.
 LANGUAGES = {"en": "English", "es": "Spanish"}
 
@@ -73,6 +74,14 @@ class Picture:
     needs_browser: bool = True
     meta: meta.MediaMeta | None = None
     row: bool = True  # listed in its page's generated table; a capture or the full photograph has its own row
+    copy_of: Path | None = None  # an opaque or WebP copy: the published file it is made from
+    lossless: bool = False  # a lossless WebP copy: it decodes to its copy_of's pixels exactly
+
+
+def webp_path(path: Path) -> Path:
+    """Return where the WebP copy of a published PNG or JPEG file goes: ``logo/webp/`` for a logo file, beside it otherwise."""
+    folder = logo.WEBP_DIR if path.parent == logo.PNG_DIR else path.parent
+    return folder / f"{path.stem}.webp"
 
 
 def stamped_svg(path: Path, svg: str, record_: meta.MediaMeta) -> Text:
@@ -230,13 +239,61 @@ def collect(root: Path = BRAND_ROOT) -> tuple[list[Text], list[Picture]]:
 
             pictures.append(Picture(narrow, narrow_size, record.sha256(photos.bare((root / whole).read_bytes())), (whole, press.PRESS_JSON),
                                     draw_photo, f"the same, {copy_width} px wide", press.BYTE_LIMIT, False, about))
+    pictures += opaque_copies(root, pictures)
+    pictures += webp_copies(root, pictures, data)
     return texts, pictures
+
+
+def opaque_copies(root: Path, pictures: list[Picture]) -> list[Picture]:
+    """Return the opaque copy of every logo PNG on transparency: its pixels flattened on white or black, no clear space added."""
+    by_path = {picture.path: picture for picture in pictures}
+    out = []
+    for copy in logo.opaque_plan(root):
+        drawn = by_path[copy.source]
+        about = records.opaque(copy, (copy.width, copy.height))
+
+        def draw_opaque(_: raster.Browser | None, __: dict[str, Any], copy: logo.Opaque = copy, about: meta.MediaMeta = about) -> bytes:
+            return png.encode(png.clean((root / copy.source).read_bytes(), flatten=copy.color), about)
+
+        what = f"{copy.item.what.replace(', on transparency', '')}, flattened on {copy.ground} ({copy.color})"
+        out.append(Picture(copy.path, (copy.width, copy.height), drawn.source, (copy.source, logo.OPAQUE_JSON, tokens.TOKENS_JSON),
+                           draw_opaque, what, needs_browser=False, meta=about, copy_of=copy.source))
+    return out
+
+
+def webp_copies(root: Path, pictures: list[Picture], data: dict[str, Any]) -> list[Picture]:
+    """Return the WebP copy of every published PNG and JPEG file: lossless from a PNG's pixels, lossy from a photograph's."""
+    wholes = {photos.PHOTOS_DIR / f"{photo['file']}.jpg": photo for photo in data.get("photos", {}).values()}
+    out = []
+    for picture in pictures:
+        if picture.meta is None or picture.path.suffix not in (".png", ".jpg"):
+            continue
+        path = webp_path(picture.path)
+        lossless = picture.path.suffix == ".png"
+        about = records.webp(picture.meta, path, picture.path, lossless)
+        if lossless:
+            inputs: tuple[Path, ...] = (picture.path,)
+
+            def draw_webp(_: raster.Browser | None, __: dict[str, Any], picture: Picture = picture, about: meta.MediaMeta = about) -> bytes:
+                return webp.copy_of((root / picture.path).read_bytes(), about)
+        else:
+            # A narrower photograph's WebP is drawn from the full-resolution file, as its JPEG is: one lossy step, not two.
+            whole = picture.path if picture.path in wholes else next(path for path in picture.inputs if path in wholes)
+            inputs = (whole, press.PRESS_JSON)
+
+            def draw_webp(_: raster.Browser | None, __: dict[str, Any], whole: Path = whole, size: tuple[int, int] = picture.size,
+                          about: meta.MediaMeta = about) -> bytes:
+                return webp.encode(photos.resized((root / whole).read_bytes(), size), about, lossless=False)
+
+        out.append(Picture(path, picture.size, picture.source, inputs, draw_webp, f"{picture.what}, as WebP", picture.limit,
+                           needs_browser=False, meta=about, row=False, copy_of=picture.path, lossless=lossless))
+    return out
 
 
 def picture_findings(name: str, data: bytes, size: tuple[int, int] | None = None, limit: int | None = None,
                      about: meta.MediaMeta | None = None) -> list[str]:
-    """Return what is wrong with a published picture, a PNG or a photograph's JPEG, its metadata included."""
-    check = photos.findings if name.endswith(".jpg") else png.findings
+    """Return what is wrong with a published picture, a PNG, a WebP copy or a photograph's JPEG, its metadata included."""
+    check = photos.findings if name.endswith(".jpg") else webp.findings if name.endswith(".webp") else png.findings
     return check(name, data, size, limit, about)
 
 
@@ -250,41 +307,58 @@ def blocks(root: Path, pictures: list[Picture], files: dict[str, Any]) -> dict[P
         return record.human_bytes(entry["bytes"]) if entry else "not built"
 
     logos = logo.build(root)
-    by_stem: dict[str, list[Picture]] = {}
+    by_family: dict[str, list[Picture]] = {}
     for picture in pictures:
         if picture.path.parent == logo.PNG_DIR:
-            by_stem.setdefault(picture.path.stem.rsplit("-", 1)[0], []).append(picture)
-    logo_rows = ["| File | What it is | SVG | PNG, by height in pixels |", "| --- | --- | --- | --- |"]
+            by_family.setdefault(picture.path.stem.rsplit("-", 1)[0], []).append(picture)
+    opaque = {copy.item.family: copy for copy in logo.opaque_plan(root)}
+    webps = {picture.copy_of: picture for picture in pictures if picture.copy_of is not None and picture.path.suffix == ".webp"}
+
+    def copies(family: str) -> tuple[str, str]:
+        drawn = by_family.get(family, [])
+        return (", ".join(f"[{picture.size[1]}](png/{picture.path.name})" for picture in drawn),
+                ", ".join(f"[{picture.size[1]}](webp/{webps[picture.path].path.name})" for picture in drawn if picture.path in webps))
+
+    logo_rows = ["| File | What it is | SVG | PNG, by height in pixels | WebP, by height in pixels |", "| --- | --- | --- | --- | --- |"]
     listed: set[str] = set()
     for item in logos:
-        if item.px:
-            if item.family in listed:
-                continue
-            listed.add(item.family)
-            sizes = [other for other in logos if other.family == item.family]
-            svgs = ", ".join(f"[{other.px}](svg/{other.stem}.svg)" for other in sizes)
-            copies = ", ".join(f"[{other.px}](png/{other.stem}.png)" for other in sizes)
-            logo_rows.append(f"| `{item.family}-<px>` | {item.what} | {svgs} | {copies} |")
+        if item.family in listed:
             continue
-        copies = ", ".join(f"[{picture.size[1]}](png/{picture.path.name})" for picture in by_stem.get(item.stem, []))
-        logo_rows.append(f"| `{item.stem}` | {item.what} | [svg](svg/{item.stem}.svg) | {copies} |")
+        listed.add(item.family)
+        named = f"{item.family}-<px>" if item.px else item.family
+        if item.px:
+            svgs = ", ".join(f"[{other.px}](svg/{other.stem}.svg)" for other in logos if other.family == item.family)
+        else:
+            svgs = f"[svg](svg/{item.stem}.svg)"
+        logo_rows.append(f"| `{named}` | {item.what} | {svgs} | {' | '.join(copies(item.family))} |")
+        if item.family in opaque:
+            copy = opaque[item.family]
+            flat = f"{item.what.replace(', on transparency', '')}, flattened on {copy.ground} ({copy.color}): no transparency, no clear space added"
+            logo_rows.append(f"| `{copy.family}{'-<px>' if item.px else ''}` | {flat} | | {' | '.join(copies(copy.family))} |")
 
-    press_rows = ["| File | Pixels | Weight | What it shows |", "| --- | --- | --- | --- |"]
-    screen_rows = ["| File | Pixels | Weight | What it shows |", "| --- | --- | --- | --- |"]
-    photo_rows = ["| File | Pixels | Weight | What it shows |", "| --- | --- | --- | --- |"]
+    def webp_cell(path: Path, folder: str) -> str:
+        twin = webps.get(path)
+        return f"[webp]({folder}/{twin.path.name}), {weight(twin.path)}" if twin else ""
+
+    head = ["| File | Pixels | Weight | WebP | What it shows |", "| --- | --- | --- | --- | --- |"]
+    press_rows, screen_rows, photo_rows = list(head), list(head), list(head)
     data = press.load(root)
     for photo in data.get("photos", {}).values():
         whole = photos.PHOTOS_DIR / f"{photo['file']}.jpg"
         weight_now = record.human_bytes((root / whole).stat().st_size) if (root / whole).is_file() else "missing"
-        photo_rows.append(f"| [`{whole.name}`](photos/{whole.name}) | {photo['size'][0]} x {photo['size'][1]} | {weight_now} | {photo['what']}, at full resolution |")
+        photo_rows.append(f"| [`{whole.name}`](photos/{whole.name}) | {photo['size'][0]} x {photo['size'][1]} | {weight_now} |"
+                          f" {webp_cell(whole, 'photos')} | {photo['what']}, at full resolution |")
     for board, screen in data["screens"].items():
         native = press.SCREENS_DIR / f"kleidos-screen-{board}.png"
         screen_rows.append(f"| [`{native.name}`](screens/{native.name}) | {screen['size'][0]} x {screen['size'][1]} |"
-                           f" {record.human_bytes((root / native).stat().st_size)} | the {screen['name']}'s unlock screen, as captured |")
+                           f" {record.human_bytes((root / native).stat().st_size)} | {webp_cell(native, 'screens')} |"
+                           f" the {screen['name']}'s unlock screen, as captured |")
     for picture in pictures:
         if picture.path.parts[0] != "press-kit" or not picture.row:
             continue
-        row = f"| [`{picture.path.name}`]({picture.path.relative_to('press-kit').as_posix()}) | {picture.size[0]} x {picture.size[1]} | {weight(picture.path)} | {picture.what} |"
+        folder = picture.path.parent.relative_to("press-kit").as_posix()
+        row = (f"| [`{picture.path.name}`]({picture.path.relative_to('press-kit').as_posix()}) | {picture.size[0]} x {picture.size[1]} |"
+               f" {weight(picture.path)} | {webp_cell(picture.path, folder)} | {picture.what} |")
         if picture.path.parent == press.IMAGES_DIR:
             press_rows.append(row)
         elif picture.path.parent == press.SCREENS_DIR:
@@ -350,7 +424,8 @@ def write(root: Path = BRAND_ROOT) -> int:
                 "inputs": {path.as_posix(): record.file_sha256(root / path) for path in picture.inputs},
             }
         version = browser.version
-    (root / record.EXPORTS_JSON).write_text(record.dump({"chromium": version, "meta_profile": meta.META_PROFILE, "files": files}), encoding="utf-8")
+    record_ = {"chromium": version, "webp": webp.settings(), "meta_profile": meta.META_PROFILE, "files": files}
+    (root / record.EXPORTS_JSON).write_text(record.dump(record_), encoding="utf-8")
     for page in pages(root, pictures, files):
         (root / page.path).write_text(page.content, encoding="utf-8")
     print(f"wrote {len(texts)} text files and {len(pictures)} pictures, drawn with Chromium {version}")
@@ -368,6 +443,9 @@ def static_findings(root: Path = BRAND_ROOT) -> list[str]:
     found = []
     if files and recorded.get("meta_profile") != meta.META_PROFILE:
         found.append(f"exports.json: the pictures carry metadata profile {recorded.get('meta_profile')!r}, not {meta.META_PROFILE!r}; run tools/build.py")
+    encoder = recorded.get("webp") or {}
+    if files and (encoder.get("lossless"), encoder.get("lossy")) != (webp.LOSSLESS, webp.LOSSY):
+        found.append("exports.json: the WebP copies were encoded with other settings than kleidos_brand.webp's; run tools/build.py")
     for text in [*texts, *pages(root, pictures, files)]:
         path = root / text.path
         if not path.is_file():
@@ -406,6 +484,7 @@ def drawn_findings(root: Path = BRAND_ROOT, tolerant: bool = False) -> list[str]
     recorded = record.load(root)
     found = []
     cache: dict[str, Any] = {}
+    encoder = webp.settings()
     with raster.Browser() as browser:
         if not tolerant and browser.version != recorded.get("chromium"):
             return [
@@ -413,9 +492,21 @@ def drawn_findings(root: Path = BRAND_ROOT, tolerant: bool = False) -> list[str]
                 " an exact comparison would report the browser, not the pictures. Install the pinned Playwright"
                 " (requirements.txt, then 'python -m playwright install chromium'), or run --check --tolerant."
             ]
+        if not tolerant and encoder["libwebp"] != (recorded.get("webp") or {}).get("libwebp"):
+            return [
+                f"this machine encodes WebP with libwebp {encoder['libwebp']} and the copies were encoded with"
+                f" {(recorded.get('webp') or {}).get('libwebp')}: install the pinned Pillow (requirements.txt), or run --check --tolerant."
+            ]
         for picture in pictures:
             path = root / picture.path
             if not path.is_file():
+                continue
+            if picture.lossless and picture.copy_of is not None:
+                # A lossless copy is held to its file's pixels exactly, under any browser and any libwebp.
+                count = png.differing((root / picture.copy_of).read_bytes(), path.read_bytes())
+                if count != 0:
+                    how = "is another size" if count is None else f"differs from {picture.copy_of.name} in {count} pixels"
+                    found.append(f"{picture.path}: a lossless copy that {how}; run tools/build.py")
                 continue
             again, kept = picture.draw(browser, cache), path.read_bytes()
             if tolerant:
@@ -434,7 +525,8 @@ def drawn_findings(root: Path = BRAND_ROOT, tolerant: bool = False) -> list[str]
 # --- The press kit as one archive --------------------------------------------------------
 
 ZIP_PATHS = ("press-kit/README.md", "press-kit/USAGE.md", "press-kit/en", "press-kit/es", "press-kit/images", "press-kit/screens",
-             "press-kit/photos", "press-kit/svg", "logo/README.md", "logo/svg", "logo/png", "about", "LICENSE", "LICENSES", "NOTICE.md", "TRADEMARKS.md")
+             "press-kit/photos", "press-kit/svg", "logo/README.md", "logo/svg", "logo/png", "logo/webp", "about", "LICENSE", "LICENSES",
+             "NOTICE.md", "TRADEMARKS.md")
 
 
 def write_zip(root: Path = BRAND_ROOT) -> Path:

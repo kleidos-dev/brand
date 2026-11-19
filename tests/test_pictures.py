@@ -9,7 +9,7 @@ from pathlib import Path
 
 import build
 import pytest
-from kleidos_brand import boards, logo, photos, png, press, record, records
+from kleidos_brand import boards, logo, meta, photos, png, press, record, records, tokens, webp
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -107,7 +107,8 @@ def test_every_committed_picture_is_recorded_and_within_its_limits() -> None:
     assert {item.path.as_posix() for item in pictures} == set(recorded["files"])
     for item in pictures:
         data = (ROOT / item.path).read_bytes()
-        assert (photos.size(data) if item.path.suffix == ".jpg" else png.size(data)) == item.size, item.path
+        sizer = {".jpg": photos.size, ".webp": webp.size}.get(item.path.suffix, png.size)
+        assert sizer(data) == item.size, item.path
         assert hashlib.sha256(data).hexdigest() == recorded["files"][item.path.as_posix()]["sha256"]
         if item.limit is not None:
             assert len(data) < item.limit, item.path
@@ -157,6 +158,97 @@ def test_the_archive_is_the_same_bytes_twice(tree: Path) -> None:
                    "kleidos-press-kit/press-kit/svg/kleidos-16x9.svg", "kleidos-press-kit/logo/svg/kleidos-mark.svg",
                    "kleidos-press-kit/press-kit/photos/kleidos-photo-four-boards.jpg", "kleidos-press-kit/press-kit/photos/kleidos-photo-four-boards-1920.jpg"):
         assert needed in names
+
+
+def test_every_published_picture_has_its_webp_copy() -> None:
+    recorded = json.loads((ROOT / record.EXPORTS_JSON).read_text(encoding="utf-8"))
+    assert recorded["webp"]["lossless"] == webp.LOSSLESS and recorded["webp"]["lossy"] == webp.LOSSY and recorded["webp"]["libwebp"]
+    _, pictures = build.collect(ROOT)
+    copies = {item.copy_of: item for item in pictures if item.path.suffix == ".webp"}
+    originals = [item for item in pictures if item.path.suffix in (".png", ".jpg")]
+    assert originals and {item.path for item in originals} == set(copies), "one WebP copy for every PNG and JPEG file, no more"
+    for item in originals:
+        twin = copies[item.path]
+        assert twin.path == build.webp_path(item.path) and twin.path.as_posix() in recorded["files"], twin.path
+        assert twin.path.parent == (logo.WEBP_DIR if item.path.parent == logo.PNG_DIR else item.path.parent)
+        data = (ROOT / twin.path).read_bytes()
+        assert webp.is_lossless(data) is (item.path.suffix == ".png") is twin.lossless, twin.path
+        assert webp.size(data) == item.size, twin.path
+        assert webp.findings(twin.path.as_posix(), data, item.size, item.limit, twin.meta) == [], twin.path
+        if twin.lossless:
+            assert png.differing((ROOT / item.path).read_bytes(), data) == 0, f"{twin.path}: not the PNG's pixels"
+        else:
+            assert png.drift((ROOT / item.path).read_bytes(), data) <= build.TOLERANCE, f"{twin.path}: not the photograph"
+        assert twin.meta is not None and item.meta is not None
+        assert twin.meta.title == f"{item.meta.title}, WebP" and "WebP" in twin.meta.description and "WebP" in twin.meta.keywords
+        assert twin.meta.source_url == records.url(item.path) and twin.meta.profile == item.meta.profile
+
+
+def test_a_webp_copy_is_the_same_bytes_twice() -> None:
+    from PIL import Image
+
+    flat = Image.new("RGBA", (40, 24), (0, 0, 0, 0))
+    flat.paste((0, 210, 255, 255), (4, 4, 20, 20))
+    photo = Image.radial_gradient("L").resize((40, 24)).convert("RGB")
+    for image, lossless in ((flat, True), (photo, False)):
+        first = webp.encode(image, lossless=lossless)
+        assert webp.encode(image, lossless=lossless) == first
+        assert webp.is_lossless(first) is lossless and webp.findings("x.webp", first, (40, 24)) == []
+    buffer = io.BytesIO()
+    flat.save(buffer, "PNG")
+    copied = webp.copy_of(buffer.getvalue())
+    assert copied == webp.copy_of(buffer.getvalue()) and png.differing(buffer.getvalue(), copied) == 0
+
+
+#: The ground of an opaque copy, by the variant its file's name ends with (logo/src/opaque.json).
+OPAQUE_GROUNDS = {"for-light": "white", "ink-dark": "white", "for-dark": "black", "ink-light": "black", "color": "black"}
+
+
+def test_every_logo_on_transparency_has_its_opaque_copy() -> None:
+    from PIL import Image
+
+    values = tokens.resolve(tokens.load(ROOT))
+    grounds = {"white": values["social.light.ground"], "black": values["social.plate"]}
+    assert grounds == {"white": "#ffffff", "black": "#000000"}
+    plan = logo.opaque_plan(ROOT)
+    transparent = [path for item, _, _, path in logo.png_plan(ROOT) if item.ground is None]
+    assert sorted(copy.source for copy in plan) == sorted(transparent) and len(plan) == 38
+    named = {path.name for path in (ROOT / logo.PNG_DIR).glob("*-opaque-*.png")}
+    assert named == {copy.path.name for copy in plan}, "no opaque file the plan does not make"
+    for copy in plan:
+        family = copy.item.family
+        assert copy.ground == OPAQUE_GROUNDS[logo.variant(family)], family
+        assert copy.path.name == f"{family}-opaque-{copy.ground}-{copy.item.px or copy.height}.png"
+        assert not any(name in copy.path.name for name in ("-on-dark", "-on-light")), "an opaque copy is not a baked tile"
+        rgb = tuple(int(grounds[copy.ground][index : index + 2], 16) for index in (1, 3, 5))
+        with Image.open(ROOT / copy.path) as opened, Image.open(ROOT / copy.source) as source:
+            assert opened.mode == "RGB" and "transparency" not in opened.info, f"{copy.path}: has alpha"
+            assert opened.size == source.size == (copy.width, copy.height)
+            flat, alpha = opened.convert("RGB"), source.convert("RGBA").getchannel("A")
+        clear = [(x, y) for x, y in ((0, 0), (copy.width - 1, 0), (0, copy.height - 1), (copy.width - 1, copy.height - 1))
+                 if alpha.getpixel((x, y)) == 0]
+        assert clear, f"{copy.source}: no clear corner to read the ground at"
+        for corner in clear:
+            assert flat.getpixel(corner) == rgb, f"{copy.path}: corner {corner} is not {copy.ground}"
+
+
+def test_an_opaque_copy_says_what_it_is() -> None:
+    _, pictures = build.collect(ROOT)
+    for copy in logo.opaque_plan(ROOT):
+        about = next(item.meta for item in pictures if item.path == copy.path)
+        assert about is not None and copy.source.name in about.description and copy.ground in about.description
+        assert "opaque" in about.keywords and about.source_url == records.url(copy.source)
+        assert about.profile == meta.profile_for((copy.width, copy.height))
+
+
+def test_the_archive_holds_the_renditions(tree: Path) -> None:
+    import zipfile
+
+    names = zipfile.ZipFile(io.BytesIO(build.write_zip(tree).read_bytes())).namelist()
+    for needed in ("kleidos-press-kit/logo/webp/kleidos-mark-1024.webp", "kleidos-press-kit/logo/png/kleidos-mark-opaque-black-1024.png",
+                   "kleidos-press-kit/logo/webp/kleidos-lockup-horizontal-for-light-opaque-white-512.webp",
+                   "kleidos-press-kit/press-kit/photos/kleidos-photo-four-boards.webp"):
+        assert needed in names, needed
 
 
 @pytest.mark.browser

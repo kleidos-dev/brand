@@ -95,7 +95,16 @@ def narrowed(data: bytes, width: int, meta: MediaMeta | None = None) -> bytes:
 
     with Image.open(io.BytesIO(data)) as opened:
         height = round(width * opened.height / opened.width)
-        return encode(opened.convert("RGB").resize((width, height), Image.Resampling.LANCZOS), meta)
+    return encode(resized(data, (width, height)), meta)
+
+
+def resized(data: bytes, size: tuple[int, int]) -> Any:
+    """Return a published photograph's pixels at *size*, resampled as the narrower copies are; at its own size, as they are."""
+    from PIL import Image  # noqa: PLC0415
+
+    with Image.open(io.BytesIO(data)) as opened:
+        pixels = opened.convert("RGB")
+    return pixels if pixels.size == size else pixels.resize(size, Image.Resampling.LANCZOS)
 
 
 #: Inside a scan's coded data, 0xFF is followed by a stuffed zero or a restart marker; any other
