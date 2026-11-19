@@ -13,7 +13,7 @@ constants and one :class:`MediaMeta` record per file, so the same record gives
 the same bytes on every machine: no date, no random identifier, no tool or
 version, no padding.
 
-- XMP (:func:`xmp_packet`): one packet for PNG and JPEG, Dublin Core, IPTC
+- XMP (:func:`xmp_packet`): one packet for PNG, JPEG and WebP, Dublin Core, IPTC
   Core and Extension, PLUS, XMP Rights and ccREL; the short profile for a
   picture under 64 px.
 - PNG (:func:`png_stamp`): ``tEXt`` chunks (Latin-1) and the XMP packet in an
@@ -22,6 +22,11 @@ version, no padding.
 - JPEG (:func:`jpeg_stamp`): the XMP packet in APP1 and an IIM block in APP13
   (with MWG's digest) after the JFIF header; no EXIF. Everything from the
   first table to the end keeps its bytes.
+- WebP (:func:`webp_stamp`): the extended format, a ``VP8X`` header with the
+  XMP flag (and the alpha flag where the picture has alpha), the pixels'
+  chunks with their bytes unchanged, then the XMP packet in an ``XMP ``
+  chunk; no EXIF and no color profile. WebP has no simple text slots, so the
+  packet is the whole record.
 - SVG (:func:`svg_stamp`): ``role``, ``aria-labelledby`` and ``lang`` on the
   root, a ``<title>``, a ``<desc>`` and Dublin Core plus ccREL in
   ``<metadata>``, between ``REUSE-IgnoreStart`` and ``REUSE-IgnoreEnd`` so
@@ -543,6 +548,116 @@ def jpeg_findings(name: str, data: bytes, meta: MediaMeta) -> list[str]:
         found.append(f"{name}: M007: its IIM is not what its record gives, or disagrees with its XMP")
     if not found and markers != [0xE0, 0xE1, 0xED]:
         found.append(f"{name}: M006: its segments are not JFIF, XMP, IIM, in that order")
+    return found
+
+
+# --- WebP ----------------------------------------------------------------------------------
+
+#: The chunks that hold a WebP picture's pixels: lossless, or lossy with its alpha beside it.
+WEBP_IMAGE_CHUNKS = frozenset({"VP8 ", "VP8L", "ALPH"})
+#: ``VP8X`` flags: the picture has alpha, the file carries XMP.
+WEBP_FLAG_ALPHA = 0x10
+WEBP_FLAG_XMP = 0x04
+
+
+def webp_chunks_of(data: bytes) -> list[tuple[str, bytes]]:
+    """Return a WebP file's chunks as (name, data) pairs, in file order, each without its padding byte."""
+    if data[:4] != b"RIFF" or data[8:12] != b"WEBP":
+        raise ValueError("not a WebP file")
+    if int.from_bytes(data[4:8], "little") + 8 != len(data):
+        raise ValueError("its RIFF size is not the file's")
+    out, position = [], 12
+    while position + 8 <= len(data):
+        name = data[position : position + 4].decode("latin-1")
+        length = int.from_bytes(data[position + 4 : position + 8], "little")
+        if position + 8 + length > len(data):
+            raise ValueError(f"its {name!r} chunk runs past the end of the file")
+        out.append((name, data[position + 8 : position + 8 + length]))
+        position += 8 + length + (length & 1)
+    if position != len(data):
+        raise ValueError("bytes after its last chunk")
+    return out
+
+
+def _webp_chunk(name: str, body: bytes) -> bytes:
+    return name.encode("latin-1") + len(body).to_bytes(4, "little") + body + (b"\x00" if len(body) & 1 else b"")
+
+
+def _webp_file(chunks: list[tuple[str, bytes]]) -> bytes:
+    body = b"WEBP" + b"".join(_webp_chunk(name, payload) for name, payload in chunks)
+    return b"RIFF" + len(body).to_bytes(4, "little") + body
+
+
+def webp_image(data: bytes) -> tuple[int, int, bool]:
+    """Return a WebP picture's width, height and whether it has alpha, read from its pixels' own chunk."""
+    chunks = dict(webp_chunks_of(data))
+    if "VP8L" in chunks:
+        head = chunks["VP8L"]
+        if len(head) < 5 or head[0] != 0x2F:
+            raise ValueError("its VP8L chunk has no lossless signature")
+        bits = int.from_bytes(head[1:5], "little")
+        return (bits & 0x3FFF) + 1, ((bits >> 14) & 0x3FFF) + 1, bool((bits >> 28) & 1)
+    if "VP8 " in chunks:
+        head = chunks["VP8 "]
+        if len(head) < 10 or head[3:6] != b"\x9d\x01\x2a":
+            raise ValueError("its VP8 chunk has no key frame")
+        return int.from_bytes(head[6:8], "little") & 0x3FFF, int.from_bytes(head[8:10], "little") & 0x3FFF, "ALPH" in chunks
+    raise ValueError("no VP8 or VP8L chunk")
+
+
+def _webp_vp8x(width: int, height: int, flags: int) -> bytes:
+    return bytes([flags, 0, 0, 0]) + (width - 1).to_bytes(3, "little") + (height - 1).to_bytes(3, "little")
+
+
+def webp_bare(data: bytes) -> bytes:
+    """Return a WebP file with its pixels' chunks only, their bytes unchanged: no XMP, EXIF or color profile.
+
+    A lossless or opaque lossy picture becomes the simple format; a lossy one
+    with alpha keeps a ``VP8X`` header that says only that.
+    """
+    chunks = [(name, body) for name, body in webp_chunks_of(data) if name in WEBP_IMAGE_CHUNKS]
+    if any(name == "ALPH" for name, _ in chunks):
+        width, height, _ = webp_image(data)
+        chunks.insert(0, ("VP8X", _webp_vp8x(width, height, WEBP_FLAG_ALPHA)))
+    return _webp_file(chunks)
+
+
+def webp_stamp(data: bytes, meta: MediaMeta) -> bytes:
+    """Return a WebP file in the extended format: a ``VP8X`` header, its pixels' chunks unchanged, then the record's XMP packet."""
+    width, height, alpha = webp_image(data)
+    pixels = [(name, body) for name, body in webp_chunks_of(data) if name in WEBP_IMAGE_CHUNKS]
+    flags = WEBP_FLAG_XMP | (WEBP_FLAG_ALPHA if alpha else 0)
+    return _webp_file([("VP8X", _webp_vp8x(width, height, flags)), *pixels, ("XMP ", xmp_packet(meta))])
+
+
+def webp_size(data: bytes) -> tuple[int, int]:
+    """Return a WebP picture's width and height."""
+    width, height, _ = webp_image(data)
+    return width, height
+
+
+def webp_findings(name: str, data: bytes, meta: MediaMeta) -> list[str]:
+    """Return how a WebP file's metadata differs from the record's: missing, different, misplaced or foreign."""
+    try:
+        chunks = webp_chunks_of(data)
+        width, height, _ = webp_image(data)
+    except ValueError as error:
+        return [f"{name}: M006: not a well-formed WebP file ({error})"]
+    found = []
+    names = [chunk for chunk, _ in chunks]
+    foreign = sorted({chunk.strip() for chunk in names if chunk not in WEBP_IMAGE_CHUNKS | {"VP8X", "XMP "}})
+    if foreign:
+        found.append(f"{name}: M005: holds {', '.join(foreign)}; a published WebP file holds its pixels and the profile's XMP only")
+    profile = profile_for((width, height))
+    if profile != meta.profile:
+        found.append(f"{name}: M009: a {width} x {height} picture carries the {profile} profile, not the {meta.profile} one")
+    packets = [body for chunk, body in chunks if chunk == "XMP "]
+    if not packets:
+        return [*found, f"{name}: M001: carries no XMP; run tools/build.py"]
+    if packets != [xmp_packet(meta)]:
+        found.append(f"{name}: M002: its XMP is not what its record gives")
+    if not found and data != webp_stamp(data, meta):
+        found.append(f"{name}: M006: its chunks are not VP8X, the pixels' chunks and XMP, in that order, with the flags they need")
     return found
 
 

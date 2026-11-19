@@ -10,7 +10,7 @@ The identity of [Kleidos](https://kleidos.dev), free firmware that turns a small
 
 | Folder | What it holds |
 | --- | --- |
-| [`logo/`](logo/) | The mark (a keyhole inside its ring, always whole), its small version for sizes under 24 px, the horizontal and stacked lockups, the name's lettering; as SVG and PNG, for dark and light grounds, in color and in one ink; the rules of use |
+| [`logo/`](logo/) | The mark (a keyhole inside its ring, always whole), its small version for sizes under 24 px, the horizontal and stacked lockups, the name's lettering; as SVG, PNG and WebP, for dark and light grounds, in color and in one ink, on transparency and flattened on white or black; the rules of use |
 | [`fonts/`](fonts/) | Mona Sans and Mona Sans Mono (the brand and the web), Inter and JetBrains Mono (the device), unmodified, with their licenses and pins |
 | [`tokens/`](tokens/) | `tokens.json`, the one file of values, and what is generated from it: a flat color list and a stylesheet |
 | [`colors/`](colors/) | The palette with each color's role, its values for screen and print, and measured contrast |
@@ -21,7 +21,7 @@ The identity of [Kleidos](https://kleidos.dev), free firmware that turns a small
 
 ## Building
 
-Every image and every generated file comes from a few sources: `logo/src/mark.svg` (the only drawing kept by hand), `logo/src/lockups.json`, `logo/src/small-mark.json`, `tokens/tokens.json`, the fonts, the templates and words under `press-kit/src/`, the screen captures, the photographs and the board fronts under `boards/`.
+Every image and every generated file comes from a few sources: `logo/src/mark.svg` (the only drawing kept by hand), `logo/src/lockups.json`, `logo/src/small-mark.json`, `logo/src/opaque.json`, `tokens/tokens.json`, the fonts, the templates and words under `press-kit/src/`, the screen captures, the photographs and the board fronts under `boards/`.
 
 ```sh
 python3 -m venv .venv
@@ -39,7 +39,7 @@ python3 -m venv .venv
 .venv/bin/python tools/sync_from_boards.py --copy <boards checkout>   # copy the fronts again, with the commit
 ```
 
-Python 3.15. Pictures are drawn by Playwright's Chromium, headless, from SVG files that hold outlines only (no picture depends on an installed font), and re-encoded from their pixels alone. The small marks are the exception: each of their pixels is counted from the fit (its alpha is the share of 256 sample points inside the shapes), so their PNG files are the same bytes on every machine. `exports.json` records the browser's version and what each picture was drawn from. Every published picture and SVG also says what it is, for desktop tools and indexers alike: title, description, alt text, author, copyright line, license with its URL, keywords, its public URL and how it was made, in XMP and the format's own slots (PNG text, IPTC in the JPEG files, Dublin Core in the SVG files), written by the builder from one record per file (`tools/kleidos_brand/meta.py`) and checked by `tools/check_metadata.py`. The exact comparison is the exporting machine's: another Chromium draws an edge a shade apart, so `--check` refuses to compare under a different version, and CI runs the static and the tolerant checks.
+Python 3.15. Pictures are drawn by Playwright's Chromium, headless, from SVG files that hold outlines only (no picture depends on an installed font), and re-encoded from their pixels alone. The small marks are the exception: each of their pixels is counted from the fit (its alpha is the share of 256 sample points inside the shapes), so their PNG files are the same bytes on every machine. Every PNG and JPEG file also comes as WebP, encoded by Pillow's pinned libwebp from its decoded pixels (lossless for the artwork and the captures, quality 90 for the photograph), and every logo PNG on transparency also comes flattened on white or black. `exports.json` records the browser's version, the WebP encoder's version and settings, and what each picture was drawn from. Every published picture and SVG also says what it is, for desktop tools and indexers alike: title, description, alt text, author, copyright line, license with its URL, keywords, its public URL and how it was made, in XMP and the format's own slots (PNG text, IPTC in the JPEG files, the XMP chunk of the WebP files, Dublin Core in the SVG files), written by the builder from one record per file (`tools/kleidos_brand/meta.py`) and checked by `tools/check_metadata.py`. The exact comparison is the exporting machine's: another Chromium draws an edge a shade apart, so `--check` refuses to compare under a different version, and CI runs the static and the tolerant checks.
 
 The [`social`](https://github.com/kleidos-dev/social) repository takes this one as a submodule and imports `tools/kleidos_brand/` from it, so both draw with one set of rules, one browser and one encoder.
 

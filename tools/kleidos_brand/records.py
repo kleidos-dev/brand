@@ -10,10 +10,12 @@ hold every record to what REUSE says for the file's path.
 """
 from __future__ import annotations
 
+from dataclasses import replace
 from pathlib import Path
 from typing import Any
 
 from . import meta
+from .logo import variant as logo_variant
 
 REPO = "brand"
 LICENSE = "GPL-3.0-or-later"
@@ -128,6 +130,64 @@ def press(image: Any, entry: dict[str, Any], path: str | Path, size: tuple[int, 
     return _record(path, about["title"]["en"], about["alt"]["en"], about["alt"]["en"], tuple(keywords),
                    "composite" if shows_screens else "digitalCreation", size, credits=tuple(credits),
                    trademarks=tuple(trademarks), source_url=source, language=image.lang, **spanish)
+
+
+#: How an opaque logo copy is named in a title, by the variant of the file it copies.
+OPAQUE_TITLES = {
+    "for-light": "on white",
+    "for-dark": "on black",
+    "ink-dark": "dark ink on white",
+    "ink-light": "light ink on black",
+    "color": "in color on black",
+}
+
+
+def opaque(copy: Any, size: tuple[int, int]) -> meta.MediaMeta:
+    """Return the record of an opaque logo copy (:class:`.logo.Opaque`): the PNG on transparency, flattened on its ground."""
+    item = copy.item
+    base = logo(item, copy.path, size, url(copy.source))
+    what = item.what.replace(", on transparency", "")
+    return replace(
+        base,
+        title=f"{KIND_TITLES[item.kind]}, {OPAQUE_TITLES[logo_variant(item.family)]}, {item.px or size[1]} px",
+        description=(f"The Kleidos logo: {what}, flattened on {copy.ground} ({copy.color}): the opaque copy of"
+                     f" {copy.source.name}, with no clear space added."),
+        keywords=_words(base.keywords, "opaque"),
+    )
+
+
+def webp(about: meta.MediaMeta, path: str | Path, copied: str | Path, lossless: bool) -> meta.MediaMeta:
+    """Return the record of the WebP copy of a published picture, from the record of the file it copies."""
+    # The note names the copied file's format, not its name: a file name spells a vendor in lowercase.
+    kind = Path(copied).suffix.lstrip(".").upper().replace("JPG", "JPEG")
+    if lossless:
+        notes = (f"A lossless WebP copy of the {kind} file of the same name, pixel for pixel.", "A lossless WebP copy, pixel for pixel.")
+        notes_es = (f"Copia en WebP, sin pérdida, del archivo {kind} del mismo nombre, píxel a píxel.",
+                    "Copia en WebP, sin pérdida, píxel a píxel.")
+    else:
+        notes = (f"A WebP copy of the {kind} file of the same name, lossy at quality 90.", "A lossy WebP copy at quality 90.")
+        notes_es = (f"Copia en WebP del archivo {kind} del mismo nombre, con pérdida, a calidad 90.", "Copia en WebP, con pérdida, a calidad 90.")
+    spanish = {}
+    if about.language == "es":
+        spanish = {"title_es": f"{about.title_es}, WebP", "description_es": _noted(str(about.description_es), notes_es)}
+    return replace(about, title=f"{about.title}, WebP", description=_noted(about.description, notes), identifier_url=url(path),
+                   source_url=url(copied), keywords=_words(about.keywords, "WebP"), **spanish)
+
+
+#: The longest description the profile takes (:func:`.meta.record_problems`).
+DESCRIPTION_LIMIT = 300
+
+
+def _noted(description: str, notes: tuple[str, ...]) -> str:
+    """Return *description* with the first of *notes* that keeps it within the profile's limit, the last one otherwise."""
+    return next((f"{description} {note}" for note in notes if len(description) + 1 + len(note) <= DESCRIPTION_LIMIT),
+                f"{description} {notes[-1]}")
+
+
+def _words(keywords: tuple[str, ...], extra: str) -> tuple[str, ...]:
+    """Return *keywords* with *extra* last, within the profile's twelve."""
+    words = tuple(dict.fromkeys(keywords))
+    return words if extra in words else (*words[:11], extra)
 
 
 def _vendor(name: str) -> tuple[str, str]:

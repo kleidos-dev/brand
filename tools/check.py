@@ -53,7 +53,7 @@ import build  # noqa: E402
 from kleidos_brand import BRAND_ROOT, SVG_HEADER, boards, logo, mark, meta, palette, photos, png, press, public_tree, svg_rules, tokens  # noqa: E402
 
 ALLOWED_LICENSES = frozenset({"GPL-3.0-or-later", "MIT", "OFL-1.1"})
-PICTURE_DIRS = ("logo/png", "colors", "press-kit/images", "press-kit/screens", photos.PHOTOS_DIR.as_posix())
+PICTURE_DIRS = ("logo/png", "logo/webp", "colors", "press-kit/images", "press-kit/screens", photos.PHOTOS_DIR.as_posix())
 SPANISH_BANNED = re.compile(r"\b(?:vault|vaults|b[oó]veda|b[oó]vedas)\b", re.I)
 URL = re.compile(r"https?://[^\s<>)\"'`]+")
 MISWRITTEN = re.compile(r"KLEIDOS|KleidOS|Kleidos OS")
@@ -126,7 +126,8 @@ def source_findings(root: Path) -> list[str]:
     expected = set()
     for photo in data.get("photos", {}).values():
         whole = photos.PHOTOS_DIR / f"{photo['file']}.jpg"
-        expected |= {whole, *(photos.PHOTOS_DIR / f"{photo['file']}-{width}.jpg" for width in photo.get("copies", ()))}
+        copies = {whole, *(photos.PHOTOS_DIR / f"{photo['file']}-{width}.jpg" for width in photo.get("copies", ()))}
+        expected |= copies | {copy.with_suffix(".webp") for copy in copies}
         for key in ("size", "what", "credit", "given"):
             if not photo.get(key):
                 found.append(f"press.json: the photograph {photo['file']!r} has no {key!r}")
@@ -324,6 +325,8 @@ def metadata_findings(root: Path = BRAND_ROOT, files: list[Path] | None = None, 
             found += meta.png_findings(name, data, about)
         elif suffix in (".jpg", ".jpeg"):
             found += meta.jpeg_findings(name, data, about)
+        elif suffix == ".webp":
+            found += meta.webp_findings(name, data, about)
         elif suffix == ".svg":
             found += meta.svg_findings(name, data.decode("utf-8"), about, meta.svg_slug(path.stem))
         values = meta.xmp_values(about)

@@ -451,3 +451,31 @@ def test_a_board_drawing_is_refused(tree: Path) -> None:
 def test_a_picture_out_of_place_is_refused(tree: Path) -> None:
     shutil.copyfile(tree / "logo/png/kleidos-mark-64.png", planted(tree, "notes/mark.png"))
     assert found(tree, "notes/mark.png", "outside")
+
+
+def test_a_webp_copy_with_camera_data_or_no_record_is_refused(tree: Path) -> None:
+    from kleidos_brand import meta
+
+    path = tree / "logo/webp/kleidos-mark-256.webp"
+    chunks = meta.webp_chunks_of(path.read_bytes())
+    exif = [chunks[0], *chunks[1:-1], ("EXIF", b"Exif\x00\x00MM"), chunks[-1]]
+    path.write_bytes(meta._webp_file(exif))  # noqa: SLF001 - a well-formed file with one chunk too many
+    assert found(tree, "logo/webp/kleidos-mark-256.webp", "M005", "EXIF")
+    bare = tree / "logo/webp/kleidos-mark-64.webp"
+    bare.write_bytes(meta.webp_bare(bare.read_bytes()))
+    assert found(tree, "logo/webp/kleidos-mark-64.webp", "M001")
+
+
+def test_a_webp_copy_of_other_pixels_is_refused(tree: Path) -> None:
+    shutil.copyfile(tree / "logo/webp/kleidos-mark-256.webp", tree / "logo/webp/kleidos-mark-ink-dark-256.webp")
+    assert found(tree, "kleidos-mark-ink-dark-256.webp", "not the ones exports.json records")
+
+
+def test_an_opaque_copy_on_another_ground_is_stale(tree: Path) -> None:
+    edit(tree / "logo/src/opaque.json", '"for-light": "white"', '"for-light": "black"')
+    assert found(tree, "logo/png/kleidos-lockup-horizontal-for-light-opaque-white-512.png", "nothing generates it")
+
+
+def test_a_photograph_webp_nothing_lists_is_refused(tree: Path) -> None:
+    shutil.copyfile(tree / "press-kit/photos/kleidos-photo-four-boards.webp", tree / "press-kit/photos/kleidos-photo-other.webp")
+    assert found(tree, "press-kit/photos/kleidos-photo-other.webp", "press.json lists no photograph")

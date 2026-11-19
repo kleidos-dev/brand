@@ -149,6 +149,51 @@ def test_a_jpeg_stamp_keeps_every_byte_from_the_first_table() -> None:
     assert [marker for marker, _ in segments] == [0xE0, 0xE1, 0xED]
 
 
+def bare_webp(lossless: bool, alpha: bool) -> bytes:
+    from PIL import Image
+
+    image = Image.new("RGBA" if alpha else "RGB", (80, 40), (0, 210, 255, 128) if alpha else (12, 15, 19))
+    buffer = io.BytesIO()
+    image.save(buffer, "WEBP", lossless=lossless, quality=90, method=6, exif=b"Exif\x00\x00MM", xmp=b"<x/>")
+    return buffer.getvalue()
+
+
+@pytest.mark.parametrize(("lossless", "alpha"), [(True, True), (True, False), (False, True), (False, False)])
+def test_a_webp_stamp_keeps_the_pixels_chunks_and_ends_with_the_packet(lossless: bool, alpha: bool) -> None:
+    record = meta.MediaMeta(**{**SHORT.__dict__, "profile": "full", "spanish": {}})
+    carried = bare_webp(lossless, alpha)
+    assert {"EXIF", "XMP "} <= {name for name, _ in meta.webp_chunks_of(carried)}, "Pillow wrote what the stamp must drop"
+    stamped = meta.webp_stamp(carried, record)
+    chunks = meta.webp_chunks_of(stamped)
+    names = [name for name, _ in chunks]
+    assert names[0] == "VP8X" and names[-1] == "XMP " and set(names[1:-1]) <= meta.WEBP_IMAGE_CHUNKS
+    assert names.count("XMP ") == 1 and "EXIF" not in names and "ICCP" not in names
+    flags = chunks[0][1][0]
+    assert flags & meta.WEBP_FLAG_XMP and bool(flags & meta.WEBP_FLAG_ALPHA) is alpha
+    assert chunks[-1][1] == meta.xmp_packet(record)
+    pixels = [chunk for chunk in meta.webp_chunks_of(carried) if chunk[0] in meta.WEBP_IMAGE_CHUNKS]
+    assert [chunk for chunk in chunks if chunk[0] in meta.WEBP_IMAGE_CHUNKS] == pixels, "the pixels' bytes are kept"
+    assert meta.webp_stamp(stamped, record) == stamped, "stamping twice changes nothing"
+    assert meta.webp_stamp(meta.webp_bare(stamped), record) == stamped
+    assert meta.webp_size(stamped) == (80, 40)
+    assert meta.webp_findings("x.webp", stamped, record) == []
+    assert any("M005" in line for line in meta.webp_findings("x.webp", carried, record)), "EXIF is refused"
+    assert any("M001" in line for line in meta.webp_findings("x.webp", meta.webp_bare(stamped), record))
+    other = meta.MediaMeta(**{**record.__dict__, "title": "Another title"})
+    assert any("M002" in line for line in meta.webp_findings("x.webp", stamped, other))
+    from PIL import Image
+
+    with Image.open(io.BytesIO(stamped)) as opened:
+        assert opened.size == (80, 40) and (opened.mode == "RGBA") is alpha
+
+
+def test_a_malformed_webp_is_reported_not_raised() -> None:
+    record = meta.MediaMeta(**{**SHORT.__dict__, "profile": "full", "spanish": {}})
+    stamped = meta.webp_stamp(bare_webp(True, False), record)
+    assert any("M006" in line for line in meta.webp_findings("x.webp", stamped[:-3], record))
+    assert any("M006" in line for line in meta.webp_findings("x.webp", b"RIFF\x04\x00\x00\x00WEBQ", record))
+
+
 def test_the_limits_refuse_a_record_and_never_cut_it() -> None:
     with pytest.raises(ValueError, match="over 64 bytes"):
         meta.MediaMeta(**{**SHORT.__dict__, "title": "x" * 65})
