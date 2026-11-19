@@ -3,8 +3,32 @@
   SPDX-License-Identifier: GPL-3.0-or-later
   Additional terms under section 7 of the GNU GPL version 3: TRADEMARKS.md
 -->
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="-100 -100 200 200" width="200" height="200" role="img">
-  <title>Kleidos</title>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-100 -100 200 200" width="200" height="200" role="img" aria-labelledby="kl-kleidos-mark-on-dark-t kl-kleidos-mark-on-dark-d" lang="en">
+  <title id="kl-kleidos-mark-on-dark-t">Kleidos mark, on its dark tile</title>
+  <desc id="kl-kleidos-mark-on-dark-d">The Kleidos logo: the mark on its dark tile (#0a0c0f), clear space included.</desc>
+  <!-- REUSE-IgnoreStart -->
+  <metadata id="kl-kleidos-mark-on-dark-m">
+    <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+             xmlns:dc="http://purl.org/dc/elements/1.1/"
+             xmlns:cc="http://creativecommons.org/ns#"
+             xmlns:Iptc4xmpExt="http://iptc.org/std/Iptc4xmpExt/2008-02-29/">
+      <cc:Work rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+        <dc:title>Kleidos mark, on its dark tile</dc:title>
+        <dc:description>The Kleidos logo: the mark on its dark tile (#0a0c0f), clear space included.</dc:description>
+        <dc:creator><cc:Agent><dc:title>José M. Requena Plens</dc:title></cc:Agent></dc:creator>
+        <dc:publisher><cc:Agent><dc:title>Kleidos</dc:title></cc:Agent></dc:publisher>
+        <dc:rights><cc:Agent><dc:title>© 2026 José M. Requena Plens. GPL-3.0-or-later.</dc:title></cc:Agent></dc:rights>
+        <dc:identifier>https://github.com/kleidos-dev/brand/blob/main/logo/svg/kleidos-mark-on-dark.svg</dc:identifier>
+        <dc:language>en</dc:language>
+        <dc:subject><rdf:Bag><rdf:li>Kleidos</rdf:li><rdf:li>hardware password manager</rdf:li><rdf:li>open source</rdf:li><rdf:li>logo</rdf:li><rdf:li>keyhole</rdf:li><rdf:li>brand</rdf:li></rdf:Bag></dc:subject>
+        <Iptc4xmpExt:DigitalSourceType rdf:resource="http://cv.iptc.org/newscodes/digitalsourcetype/digitalCreation"/>
+        <cc:license rdf:resource="https://spdx.org/licenses/GPL-3.0-or-later.html"/>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <!-- REUSE-IgnoreEnd -->
   <rect x="-100" y="-100" width="200" height="200" fill="#0a0c0f"/>
   <g class="mark">
     <circle cx="0" cy="0" r="42" fill="none" stroke="#00D2FF" stroke-width="3"/>

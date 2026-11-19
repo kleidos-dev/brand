@@ -14,6 +14,13 @@ jobs:
   check:
     runs-on: ubuntu-latest
     timeout-minutes: 45
+    # The identity patterns of the metadata check's deny-list are private:
+    # they come from the KLEIDOS_DENY_EXTRA secret, one pattern per line. A
+    # run without it (a fork, Dependabot, or the secret not set yet) checks
+    # every other class and warns that identity was not checked.
+    env:
+      KLEIDOS_DENY_EXTRA: ${{ secrets.KLEIDOS_DENY_EXTRA }}
+      KLEIDOS_DENY_OPTIONAL: ${{ secrets.KLEIDOS_DENY_EXTRA == '' && '1' || '0' }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:

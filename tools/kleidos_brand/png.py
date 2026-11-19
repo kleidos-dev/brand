@@ -2,16 +2,26 @@
 """PNG files built from pixels alone, and the checks on the ones in the tree.
 
 A browser writes more than pixels into a screenshot. Every PNG this project
-publishes is re-encoded by Pillow from the pixels only, so it carries no text
-chunk, no time and no trace of the machine that drew it.
+publishes is re-encoded by Pillow from the pixels only, so it carries no time
+and no trace of the machine that drew it; then the record of what it is
+(:mod:`.meta`) is added as the profile's fixed text chunks and XMP packet,
+right before the pixels, and nothing else.
 """
 from __future__ import annotations
 
 import io
-from typing import Any
+from typing import TYPE_CHECKING, Any
 
-#: The chunks a published PNG may hold: pixels, color and layout, nothing else.
+from . import meta as media
+
+if TYPE_CHECKING:
+    from .meta import MediaMeta
+
+#: The chunks a published PNG may hold: pixels, color and layout, and the
+#: profile's text chunks (``tEXt`` and the XMP ``iTXt``), only with the values
+#: its record gives.
 ALLOWED_CHUNKS = frozenset({"IHDR", "PLTE", "IDAT", "IEND", "tRNS", "gAMA", "cHRM", "sRGB", "iCCP", "sBIT", "bKGD", "pHYs"})
+METADATA_CHUNKS = media.PNG_TEXT_CHUNKS
 
 
 def clean(shot: bytes, flatten: str | None = None) -> Any:
@@ -32,11 +42,28 @@ def clean(shot: bytes, flatten: str | None = None) -> Any:
         return fresh
 
 
-def encode(image: Any) -> bytes:
-    """Return *image* as a PNG that holds its pixels and nothing else."""
+def encode(image: Any, meta: MediaMeta | None = None) -> bytes:
+    """Return *image* as a PNG that holds its pixels and, given a record, its metadata.
+
+    The image's ``info`` is left behind, so Pillow never writes a color profile
+    or text it carried in; the record's chunks are added to the encoder's output.
+    """
+    bare = image.copy()
+    bare.info = {}
     buffer = io.BytesIO()
-    image.save(buffer, "PNG", optimize=True)
-    return buffer.getvalue()
+    bare.save(buffer, "PNG", optimize=True)
+    data = buffer.getvalue()
+    return data if meta is None else media.png_stamp(data, meta)
+
+
+def stamp(data: bytes, meta: MediaMeta) -> bytes:
+    """Return a PNG with its metadata replaced by the record's, every other chunk's bytes unchanged."""
+    return media.png_stamp(data, meta)
+
+
+def bare(data: bytes) -> bytes:
+    """Return a PNG without any text, time or EXIF chunk."""
+    return media.png_bare(data)
 
 
 def chunk_names(data: bytes) -> list[str]:
@@ -95,16 +122,24 @@ def drift(first: bytes, second: bytes, step: int = 24) -> float | None:
         return far / (one.size[0] * one.size[1])
 
 
-def findings(name: str, data: bytes, expected: tuple[int, int] | None = None, limit: int | None = None) -> list[str]:
-    """Return what is wrong with a published PNG: its chunks, its size, its weight."""
+def findings(name: str, data: bytes, expected: tuple[int, int] | None = None, limit: int | None = None,
+             meta: MediaMeta | None = None) -> list[str]:
+    """Return what is wrong with a published PNG: its chunks, its metadata, its size, its weight.
+
+    :param meta: The file's record. Without one, a text chunk is refused like any other.
+    """
     found = []
     try:
         actual = size(data)
     except ValueError:
         return [f"{name}: not a PNG"]
-    extra = sorted(set(chunk_names(data)) - ALLOWED_CHUNKS)
+    allowed = ALLOWED_CHUNKS | (METADATA_CHUNKS if meta is not None else frozenset())
+    extra = sorted(set(chunk_names(data)) - allowed)
     if extra:
-        found.append(f"{name}: holds {', '.join(extra)}; a published PNG holds pixels, color and layout chunks only")
+        what = "pixels, color and layout chunks and the profile's metadata" if meta is not None else "pixels, color and layout chunks only"
+        found.append(f"{name}: holds {', '.join(extra)}; a published PNG holds {what}")
+    if meta is not None:
+        found += media.png_findings(name, data, meta)
     if expected is not None and actual != expected:
         found.append(f"{name}: is {actual[0]} x {actual[1]}, not {expected[0]} x {expected[1]}")
     if limit is not None and len(data) >= limit:

@@ -97,7 +97,7 @@ def _lockup_children(root: Path, kind: str, theme: str) -> tuple[list[ET.Element
     stem = f"kleidos-lockup-{kind}-for-{theme}"
     chosen = next(item for item in logo.build(root) if item.stem == stem)
     tree = ET.fromstring(chosen.svg)
-    return [child for child in tree if _local(child) != "title"], chosen
+    return [child for child in tree if _local(child) not in ("title", "desc", "metadata")], chosen
 
 
 def _set_words(element: ET.Element, text: str, accent: str | None, accent_fill: str) -> None:

@@ -15,8 +15,7 @@ What it holds:
 - sources:   each press template keeps the source rules (layers, plain shapes, token colors, the two
              families, no opacity or filter or picture), carries the lockup the logo files draw, and
              keeps every word and the lockup inside its safe area in every language; each
-             photograph press.json lists is there, at its size, with no metadata segment, and
-             nothing else is in its folder;
+             photograph press.json lists is there, and nothing else is in its folder;
 - generated: a generated SVG holds outlines only and opens with the license header;
 - fonts:     only the pinned upstream files, byte for byte, and no font inside an SVG;
 - boards:    each front under boards/ is the byte copy boards/boards.json records, and a line-up
@@ -29,12 +28,20 @@ What it holds:
              quoted whole where the press kit promises it, both additional terms (7(c) and 7(e))
              stated in TRADEMARKS.md;
 - public:    nothing private, no picture out of place, no board drawing outside boards/, no
-             registered-trademark sign but a board's own print.
+             registered-trademark sign but a board's own print;
+- metadata:  every published picture and SVG carries exactly the metadata its record gives
+             (kleidos_brand.meta: title, description, alt text, creator, copyright line, license
+             and its URL, keywords, how it was made), its license and holders are what REUSE says
+             for its path, no value holds a local path, a private host, a machine's time, a tool's
+             name, an e-mail address or a pattern of the private deny-list, and every media file
+             has a record or a reason in METADATA_EXEMPT. Rule codes M001 to M012; also
+             tools/check_metadata.py.
 """
 from __future__ import annotations
 
 import argparse
 import json
+import os
 import re
 import sys
 import xml.etree.ElementTree as ET
@@ -43,7 +50,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 import build  # noqa: E402
-from kleidos_brand import BRAND_ROOT, SVG_HEADER, boards, logo, mark, palette, photos, png, press, public_tree, svg_rules, tokens  # noqa: E402
+from kleidos_brand import BRAND_ROOT, SVG_HEADER, boards, logo, mark, meta, palette, photos, png, press, public_tree, svg_rules, tokens  # noqa: E402
 
 ALLOWED_LICENSES = frozenset({"GPL-3.0-or-later", "MIT", "OFL-1.1"})
 PICTURE_DIRS = ("logo/png", "colors", "press-kit/images", "press-kit/screens", photos.PHOTOS_DIR.as_posix())
@@ -53,6 +60,21 @@ MISWRITTEN = re.compile(r"KLEIDOS|KleidOS|Kleidos OS")
 VENDOR_FORMS = re.compile(r"(?<![\w/-])(?:lilygo|m5stack)(?![\w-])", re.I)  # prose, not a file name
 TEXT_DIRS = ("about", "press-kit")
 ABOUT_TEXTS = ("one-line", "one-paragraph", "one-page", "name-and-history")
+
+#: Every kind of file the metadata rule looks at: pictures, drawings, documents, video, models, fonts, sound, captions.
+MEDIA_SUFFIXES = frozenset({".png", ".jpg", ".jpeg", ".webp", ".avif", ".gif", ".svg", ".pdf", ".mp4", ".webm", ".mkv", ".glb", ".gltf",
+                            ".obj", ".mtl", ".ico", ".ttf", ".otf", ".woff", ".woff2", ".stl", ".ksm", ".wav", ".mp3", ".vtt", ".srt"})
+#: The media files that carry no record of this repository, and why.
+METADATA_EXEMPT = (
+    ("fonts/**", "third-party font files, unmodified, pinned by SHA-256 in fonts/VERSIONS.md; their name tables say what they are"),
+    ("boards/*.svg", "byte copies of the boards repository's fronts: their metadata is written there and comes with each copy"),
+)
+#: The hand-made SVG sources the builder reads: held to the license header, a title and a description, and no RDF.
+METADATA_SOURCES = ("logo/src/mark.svg", "press-kit/src/*.svg")
+#: How a vendor or a term may never be written in a metadata value.
+METADATA_MISWRITTEN = re.compile(r"LilyGO|Lilygo|lilygo|M5stack|m5stack")
+#: A URL in a metadata value: its path spells a file's name, which is lowercase, not a vendor's name.
+METADATA_URL = re.compile(r"https?://\S+")
 
 
 def mark_findings(root: Path, files: list[Path]) -> list[str]:
@@ -97,12 +119,10 @@ def source_findings(root: Path) -> list[str]:
             found += press.findings(image)
     except (ValueError, KeyError, ET.ParseError) as error:
         found.append(f"press-kit/src: {error}")
-    for board, screen in data["screens"].items():
+    for board in data["screens"]:
         native = root / press.SCREENS_DIR / f"kleidos-screen-{board}.png"
         if not native.is_file():
             found.append(f"{native.relative_to(root)}: missing")
-        else:
-            found += png.findings(native.relative_to(root).as_posix(), native.read_bytes(), tuple(screen["size"]))
     expected = set()
     for photo in data.get("photos", {}).values():
         whole = photos.PHOTOS_DIR / f"{photo['file']}.jpg"
@@ -118,8 +138,6 @@ def source_findings(root: Path) -> list[str]:
                 found.append(f"press-kit/README.md: does not give {needed[:50]!r}, the photograph {photo['file']!r}'s credit or alt text")
         if not (root / whole).is_file():
             found.append(f"{whole}: missing")
-        else:
-            found += photos.findings(whole.as_posix(), (root / whole).read_bytes(), tuple(photo["size"]))
     if (root / photos.PHOTOS_DIR).is_dir():
         for path in sorted((root / photos.PHOTOS_DIR).iterdir()):
             if path.is_file() and path.relative_to(root) not in expected:
@@ -256,6 +274,69 @@ def text_findings(root: Path) -> list[str]:
     return found
 
 
+def _source_svg_findings(root: Path, name: str) -> list[str]:
+    try:
+        tree = ET.parse(root / name).getroot()
+    except ET.ParseError as error:
+        return [f"{name}: M006: not well-formed XML ({error})"]
+    children = {mark.tag_name(child): (child.text or "").strip() for child in tree if isinstance(child.tag, str)}
+    found = [f"{name}: M001: a source opens with a <{tag}> that says what it is" for tag in ("title", "desc") if not children.get(tag)]
+    if "metadata" in children:
+        found.append(f"{name}: M005: a source holds no <metadata>; the builder writes it into what it publishes")
+    return found
+
+
+def metadata_findings(root: Path = BRAND_ROOT, files: list[Path] | None = None, only: set[str] | None = None) -> list[str]:
+    """Return every media file whose metadata is not what its record gives, or that has no record and no reason.
+
+    :param only: Check these paths alone (as the repository names them).
+    """
+    files = public_tree.tracked(root) if files is None else files
+    texts, pictures = build.collect(root)
+    records_by_path: dict[str, meta.MediaMeta] = {text.path.as_posix(): text.meta for text in texts if text.meta is not None}
+    records_by_path |= {picture.path.as_posix(): picture.meta for picture in pictures if picture.meta is not None}
+    identity, source = meta.identity_patterns()
+    found = []
+    if source == "missing":
+        if os.environ.get("GITHUB_ACTIONS") == "true" and os.environ.get(meta.DENY_OPTIONAL_ENV) != "1":
+            found.append(f"tools/check.py: M004: the private deny-list is not loaded; set the {meta.DENY_ENV} secret")
+        else:
+            print(f"warning: no private deny-list ({meta.DENY_LOCAL.relative_to(BRAND_ROOT)} or {meta.DENY_ENV}); identity patterns not checked",
+                  file=sys.stderr)
+    exempt = tuple(pattern for pattern, _ in METADATA_EXEMPT)
+    for path in files:
+        name = path.as_posix()
+        if path.suffix.lower() not in MEDIA_SUFFIXES or (only is not None and name not in only) or meta.matches(name, exempt):
+            continue
+        if meta.matches(name, METADATA_SOURCES):
+            found += _source_svg_findings(root, name)
+            continue
+        about = records_by_path.get(name)
+        if about is None:
+            found.append(f"{name}: M008: a media file with no metadata record and no reason in METADATA_EXEMPT")
+            continue
+        spdx, holders = meta.reuse_truth(root, name)
+        if (about.spdx, about.holders) != (spdx, holders):
+            found.append(f"{name}: M003: its record says {about.spdx} by {'; '.join(about.holders)}, REUSE says {spdx} by {'; '.join(holders)}")
+        data = (root / path).read_bytes()
+        suffix = path.suffix.lower()
+        if suffix == ".png":
+            found += meta.png_findings(name, data, about)
+        elif suffix in (".jpg", ".jpeg"):
+            found += meta.jpeg_findings(name, data, about)
+        elif suffix == ".svg":
+            found += meta.svg_findings(name, data.decode("utf-8"), about, meta.svg_slug(path.stem))
+        values = meta.xmp_values(about)
+        found += meta.deny_findings(name, values, identity)
+        if any(METADATA_MISWRITTEN.search(METADATA_URL.sub("", value)) for value in values):
+            found.append(f"{name}: M010: a metadata value writes a vendor another way than M5Stack or LILYGO")
+        if about.language == "es":
+            spanish = [str(about.title_es), str(about.description_es), str(about.alt_es), about.usage_terms("es")]
+            if any(SPANISH_BANNED.search(value) for value in spanish):
+                found.append(f"{name}: M010: a Spanish metadata value says 'vault' or 'bóveda'; the container is 'llavero'")
+    return found
+
+
 def findings(root: Path = BRAND_ROOT) -> list[str]:
     """Return everything in the tree at *root* that breaks a rule."""
     files = public_tree.tracked(root)
@@ -271,7 +352,12 @@ def findings(root: Path = BRAND_ROOT) -> list[str]:
     found += text_findings(root)
     found += boards.findings(root)
     found += public_tree.findings(root, files, PICTURE_DIRS, board_dirs=(boards.BOARDS_DIR.as_posix(),))
-    return found
+    try:
+        found += metadata_findings(root, files)
+    except (ValueError, KeyError, ET.ParseError, OSError) as error:
+        found.append(f"the metadata records cannot be made: {error}")
+    # A picture's metadata is held by the built check and by this rule alike: one line each.
+    return list(dict.fromkeys(found))
 
 
 def main(argv: list[str] | None = None) -> int:

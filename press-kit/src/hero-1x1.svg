@@ -5,6 +5,7 @@
 -->
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2160 2160" width="2160" height="2160">
   <title>Kleidos press image, 1:1: the stacked lockup, the hero line and the address</title>
+  <desc>The layout of the square press images with the stacked logo and the tagline; press.json sets its words in each language and the builder paints each theme.</desc>
   <g id="ground">
     <rect x="0" y="0" width="2160" height="2160" fill="#0a0c0f"/>
   </g>

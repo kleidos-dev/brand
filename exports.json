@@ -1,1167 +1,1288 @@
 {
   "$comment": "Written by tools/build.py: the bytes of each picture and of what it was drawn from. Do not edit; run the builder.",
   "chromium": "159.0.8154.6",
+  "meta_profile": "kleidos-media-meta/1",
   "files": {
     "logo/png/kleidos-mark-64.png": {
-      "sha256": "784a41aaa2bcff432ae1b13634c9469f308dde397d0670c0f52f5406bf4dfff1",
-      "bytes": 2149,
+      "sha256": "5b9f4f04f393db3150e86a6f717265bf31200a2a74cef9ce2f3c77552826df63",
+      "bytes": 5689,
       "size": [
         64,
         64
       ],
-      "drawn_from": "242b87f3bf16015b6b9d366fbc05a050b9a20116157c096ed9dc09ad9fcea699",
+      "drawn_from": "8b0059587057e45d3fe76e6cde0782eaaa16873c6fa1cdad42b9c3e69db20562",
       "inputs": {
-        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/mark.svg": "7ec13579b19170cd8a0679d1a15ec185fe1a17e5c47af951b9b81436361256b7",
         "logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
         "tokens/tokens.json": "02adc61017345c669b22aebcccda5713fd31c72f88936ae8964014dfe9ca5c96",
         "fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435"
       }
     },
     "logo/png/kleidos-mark-256.png": {
-      "sha256": "a7dd65680971f9a7960a7420427fdc1f1df8c1be15be22208f5ae4e52afe4300",
-      "bytes": 9794,
+      "sha256": "0c0a24e1496258640888878647418f03b98827d30089e214c45a3761a9aefc1b",
+      "bytes": 13338,
       "size": [
         256,
         256
       ],
-      "drawn_from": "242b87f3bf16015b6b9d366fbc05a050b9a20116157c096ed9dc09ad9fcea699",
+      "drawn_from": "8b0059587057e45d3fe76e6cde0782eaaa16873c6fa1cdad42b9c3e69db20562",
       "inputs": {
-        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/mark.svg": "7ec13579b19170cd8a0679d1a15ec185fe1a17e5c47af951b9b81436361256b7",
         "logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
         "tokens/tokens.json": "02adc61017345c669b22aebcccda5713fd31c72f88936ae8964014dfe9ca5c96",
         "fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435"
       }
     },
     "logo/png/kleidos-mark-1024.png": {
-      "sha256": "23360e271663b2a588dca0d9bd5347e1d91ade8a3b52fcd5429e01b731047063",
-      "bytes": 45103,
+      "sha256": "e42948777ada49af899d31967e124d1e6dd961093c69e5b1472f94f326c701d9",
+      "bytes": 48651,
       "size": [
         1024,
         1024
       ],
-      "drawn_from": "242b87f3bf16015b6b9d366fbc05a050b9a20116157c096ed9dc09ad9fcea699",
+      "drawn_from": "8b0059587057e45d3fe76e6cde0782eaaa16873c6fa1cdad42b9c3e69db20562",
       "inputs": {
-        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/mark.svg": "7ec13579b19170cd8a0679d1a15ec185fe1a17e5c47af951b9b81436361256b7",
         "logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
         "tokens/tokens.json": "02adc61017345c669b22aebcccda5713fd31c72f88936ae8964014dfe9ca5c96",
         "fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435"
       }
     },
     "logo/png/kleidos-mark-ink-dark-64.png": {
-      "sha256": "753c0775efbaf94c3ab4ed2ebcd40965650750cb014251f3e6e39e47f54b946b",
-      "bytes": 2214,
+      "sha256": "85909fa97dc598d834d0279786d78f2d79f4e9e71c5aa486447262360eb4a7a2",
+      "bytes": 5833,
       "size": [
         64,
         64
       ],
-      "drawn_from": "acd229558672ca342f99906e5418ea4581d367e16269cf758b073a9a567a0573",
+      "drawn_from": "c4ffe6be6981caf0e19f2c7c9008a20bd32f2a61a4b3543d012be879779749c4",
       "inputs": {
-        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/mark.svg": "7ec13579b19170cd8a0679d1a15ec185fe1a17e5c47af951b9b81436361256b7",
         "logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
         "tokens/tokens.json": "02adc61017345c669b22aebcccda5713fd31c72f88936ae8964014dfe9ca5c96",
         "fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435"
       }
     },
     "logo/png/kleidos-mark-ink-dark-256.png": {
-      "sha256": "c1dbb2d8512c6e01f39da119f151158f73c5f1b72dc2db71090c26f545067fae",
-      "bytes": 11173,
+      "sha256": "392a2fdb598769aca1fa555be27af14374c471e83d9d85c7dab2aeaa15ca5d11",
+      "bytes": 14796,
       "size": [
         256,
         256
       ],
-      "drawn_from": "acd229558672ca342f99906e5418ea4581d367e16269cf758b073a9a567a0573",
+      "drawn_from": "c4ffe6be6981caf0e19f2c7c9008a20bd32f2a61a4b3543d012be879779749c4",
       "inputs": {
-        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/mark.svg": "7ec13579b19170cd8a0679d1a15ec185fe1a17e5c47af951b9b81436361256b7",
         "logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
         "tokens/tokens.json": "02adc61017345c669b22aebcccda5713fd31c72f88936ae8964014dfe9ca5c96",
         "fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435"
       }
     },
     "logo/png/kleidos-mark-ink-dark-1024.png": {
-      "sha256": "e6175a3b09a58f6abf97d37e449a31f3b3aa277d4de59c88d9838ea189facdf7",
-      "bytes": 51956,
+      "sha256": "b4df039d9d1e5d7b41d10756eeb559ac11a0842a29e305b7efc4c07eadd16494",
+      "bytes": 55583,
       "size": [
         1024,
         1024
       ],
-      "drawn_from": "acd229558672ca342f99906e5418ea4581d367e16269cf758b073a9a567a0573",
+      "drawn_from": "c4ffe6be6981caf0e19f2c7c9008a20bd32f2a61a4b3543d012be879779749c4",
       "inputs": {
-        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/mark.svg": "7ec13579b19170cd8a0679d1a15ec185fe1a17e5c47af951b9b81436361256b7",
         "logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
         "tokens/tokens.json": "02adc61017345c669b22aebcccda5713fd31c72f88936ae8964014dfe9ca5c96",
         "fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435"
       }
     },
     "logo/png/kleidos-mark-ink-light-64.png": {
-      "sha256": "95dd149b5e9f87696fafc546ebeb93ae44a6500defd69a6182ab97c826740f88",
-      "bytes": 2310,
+      "sha256": "6290bab041f0c9c904009169e1bff4d8f0ed599fa6b11245935378d5a6665987",
+      "bytes": 5934,
       "size": [
         64,
         64
       ],
-      "drawn_from": "b99ac53b26cb4db4a04dec63c97231179ac53b3f5842bf4a386dd490c01371bb",
+      "drawn_from": "9c0e6a88516e9ede41cc14ce18fc11645a32288ff7efb4aae8049243d70517cd",
       "inputs": {
-        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/mark.svg": "7ec13579b19170cd8a0679d1a15ec185fe1a17e5c47af951b9b81436361256b7",
         "logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
         "tokens/tokens.json": "02adc61017345c669b22aebcccda5713fd31c72f88936ae8964014dfe9ca5c96",
         "fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435"
       }
     },
     "logo/png/kleidos-mark-ink-light-256.png": {
-      "sha256": "d7488c636cd5eb77fcf9bb3764a4be57e1fb36a878b1ebc3f50646b18472dcb5",
-      "bytes": 11023,
+      "sha256": "9f9e89bdacf9b29d3dfb1ba24a4eb31132b72db01ead800c542627e89587222a",
+      "bytes": 14651,
       "size": [
         256,
         256
       ],
-      "drawn_from": "b99ac53b26cb4db4a04dec63c97231179ac53b3f5842bf4a386dd490c01371bb",
+      "drawn_from": "9c0e6a88516e9ede41cc14ce18fc11645a32288ff7efb4aae8049243d70517cd",
       "inputs": {
-        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/mark.svg": "7ec13579b19170cd8a0679d1a15ec185fe1a17e5c47af951b9b81436361256b7",
         "logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
         "tokens/tokens.json": "02adc61017345c669b22aebcccda5713fd31c72f88936ae8964014dfe9ca5c96",
         "fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435"
       }
     },
     "logo/png/kleidos-mark-ink-light-1024.png": {
-      "sha256": "a015cba37ab4ec54b0134ef5576237d4eb5c664893915330abafbafc84be7073",
-      "bytes": 51508,
+      "sha256": "4121143d359ea37476af6e0e04d55233acc2cd8dd120ae8e3c108f834fa9cf6a",
+      "bytes": 55140,
       "size": [
         1024,
         1024
       ],
-      "drawn_from": "b99ac53b26cb4db4a04dec63c97231179ac53b3f5842bf4a386dd490c01371bb",
+      "drawn_from": "9c0e6a88516e9ede41cc14ce18fc11645a32288ff7efb4aae8049243d70517cd",
       "inputs": {
-        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/mark.svg": "7ec13579b19170cd8a0679d1a15ec185fe1a17e5c47af951b9b81436361256b7",
         "logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
         "tokens/tokens.json": "02adc61017345c669b22aebcccda5713fd31c72f88936ae8964014dfe9ca5c96",
         "fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435"
       }
     },
     "logo/png/kleidos-mark-on-dark-64.png": {
-      "sha256": "729c8a472d1b41149986dc6cf8acf8737d04f44bfcf29ebd211c29ca5f9e9a02",
-      "bytes": 1049,
+      "sha256": "cfaa19ffa9c9693280141a638a63f694e19a2752157836931166f587efc47f32",
+      "bytes": 4673,
       "size": [
         64,
         64
       ],
-      "drawn_from": "4a74030866a7bbd42c94d6d6f0c145dcf4fe8465a8e1ac5ba45d28991ec14126",
+      "drawn_from": "d14e652a72ff94e239b9dfa15cc06823e66c307b015fb939aeb597b2dca2a51d",
       "inputs": {
-        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/mark.svg": "7ec13579b19170cd8a0679d1a15ec185fe1a17e5c47af951b9b81436361256b7",
         "logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
         "tokens/tokens.json": "02adc61017345c669b22aebcccda5713fd31c72f88936ae8964014dfe9ca5c96",
         "fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435"
       }
     },
     "logo/png/kleidos-mark-on-dark-256.png": {
-      "sha256": "d5563753f09d761a4b6e27ba1c292cf1b0c24f0ab3bdd6c40fac3a5931f9ff6d",
-      "bytes": 6057,
+      "sha256": "38804bbdf9bb69c8eb7e9d81d60914e791cc9c316044317d83ef7bfd155ce3ba",
+      "bytes": 9685,
       "size": [
         256,
         256
       ],
-      "drawn_from": "4a74030866a7bbd42c94d6d6f0c145dcf4fe8465a8e1ac5ba45d28991ec14126",
+      "drawn_from": "d14e652a72ff94e239b9dfa15cc06823e66c307b015fb939aeb597b2dca2a51d",
       "inputs": {
-        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/mark.svg": "7ec13579b19170cd8a0679d1a15ec185fe1a17e5c47af951b9b81436361256b7",
         "logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
         "tokens/tokens.json": "02adc61017345c669b22aebcccda5713fd31c72f88936ae8964014dfe9ca5c96",
         "fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435"
       }
     },
     "logo/png/kleidos-mark-on-dark-1024.png": {
-      "sha256": "886deddcc07caac65cf79a50a34ea9053799b6ed49e4a326b6c64f5ff66ef9eb",
-      "bytes": 28247,
+      "sha256": "4d4c3f6ec3bdbbc07f4009cc5180a82c5d025351b41e89c5d1b61e742a218ee0",
+      "bytes": 31879,
       "size": [
         1024,
         1024
       ],
-      "drawn_from": "4a74030866a7bbd42c94d6d6f0c145dcf4fe8465a8e1ac5ba45d28991ec14126",
+      "drawn_from": "d14e652a72ff94e239b9dfa15cc06823e66c307b015fb939aeb597b2dca2a51d",
       "inputs": {
-        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/mark.svg": "7ec13579b19170cd8a0679d1a15ec185fe1a17e5c47af951b9b81436361256b7",
         "logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
         "tokens/tokens.json": "02adc61017345c669b22aebcccda5713fd31c72f88936ae8964014dfe9ca5c96",
         "fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435"
       }
     },
     "logo/png/kleidos-mark-on-light-64.png": {
-      "sha256": "e3a175ec584602a7f067dd8d0fb8ab763f686fda6292409503d946acd684b358",
-      "bytes": 996,
+      "sha256": "0c6ae9e126f3859ccb105fed1502847707f889ca00d3a211ff777de1ad3703b1",
+      "bytes": 4627,
       "size": [
         64,
         64
       ],
-      "drawn_from": "f29c02c678865308ad3b06ed216e3d519a4f0ee75d819f64f26905832817ff6f",
+      "drawn_from": "92ae30c8d104c4da95b3d680afac26697efb1c0828e46c9fb116b33d8c3761ef",
       "inputs": {
-        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/mark.svg": "7ec13579b19170cd8a0679d1a15ec185fe1a17e5c47af951b9b81436361256b7",
         "logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
         "tokens/tokens.json": "02adc61017345c669b22aebcccda5713fd31c72f88936ae8964014dfe9ca5c96",
         "fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435"
       }
     },
     "logo/png/kleidos-mark-on-light-256.png": {
-      "sha256": "d7cde82220fffaea29510eb63f0de8b78bac5dd9d3a76b0b19fefc3d5121109e",
-      "bytes": 5176,
+      "sha256": "97cf6864c1f67c7a203179348a562f5bda05c993fef52d2d73640c38c161313d",
+      "bytes": 8811,
       "size": [
         256,
         256
       ],
-      "drawn_from": "f29c02c678865308ad3b06ed216e3d519a4f0ee75d819f64f26905832817ff6f",
+      "drawn_from": "92ae30c8d104c4da95b3d680afac26697efb1c0828e46c9fb116b33d8c3761ef",
       "inputs": {
-        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/mark.svg": "7ec13579b19170cd8a0679d1a15ec185fe1a17e5c47af951b9b81436361256b7",
         "logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
         "tokens/tokens.json": "02adc61017345c669b22aebcccda5713fd31c72f88936ae8964014dfe9ca5c96",
         "fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435"
       }
     },
     "logo/png/kleidos-mark-on-light-1024.png": {
-      "sha256": "09b133beaa8dd6c430913762b9c46bd5f706c1922f32ffe5be8ac277b889ec97",
-      "bytes": 23848,
+      "sha256": "93b6ab0d1e521a9a31aebdf6527cd4fb8972b2e8f38783552ceb5ab0f5995af6",
+      "bytes": 27487,
       "size": [
         1024,
         1024
       ],
-      "drawn_from": "f29c02c678865308ad3b06ed216e3d519a4f0ee75d819f64f26905832817ff6f",
+      "drawn_from": "92ae30c8d104c4da95b3d680afac26697efb1c0828e46c9fb116b33d8c3761ef",
       "inputs": {
-        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/mark.svg": "7ec13579b19170cd8a0679d1a15ec185fe1a17e5c47af951b9b81436361256b7",
         "logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
         "tokens/tokens.json": "02adc61017345c669b22aebcccda5713fd31c72f88936ae8964014dfe9ca5c96",
         "fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435"
       }
     },
     "logo/png/kleidos-mark-small-19.png": {
-      "sha256": "455b87b0ea13379ef468b113d69db7b89ad472a37c027da0121b3ae4722a04b4",
-      "bytes": 424,
+      "sha256": "077379d9d563f8aef332844697f0b84dc979a929765c782bf8e958269628a365",
+      "bytes": 1940,
       "size": [
         19,
         19
       ],
-      "drawn_from": "b3bdd13336a0f09c57c68aafaf5fd4fda61b774f5f278dcd5d6d7ce69083b32b",
+      "drawn_from": "bba0738a64bba64ba4f5da8da06b8ea2b2d8152d99e49f77260303935b32c1e1",
       "inputs": {
-        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/mark.svg": "7ec13579b19170cd8a0679d1a15ec185fe1a17e5c47af951b9b81436361256b7",
         "logo/src/small-mark.json": "09bad5101382474bde10aa4da610252f19fba1ce54554b067102234db5defbf3",
         "tokens/tokens.json": "02adc61017345c669b22aebcccda5713fd31c72f88936ae8964014dfe9ca5c96"
       }
     },
     "logo/png/kleidos-mark-small-21.png": {
-      "sha256": "ce3ad58d74bdbe79640f8221e3c8250f7071da6e057ed23a8af1f3f6155b373c",
-      "bytes": 492,
+      "sha256": "70541efa69f90d3c5f512b37d4229da1cee9d1e17d8de381b40e2b63e4dfdc44",
+      "bytes": 2008,
       "size": [
         21,
         21
       ],
-      "drawn_from": "517ede9f03102af6ad19fb9986d8b21b1ad000dbc2f908a4a04ce232bb6ad30c",
+      "drawn_from": "0373b85d1bec36f72717b90006f2c610fe524624ffab7da7f64abeac5655ae40",
       "inputs": {
-        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/mark.svg": "7ec13579b19170cd8a0679d1a15ec185fe1a17e5c47af951b9b81436361256b7",
         "logo/src/small-mark.json": "09bad5101382474bde10aa4da610252f19fba1ce54554b067102234db5defbf3",
         "tokens/tokens.json": "02adc61017345c669b22aebcccda5713fd31c72f88936ae8964014dfe9ca5c96"
       }
     },
     "logo/png/kleidos-mark-small-23.png": {
-      "sha256": "248a89ae6cf65f5cd733baf3ce883e7b637457f7f665ca22e62bd6b6818627e2",
-      "bytes": 497,
+      "sha256": "3db828ef9bf1fa5a8b70c563d9d4026de0ac52b510b5bc606426e0feeef5f99e",
+      "bytes": 2013,
       "size": [
         23,
         23
       ],
-      "drawn_from": "1f085e60729f52bd71774fe8bd5bcb29c15f4aca63e54e89910313fa62132987",
+      "drawn_from": "0bd739ff1527e83cf6d9dd17db416b57a9c98197a79a34276184470d04143b90",
       "inputs": {
-        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/mark.svg": "7ec13579b19170cd8a0679d1a15ec185fe1a17e5c47af951b9b81436361256b7",
         "logo/src/small-mark.json": "09bad5101382474bde10aa4da610252f19fba1ce54554b067102234db5defbf3",
         "tokens/tokens.json": "02adc61017345c669b22aebcccda5713fd31c72f88936ae8964014dfe9ca5c96"
       }
     },
     "logo/png/kleidos-mark-small-ink-dark-19.png": {
-      "sha256": "73db117ae6a8f066e12a0f7e062efbc69339fe3d721266dc3102d12802bb9ded",
-      "bytes": 441,
+      "sha256": "b04f92073077cf24846a6c4e69a1bcae01e07a18affbba153a2969342c4cd2d0",
+      "bytes": 1966,
       "size": [
         19,
         19
       ],
-      "drawn_from": "8006c0c1594dff3184f8f2cec7dc4429369caf400eec5046384ecd92c7afa507",
+      "drawn_from": "5cc2041702b66f34e6aa1b1a1d6b45d30f53d43babe93cd95227cf0e058fd1c6",
       "inputs": {
-        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/mark.svg": "7ec13579b19170cd8a0679d1a15ec185fe1a17e5c47af951b9b81436361256b7",
         "logo/src/small-mark.json": "09bad5101382474bde10aa4da610252f19fba1ce54554b067102234db5defbf3",
         "tokens/tokens.json": "02adc61017345c669b22aebcccda5713fd31c72f88936ae8964014dfe9ca5c96"
       }
     },
     "logo/png/kleidos-mark-small-ink-dark-21.png": {
-      "sha256": "1e26dd93c27da33ebc21c853cded866de63a0fa8b0c8bb5af935321838bd3bd4",
-      "bytes": 535,
+      "sha256": "4714549863e5b68a68018258a54c66c2d72f5338f20bf0d65c6a41ab538a098e",
+      "bytes": 2060,
       "size": [
         21,
         21
       ],
-      "drawn_from": "d05f689cef573d07170e3d8c850747dab7d4f1fe8981527f90cb8d2e4de71d26",
+      "drawn_from": "13238799eb0bec0166cea72afa12afd626e1e08149a8d09d88b5c08deaff84fe",
       "inputs": {
-        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/mark.svg": "7ec13579b19170cd8a0679d1a15ec185fe1a17e5c47af951b9b81436361256b7",
         "logo/src/small-mark.json": "09bad5101382474bde10aa4da610252f19fba1ce54554b067102234db5defbf3",
         "tokens/tokens.json": "02adc61017345c669b22aebcccda5713fd31c72f88936ae8964014dfe9ca5c96"
       }
     },
     "logo/png/kleidos-mark-small-ink-dark-23.png": {
-      "sha256": "98334a5797054db0ec88a5f33308d088d11a9f815cbeb44f291d142690776620",
-      "bytes": 500,
+      "sha256": "8e1a194deafb8c8e7ff5705b5e675042483f728d655f188db8c65e5acfb46a4a",
+      "bytes": 2025,
       "size": [
         23,
         23
       ],
-      "drawn_from": "7d0219050fa0aa45b7edd43390eae026e8b2d7882c882c874124748c1ef41070",
+      "drawn_from": "81f897bb8b8494f99bba17b74225d7aca48aaabad42955d8720e805dc7a58a6a",
       "inputs": {
-        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/mark.svg": "7ec13579b19170cd8a0679d1a15ec185fe1a17e5c47af951b9b81436361256b7",
         "logo/src/small-mark.json": "09bad5101382474bde10aa4da610252f19fba1ce54554b067102234db5defbf3",
         "tokens/tokens.json": "02adc61017345c669b22aebcccda5713fd31c72f88936ae8964014dfe9ca5c96"
       }
     },
     "logo/png/kleidos-mark-small-ink-light-19.png": {
-      "sha256": "9b02c7eb221bcd68fbe41597199ee7d57f510518b8a82e00839b2edfbd0309c4",
-      "bytes": 427,
+      "sha256": "8b8859d152fe79a4293148a9abb9be944082a29eab46a76a612a8bd5089865c2",
+      "bytes": 1954,
       "size": [
         19,
         19
       ],
-      "drawn_from": "523a80a3573a7c6ee36936c64538e5f7601793a0ad0b3897b4a9ee3d2d6f16ab",
+      "drawn_from": "3a70735ca03f9cfe57f41e26d3a4c9ee5265923dc23035d8cca115d55cb51085",
       "inputs": {
-        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/mark.svg": "7ec13579b19170cd8a0679d1a15ec185fe1a17e5c47af951b9b81436361256b7",
         "logo/src/small-mark.json": "09bad5101382474bde10aa4da610252f19fba1ce54554b067102234db5defbf3",
         "tokens/tokens.json": "02adc61017345c669b22aebcccda5713fd31c72f88936ae8964014dfe9ca5c96"
       }
     },
     "logo/png/kleidos-mark-small-ink-light-21.png": {
-      "sha256": "92b8f34fcc83781bc356cf653b4241a1efe4172c1bab82f6942636c4afe3d59f",
-      "bytes": 486,
+      "sha256": "74d3183e21c59c6d21404b59181cb9f883dd3a8037db2b8914c9dd7ad75b5570",
+      "bytes": 2013,
       "size": [
         21,
         21
       ],
-      "drawn_from": "86bb1c7a07730cf095dc7aabf3cb1ff68247fb5096e40d322c19e681faf1b27c",
+      "drawn_from": "afa66fd7491160f7377013f8776d16e36bc0f3fe0407074259bb91daabea4df3",
       "inputs": {
-        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/mark.svg": "7ec13579b19170cd8a0679d1a15ec185fe1a17e5c47af951b9b81436361256b7",
         "logo/src/small-mark.json": "09bad5101382474bde10aa4da610252f19fba1ce54554b067102234db5defbf3",
         "tokens/tokens.json": "02adc61017345c669b22aebcccda5713fd31c72f88936ae8964014dfe9ca5c96"
       }
     },
     "logo/png/kleidos-mark-small-ink-light-23.png": {
-      "sha256": "8c15b79c0f4978ad562bffd1bec5ab73d2592309fb42d11679ad86568edcd031",
-      "bytes": 501,
+      "sha256": "067c166fe0c722bbd92a17ad02aa03c57c330fbbeff43dcb72759713fd392e2e",
+      "bytes": 2028,
       "size": [
         23,
         23
       ],
-      "drawn_from": "c7faf43ee984a303d73d4d7e4a01105d34769c96de12e843ec7f69d2d4769e4c",
+      "drawn_from": "14d1509276ab2941fe7f41d5de51da025acb3fdfc74e13a52621b53f5cdbcd17",
       "inputs": {
-        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/mark.svg": "7ec13579b19170cd8a0679d1a15ec185fe1a17e5c47af951b9b81436361256b7",
         "logo/src/small-mark.json": "09bad5101382474bde10aa4da610252f19fba1ce54554b067102234db5defbf3",
         "tokens/tokens.json": "02adc61017345c669b22aebcccda5713fd31c72f88936ae8964014dfe9ca5c96"
       }
     },
     "logo/png/kleidos-mark-small-on-dark-19.png": {
-      "sha256": "200ae61e555d1208fde77f106ed63d943138f810c44ce9eaec6a6652e0a6819a",
-      "bytes": 679,
+      "sha256": "2a68434d8bd67b3673f809642dd350a5a41d1565752092d0c9a9ff830ac82650",
+      "bytes": 2211,
       "size": [
         19,
         19
       ],
-      "drawn_from": "3bec0591d418005adb6dcb5503b4dabb3d937b39c74b1037ae2f9edf1c5607dd",
+      "drawn_from": "e91a5f342be6afd498e97f5575243481729635cfe34c5e1b91c04d6c133c4960",
       "inputs": {
-        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/mark.svg": "7ec13579b19170cd8a0679d1a15ec185fe1a17e5c47af951b9b81436361256b7",
         "logo/src/small-mark.json": "09bad5101382474bde10aa4da610252f19fba1ce54554b067102234db5defbf3",
         "tokens/tokens.json": "02adc61017345c669b22aebcccda5713fd31c72f88936ae8964014dfe9ca5c96"
       }
     },
     "logo/png/kleidos-mark-small-on-dark-21.png": {
-      "sha256": "5631180a2db57bfac850320c8cead26c95c4341f60a24de5a474a51756a3bd03",
-      "bytes": 617,
+      "sha256": "3dcabbe7ea7ceae019213e112b19cc41072d383da4252efbf0716c47968ec088",
+      "bytes": 2149,
       "size": [
         21,
         21
       ],
-      "drawn_from": "98f3263ce5dabf65be4307df72b529d5f95a9ac52b1d5a3e569c181db62b50cb",
+      "drawn_from": "d177f9e4c6cb5f24ba6519b75e0b2665e919f3a2838b39b8d0521e86b1f56074",
       "inputs": {
-        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/mark.svg": "7ec13579b19170cd8a0679d1a15ec185fe1a17e5c47af951b9b81436361256b7",
         "logo/src/small-mark.json": "09bad5101382474bde10aa4da610252f19fba1ce54554b067102234db5defbf3",
         "tokens/tokens.json": "02adc61017345c669b22aebcccda5713fd31c72f88936ae8964014dfe9ca5c96"
       }
     },
     "logo/png/kleidos-mark-small-on-dark-23.png": {
-      "sha256": "edafd112340142f49eeddbbcec11c1277837d012cb547c3a8f4e71e043b1ee82",
-      "bytes": 715,
+      "sha256": "a7320a446f802d211b7d9ead6fa852823e2231598df0074dcf1be2fd57bf828a",
+      "bytes": 2247,
       "size": [
         23,
         23
       ],
-      "drawn_from": "4c0a843a995a9e0234e2ef24df5a1aceb29bcedaadc74071acd8a6fb7f50ae55",
+      "drawn_from": "ac1c15920fdb723d8364c8521a3be4d13dfd8b9eb425dafe64a06566e9e042d3",
       "inputs": {
-        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/mark.svg": "7ec13579b19170cd8a0679d1a15ec185fe1a17e5c47af951b9b81436361256b7",
         "logo/src/small-mark.json": "09bad5101382474bde10aa4da610252f19fba1ce54554b067102234db5defbf3",
         "tokens/tokens.json": "02adc61017345c669b22aebcccda5713fd31c72f88936ae8964014dfe9ca5c96"
       }
     },
     "logo/png/kleidos-lockup-horizontal-for-dark-128.png": {
-      "sha256": "7e5391e29b34bcc43f3416d00f899bd3723516a3d8c1fc65d54c920173ea29dc",
-      "bytes": 13608,
+      "sha256": "e9a0cddd86853cc4eb511e56782e320746c49eb41fecd7c105cb07c76f25af2e",
+      "bytes": 17456,
       "size": [
         506,
         128
       ],
-      "drawn_from": "278ec5bd520427fd499c6ad2840bda6120c928e5b385904264e353acf14a1634",
+      "drawn_from": "fceb691b5e5711a1cb5f5f130e6bb992ce56108cb70425164f201ea0eff599de",
       "inputs": {
-        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/mark.svg": "7ec13579b19170cd8a0679d1a15ec185fe1a17e5c47af951b9b81436361256b7",
         "logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
         "tokens/tokens.json": "02adc61017345c669b22aebcccda5713fd31c72f88936ae8964014dfe9ca5c96",
         "fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435"
       }
     },
     "logo/png/kleidos-lockup-horizontal-for-dark-512.png": {
-      "sha256": "987ac0b2910e7a90b25a76e06594961972b893dbf8f3cd1509e50e8eaedeb164",
-      "bytes": 62601,
+      "sha256": "d69baeef4ab09b0a0a6a5d77b79a6ec9f4f827502fde1d60a841b71c47cf7274",
+      "bytes": 66449,
       "size": [
         2023,
         512
       ],
-      "drawn_from": "278ec5bd520427fd499c6ad2840bda6120c928e5b385904264e353acf14a1634",
+      "drawn_from": "fceb691b5e5711a1cb5f5f130e6bb992ce56108cb70425164f201ea0eff599de",
       "inputs": {
-        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/mark.svg": "7ec13579b19170cd8a0679d1a15ec185fe1a17e5c47af951b9b81436361256b7",
         "logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
         "tokens/tokens.json": "02adc61017345c669b22aebcccda5713fd31c72f88936ae8964014dfe9ca5c96",
         "fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435"
       }
     },
     "logo/png/kleidos-lockup-horizontal-for-light-128.png": {
-      "sha256": "3a1a00f18f23490bdaf320bcef1197d5d0353c6afeabbd5977bc15d8d4b0d950",
-      "bytes": 13618,
+      "sha256": "7ae05019fd42b2dea82782a4eb5b03307994a4ce3b89577df226939b5fc53565",
+      "bytes": 17473,
       "size": [
         506,
         128
       ],
-      "drawn_from": "30abdf52a320115814581a73d00631d49ee58b6c5645963bda3a0b839c0a5457",
+      "drawn_from": "39555f9bb51f105015b5c6f7600d1bc9769059566d1bb4b6d5920a78305ea24c",
       "inputs": {
-        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/mark.svg": "7ec13579b19170cd8a0679d1a15ec185fe1a17e5c47af951b9b81436361256b7",
         "logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
         "tokens/tokens.json": "02adc61017345c669b22aebcccda5713fd31c72f88936ae8964014dfe9ca5c96",
         "fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435"
       }
     },
     "logo/png/kleidos-lockup-horizontal-for-light-512.png": {
-      "sha256": "a40363c2f2261ad256f297ac28bfc3d035ce722d5c7d2ca2be241ac305b259aa",
-      "bytes": 62403,
+      "sha256": "c517cf15f9e09e642e2328c2e0516cd5d0ed45211b1dbe866e3fa2fca6434c9b",
+      "bytes": 66258,
       "size": [
         2023,
         512
       ],
-      "drawn_from": "30abdf52a320115814581a73d00631d49ee58b6c5645963bda3a0b839c0a5457",
+      "drawn_from": "39555f9bb51f105015b5c6f7600d1bc9769059566d1bb4b6d5920a78305ea24c",
       "inputs": {
-        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/mark.svg": "7ec13579b19170cd8a0679d1a15ec185fe1a17e5c47af951b9b81436361256b7",
         "logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
         "tokens/tokens.json": "02adc61017345c669b22aebcccda5713fd31c72f88936ae8964014dfe9ca5c96",
         "fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435"
       }
     },
     "logo/png/kleidos-lockup-horizontal-ink-dark-128.png": {
-      "sha256": "2e9d2182d4c0d595bae527867fb30f4db379d4210d90a94c2112aaa5ab0fad9b",
-      "bytes": 13998,
+      "sha256": "f53a07c9e9251ed6a1fe6ec4fcb68b73f2c1fef1500497a316f7e7b287b85387",
+      "bytes": 17774,
       "size": [
         506,
         128
       ],
-      "drawn_from": "4bde53e4024589ff6b1c118a9b9e627873a9e928c68ffec788442a8d51d07921",
+      "drawn_from": "e6b069b58dcae694c494b62b12ebc4e70540317df057d752a1389237ad5de312",
       "inputs": {
-        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/mark.svg": "7ec13579b19170cd8a0679d1a15ec185fe1a17e5c47af951b9b81436361256b7",
         "logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
         "tokens/tokens.json": "02adc61017345c669b22aebcccda5713fd31c72f88936ae8964014dfe9ca5c96",
         "fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435"
       }
     },
     "logo/png/kleidos-lockup-horizontal-ink-dark-512.png": {
-      "sha256": "b0aa47409f81e39b1d59f96ea426e22bdcc514abd9dc85f546d293ec0a68d4f9",
-      "bytes": 64298,
+      "sha256": "2850ccd2788347e59ebb52a1fc762b3ff268b852785391e862516cd1295ab8d7",
+      "bytes": 68074,
       "size": [
         2023,
         512
       ],
-      "drawn_from": "4bde53e4024589ff6b1c118a9b9e627873a9e928c68ffec788442a8d51d07921",
+      "drawn_from": "e6b069b58dcae694c494b62b12ebc4e70540317df057d752a1389237ad5de312",
       "inputs": {
-        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/mark.svg": "7ec13579b19170cd8a0679d1a15ec185fe1a17e5c47af951b9b81436361256b7",
         "logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
         "tokens/tokens.json": "02adc61017345c669b22aebcccda5713fd31c72f88936ae8964014dfe9ca5c96",
         "fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435"
       }
     },
     "logo/png/kleidos-lockup-horizontal-ink-light-128.png": {
-      "sha256": "af8f08ce536f713b3d119fa0219f26aae3ba675ea0024c886db16ab341114136",
-      "bytes": 13926,
+      "sha256": "1bf74d54e61f95b74123748293b570bd5cd3d7613aeb530ccd01bf331e3cb15d",
+      "bytes": 17707,
       "size": [
         506,
         128
       ],
-      "drawn_from": "a74a50c7cfde48365558b2d4269eb4d3032967470665d597b633c9d9f2b7331f",
+      "drawn_from": "3104f88e666c6357563097c9cf504d29f2ded22238451c5cc0ae450cfbdb5a09",
       "inputs": {
-        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/mark.svg": "7ec13579b19170cd8a0679d1a15ec185fe1a17e5c47af951b9b81436361256b7",
         "logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
         "tokens/tokens.json": "02adc61017345c669b22aebcccda5713fd31c72f88936ae8964014dfe9ca5c96",
         "fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435"
       }
     },
     "logo/png/kleidos-lockup-horizontal-ink-light-512.png": {
-      "sha256": "8119b369071d027ff1c9b4229701b2561ff2a8c0359a03ef7c078978ad735958",
-      "bytes": 64596,
+      "sha256": "6f2712db67d577aefa724e53e3322c2a466d97fb11d45f78ad4e261f180d801d",
+      "bytes": 68377,
       "size": [
         2023,
         512
       ],
-      "drawn_from": "a74a50c7cfde48365558b2d4269eb4d3032967470665d597b633c9d9f2b7331f",
+      "drawn_from": "3104f88e666c6357563097c9cf504d29f2ded22238451c5cc0ae450cfbdb5a09",
       "inputs": {
-        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/mark.svg": "7ec13579b19170cd8a0679d1a15ec185fe1a17e5c47af951b9b81436361256b7",
         "logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
         "tokens/tokens.json": "02adc61017345c669b22aebcccda5713fd31c72f88936ae8964014dfe9ca5c96",
         "fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435"
       }
     },
     "logo/png/kleidos-lockup-horizontal-on-dark-128.png": {
-      "sha256": "4038f838766060e1f5743010d3d83206506ae7384e75f786cf72dc1db97c263a",
-      "bytes": 7232,
+      "sha256": "0576fff0611882d6f09fb8cdc1d7e8bdee64ca9bc6c9044cb042bcaefaa6d6a1",
+      "bytes": 11045,
       "size": [
         317,
         128
       ],
-      "drawn_from": "930078e08725158bc85ad4366e4da74975cc9ab251908035dde3d1a3ab34085c",
+      "drawn_from": "3c7020195f685215fece9c03a99056841dbfd2cb4a129eb7ba05fc677fc3c7ad",
       "inputs": {
-        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/mark.svg": "7ec13579b19170cd8a0679d1a15ec185fe1a17e5c47af951b9b81436361256b7",
         "logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
         "tokens/tokens.json": "02adc61017345c669b22aebcccda5713fd31c72f88936ae8964014dfe9ca5c96",
         "fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435"
       }
     },
     "logo/png/kleidos-lockup-horizontal-on-dark-512.png": {
-      "sha256": "c46c6e9938b491f9997f73baedaf41ab09d9b83dc9edbb56b24aa872dc111f38",
-      "bytes": 32530,
+      "sha256": "d5c5d41e6c42504b57e50baa65e7e6aac5c6ec69c0e32e11e0a669ee0d732b4c",
+      "bytes": 36343,
       "size": [
         1268,
         512
       ],
-      "drawn_from": "930078e08725158bc85ad4366e4da74975cc9ab251908035dde3d1a3ab34085c",
+      "drawn_from": "3c7020195f685215fece9c03a99056841dbfd2cb4a129eb7ba05fc677fc3c7ad",
       "inputs": {
-        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/mark.svg": "7ec13579b19170cd8a0679d1a15ec185fe1a17e5c47af951b9b81436361256b7",
         "logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
         "tokens/tokens.json": "02adc61017345c669b22aebcccda5713fd31c72f88936ae8964014dfe9ca5c96",
         "fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435"
       }
     },
     "logo/png/kleidos-lockup-horizontal-on-light-128.png": {
-      "sha256": "9e3e73967887db4c527151006bd6b51a0502b90caf0dbe7bf6a6b07683e7e2b5",
-      "bytes": 6797,
+      "sha256": "6d9d35502d8923140404da4c1167f593a0ef3a7c38ccc5e2826199a87c1f8a83",
+      "bytes": 10615,
       "size": [
         317,
         128
       ],
-      "drawn_from": "7455eb2bc4d60867048a3e7edcc4e23250b63f64e4338444eb12d8192d321988",
+      "drawn_from": "d771b0d4f4a251cab9a9dada98ba8e67facf59537a0787f1bd8ffa948905f75d",
       "inputs": {
-        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/mark.svg": "7ec13579b19170cd8a0679d1a15ec185fe1a17e5c47af951b9b81436361256b7",
         "logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
         "tokens/tokens.json": "02adc61017345c669b22aebcccda5713fd31c72f88936ae8964014dfe9ca5c96",
         "fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435"
       }
     },
     "logo/png/kleidos-lockup-horizontal-on-light-512.png": {
-      "sha256": "5f82e1b348a7e9f657a25f898764be1436dcc76671b8f47a42e666c03de30744",
-      "bytes": 30302,
+      "sha256": "5d5cc1ef9330c936a2650d5d44af96630e1dab28b80d872731b8d89341791516",
+      "bytes": 34120,
       "size": [
         1268,
         512
       ],
-      "drawn_from": "7455eb2bc4d60867048a3e7edcc4e23250b63f64e4338444eb12d8192d321988",
+      "drawn_from": "d771b0d4f4a251cab9a9dada98ba8e67facf59537a0787f1bd8ffa948905f75d",
       "inputs": {
-        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/mark.svg": "7ec13579b19170cd8a0679d1a15ec185fe1a17e5c47af951b9b81436361256b7",
         "logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
         "tokens/tokens.json": "02adc61017345c669b22aebcccda5713fd31c72f88936ae8964014dfe9ca5c96",
         "fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435"
       }
     },
     "logo/png/kleidos-lockup-stacked-for-dark-512.png": {
-      "sha256": "cf04797a62315f813ba06601f0800bde164596c6b0f8be3e88630b1f5a1f8e6c",
-      "bytes": 26557,
+      "sha256": "b734e72868224a3760e56965324eb1d7b5b2716f654c507fa64d02b6e1e4013d",
+      "bytes": 30367,
       "size": [
         508,
         512
       ],
-      "drawn_from": "474644044392bb3d47e46b40aced35b0d2b062d3379f4f9f9dcbd2193404245d",
+      "drawn_from": "136ed7f7eac60df3ec328482cce93d182decbce3f6daf8ac20469a46c4cff205",
       "inputs": {
-        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/mark.svg": "7ec13579b19170cd8a0679d1a15ec185fe1a17e5c47af951b9b81436361256b7",
         "logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
         "tokens/tokens.json": "02adc61017345c669b22aebcccda5713fd31c72f88936ae8964014dfe9ca5c96",
         "fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435"
       }
     },
     "logo/png/kleidos-lockup-stacked-for-dark-1024.png": {
-      "sha256": "8a157410f8fdfbd0d3f174fc4b1333700f153233642c894606f0879fd8334d1e",
-      "bytes": 57065,
+      "sha256": "3637a3f6bda6cb5824afb00449b0f813022f06e59e47bca4924fe4f9d93522f7",
+      "bytes": 60879,
       "size": [
         1017,
         1024
       ],
-      "drawn_from": "474644044392bb3d47e46b40aced35b0d2b062d3379f4f9f9dcbd2193404245d",
+      "drawn_from": "136ed7f7eac60df3ec328482cce93d182decbce3f6daf8ac20469a46c4cff205",
       "inputs": {
-        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/mark.svg": "7ec13579b19170cd8a0679d1a15ec185fe1a17e5c47af951b9b81436361256b7",
         "logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
         "tokens/tokens.json": "02adc61017345c669b22aebcccda5713fd31c72f88936ae8964014dfe9ca5c96",
         "fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435"
       }
     },
     "logo/png/kleidos-lockup-stacked-for-light-512.png": {
-      "sha256": "6cc4b57e0a884a770f6abfb5e0f8c0a7d241a0fbbfccd7846ecf157333ceb1f8",
-      "bytes": 26520,
+      "sha256": "9f46ad65f00d2cd2efa7578a2f31886e69306aa5fa919331342c9186401f3ca2",
+      "bytes": 30337,
       "size": [
         508,
         512
       ],
-      "drawn_from": "3a8334f3859af5312eb3af91e3c5961bbf9adc2fe92639aaf31b27753edfccce",
+      "drawn_from": "d8f05bd8aa53171917200f865d1d814d5ad02aed808f2e5855b4133879bd93fe",
       "inputs": {
-        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/mark.svg": "7ec13579b19170cd8a0679d1a15ec185fe1a17e5c47af951b9b81436361256b7",
         "logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
         "tokens/tokens.json": "02adc61017345c669b22aebcccda5713fd31c72f88936ae8964014dfe9ca5c96",
         "fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435"
       }
     },
     "logo/png/kleidos-lockup-stacked-for-light-1024.png": {
-      "sha256": "25b1164b0209a1542c0a2836eb53ad6efcccdd67fafff53b8d90972f64366e9a",
-      "bytes": 56942,
+      "sha256": "0398bf403648577619bf3bbb35b6661c9df2a188b905517a40b5083c156c461d",
+      "bytes": 60763,
       "size": [
         1017,
         1024
       ],
-      "drawn_from": "3a8334f3859af5312eb3af91e3c5961bbf9adc2fe92639aaf31b27753edfccce",
+      "drawn_from": "d8f05bd8aa53171917200f865d1d814d5ad02aed808f2e5855b4133879bd93fe",
       "inputs": {
-        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/mark.svg": "7ec13579b19170cd8a0679d1a15ec185fe1a17e5c47af951b9b81436361256b7",
         "logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
         "tokens/tokens.json": "02adc61017345c669b22aebcccda5713fd31c72f88936ae8964014dfe9ca5c96",
         "fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435"
       }
     },
     "logo/png/kleidos-lockup-stacked-ink-dark-512.png": {
-      "sha256": "3d49da5863b52ef8ea96207bb87240f7fe18e8a2d27a487b601cbc8bcb1146e2",
-      "bytes": 28422,
+      "sha256": "7aa837302a3be71d908ae46d2dce0b3bb47ade14dc39cea584f7f011222b571f",
+      "bytes": 32176,
       "size": [
         508,
         512
       ],
-      "drawn_from": "26b2e764365cd84e774ac86fe10f563ad5e63e1185daac4b201266c9ea7f0376",
+      "drawn_from": "cab5066243ee1faec1a57a320a30885e57f452ee01deeb2d806a4ead10c1e297",
       "inputs": {
-        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/mark.svg": "7ec13579b19170cd8a0679d1a15ec185fe1a17e5c47af951b9b81436361256b7",
         "logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
         "tokens/tokens.json": "02adc61017345c669b22aebcccda5713fd31c72f88936ae8964014dfe9ca5c96",
         "fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435"
       }
     },
     "logo/png/kleidos-lockup-stacked-ink-dark-1024.png": {
-      "sha256": "fbf2f4a84c081078aaf88a63f6c5be7bcba27b68abbdd0cdfb874b244465b2ed",
-      "bytes": 61483,
+      "sha256": "4b71a8457f86c911533d15bc21b348a70e3d200e8ebc92e674a98ede5a2361c4",
+      "bytes": 65241,
       "size": [
         1017,
         1024
       ],
-      "drawn_from": "26b2e764365cd84e774ac86fe10f563ad5e63e1185daac4b201266c9ea7f0376",
+      "drawn_from": "cab5066243ee1faec1a57a320a30885e57f452ee01deeb2d806a4ead10c1e297",
       "inputs": {
-        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/mark.svg": "7ec13579b19170cd8a0679d1a15ec185fe1a17e5c47af951b9b81436361256b7",
         "logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
         "tokens/tokens.json": "02adc61017345c669b22aebcccda5713fd31c72f88936ae8964014dfe9ca5c96",
         "fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435"
       }
     },
     "logo/png/kleidos-lockup-stacked-ink-light-512.png": {
-      "sha256": "47b2fd87161c14a56beaa31b5fe5a0cdf7f7929fe06db7d64239dd86c9897fb4",
-      "bytes": 28177,
+      "sha256": "81e1a785de77659b973476e07bef81196a570f30c7a2fbe6c2f34513251fbf5e",
+      "bytes": 31936,
       "size": [
         508,
         512
       ],
-      "drawn_from": "e145ef5d1cb5f3cb8a8ff4a609290be0f604188496f73e62bda75032776d58d3",
+      "drawn_from": "6dc756b93aa398732d3d93307a18fa9a403a53d38f80437ac1c8bed7b9a592d9",
       "inputs": {
-        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/mark.svg": "7ec13579b19170cd8a0679d1a15ec185fe1a17e5c47af951b9b81436361256b7",
         "logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
         "tokens/tokens.json": "02adc61017345c669b22aebcccda5713fd31c72f88936ae8964014dfe9ca5c96",
         "fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435"
       }
     },
     "logo/png/kleidos-lockup-stacked-ink-light-1024.png": {
-      "sha256": "fc0b29bd2a7441c6194654c858e6c5b6b5e44b9733fe5d6cc08b9c54e80c40e3",
-      "bytes": 61203,
+      "sha256": "a588e24bcf26e6755fd6fba2b90e722d462c86790a8e2258d82a98d6a084cf4b",
+      "bytes": 64966,
       "size": [
         1017,
         1024
       ],
-      "drawn_from": "e145ef5d1cb5f3cb8a8ff4a609290be0f604188496f73e62bda75032776d58d3",
+      "drawn_from": "6dc756b93aa398732d3d93307a18fa9a403a53d38f80437ac1c8bed7b9a592d9",
       "inputs": {
-        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/mark.svg": "7ec13579b19170cd8a0679d1a15ec185fe1a17e5c47af951b9b81436361256b7",
         "logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
         "tokens/tokens.json": "02adc61017345c669b22aebcccda5713fd31c72f88936ae8964014dfe9ca5c96",
         "fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435"
       }
     },
     "logo/png/kleidos-lockup-stacked-on-dark-512.png": {
-      "sha256": "86c4d8c50ff6d9c4df0c2efd2586d1cc0edf8e9e14dd2e77b7b8f703e6355d0c",
-      "bytes": 18093,
+      "sha256": "b23490bce51743348f78598fe6145134108a2fafc1fee32bdeba65e7f81e7120",
+      "bytes": 21884,
       "size": [
         510,
         512
       ],
-      "drawn_from": "754b9262b7a3b36eee8d7ed859f0129327417ec7d3d34f84c35061b113d324e6",
+      "drawn_from": "2ada2d1a8061b19b5baac62aa7ea36b9835eb0e240b1f2db74e20b9123813fcc",
       "inputs": {
-        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/mark.svg": "7ec13579b19170cd8a0679d1a15ec185fe1a17e5c47af951b9b81436361256b7",
         "logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
         "tokens/tokens.json": "02adc61017345c669b22aebcccda5713fd31c72f88936ae8964014dfe9ca5c96",
         "fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435"
       }
     },
     "logo/png/kleidos-lockup-stacked-on-dark-1024.png": {
-      "sha256": "80c90189de9e4337dcfc05a502e3b927001b3261b8d825c254df38af64072950",
-      "bytes": 38426,
+      "sha256": "81b385cce0e9a28f2fb92fc51e1d3e514e2565123895ed61de255eb6484ff21f",
+      "bytes": 42221,
       "size": [
         1020,
         1024
       ],
-      "drawn_from": "754b9262b7a3b36eee8d7ed859f0129327417ec7d3d34f84c35061b113d324e6",
+      "drawn_from": "2ada2d1a8061b19b5baac62aa7ea36b9835eb0e240b1f2db74e20b9123813fcc",
       "inputs": {
-        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/mark.svg": "7ec13579b19170cd8a0679d1a15ec185fe1a17e5c47af951b9b81436361256b7",
         "logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
         "tokens/tokens.json": "02adc61017345c669b22aebcccda5713fd31c72f88936ae8964014dfe9ca5c96",
         "fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435"
       }
     },
     "logo/png/kleidos-lockup-stacked-on-light-512.png": {
-      "sha256": "33b356f90cf5d1314e5b14e3755cc7dda7f477dad4154ee748167e196d37fa7b",
-      "bytes": 16411,
+      "sha256": "49a6c13b712ac70e3bfcce645ecd5c977cd780281fac58db5e77b31d4379c5d3",
+      "bytes": 20207,
       "size": [
         510,
         512
       ],
-      "drawn_from": "67c14c3e5694b4e638f8e820e133cc6f26a2d8181a5e3483779eec2caae65363",
+      "drawn_from": "0b8df2d7c75183ec5797e268e4662204c7712dea8bed1db9694f71078c35b529",
       "inputs": {
-        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/mark.svg": "7ec13579b19170cd8a0679d1a15ec185fe1a17e5c47af951b9b81436361256b7",
         "logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
         "tokens/tokens.json": "02adc61017345c669b22aebcccda5713fd31c72f88936ae8964014dfe9ca5c96",
         "fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435"
       }
     },
     "logo/png/kleidos-lockup-stacked-on-light-1024.png": {
-      "sha256": "ffee324b56f5be6a9fdc5c6e5fc813511c8260d92b0e2cee7dcac3c39fd45501",
-      "bytes": 35016,
+      "sha256": "f52d19d101d840b846f6fc5fdf3305410e6596e29933a8606622984f52e2a872",
+      "bytes": 38816,
       "size": [
         1020,
         1024
       ],
-      "drawn_from": "67c14c3e5694b4e638f8e820e133cc6f26a2d8181a5e3483779eec2caae65363",
+      "drawn_from": "0b8df2d7c75183ec5797e268e4662204c7712dea8bed1db9694f71078c35b529",
       "inputs": {
-        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/mark.svg": "7ec13579b19170cd8a0679d1a15ec185fe1a17e5c47af951b9b81436361256b7",
         "logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
         "tokens/tokens.json": "02adc61017345c669b22aebcccda5713fd31c72f88936ae8964014dfe9ca5c96",
         "fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435"
       }
     },
     "logo/png/kleidos-lettering-for-dark-64.png": {
-      "sha256": "b546231b6ceb0026f3e5f97046b2db0fcb53ed9b4491b0f999f7f2721aa5cb86",
-      "bytes": 7131,
+      "sha256": "c606aef1fcd56be1d3516a4d2e604a6dc5caeb792b09fac7c863877c6f1b9be7",
+      "bytes": 10915,
       "size": [
         295,
         64
       ],
-      "drawn_from": "950b9f7a43eaffdca3b7b3e376a16169e00418943264883444c3d36dded345e4",
+      "drawn_from": "31ab80ee0a1c22cf04bbe6eb1f531290c21229e1cafe07a399a9042d05b069dc",
       "inputs": {
-        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/mark.svg": "7ec13579b19170cd8a0679d1a15ec185fe1a17e5c47af951b9b81436361256b7",
         "logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
         "tokens/tokens.json": "02adc61017345c669b22aebcccda5713fd31c72f88936ae8964014dfe9ca5c96",
         "fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435"
       }
     },
     "logo/png/kleidos-lettering-for-dark-256.png": {
-      "sha256": "ae09d038821d43bdb018912715acb3af847dc713ffe208a2551a2a38aebe2103",
-      "bytes": 31802,
+      "sha256": "e78cb16ebc1c4566d404af7610da8cdad88daece693c92f69a439e9d8033f8bd",
+      "bytes": 35590,
       "size": [
         1178,
         256
       ],
-      "drawn_from": "950b9f7a43eaffdca3b7b3e376a16169e00418943264883444c3d36dded345e4",
+      "drawn_from": "31ab80ee0a1c22cf04bbe6eb1f531290c21229e1cafe07a399a9042d05b069dc",
       "inputs": {
-        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/mark.svg": "7ec13579b19170cd8a0679d1a15ec185fe1a17e5c47af951b9b81436361256b7",
         "logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
         "tokens/tokens.json": "02adc61017345c669b22aebcccda5713fd31c72f88936ae8964014dfe9ca5c96",
         "fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435"
       }
     },
     "logo/png/kleidos-lettering-for-light-64.png": {
-      "sha256": "164a35acdca04b1ab7bf9bba1ed71f55b4cacbb7421c299cf318f91989d3c023",
-      "bytes": 7160,
+      "sha256": "58dc45e4d5b150a0b0532da26a720e220d873343b36b1d6f7f815b73a3624f8e",
+      "bytes": 10951,
       "size": [
         295,
         64
       ],
-      "drawn_from": "43544670e8774b9de820454d848d9c755c528177be224bcf1e0bc7a2f92ad93b",
+      "drawn_from": "42e0231bba1de7db1b92013f390efda9afa185c235caa1340cca79e8c9d7c165",
       "inputs": {
-        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/mark.svg": "7ec13579b19170cd8a0679d1a15ec185fe1a17e5c47af951b9b81436361256b7",
         "logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
         "tokens/tokens.json": "02adc61017345c669b22aebcccda5713fd31c72f88936ae8964014dfe9ca5c96",
         "fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435"
       }
     },
     "logo/png/kleidos-lettering-for-light-256.png": {
-      "sha256": "f60c6e249a51fe13a02e0f6679712531e2d6659c2c54e24249d9c7b6bc658f35",
-      "bytes": 31651,
+      "sha256": "0c2a81a22c8304cfa8aa0d55f47bb3955a5eee97ad11fa4199ab33bf6d9af86d",
+      "bytes": 35446,
       "size": [
         1178,
         256
       ],
-      "drawn_from": "43544670e8774b9de820454d848d9c755c528177be224bcf1e0bc7a2f92ad93b",
+      "drawn_from": "42e0231bba1de7db1b92013f390efda9afa185c235caa1340cca79e8c9d7c165",
       "inputs": {
-        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/mark.svg": "7ec13579b19170cd8a0679d1a15ec185fe1a17e5c47af951b9b81436361256b7",
         "logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
         "tokens/tokens.json": "02adc61017345c669b22aebcccda5713fd31c72f88936ae8964014dfe9ca5c96",
         "fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435"
       }
     },
     "colors/palette.png": {
-      "sha256": "430c381bcfbaf804188a03760eb4476782212b7494f2b4e98c5c11eb0411aba8",
-      "bytes": 199212,
+      "sha256": "f179ad3e4e88bbc364a870c1e9e83352e751eb0d8d12338d592007afe04d4f82",
+      "bytes": 202827,
       "size": [
         2444,
         2222
       ],
-      "drawn_from": "adba7a0d0d1cff549fd98c03eb8b9a66f2bb40b2cefe33b16795ed11578fb895",
+      "drawn_from": "2108110b25eefdb38b03e825abcc557dbc94da36838939a7af89300ab0b32d7a",
       "inputs": {
         "tokens/tokens.json": "02adc61017345c669b22aebcccda5713fd31c72f88936ae8964014dfe9ca5c96",
         "fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435",
         "fonts/mona-sans/MonaSansMonoVF[wght].ttf": "e1d0ba93b9abf682de1bd67d20b58d312fab5d0cbe8fe012e2b1ab7687b42219"
       }
     },
+    "press-kit/screens/kleidos-screen-sticks3.png": {
+      "sha256": "ce4548cfe238ff251a58f349e600078064e4da37f02174493b5eab8b06012660",
+      "bytes": 10808,
+      "size": [
+        135,
+        240
+      ],
+      "drawn_from": "dcd8457f76e3325008a506cb4ce79262b4e5c2b62dcb88ebba6f5603a6465bfd",
+      "inputs": {
+        "press-kit/src/press.json": "3b77cd83744216b458cc6b97f1e9f7ee43b97182163728d49eb4fa8450e67ae0"
+      }
+    },
+    "press-kit/screens/kleidos-screen-m5stickc-plus2.png": {
+      "sha256": "83f080ae27414d761a63c3ef42be67fb9393ce522ea2af3174c24b2f2f506915",
+      "bytes": 10831,
+      "size": [
+        135,
+        240
+      ],
+      "drawn_from": "80f170e144bd88c8e1af234305419ad51c44addfdb4c1252e408ef11688bf996",
+      "inputs": {
+        "press-kit/src/press.json": "3b77cd83744216b458cc6b97f1e9f7ee43b97182163728d49eb4fa8450e67ae0"
+      }
+    },
+    "press-kit/screens/kleidos-screen-m5stickc-plus1.png": {
+      "sha256": "f797eae6a35fc5cbba40e6ad489340d9ae30e7a8ceaf93116c8474bfd029179f",
+      "bytes": 10849,
+      "size": [
+        135,
+        240
+      ],
+      "drawn_from": "80f170e144bd88c8e1af234305419ad51c44addfdb4c1252e408ef11688bf996",
+      "inputs": {
+        "press-kit/src/press.json": "3b77cd83744216b458cc6b97f1e9f7ee43b97182163728d49eb4fa8450e67ae0"
+      }
+    },
+    "press-kit/screens/kleidos-screen-m5stickc-plus-se.png": {
+      "sha256": "d666c92ed10d9a7355bf193e07a188457c72fc368c0cad42c11523a7bd8205d3",
+      "bytes": 10847,
+      "size": [
+        135,
+        240
+      ],
+      "drawn_from": "80f170e144bd88c8e1af234305419ad51c44addfdb4c1252e408ef11688bf996",
+      "inputs": {
+        "press-kit/src/press.json": "3b77cd83744216b458cc6b97f1e9f7ee43b97182163728d49eb4fa8450e67ae0"
+      }
+    },
+    "press-kit/screens/kleidos-screen-coreink.png": {
+      "sha256": "424536b9dffe1271faaebdf1c7ff936459e636d779b24cd19c1aa26a6e03cea9",
+      "bytes": 5797,
+      "size": [
+        200,
+        200
+      ],
+      "drawn_from": "78cc9bf8a31b9e653f9c4fb9103e37ca74409e4d496dc63ef39615660a45275c",
+      "inputs": {
+        "press-kit/src/press.json": "3b77cd83744216b458cc6b97f1e9f7ee43b97182163728d49eb4fa8450e67ae0"
+      }
+    },
+    "press-kit/screens/kleidos-screen-cardputer.png": {
+      "sha256": "57d77d274dff42c4cb4d10f6c484745bfe456a764c4f37de16f987002342efc9",
+      "bytes": 7717,
+      "size": [
+        240,
+        135
+      ],
+      "drawn_from": "280637e53867d7f1886188e866acca6b93752de9cca3978f16190b373be7b4ad",
+      "inputs": {
+        "press-kit/src/press.json": "3b77cd83744216b458cc6b97f1e9f7ee43b97182163728d49eb4fa8450e67ae0"
+      }
+    },
+    "press-kit/screens/kleidos-screen-tdeck-plus.png": {
+      "sha256": "802cdf42c4676770e3bea58e5f6fd679a510b9c2e06582ae52abd4a7a572e0f7",
+      "bytes": 9115,
+      "size": [
+        320,
+        240
+      ],
+      "drawn_from": "e413748d412d687e5a4a6f84fa6022a4cbc49a6bf1b14286042c8ad8ed040b5f",
+      "inputs": {
+        "press-kit/src/press.json": "3b77cd83744216b458cc6b97f1e9f7ee43b97182163728d49eb4fa8450e67ae0"
+      }
+    },
+    "press-kit/screens/kleidos-screen-cores3-se.png": {
+      "sha256": "9cb7831e0dec53bc7d2de8bf86bec333d1f78e50b468d92c4d3234ea009755e0",
+      "bytes": 11171,
+      "size": [
+        320,
+        240
+      ],
+      "drawn_from": "b9c566b1af2c831bc3dcfdb57e19f699c1a230af70a06a6ddc3f4aebcda9cb70",
+      "inputs": {
+        "press-kit/src/press.json": "3b77cd83744216b458cc6b97f1e9f7ee43b97182163728d49eb4fa8450e67ae0"
+      }
+    },
+    "press-kit/screens/kleidos-screen-m5stack-core2-v13.png": {
+      "sha256": "a73016793851d0a46c9853dade250beb9a920e92129998a86374d6e48f52ca93",
+      "bytes": 11351,
+      "size": [
+        320,
+        240
+      ],
+      "drawn_from": "9f660bf0984693441bf8575f67c02ea6ef5d64005fcf1d0b99d5ea22e671846a",
+      "inputs": {
+        "press-kit/src/press.json": "3b77cd83744216b458cc6b97f1e9f7ee43b97182163728d49eb4fa8450e67ae0"
+      }
+    },
+    "press-kit/photos/kleidos-photo-four-boards.jpg": {
+      "sha256": "1d41394cca778628f2fe035d058f6000e73d0b58b5e9f8c56abc3a60d894abb3",
+      "bytes": 1740329,
+      "size": [
+        2800,
+        2100
+      ],
+      "drawn_from": "36b9c9ed30bfd25397063ed824c87ed94d817439adbd14827a11f1b1a79dec4c",
+      "inputs": {
+        "press-kit/src/press.json": "3b77cd83744216b458cc6b97f1e9f7ee43b97182163728d49eb4fa8450e67ae0"
+      }
+    },
     "press-kit/images/kleidos-16x9.png": {
-      "sha256": "2a9a3122f9b6b5aeafd50de1c1d1b8d5cc8a66f40c0e983e632d9de6896d524a",
-      "bytes": 191699,
+      "sha256": "316e471fbc0ae55ae527e1e1e5b5b03c1a5d8f12cb6bdf30d1c46209b22a4f86",
+      "bytes": 195722,
       "size": [
         3840,
         2160
       ],
-      "drawn_from": "547ddbced212bbe7c2c9b15f9fc1276a4087c2cdc48bb71981aa34a4b270f3c6",
+      "drawn_from": "0671a10f51f8ca499dfead116d889a85b4bc102b0484029637df4edc6341e6fb",
       "inputs": {
-        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/mark.svg": "7ec13579b19170cd8a0679d1a15ec185fe1a17e5c47af951b9b81436361256b7",
         "logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
         "tokens/tokens.json": "02adc61017345c669b22aebcccda5713fd31c72f88936ae8964014dfe9ca5c96",
         "fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435",
         "fonts/mona-sans/MonaSansMonoVF[wght].ttf": "e1d0ba93b9abf682de1bd67d20b58d312fab5d0cbe8fe012e2b1ab7687b42219",
-        "press-kit/src/press.json": "8b266a23f3999b4d4b8655d32eb250acc7bf3b5b8da1a0b5c9b198acce1dfa90",
-        "press-kit/src/hero-16x9.svg": "999a790714aeeab691314f929d5e453a237fcb53edce1a36e5f1b8a66c48c9c5"
+        "press-kit/src/press.json": "3b77cd83744216b458cc6b97f1e9f7ee43b97182163728d49eb4fa8450e67ae0",
+        "press-kit/src/hero-16x9.svg": "93e47ad0bf307b555b7c1e892670bf8e5d9cba645860ac0bdd3ffe9bcffe6b4a"
       }
     },
     "press-kit/images/kleidos-16x9-1920.png": {
-      "sha256": "61ab60e28385b7d978f1a54e842c0866c58a8af50fcae4d3349fab6ded24c06b",
-      "bytes": 87278,
+      "sha256": "21c0eca02e6313b2d5f094f7349800c4a5becf7009bf06872a67c1b5b585eb84",
+      "bytes": 91314,
       "size": [
         1920,
         1080
       ],
-      "drawn_from": "547ddbced212bbe7c2c9b15f9fc1276a4087c2cdc48bb71981aa34a4b270f3c6",
+      "drawn_from": "0671a10f51f8ca499dfead116d889a85b4bc102b0484029637df4edc6341e6fb",
       "inputs": {
-        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/mark.svg": "7ec13579b19170cd8a0679d1a15ec185fe1a17e5c47af951b9b81436361256b7",
         "logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
         "tokens/tokens.json": "02adc61017345c669b22aebcccda5713fd31c72f88936ae8964014dfe9ca5c96",
         "fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435",
         "fonts/mona-sans/MonaSansMonoVF[wght].ttf": "e1d0ba93b9abf682de1bd67d20b58d312fab5d0cbe8fe012e2b1ab7687b42219",
-        "press-kit/src/press.json": "8b266a23f3999b4d4b8655d32eb250acc7bf3b5b8da1a0b5c9b198acce1dfa90",
-        "press-kit/src/hero-16x9.svg": "999a790714aeeab691314f929d5e453a237fcb53edce1a36e5f1b8a66c48c9c5"
+        "press-kit/src/press.json": "3b77cd83744216b458cc6b97f1e9f7ee43b97182163728d49eb4fa8450e67ae0",
+        "press-kit/src/hero-16x9.svg": "93e47ad0bf307b555b7c1e892670bf8e5d9cba645860ac0bdd3ffe9bcffe6b4a"
       }
     },
     "press-kit/images/kleidos-16x9-es.png": {
-      "sha256": "23b055d02023dd722467596b46049d7609beab35789576ea75cbc734ab3dfaa3",
-      "bytes": 185310,
+      "sha256": "cffff61d3d8fb3f6d3a6986257a5450e3e497f5eea0b63a489ca5413260ad5e5",
+      "bytes": 190392,
       "size": [
         3840,
         2160
       ],
-      "drawn_from": "ff32ce2f7424976f4af1408d8f676a8b86ae8457e8fc3dca4aaac8c467098892",
+      "drawn_from": "4a00c02d057c6a7d0e25c533820178e963921d4d74e82947756417391e2e290b",
       "inputs": {
-        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/mark.svg": "7ec13579b19170cd8a0679d1a15ec185fe1a17e5c47af951b9b81436361256b7",
         "logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
         "tokens/tokens.json": "02adc61017345c669b22aebcccda5713fd31c72f88936ae8964014dfe9ca5c96",
         "fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435",
         "fonts/mona-sans/MonaSansMonoVF[wght].ttf": "e1d0ba93b9abf682de1bd67d20b58d312fab5d0cbe8fe012e2b1ab7687b42219",
-        "press-kit/src/press.json": "8b266a23f3999b4d4b8655d32eb250acc7bf3b5b8da1a0b5c9b198acce1dfa90",
-        "press-kit/src/hero-16x9.svg": "999a790714aeeab691314f929d5e453a237fcb53edce1a36e5f1b8a66c48c9c5"
+        "press-kit/src/press.json": "3b77cd83744216b458cc6b97f1e9f7ee43b97182163728d49eb4fa8450e67ae0",
+        "press-kit/src/hero-16x9.svg": "93e47ad0bf307b555b7c1e892670bf8e5d9cba645860ac0bdd3ffe9bcffe6b4a"
       }
     },
     "press-kit/images/kleidos-16x9-es-1920.png": {
-      "sha256": "505933805cb249f814f5dee47f6f05204971c45d9280da980306b7e8e0087a54",
-      "bytes": 85631,
+      "sha256": "fd4738e0a9ed0b3098b9391bc6b1fd13a2f177529de2b1ddd54d94571f0e97cd",
+      "bytes": 90726,
       "size": [
         1920,
         1080
       ],
-      "drawn_from": "ff32ce2f7424976f4af1408d8f676a8b86ae8457e8fc3dca4aaac8c467098892",
+      "drawn_from": "4a00c02d057c6a7d0e25c533820178e963921d4d74e82947756417391e2e290b",
       "inputs": {
-        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/mark.svg": "7ec13579b19170cd8a0679d1a15ec185fe1a17e5c47af951b9b81436361256b7",
         "logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
         "tokens/tokens.json": "02adc61017345c669b22aebcccda5713fd31c72f88936ae8964014dfe9ca5c96",
         "fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435",
         "fonts/mona-sans/MonaSansMonoVF[wght].ttf": "e1d0ba93b9abf682de1bd67d20b58d312fab5d0cbe8fe012e2b1ab7687b42219",
-        "press-kit/src/press.json": "8b266a23f3999b4d4b8655d32eb250acc7bf3b5b8da1a0b5c9b198acce1dfa90",
-        "press-kit/src/hero-16x9.svg": "999a790714aeeab691314f929d5e453a237fcb53edce1a36e5f1b8a66c48c9c5"
+        "press-kit/src/press.json": "3b77cd83744216b458cc6b97f1e9f7ee43b97182163728d49eb4fa8450e67ae0",
+        "press-kit/src/hero-16x9.svg": "93e47ad0bf307b555b7c1e892670bf8e5d9cba645860ac0bdd3ffe9bcffe6b4a"
       }
     },
     "press-kit/images/kleidos-16x9-light.png": {
-      "sha256": "58d01dbf2c3b18b59510a0255ba8df9fb14ea0ee70aee43b790fb2efa76ee325",
-      "bytes": 188474,
+      "sha256": "d7bb1b23485506f99ace72f63c20d77c750afa6ec74bce072053407e9f31aba2",
+      "bytes": 192520,
       "size": [
         3840,
         2160
       ],
-      "drawn_from": "8d030ed58cd47305f348a14875e6e81efb967b74e6195c4d6e0d3fd4ddc633d0",
+      "drawn_from": "245ea2eb28f97c28d93d1c425d90edfd73ef792045a4bf62bb380a32d980d32f",
       "inputs": {
-        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/mark.svg": "7ec13579b19170cd8a0679d1a15ec185fe1a17e5c47af951b9b81436361256b7",
         "logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
         "tokens/tokens.json": "02adc61017345c669b22aebcccda5713fd31c72f88936ae8964014dfe9ca5c96",
         "fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435",
         "fonts/mona-sans/MonaSansMonoVF[wght].ttf": "e1d0ba93b9abf682de1bd67d20b58d312fab5d0cbe8fe012e2b1ab7687b42219",
-        "press-kit/src/press.json": "8b266a23f3999b4d4b8655d32eb250acc7bf3b5b8da1a0b5c9b198acce1dfa90",
-        "press-kit/src/hero-16x9.svg": "999a790714aeeab691314f929d5e453a237fcb53edce1a36e5f1b8a66c48c9c5"
+        "press-kit/src/press.json": "3b77cd83744216b458cc6b97f1e9f7ee43b97182163728d49eb4fa8450e67ae0",
+        "press-kit/src/hero-16x9.svg": "93e47ad0bf307b555b7c1e892670bf8e5d9cba645860ac0bdd3ffe9bcffe6b4a"
       }
     },
     "press-kit/images/kleidos-16x9-light-1920.png": {
-      "sha256": "e85f2486b97879e14f363f6947f42ad04dd817c7d4d18be7b516c97e69eceacb",
-      "bytes": 85748,
+      "sha256": "a3f6a1a5802fc0d977bd3d5c83e3ba37a30a7f33c85423a578302788017b1cd3",
+      "bytes": 89807,
       "size": [
         1920,
         1080
       ],
-      "drawn_from": "8d030ed58cd47305f348a14875e6e81efb967b74e6195c4d6e0d3fd4ddc633d0",
+      "drawn_from": "245ea2eb28f97c28d93d1c425d90edfd73ef792045a4bf62bb380a32d980d32f",
       "inputs": {
-        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/mark.svg": "7ec13579b19170cd8a0679d1a15ec185fe1a17e5c47af951b9b81436361256b7",
         "logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
         "tokens/tokens.json": "02adc61017345c669b22aebcccda5713fd31c72f88936ae8964014dfe9ca5c96",
         "fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435",
         "fonts/mona-sans/MonaSansMonoVF[wght].ttf": "e1d0ba93b9abf682de1bd67d20b58d312fab5d0cbe8fe012e2b1ab7687b42219",
-        "press-kit/src/press.json": "8b266a23f3999b4d4b8655d32eb250acc7bf3b5b8da1a0b5c9b198acce1dfa90",
-        "press-kit/src/hero-16x9.svg": "999a790714aeeab691314f929d5e453a237fcb53edce1a36e5f1b8a66c48c9c5"
+        "press-kit/src/press.json": "3b77cd83744216b458cc6b97f1e9f7ee43b97182163728d49eb4fa8450e67ae0",
+        "press-kit/src/hero-16x9.svg": "93e47ad0bf307b555b7c1e892670bf8e5d9cba645860ac0bdd3ffe9bcffe6b4a"
       }
     },
     "press-kit/images/kleidos-16x9-light-es.png": {
-      "sha256": "0664dc25290dcb93a1219c71b719a8ab8b60a4453795fc123135d6498b7a58ba",
-      "bytes": 182062,
+      "sha256": "cb699345d2520bcafc89c3249231f360ba2aeebfd6640d1f5c95bb614e9ee0cc",
+      "bytes": 187166,
       "size": [
         3840,
         2160
       ],
-      "drawn_from": "f8729347e44ccbe833814a9af4e7e0173b807ff85e9627b8dcdf1f2b9bd5d37c",
+      "drawn_from": "416a18f65db00a897185f21e645cb65b5295eec3db6373c67e12b21a49a54829",
       "inputs": {
-        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/mark.svg": "7ec13579b19170cd8a0679d1a15ec185fe1a17e5c47af951b9b81436361256b7",
         "logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
         "tokens/tokens.json": "02adc61017345c669b22aebcccda5713fd31c72f88936ae8964014dfe9ca5c96",
         "fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435",
         "fonts/mona-sans/MonaSansMonoVF[wght].ttf": "e1d0ba93b9abf682de1bd67d20b58d312fab5d0cbe8fe012e2b1ab7687b42219",
-        "press-kit/src/press.json": "8b266a23f3999b4d4b8655d32eb250acc7bf3b5b8da1a0b5c9b198acce1dfa90",
-        "press-kit/src/hero-16x9.svg": "999a790714aeeab691314f929d5e453a237fcb53edce1a36e5f1b8a66c48c9c5"
+        "press-kit/src/press.json": "3b77cd83744216b458cc6b97f1e9f7ee43b97182163728d49eb4fa8450e67ae0",
+        "press-kit/src/hero-16x9.svg": "93e47ad0bf307b555b7c1e892670bf8e5d9cba645860ac0bdd3ffe9bcffe6b4a"
       }
     },
     "press-kit/images/kleidos-16x9-light-es-1920.png": {
-      "sha256": "750f8dc7728ad2c7b7adff7aa30a1cf7c67afce3a85f7359be14102b7a976cf2",
-      "bytes": 84022,
+      "sha256": "0520c805d29044619cf4f384d506c06e4d1fc65e4cb8b3873f660b35973f10a8",
+      "bytes": 89139,
       "size": [
         1920,
         1080
       ],
-      "drawn_from": "f8729347e44ccbe833814a9af4e7e0173b807ff85e9627b8dcdf1f2b9bd5d37c",
+      "drawn_from": "416a18f65db00a897185f21e645cb65b5295eec3db6373c67e12b21a49a54829",
       "inputs": {
-        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/mark.svg": "7ec13579b19170cd8a0679d1a15ec185fe1a17e5c47af951b9b81436361256b7",
         "logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
         "tokens/tokens.json": "02adc61017345c669b22aebcccda5713fd31c72f88936ae8964014dfe9ca5c96",
         "fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435",
         "fonts/mona-sans/MonaSansMonoVF[wght].ttf": "e1d0ba93b9abf682de1bd67d20b58d312fab5d0cbe8fe012e2b1ab7687b42219",
-        "press-kit/src/press.json": "8b266a23f3999b4d4b8655d32eb250acc7bf3b5b8da1a0b5c9b198acce1dfa90",
-        "press-kit/src/hero-16x9.svg": "999a790714aeeab691314f929d5e453a237fcb53edce1a36e5f1b8a66c48c9c5"
+        "press-kit/src/press.json": "3b77cd83744216b458cc6b97f1e9f7ee43b97182163728d49eb4fa8450e67ae0",
+        "press-kit/src/hero-16x9.svg": "93e47ad0bf307b555b7c1e892670bf8e5d9cba645860ac0bdd3ffe9bcffe6b4a"
       }
     },
     "press-kit/images/kleidos-1x1.png": {
-      "sha256": "bdfa8c60737eaa25d95f08065fc813cf3c63d42a444ccbbffb0acba5fcc20983",
-      "bytes": 155406,
+      "sha256": "ef62885ece0b44a7cbb3d7b5f6e06a02be78adf981278f3f5c17035228e28f26",
+      "bytes": 159331,
       "size": [
         2160,
         2160
       ],
-      "drawn_from": "59de48b984fd3674e641559110cec5dbb501eed5fd185033b3c5647f055d4ea9",
+      "drawn_from": "71a65495136e0e6a517d6609a84de717a67eb73431e7759136372024192ac745",
       "inputs": {
-        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/mark.svg": "7ec13579b19170cd8a0679d1a15ec185fe1a17e5c47af951b9b81436361256b7",
         "logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
         "tokens/tokens.json": "02adc61017345c669b22aebcccda5713fd31c72f88936ae8964014dfe9ca5c96",
         "fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435",
         "fonts/mona-sans/MonaSansMonoVF[wght].ttf": "e1d0ba93b9abf682de1bd67d20b58d312fab5d0cbe8fe012e2b1ab7687b42219",
-        "press-kit/src/press.json": "8b266a23f3999b4d4b8655d32eb250acc7bf3b5b8da1a0b5c9b198acce1dfa90",
-        "press-kit/src/hero-1x1.svg": "4c1c736b19d4ba29066d1e97f9971d08ca8e6472541135880552d50d51ef8b56"
+        "press-kit/src/press.json": "3b77cd83744216b458cc6b97f1e9f7ee43b97182163728d49eb4fa8450e67ae0",
+        "press-kit/src/hero-1x1.svg": "d4eb75967657cc2953782e03c5ab06d4726668d1a9808980bf48b2f549ab9aa5"
       }
     },
     "press-kit/images/kleidos-1x1-es.png": {
-      "sha256": "7cf6e8b0136cc354eda110efdd6ea6f436f7db77af04658d905c09cd246c31d2",
-      "bytes": 151930,
+      "sha256": "14fac386ef2701064552655449e850a8f2f8aa88c19a825ce7a13113b8ddd2a4",
+      "bytes": 156831,
       "size": [
         2160,
         2160
       ],
-      "drawn_from": "bfe24d73c2c074a37163cd60fcd34fe9b74a55096f54a7422bf2666e56da8d03",
+      "drawn_from": "073c0a5f2e04a31b5a02e97a129836f5f04782593cffb02c5d0365a11319c294",
       "inputs": {
-        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/mark.svg": "7ec13579b19170cd8a0679d1a15ec185fe1a17e5c47af951b9b81436361256b7",
         "logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
         "tokens/tokens.json": "02adc61017345c669b22aebcccda5713fd31c72f88936ae8964014dfe9ca5c96",
         "fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435",
         "fonts/mona-sans/MonaSansMonoVF[wght].ttf": "e1d0ba93b9abf682de1bd67d20b58d312fab5d0cbe8fe012e2b1ab7687b42219",
-        "press-kit/src/press.json": "8b266a23f3999b4d4b8655d32eb250acc7bf3b5b8da1a0b5c9b198acce1dfa90",
-        "press-kit/src/hero-1x1.svg": "4c1c736b19d4ba29066d1e97f9971d08ca8e6472541135880552d50d51ef8b56"
+        "press-kit/src/press.json": "3b77cd83744216b458cc6b97f1e9f7ee43b97182163728d49eb4fa8450e67ae0",
+        "press-kit/src/hero-1x1.svg": "d4eb75967657cc2953782e03c5ab06d4726668d1a9808980bf48b2f549ab9aa5"
       }
     },
     "press-kit/images/kleidos-1x1-light.png": {
-      "sha256": "9c6f7aac25890bf3435d5426d9b7b60b70ffe3aaff03695a3ca16fcd6470dc2c",
-      "bytes": 150825,
+      "sha256": "4976f38e9a9a25daec06faf8bfa9e6c1127237170fd4fe1d30d4375e3768b6a6",
+      "bytes": 154773,
       "size": [
         2160,
         2160
       ],
-      "drawn_from": "a8d8528b7b759abbc4213729b38b5e14d9b55719aae4f4e40bef0031d21bf6f8",
+      "drawn_from": "c181a40fcc806de488d55b71cff9b906fe1c373cb5ca8218e4852b61feafdd11",
       "inputs": {
-        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/mark.svg": "7ec13579b19170cd8a0679d1a15ec185fe1a17e5c47af951b9b81436361256b7",
         "logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
         "tokens/tokens.json": "02adc61017345c669b22aebcccda5713fd31c72f88936ae8964014dfe9ca5c96",
         "fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435",
         "fonts/mona-sans/MonaSansMonoVF[wght].ttf": "e1d0ba93b9abf682de1bd67d20b58d312fab5d0cbe8fe012e2b1ab7687b42219",
-        "press-kit/src/press.json": "8b266a23f3999b4d4b8655d32eb250acc7bf3b5b8da1a0b5c9b198acce1dfa90",
-        "press-kit/src/hero-1x1.svg": "4c1c736b19d4ba29066d1e97f9971d08ca8e6472541135880552d50d51ef8b56"
+        "press-kit/src/press.json": "3b77cd83744216b458cc6b97f1e9f7ee43b97182163728d49eb4fa8450e67ae0",
+        "press-kit/src/hero-1x1.svg": "d4eb75967657cc2953782e03c5ab06d4726668d1a9808980bf48b2f549ab9aa5"
       }
     },
     "press-kit/images/kleidos-1x1-light-es.png": {
-      "sha256": "7424011ff03f91844d986ffe2d2250e3a63706dd9b4f0ee2ee2f9baa42344e99",
-      "bytes": 147460,
+      "sha256": "ce98d832b2dee8fb0983dcf238e707ce8cfce7d9c5801ee76607766405336e95",
+      "bytes": 152383,
       "size": [
         2160,
         2160
       ],
-      "drawn_from": "abbedb45e082d5f816200143afa53d43c10df3c1815c1bb725f5a1e5ab4701ac",
+      "drawn_from": "b29020cfcf2b02c8002c1c205c8bb74463feb417fc79a3d412dac03af49638d7",
       "inputs": {
-        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/mark.svg": "7ec13579b19170cd8a0679d1a15ec185fe1a17e5c47af951b9b81436361256b7",
         "logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
         "tokens/tokens.json": "02adc61017345c669b22aebcccda5713fd31c72f88936ae8964014dfe9ca5c96",
         "fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435",
         "fonts/mona-sans/MonaSansMonoVF[wght].ttf": "e1d0ba93b9abf682de1bd67d20b58d312fab5d0cbe8fe012e2b1ab7687b42219",
-        "press-kit/src/press.json": "8b266a23f3999b4d4b8655d32eb250acc7bf3b5b8da1a0b5c9b198acce1dfa90",
-        "press-kit/src/hero-1x1.svg": "4c1c736b19d4ba29066d1e97f9971d08ca8e6472541135880552d50d51ef8b56"
+        "press-kit/src/press.json": "3b77cd83744216b458cc6b97f1e9f7ee43b97182163728d49eb4fa8450e67ae0",
+        "press-kit/src/hero-1x1.svg": "d4eb75967657cc2953782e03c5ab06d4726668d1a9808980bf48b2f549ab9aa5"
       }
     },
     "press-kit/images/kleidos-screens-16x9.png": {
-      "sha256": "dd7cf85c8fb22dbc0ba45c982c795085f16b7e4fa6c73b8ebd9527e8f7bdd189",
-      "bytes": 168459,
+      "sha256": "9e19baec707c8d65c35dd88bd702af8f0a563a08d5fca0980469c0900b52e373",
+      "bytes": 173041,
       "size": [
         3840,
         2160
       ],
-      "drawn_from": "4de7578c7b6e46cc5ced3c6d993c2059c01ac254daafee4b521f0c88d5483f7e",
+      "drawn_from": "7d31951e1edbf8266a1722d5fd742b6914d61e1cf753a257e1311d23965110e6",
       "inputs": {
-        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/mark.svg": "7ec13579b19170cd8a0679d1a15ec185fe1a17e5c47af951b9b81436361256b7",
         "logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
         "tokens/tokens.json": "02adc61017345c669b22aebcccda5713fd31c72f88936ae8964014dfe9ca5c96",
         "fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435",
         "fonts/mona-sans/MonaSansMonoVF[wght].ttf": "e1d0ba93b9abf682de1bd67d20b58d312fab5d0cbe8fe012e2b1ab7687b42219",
-        "press-kit/src/press.json": "8b266a23f3999b4d4b8655d32eb250acc7bf3b5b8da1a0b5c9b198acce1dfa90",
-        "press-kit/src/screens-16x9.svg": "1d840a218009b5c2c950560a91168b36781ee0987f6a2bd95ce94cc99077d8a6",
-        "press-kit/screens/kleidos-screen-m5stickc-plus2.png": "80f170e144bd88c8e1af234305419ad51c44addfdb4c1252e408ef11688bf996",
-        "press-kit/screens/kleidos-screen-coreink.png": "78cc9bf8a31b9e653f9c4fb9103e37ca74409e4d496dc63ef39615660a45275c",
-        "press-kit/screens/kleidos-screen-cardputer.png": "280637e53867d7f1886188e866acca6b93752de9cca3978f16190b373be7b4ad",
-        "press-kit/screens/kleidos-screen-tdeck-plus.png": "e413748d412d687e5a4a6f84fa6022a4cbc49a6bf1b14286042c8ad8ed040b5f",
-        "press-kit/screens/kleidos-screen-cores3-se.png": "b9c566b1af2c831bc3dcfdb57e19f699c1a230af70a06a6ddc3f4aebcda9cb70"
+        "press-kit/src/press.json": "3b77cd83744216b458cc6b97f1e9f7ee43b97182163728d49eb4fa8450e67ae0",
+        "press-kit/src/screens-16x9.svg": "35a06c9150fdf541a71cdc6b24e2d16c3bc6669eeb579240dd20ba2e3fd18306",
+        "press-kit/screens/kleidos-screen-m5stickc-plus2.png": "83f080ae27414d761a63c3ef42be67fb9393ce522ea2af3174c24b2f2f506915",
+        "press-kit/screens/kleidos-screen-coreink.png": "424536b9dffe1271faaebdf1c7ff936459e636d779b24cd19c1aa26a6e03cea9",
+        "press-kit/screens/kleidos-screen-cardputer.png": "57d77d274dff42c4cb4d10f6c484745bfe456a764c4f37de16f987002342efc9",
+        "press-kit/screens/kleidos-screen-tdeck-plus.png": "802cdf42c4676770e3bea58e5f6fd679a510b9c2e06582ae52abd4a7a572e0f7",
+        "press-kit/screens/kleidos-screen-cores3-se.png": "9cb7831e0dec53bc7d2de8bf86bec333d1f78e50b468d92c4d3234ea009755e0"
       }
     },
     "press-kit/images/kleidos-screens-16x9-1920.png": {
-      "sha256": "40365be8ea4178f95c0297545df38305a10b924da7c9b8156da058e1ce5bcfff",
-      "bytes": 196770,
+      "sha256": "58a2b1dab2b04deec7581917364baeba8fcfdb3df9b15000d53559a848391bba",
+      "bytes": 201480,
       "size": [
         1920,
         1080
       ],
-      "drawn_from": "4de7578c7b6e46cc5ced3c6d993c2059c01ac254daafee4b521f0c88d5483f7e",
+      "drawn_from": "7d31951e1edbf8266a1722d5fd742b6914d61e1cf753a257e1311d23965110e6",
       "inputs": {
-        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/mark.svg": "7ec13579b19170cd8a0679d1a15ec185fe1a17e5c47af951b9b81436361256b7",
         "logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
         "tokens/tokens.json": "02adc61017345c669b22aebcccda5713fd31c72f88936ae8964014dfe9ca5c96",
         "fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435",
         "fonts/mona-sans/MonaSansMonoVF[wght].ttf": "e1d0ba93b9abf682de1bd67d20b58d312fab5d0cbe8fe012e2b1ab7687b42219",
-        "press-kit/src/press.json": "8b266a23f3999b4d4b8655d32eb250acc7bf3b5b8da1a0b5c9b198acce1dfa90",
-        "press-kit/src/screens-16x9.svg": "1d840a218009b5c2c950560a91168b36781ee0987f6a2bd95ce94cc99077d8a6",
-        "press-kit/screens/kleidos-screen-m5stickc-plus2.png": "80f170e144bd88c8e1af234305419ad51c44addfdb4c1252e408ef11688bf996",
-        "press-kit/screens/kleidos-screen-coreink.png": "78cc9bf8a31b9e653f9c4fb9103e37ca74409e4d496dc63ef39615660a45275c",
-        "press-kit/screens/kleidos-screen-cardputer.png": "280637e53867d7f1886188e866acca6b93752de9cca3978f16190b373be7b4ad",
-        "press-kit/screens/kleidos-screen-tdeck-plus.png": "e413748d412d687e5a4a6f84fa6022a4cbc49a6bf1b14286042c8ad8ed040b5f",
-        "press-kit/screens/kleidos-screen-cores3-se.png": "b9c566b1af2c831bc3dcfdb57e19f699c1a230af70a06a6ddc3f4aebcda9cb70"
+        "press-kit/src/press.json": "3b77cd83744216b458cc6b97f1e9f7ee43b97182163728d49eb4fa8450e67ae0",
+        "press-kit/src/screens-16x9.svg": "35a06c9150fdf541a71cdc6b24e2d16c3bc6669eeb579240dd20ba2e3fd18306",
+        "press-kit/screens/kleidos-screen-m5stickc-plus2.png": "83f080ae27414d761a63c3ef42be67fb9393ce522ea2af3174c24b2f2f506915",
+        "press-kit/screens/kleidos-screen-coreink.png": "424536b9dffe1271faaebdf1c7ff936459e636d779b24cd19c1aa26a6e03cea9",
+        "press-kit/screens/kleidos-screen-cardputer.png": "57d77d274dff42c4cb4d10f6c484745bfe456a764c4f37de16f987002342efc9",
+        "press-kit/screens/kleidos-screen-tdeck-plus.png": "802cdf42c4676770e3bea58e5f6fd679a510b9c2e06582ae52abd4a7a572e0f7",
+        "press-kit/screens/kleidos-screen-cores3-se.png": "9cb7831e0dec53bc7d2de8bf86bec333d1f78e50b468d92c4d3234ea009755e0"
       }
     },
     "press-kit/images/kleidos-screens-16x9-es.png": {
-      "sha256": "37c5474b2dffcf6aef2f8df411207b436a38b87f9b7d2e7176c5f08b5d147552",
-      "bytes": 183431,
+      "sha256": "5983cdfea4f419d192b2d243d8397309a1cadb88854b0fd4944b91bcaefad600",
+      "bytes": 189543,
       "size": [
         3840,
         2160
       ],
-      "drawn_from": "a7598e07f8b82fb7dc12bb91101e8b9569a2b533e21bdaeccfdd31f33180fc37",
+      "drawn_from": "c5106d5585be2e5483416dd2dc34a5a2ea48bf21fb6aa4e3235bdebfa42b1a58",
       "inputs": {
-        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/mark.svg": "7ec13579b19170cd8a0679d1a15ec185fe1a17e5c47af951b9b81436361256b7",
         "logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
         "tokens/tokens.json": "02adc61017345c669b22aebcccda5713fd31c72f88936ae8964014dfe9ca5c96",
         "fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435",
         "fonts/mona-sans/MonaSansMonoVF[wght].ttf": "e1d0ba93b9abf682de1bd67d20b58d312fab5d0cbe8fe012e2b1ab7687b42219",
-        "press-kit/src/press.json": "8b266a23f3999b4d4b8655d32eb250acc7bf3b5b8da1a0b5c9b198acce1dfa90",
-        "press-kit/src/screens-16x9.svg": "1d840a218009b5c2c950560a91168b36781ee0987f6a2bd95ce94cc99077d8a6",
-        "press-kit/screens/kleidos-screen-m5stickc-plus2.png": "80f170e144bd88c8e1af234305419ad51c44addfdb4c1252e408ef11688bf996",
-        "press-kit/screens/kleidos-screen-coreink.png": "78cc9bf8a31b9e653f9c4fb9103e37ca74409e4d496dc63ef39615660a45275c",
-        "press-kit/screens/kleidos-screen-cardputer.png": "280637e53867d7f1886188e866acca6b93752de9cca3978f16190b373be7b4ad",
-        "press-kit/screens/kleidos-screen-tdeck-plus.png": "e413748d412d687e5a4a6f84fa6022a4cbc49a6bf1b14286042c8ad8ed040b5f",
-        "press-kit/screens/kleidos-screen-cores3-se.png": "b9c566b1af2c831bc3dcfdb57e19f699c1a230af70a06a6ddc3f4aebcda9cb70"
+        "press-kit/src/press.json": "3b77cd83744216b458cc6b97f1e9f7ee43b97182163728d49eb4fa8450e67ae0",
+        "press-kit/src/screens-16x9.svg": "35a06c9150fdf541a71cdc6b24e2d16c3bc6669eeb579240dd20ba2e3fd18306",
+        "press-kit/screens/kleidos-screen-m5stickc-plus2.png": "83f080ae27414d761a63c3ef42be67fb9393ce522ea2af3174c24b2f2f506915",
+        "press-kit/screens/kleidos-screen-coreink.png": "424536b9dffe1271faaebdf1c7ff936459e636d779b24cd19c1aa26a6e03cea9",
+        "press-kit/screens/kleidos-screen-cardputer.png": "57d77d274dff42c4cb4d10f6c484745bfe456a764c4f37de16f987002342efc9",
+        "press-kit/screens/kleidos-screen-tdeck-plus.png": "802cdf42c4676770e3bea58e5f6fd679a510b9c2e06582ae52abd4a7a572e0f7",
+        "press-kit/screens/kleidos-screen-cores3-se.png": "9cb7831e0dec53bc7d2de8bf86bec333d1f78e50b468d92c4d3234ea009755e0"
       }
     },
     "press-kit/images/kleidos-screens-16x9-es-1920.png": {
-      "sha256": "90b653810f76c7230c942c5a94a6f506ac59e466606408a2a63a8f476b17a1e3",
-      "bytes": 210618,
+      "sha256": "353e7b1c0a9277842aa82e2dbd798cae9f3f3117dc27f4a1240cd30dcd102934",
+      "bytes": 216861,
       "size": [
         1920,
         1080
       ],
-      "drawn_from": "a7598e07f8b82fb7dc12bb91101e8b9569a2b533e21bdaeccfdd31f33180fc37",
+      "drawn_from": "c5106d5585be2e5483416dd2dc34a5a2ea48bf21fb6aa4e3235bdebfa42b1a58",
       "inputs": {
-        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/mark.svg": "7ec13579b19170cd8a0679d1a15ec185fe1a17e5c47af951b9b81436361256b7",
         "logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
         "tokens/tokens.json": "02adc61017345c669b22aebcccda5713fd31c72f88936ae8964014dfe9ca5c96",
         "fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435",
         "fonts/mona-sans/MonaSansMonoVF[wght].ttf": "e1d0ba93b9abf682de1bd67d20b58d312fab5d0cbe8fe012e2b1ab7687b42219",
-        "press-kit/src/press.json": "8b266a23f3999b4d4b8655d32eb250acc7bf3b5b8da1a0b5c9b198acce1dfa90",
-        "press-kit/src/screens-16x9.svg": "1d840a218009b5c2c950560a91168b36781ee0987f6a2bd95ce94cc99077d8a6",
-        "press-kit/screens/kleidos-screen-m5stickc-plus2.png": "80f170e144bd88c8e1af234305419ad51c44addfdb4c1252e408ef11688bf996",
-        "press-kit/screens/kleidos-screen-coreink.png": "78cc9bf8a31b9e653f9c4fb9103e37ca74409e4d496dc63ef39615660a45275c",
-        "press-kit/screens/kleidos-screen-cardputer.png": "280637e53867d7f1886188e866acca6b93752de9cca3978f16190b373be7b4ad",
-        "press-kit/screens/kleidos-screen-tdeck-plus.png": "e413748d412d687e5a4a6f84fa6022a4cbc49a6bf1b14286042c8ad8ed040b5f",
-        "press-kit/screens/kleidos-screen-cores3-se.png": "b9c566b1af2c831bc3dcfdb57e19f699c1a230af70a06a6ddc3f4aebcda9cb70"
+        "press-kit/src/press.json": "3b77cd83744216b458cc6b97f1e9f7ee43b97182163728d49eb4fa8450e67ae0",
+        "press-kit/src/screens-16x9.svg": "35a06c9150fdf541a71cdc6b24e2d16c3bc6669eeb579240dd20ba2e3fd18306",
+        "press-kit/screens/kleidos-screen-m5stickc-plus2.png": "83f080ae27414d761a63c3ef42be67fb9393ce522ea2af3174c24b2f2f506915",
+        "press-kit/screens/kleidos-screen-coreink.png": "424536b9dffe1271faaebdf1c7ff936459e636d779b24cd19c1aa26a6e03cea9",
+        "press-kit/screens/kleidos-screen-cardputer.png": "57d77d274dff42c4cb4d10f6c484745bfe456a764c4f37de16f987002342efc9",
+        "press-kit/screens/kleidos-screen-tdeck-plus.png": "802cdf42c4676770e3bea58e5f6fd679a510b9c2e06582ae52abd4a7a572e0f7",
+        "press-kit/screens/kleidos-screen-cores3-se.png": "9cb7831e0dec53bc7d2de8bf86bec333d1f78e50b468d92c4d3234ea009755e0"
       }
     },
     "press-kit/images/kleidos-boards-16x9.png": {
-      "sha256": "c7177beedb95074d26927b604d7b106a7837dafcc71928617239070af4dd08cf",
-      "bytes": 641409,
+      "sha256": "e5953a10ad0b0aa47084d2aaedf63be55ef446bfe3aee619a1c8c7dada9afb22",
+      "bytes": 646021,
       "size": [
         3840,
         2160
       ],
-      "drawn_from": "de94fda3cbaff85b4378d1531f7e3f896d57763df3a585326a9abed94229e691",
+      "drawn_from": "94d36451c8e6eb777c6317acdcb838827dddd27bbdecba810c36a8a4c041da8a",
       "inputs": {
-        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/mark.svg": "7ec13579b19170cd8a0679d1a15ec185fe1a17e5c47af951b9b81436361256b7",
         "logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
         "tokens/tokens.json": "02adc61017345c669b22aebcccda5713fd31c72f88936ae8964014dfe9ca5c96",
         "fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435",
         "fonts/mona-sans/MonaSansMonoVF[wght].ttf": "e1d0ba93b9abf682de1bd67d20b58d312fab5d0cbe8fe012e2b1ab7687b42219",
-        "press-kit/src/press.json": "8b266a23f3999b4d4b8655d32eb250acc7bf3b5b8da1a0b5c9b198acce1dfa90",
-        "press-kit/src/boards-16x9.svg": "590127260e1ad2384d49b20421c26d45705ef4c91189067073d20cacc3ca3cc9",
-        "press-kit/screens/kleidos-screen-sticks3.png": "dcd8457f76e3325008a506cb4ce79262b4e5c2b62dcb88ebba6f5603a6465bfd",
-        "press-kit/screens/kleidos-screen-m5stickc-plus2.png": "80f170e144bd88c8e1af234305419ad51c44addfdb4c1252e408ef11688bf996",
-        "press-kit/screens/kleidos-screen-m5stickc-plus1.png": "80f170e144bd88c8e1af234305419ad51c44addfdb4c1252e408ef11688bf996",
-        "press-kit/screens/kleidos-screen-m5stickc-plus-se.png": "80f170e144bd88c8e1af234305419ad51c44addfdb4c1252e408ef11688bf996",
-        "press-kit/screens/kleidos-screen-coreink.png": "78cc9bf8a31b9e653f9c4fb9103e37ca74409e4d496dc63ef39615660a45275c",
-        "press-kit/screens/kleidos-screen-cores3-se.png": "b9c566b1af2c831bc3dcfdb57e19f699c1a230af70a06a6ddc3f4aebcda9cb70",
-        "press-kit/screens/kleidos-screen-m5stack-core2-v13.png": "9f660bf0984693441bf8575f67c02ea6ef5d64005fcf1d0b99d5ea22e671846a",
-        "press-kit/screens/kleidos-screen-cardputer.png": "280637e53867d7f1886188e866acca6b93752de9cca3978f16190b373be7b4ad",
-        "press-kit/screens/kleidos-screen-tdeck-plus.png": "e413748d412d687e5a4a6f84fa6022a4cbc49a6bf1b14286042c8ad8ed040b5f",
+        "press-kit/src/press.json": "3b77cd83744216b458cc6b97f1e9f7ee43b97182163728d49eb4fa8450e67ae0",
+        "press-kit/src/boards-16x9.svg": "8b1cc9a80ecaaa45741038d7d9dd9546a1462e2a0103d69801fb16516fe3a0b0",
+        "press-kit/screens/kleidos-screen-sticks3.png": "ce4548cfe238ff251a58f349e600078064e4da37f02174493b5eab8b06012660",
+        "press-kit/screens/kleidos-screen-m5stickc-plus2.png": "83f080ae27414d761a63c3ef42be67fb9393ce522ea2af3174c24b2f2f506915",
+        "press-kit/screens/kleidos-screen-m5stickc-plus1.png": "f797eae6a35fc5cbba40e6ad489340d9ae30e7a8ceaf93116c8474bfd029179f",
+        "press-kit/screens/kleidos-screen-m5stickc-plus-se.png": "d666c92ed10d9a7355bf193e07a188457c72fc368c0cad42c11523a7bd8205d3",
+        "press-kit/screens/kleidos-screen-coreink.png": "424536b9dffe1271faaebdf1c7ff936459e636d779b24cd19c1aa26a6e03cea9",
+        "press-kit/screens/kleidos-screen-cores3-se.png": "9cb7831e0dec53bc7d2de8bf86bec333d1f78e50b468d92c4d3234ea009755e0",
+        "press-kit/screens/kleidos-screen-m5stack-core2-v13.png": "a73016793851d0a46c9853dade250beb9a920e92129998a86374d6e48f52ca93",
+        "press-kit/screens/kleidos-screen-cardputer.png": "57d77d274dff42c4cb4d10f6c484745bfe456a764c4f37de16f987002342efc9",
+        "press-kit/screens/kleidos-screen-tdeck-plus.png": "802cdf42c4676770e3bea58e5f6fd679a510b9c2e06582ae52abd4a7a572e0f7",
         "boards/boards.json": "2fc93598d2f55a45e56618cf53496ffc3eb1d1b6c4d17efe6f4937796f2358f1",
         "boards/sticks3.svg": "0c893adb838469d0a5b503130061349feaeeb0d6064d1d62e8a69fa03c2c855f",
         "boards/m5stickc-plus2.svg": "170040d38f2c50673eb334000859a443728ca72bcc36b6045c2c99739c0d7c0d",
@@ -1178,30 +1299,30 @@
       }
     },
     "press-kit/images/kleidos-boards-16x9-1920.png": {
-      "sha256": "0e7008d81106fa560e580d5a22611400389601f0f05d1c20056341927e6b187e",
-      "bytes": 377030,
+      "sha256": "f85cc75f2653ebea8cfc973ec13e0728a09b1682b0b04865d64cd37ae37b2962",
+      "bytes": 381769,
       "size": [
         1920,
         1080
       ],
-      "drawn_from": "de94fda3cbaff85b4378d1531f7e3f896d57763df3a585326a9abed94229e691",
+      "drawn_from": "94d36451c8e6eb777c6317acdcb838827dddd27bbdecba810c36a8a4c041da8a",
       "inputs": {
-        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/mark.svg": "7ec13579b19170cd8a0679d1a15ec185fe1a17e5c47af951b9b81436361256b7",
         "logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
         "tokens/tokens.json": "02adc61017345c669b22aebcccda5713fd31c72f88936ae8964014dfe9ca5c96",
         "fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435",
         "fonts/mona-sans/MonaSansMonoVF[wght].ttf": "e1d0ba93b9abf682de1bd67d20b58d312fab5d0cbe8fe012e2b1ab7687b42219",
-        "press-kit/src/press.json": "8b266a23f3999b4d4b8655d32eb250acc7bf3b5b8da1a0b5c9b198acce1dfa90",
-        "press-kit/src/boards-16x9.svg": "590127260e1ad2384d49b20421c26d45705ef4c91189067073d20cacc3ca3cc9",
-        "press-kit/screens/kleidos-screen-sticks3.png": "dcd8457f76e3325008a506cb4ce79262b4e5c2b62dcb88ebba6f5603a6465bfd",
-        "press-kit/screens/kleidos-screen-m5stickc-plus2.png": "80f170e144bd88c8e1af234305419ad51c44addfdb4c1252e408ef11688bf996",
-        "press-kit/screens/kleidos-screen-m5stickc-plus1.png": "80f170e144bd88c8e1af234305419ad51c44addfdb4c1252e408ef11688bf996",
-        "press-kit/screens/kleidos-screen-m5stickc-plus-se.png": "80f170e144bd88c8e1af234305419ad51c44addfdb4c1252e408ef11688bf996",
-        "press-kit/screens/kleidos-screen-coreink.png": "78cc9bf8a31b9e653f9c4fb9103e37ca74409e4d496dc63ef39615660a45275c",
-        "press-kit/screens/kleidos-screen-cores3-se.png": "b9c566b1af2c831bc3dcfdb57e19f699c1a230af70a06a6ddc3f4aebcda9cb70",
-        "press-kit/screens/kleidos-screen-m5stack-core2-v13.png": "9f660bf0984693441bf8575f67c02ea6ef5d64005fcf1d0b99d5ea22e671846a",
-        "press-kit/screens/kleidos-screen-cardputer.png": "280637e53867d7f1886188e866acca6b93752de9cca3978f16190b373be7b4ad",
-        "press-kit/screens/kleidos-screen-tdeck-plus.png": "e413748d412d687e5a4a6f84fa6022a4cbc49a6bf1b14286042c8ad8ed040b5f",
+        "press-kit/src/press.json": "3b77cd83744216b458cc6b97f1e9f7ee43b97182163728d49eb4fa8450e67ae0",
+        "press-kit/src/boards-16x9.svg": "8b1cc9a80ecaaa45741038d7d9dd9546a1462e2a0103d69801fb16516fe3a0b0",
+        "press-kit/screens/kleidos-screen-sticks3.png": "ce4548cfe238ff251a58f349e600078064e4da37f02174493b5eab8b06012660",
+        "press-kit/screens/kleidos-screen-m5stickc-plus2.png": "83f080ae27414d761a63c3ef42be67fb9393ce522ea2af3174c24b2f2f506915",
+        "press-kit/screens/kleidos-screen-m5stickc-plus1.png": "f797eae6a35fc5cbba40e6ad489340d9ae30e7a8ceaf93116c8474bfd029179f",
+        "press-kit/screens/kleidos-screen-m5stickc-plus-se.png": "d666c92ed10d9a7355bf193e07a188457c72fc368c0cad42c11523a7bd8205d3",
+        "press-kit/screens/kleidos-screen-coreink.png": "424536b9dffe1271faaebdf1c7ff936459e636d779b24cd19c1aa26a6e03cea9",
+        "press-kit/screens/kleidos-screen-cores3-se.png": "9cb7831e0dec53bc7d2de8bf86bec333d1f78e50b468d92c4d3234ea009755e0",
+        "press-kit/screens/kleidos-screen-m5stack-core2-v13.png": "a73016793851d0a46c9853dade250beb9a920e92129998a86374d6e48f52ca93",
+        "press-kit/screens/kleidos-screen-cardputer.png": "57d77d274dff42c4cb4d10f6c484745bfe456a764c4f37de16f987002342efc9",
+        "press-kit/screens/kleidos-screen-tdeck-plus.png": "802cdf42c4676770e3bea58e5f6fd679a510b9c2e06582ae52abd4a7a572e0f7",
         "boards/boards.json": "2fc93598d2f55a45e56618cf53496ffc3eb1d1b6c4d17efe6f4937796f2358f1",
         "boards/sticks3.svg": "0c893adb838469d0a5b503130061349feaeeb0d6064d1d62e8a69fa03c2c855f",
         "boards/m5stickc-plus2.svg": "170040d38f2c50673eb334000859a443728ca72bcc36b6045c2c99739c0d7c0d",
@@ -1218,30 +1339,30 @@
       }
     },
     "press-kit/images/kleidos-boards-16x9-es.png": {
-      "sha256": "7628594ba3de9a4ee0fca1f4a9bdc2bb6487be47de32d09f798f7a46527c4d12",
-      "bytes": 651750,
+      "sha256": "6f9f7af16a4626db8e72f6b66ba217c46b41165a895a5b292ae950eadbe4b872",
+      "bytes": 658011,
       "size": [
         3840,
         2160
       ],
-      "drawn_from": "0a464585eb5c25e82b4ad073b979a5231987d0eda0073c74fc58370b714f29f4",
+      "drawn_from": "6bc9951262797ddcf1e9b2c4558c14dbefe946d9782e9519450b918f6107bf8a",
       "inputs": {
-        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/mark.svg": "7ec13579b19170cd8a0679d1a15ec185fe1a17e5c47af951b9b81436361256b7",
         "logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
         "tokens/tokens.json": "02adc61017345c669b22aebcccda5713fd31c72f88936ae8964014dfe9ca5c96",
         "fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435",
         "fonts/mona-sans/MonaSansMonoVF[wght].ttf": "e1d0ba93b9abf682de1bd67d20b58d312fab5d0cbe8fe012e2b1ab7687b42219",
-        "press-kit/src/press.json": "8b266a23f3999b4d4b8655d32eb250acc7bf3b5b8da1a0b5c9b198acce1dfa90",
-        "press-kit/src/boards-16x9.svg": "590127260e1ad2384d49b20421c26d45705ef4c91189067073d20cacc3ca3cc9",
-        "press-kit/screens/kleidos-screen-sticks3.png": "dcd8457f76e3325008a506cb4ce79262b4e5c2b62dcb88ebba6f5603a6465bfd",
-        "press-kit/screens/kleidos-screen-m5stickc-plus2.png": "80f170e144bd88c8e1af234305419ad51c44addfdb4c1252e408ef11688bf996",
-        "press-kit/screens/kleidos-screen-m5stickc-plus1.png": "80f170e144bd88c8e1af234305419ad51c44addfdb4c1252e408ef11688bf996",
-        "press-kit/screens/kleidos-screen-m5stickc-plus-se.png": "80f170e144bd88c8e1af234305419ad51c44addfdb4c1252e408ef11688bf996",
-        "press-kit/screens/kleidos-screen-coreink.png": "78cc9bf8a31b9e653f9c4fb9103e37ca74409e4d496dc63ef39615660a45275c",
-        "press-kit/screens/kleidos-screen-cores3-se.png": "b9c566b1af2c831bc3dcfdb57e19f699c1a230af70a06a6ddc3f4aebcda9cb70",
-        "press-kit/screens/kleidos-screen-m5stack-core2-v13.png": "9f660bf0984693441bf8575f67c02ea6ef5d64005fcf1d0b99d5ea22e671846a",
-        "press-kit/screens/kleidos-screen-cardputer.png": "280637e53867d7f1886188e866acca6b93752de9cca3978f16190b373be7b4ad",
-        "press-kit/screens/kleidos-screen-tdeck-plus.png": "e413748d412d687e5a4a6f84fa6022a4cbc49a6bf1b14286042c8ad8ed040b5f",
+        "press-kit/src/press.json": "3b77cd83744216b458cc6b97f1e9f7ee43b97182163728d49eb4fa8450e67ae0",
+        "press-kit/src/boards-16x9.svg": "8b1cc9a80ecaaa45741038d7d9dd9546a1462e2a0103d69801fb16516fe3a0b0",
+        "press-kit/screens/kleidos-screen-sticks3.png": "ce4548cfe238ff251a58f349e600078064e4da37f02174493b5eab8b06012660",
+        "press-kit/screens/kleidos-screen-m5stickc-plus2.png": "83f080ae27414d761a63c3ef42be67fb9393ce522ea2af3174c24b2f2f506915",
+        "press-kit/screens/kleidos-screen-m5stickc-plus1.png": "f797eae6a35fc5cbba40e6ad489340d9ae30e7a8ceaf93116c8474bfd029179f",
+        "press-kit/screens/kleidos-screen-m5stickc-plus-se.png": "d666c92ed10d9a7355bf193e07a188457c72fc368c0cad42c11523a7bd8205d3",
+        "press-kit/screens/kleidos-screen-coreink.png": "424536b9dffe1271faaebdf1c7ff936459e636d779b24cd19c1aa26a6e03cea9",
+        "press-kit/screens/kleidos-screen-cores3-se.png": "9cb7831e0dec53bc7d2de8bf86bec333d1f78e50b468d92c4d3234ea009755e0",
+        "press-kit/screens/kleidos-screen-m5stack-core2-v13.png": "a73016793851d0a46c9853dade250beb9a920e92129998a86374d6e48f52ca93",
+        "press-kit/screens/kleidos-screen-cardputer.png": "57d77d274dff42c4cb4d10f6c484745bfe456a764c4f37de16f987002342efc9",
+        "press-kit/screens/kleidos-screen-tdeck-plus.png": "802cdf42c4676770e3bea58e5f6fd679a510b9c2e06582ae52abd4a7a572e0f7",
         "boards/boards.json": "2fc93598d2f55a45e56618cf53496ffc3eb1d1b6c4d17efe6f4937796f2358f1",
         "boards/sticks3.svg": "0c893adb838469d0a5b503130061349feaeeb0d6064d1d62e8a69fa03c2c855f",
         "boards/m5stickc-plus2.svg": "170040d38f2c50673eb334000859a443728ca72bcc36b6045c2c99739c0d7c0d",
@@ -1258,30 +1379,30 @@
       }
     },
     "press-kit/images/kleidos-boards-16x9-es-1920.png": {
-      "sha256": "805bf9494e8cb2a886785941b64ab184276712c087401df6cb427f1c3d2af009",
-      "bytes": 388718,
+      "sha256": "0ea85d72ce4fe75424c9911d50216bf514efb4ad30b8cdb626e983d6fb6260e0",
+      "bytes": 395109,
       "size": [
         1920,
         1080
       ],
-      "drawn_from": "0a464585eb5c25e82b4ad073b979a5231987d0eda0073c74fc58370b714f29f4",
+      "drawn_from": "6bc9951262797ddcf1e9b2c4558c14dbefe946d9782e9519450b918f6107bf8a",
       "inputs": {
-        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/mark.svg": "7ec13579b19170cd8a0679d1a15ec185fe1a17e5c47af951b9b81436361256b7",
         "logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
         "tokens/tokens.json": "02adc61017345c669b22aebcccda5713fd31c72f88936ae8964014dfe9ca5c96",
         "fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435",
         "fonts/mona-sans/MonaSansMonoVF[wght].ttf": "e1d0ba93b9abf682de1bd67d20b58d312fab5d0cbe8fe012e2b1ab7687b42219",
-        "press-kit/src/press.json": "8b266a23f3999b4d4b8655d32eb250acc7bf3b5b8da1a0b5c9b198acce1dfa90",
-        "press-kit/src/boards-16x9.svg": "590127260e1ad2384d49b20421c26d45705ef4c91189067073d20cacc3ca3cc9",
-        "press-kit/screens/kleidos-screen-sticks3.png": "dcd8457f76e3325008a506cb4ce79262b4e5c2b62dcb88ebba6f5603a6465bfd",
-        "press-kit/screens/kleidos-screen-m5stickc-plus2.png": "80f170e144bd88c8e1af234305419ad51c44addfdb4c1252e408ef11688bf996",
-        "press-kit/screens/kleidos-screen-m5stickc-plus1.png": "80f170e144bd88c8e1af234305419ad51c44addfdb4c1252e408ef11688bf996",
-        "press-kit/screens/kleidos-screen-m5stickc-plus-se.png": "80f170e144bd88c8e1af234305419ad51c44addfdb4c1252e408ef11688bf996",
-        "press-kit/screens/kleidos-screen-coreink.png": "78cc9bf8a31b9e653f9c4fb9103e37ca74409e4d496dc63ef39615660a45275c",
-        "press-kit/screens/kleidos-screen-cores3-se.png": "b9c566b1af2c831bc3dcfdb57e19f699c1a230af70a06a6ddc3f4aebcda9cb70",
-        "press-kit/screens/kleidos-screen-m5stack-core2-v13.png": "9f660bf0984693441bf8575f67c02ea6ef5d64005fcf1d0b99d5ea22e671846a",
-        "press-kit/screens/kleidos-screen-cardputer.png": "280637e53867d7f1886188e866acca6b93752de9cca3978f16190b373be7b4ad",
-        "press-kit/screens/kleidos-screen-tdeck-plus.png": "e413748d412d687e5a4a6f84fa6022a4cbc49a6bf1b14286042c8ad8ed040b5f",
+        "press-kit/src/press.json": "3b77cd83744216b458cc6b97f1e9f7ee43b97182163728d49eb4fa8450e67ae0",
+        "press-kit/src/boards-16x9.svg": "8b1cc9a80ecaaa45741038d7d9dd9546a1462e2a0103d69801fb16516fe3a0b0",
+        "press-kit/screens/kleidos-screen-sticks3.png": "ce4548cfe238ff251a58f349e600078064e4da37f02174493b5eab8b06012660",
+        "press-kit/screens/kleidos-screen-m5stickc-plus2.png": "83f080ae27414d761a63c3ef42be67fb9393ce522ea2af3174c24b2f2f506915",
+        "press-kit/screens/kleidos-screen-m5stickc-plus1.png": "f797eae6a35fc5cbba40e6ad489340d9ae30e7a8ceaf93116c8474bfd029179f",
+        "press-kit/screens/kleidos-screen-m5stickc-plus-se.png": "d666c92ed10d9a7355bf193e07a188457c72fc368c0cad42c11523a7bd8205d3",
+        "press-kit/screens/kleidos-screen-coreink.png": "424536b9dffe1271faaebdf1c7ff936459e636d779b24cd19c1aa26a6e03cea9",
+        "press-kit/screens/kleidos-screen-cores3-se.png": "9cb7831e0dec53bc7d2de8bf86bec333d1f78e50b468d92c4d3234ea009755e0",
+        "press-kit/screens/kleidos-screen-m5stack-core2-v13.png": "a73016793851d0a46c9853dade250beb9a920e92129998a86374d6e48f52ca93",
+        "press-kit/screens/kleidos-screen-cardputer.png": "57d77d274dff42c4cb4d10f6c484745bfe456a764c4f37de16f987002342efc9",
+        "press-kit/screens/kleidos-screen-tdeck-plus.png": "802cdf42c4676770e3bea58e5f6fd679a510b9c2e06582ae52abd4a7a572e0f7",
         "boards/boards.json": "2fc93598d2f55a45e56618cf53496ffc3eb1d1b6c4d17efe6f4937796f2358f1",
         "boards/sticks3.svg": "0c893adb838469d0a5b503130061349feaeeb0d6064d1d62e8a69fa03c2c855f",
         "boards/m5stickc-plus2.svg": "170040d38f2c50673eb334000859a443728ca72bcc36b6045c2c99739c0d7c0d",
@@ -1298,30 +1419,30 @@
       }
     },
     "press-kit/images/kleidos-boards-16x9-light.png": {
-      "sha256": "e2bb49e80a324176a05f3be9980b9c2e762a6e23f1b9e053718bddd6fdcd576e",
-      "bytes": 639842,
+      "sha256": "cd172ac855275b5fdaeca07b65f4cb4ba6c217379564dc953c10cc37fc04f5fe",
+      "bytes": 644471,
       "size": [
         3840,
         2160
       ],
-      "drawn_from": "afcab2ed9e06fd5b184d9b8cac9d7c142db06dde8e48b37d8848eb73900c99bf",
+      "drawn_from": "6cfa43bbe7678f26a0fdd9342b79bef55512d6ed39597f13ec237e4206d34508",
       "inputs": {
-        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/mark.svg": "7ec13579b19170cd8a0679d1a15ec185fe1a17e5c47af951b9b81436361256b7",
         "logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
         "tokens/tokens.json": "02adc61017345c669b22aebcccda5713fd31c72f88936ae8964014dfe9ca5c96",
         "fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435",
         "fonts/mona-sans/MonaSansMonoVF[wght].ttf": "e1d0ba93b9abf682de1bd67d20b58d312fab5d0cbe8fe012e2b1ab7687b42219",
-        "press-kit/src/press.json": "8b266a23f3999b4d4b8655d32eb250acc7bf3b5b8da1a0b5c9b198acce1dfa90",
-        "press-kit/src/boards-16x9.svg": "590127260e1ad2384d49b20421c26d45705ef4c91189067073d20cacc3ca3cc9",
-        "press-kit/screens/kleidos-screen-sticks3.png": "dcd8457f76e3325008a506cb4ce79262b4e5c2b62dcb88ebba6f5603a6465bfd",
-        "press-kit/screens/kleidos-screen-m5stickc-plus2.png": "80f170e144bd88c8e1af234305419ad51c44addfdb4c1252e408ef11688bf996",
-        "press-kit/screens/kleidos-screen-m5stickc-plus1.png": "80f170e144bd88c8e1af234305419ad51c44addfdb4c1252e408ef11688bf996",
-        "press-kit/screens/kleidos-screen-m5stickc-plus-se.png": "80f170e144bd88c8e1af234305419ad51c44addfdb4c1252e408ef11688bf996",
-        "press-kit/screens/kleidos-screen-coreink.png": "78cc9bf8a31b9e653f9c4fb9103e37ca74409e4d496dc63ef39615660a45275c",
-        "press-kit/screens/kleidos-screen-cores3-se.png": "b9c566b1af2c831bc3dcfdb57e19f699c1a230af70a06a6ddc3f4aebcda9cb70",
-        "press-kit/screens/kleidos-screen-m5stack-core2-v13.png": "9f660bf0984693441bf8575f67c02ea6ef5d64005fcf1d0b99d5ea22e671846a",
-        "press-kit/screens/kleidos-screen-cardputer.png": "280637e53867d7f1886188e866acca6b93752de9cca3978f16190b373be7b4ad",
-        "press-kit/screens/kleidos-screen-tdeck-plus.png": "e413748d412d687e5a4a6f84fa6022a4cbc49a6bf1b14286042c8ad8ed040b5f",
+        "press-kit/src/press.json": "3b77cd83744216b458cc6b97f1e9f7ee43b97182163728d49eb4fa8450e67ae0",
+        "press-kit/src/boards-16x9.svg": "8b1cc9a80ecaaa45741038d7d9dd9546a1462e2a0103d69801fb16516fe3a0b0",
+        "press-kit/screens/kleidos-screen-sticks3.png": "ce4548cfe238ff251a58f349e600078064e4da37f02174493b5eab8b06012660",
+        "press-kit/screens/kleidos-screen-m5stickc-plus2.png": "83f080ae27414d761a63c3ef42be67fb9393ce522ea2af3174c24b2f2f506915",
+        "press-kit/screens/kleidos-screen-m5stickc-plus1.png": "f797eae6a35fc5cbba40e6ad489340d9ae30e7a8ceaf93116c8474bfd029179f",
+        "press-kit/screens/kleidos-screen-m5stickc-plus-se.png": "d666c92ed10d9a7355bf193e07a188457c72fc368c0cad42c11523a7bd8205d3",
+        "press-kit/screens/kleidos-screen-coreink.png": "424536b9dffe1271faaebdf1c7ff936459e636d779b24cd19c1aa26a6e03cea9",
+        "press-kit/screens/kleidos-screen-cores3-se.png": "9cb7831e0dec53bc7d2de8bf86bec333d1f78e50b468d92c4d3234ea009755e0",
+        "press-kit/screens/kleidos-screen-m5stack-core2-v13.png": "a73016793851d0a46c9853dade250beb9a920e92129998a86374d6e48f52ca93",
+        "press-kit/screens/kleidos-screen-cardputer.png": "57d77d274dff42c4cb4d10f6c484745bfe456a764c4f37de16f987002342efc9",
+        "press-kit/screens/kleidos-screen-tdeck-plus.png": "802cdf42c4676770e3bea58e5f6fd679a510b9c2e06582ae52abd4a7a572e0f7",
         "boards/boards.json": "2fc93598d2f55a45e56618cf53496ffc3eb1d1b6c4d17efe6f4937796f2358f1",
         "boards/sticks3.svg": "0c893adb838469d0a5b503130061349feaeeb0d6064d1d62e8a69fa03c2c855f",
         "boards/m5stickc-plus2.svg": "170040d38f2c50673eb334000859a443728ca72bcc36b6045c2c99739c0d7c0d",
@@ -1338,30 +1459,30 @@
       }
     },
     "press-kit/images/kleidos-boards-16x9-light-1920.png": {
-      "sha256": "fe71624016a41186ce2951445bac586914a521bc63c343521402a922a9bb2ab9",
-      "bytes": 367640,
+      "sha256": "f765d2777a04e867d518e65c641582f400682fd54576bd51ddf0de4590822366",
+      "bytes": 372402,
       "size": [
         1920,
         1080
       ],
-      "drawn_from": "afcab2ed9e06fd5b184d9b8cac9d7c142db06dde8e48b37d8848eb73900c99bf",
+      "drawn_from": "6cfa43bbe7678f26a0fdd9342b79bef55512d6ed39597f13ec237e4206d34508",
       "inputs": {
-        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/mark.svg": "7ec13579b19170cd8a0679d1a15ec185fe1a17e5c47af951b9b81436361256b7",
         "logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
         "tokens/tokens.json": "02adc61017345c669b22aebcccda5713fd31c72f88936ae8964014dfe9ca5c96",
         "fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435",
         "fonts/mona-sans/MonaSansMonoVF[wght].ttf": "e1d0ba93b9abf682de1bd67d20b58d312fab5d0cbe8fe012e2b1ab7687b42219",
-        "press-kit/src/press.json": "8b266a23f3999b4d4b8655d32eb250acc7bf3b5b8da1a0b5c9b198acce1dfa90",
-        "press-kit/src/boards-16x9.svg": "590127260e1ad2384d49b20421c26d45705ef4c91189067073d20cacc3ca3cc9",
-        "press-kit/screens/kleidos-screen-sticks3.png": "dcd8457f76e3325008a506cb4ce79262b4e5c2b62dcb88ebba6f5603a6465bfd",
-        "press-kit/screens/kleidos-screen-m5stickc-plus2.png": "80f170e144bd88c8e1af234305419ad51c44addfdb4c1252e408ef11688bf996",
-        "press-kit/screens/kleidos-screen-m5stickc-plus1.png": "80f170e144bd88c8e1af234305419ad51c44addfdb4c1252e408ef11688bf996",
-        "press-kit/screens/kleidos-screen-m5stickc-plus-se.png": "80f170e144bd88c8e1af234305419ad51c44addfdb4c1252e408ef11688bf996",
-        "press-kit/screens/kleidos-screen-coreink.png": "78cc9bf8a31b9e653f9c4fb9103e37ca74409e4d496dc63ef39615660a45275c",
-        "press-kit/screens/kleidos-screen-cores3-se.png": "b9c566b1af2c831bc3dcfdb57e19f699c1a230af70a06a6ddc3f4aebcda9cb70",
-        "press-kit/screens/kleidos-screen-m5stack-core2-v13.png": "9f660bf0984693441bf8575f67c02ea6ef5d64005fcf1d0b99d5ea22e671846a",
-        "press-kit/screens/kleidos-screen-cardputer.png": "280637e53867d7f1886188e866acca6b93752de9cca3978f16190b373be7b4ad",
-        "press-kit/screens/kleidos-screen-tdeck-plus.png": "e413748d412d687e5a4a6f84fa6022a4cbc49a6bf1b14286042c8ad8ed040b5f",
+        "press-kit/src/press.json": "3b77cd83744216b458cc6b97f1e9f7ee43b97182163728d49eb4fa8450e67ae0",
+        "press-kit/src/boards-16x9.svg": "8b1cc9a80ecaaa45741038d7d9dd9546a1462e2a0103d69801fb16516fe3a0b0",
+        "press-kit/screens/kleidos-screen-sticks3.png": "ce4548cfe238ff251a58f349e600078064e4da37f02174493b5eab8b06012660",
+        "press-kit/screens/kleidos-screen-m5stickc-plus2.png": "83f080ae27414d761a63c3ef42be67fb9393ce522ea2af3174c24b2f2f506915",
+        "press-kit/screens/kleidos-screen-m5stickc-plus1.png": "f797eae6a35fc5cbba40e6ad489340d9ae30e7a8ceaf93116c8474bfd029179f",
+        "press-kit/screens/kleidos-screen-m5stickc-plus-se.png": "d666c92ed10d9a7355bf193e07a188457c72fc368c0cad42c11523a7bd8205d3",
+        "press-kit/screens/kleidos-screen-coreink.png": "424536b9dffe1271faaebdf1c7ff936459e636d779b24cd19c1aa26a6e03cea9",
+        "press-kit/screens/kleidos-screen-cores3-se.png": "9cb7831e0dec53bc7d2de8bf86bec333d1f78e50b468d92c4d3234ea009755e0",
+        "press-kit/screens/kleidos-screen-m5stack-core2-v13.png": "a73016793851d0a46c9853dade250beb9a920e92129998a86374d6e48f52ca93",
+        "press-kit/screens/kleidos-screen-cardputer.png": "57d77d274dff42c4cb4d10f6c484745bfe456a764c4f37de16f987002342efc9",
+        "press-kit/screens/kleidos-screen-tdeck-plus.png": "802cdf42c4676770e3bea58e5f6fd679a510b9c2e06582ae52abd4a7a572e0f7",
         "boards/boards.json": "2fc93598d2f55a45e56618cf53496ffc3eb1d1b6c4d17efe6f4937796f2358f1",
         "boards/sticks3.svg": "0c893adb838469d0a5b503130061349feaeeb0d6064d1d62e8a69fa03c2c855f",
         "boards/m5stickc-plus2.svg": "170040d38f2c50673eb334000859a443728ca72bcc36b6045c2c99739c0d7c0d",
@@ -1378,30 +1499,30 @@
       }
     },
     "press-kit/images/kleidos-boards-16x9-light-es.png": {
-      "sha256": "cb73916bd626d710a79a5e7263e27f9e4591711219a71972e9b25531311c5b53",
-      "bytes": 649610,
+      "sha256": "f88993fe6e58442f77ddf13d71bcffded2e204cc3074d48b556eee9ef42b04ec",
+      "bytes": 655887,
       "size": [
         3840,
         2160
       ],
-      "drawn_from": "1adf86cb8530d5f7e4c7468c022b86bbe1f5129846306b97cb74c5109f823cf3",
+      "drawn_from": "22f07eb2e3bc018bb593ed8f8b93b2547cf27ab5bb7fec2eb825f65819bba35e",
       "inputs": {
-        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/mark.svg": "7ec13579b19170cd8a0679d1a15ec185fe1a17e5c47af951b9b81436361256b7",
         "logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
         "tokens/tokens.json": "02adc61017345c669b22aebcccda5713fd31c72f88936ae8964014dfe9ca5c96",
         "fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435",
         "fonts/mona-sans/MonaSansMonoVF[wght].ttf": "e1d0ba93b9abf682de1bd67d20b58d312fab5d0cbe8fe012e2b1ab7687b42219",
-        "press-kit/src/press.json": "8b266a23f3999b4d4b8655d32eb250acc7bf3b5b8da1a0b5c9b198acce1dfa90",
-        "press-kit/src/boards-16x9.svg": "590127260e1ad2384d49b20421c26d45705ef4c91189067073d20cacc3ca3cc9",
-        "press-kit/screens/kleidos-screen-sticks3.png": "dcd8457f76e3325008a506cb4ce79262b4e5c2b62dcb88ebba6f5603a6465bfd",
-        "press-kit/screens/kleidos-screen-m5stickc-plus2.png": "80f170e144bd88c8e1af234305419ad51c44addfdb4c1252e408ef11688bf996",
-        "press-kit/screens/kleidos-screen-m5stickc-plus1.png": "80f170e144bd88c8e1af234305419ad51c44addfdb4c1252e408ef11688bf996",
-        "press-kit/screens/kleidos-screen-m5stickc-plus-se.png": "80f170e144bd88c8e1af234305419ad51c44addfdb4c1252e408ef11688bf996",
-        "press-kit/screens/kleidos-screen-coreink.png": "78cc9bf8a31b9e653f9c4fb9103e37ca74409e4d496dc63ef39615660a45275c",
-        "press-kit/screens/kleidos-screen-cores3-se.png": "b9c566b1af2c831bc3dcfdb57e19f699c1a230af70a06a6ddc3f4aebcda9cb70",
-        "press-kit/screens/kleidos-screen-m5stack-core2-v13.png": "9f660bf0984693441bf8575f67c02ea6ef5d64005fcf1d0b99d5ea22e671846a",
-        "press-kit/screens/kleidos-screen-cardputer.png": "280637e53867d7f1886188e866acca6b93752de9cca3978f16190b373be7b4ad",
-        "press-kit/screens/kleidos-screen-tdeck-plus.png": "e413748d412d687e5a4a6f84fa6022a4cbc49a6bf1b14286042c8ad8ed040b5f",
+        "press-kit/src/press.json": "3b77cd83744216b458cc6b97f1e9f7ee43b97182163728d49eb4fa8450e67ae0",
+        "press-kit/src/boards-16x9.svg": "8b1cc9a80ecaaa45741038d7d9dd9546a1462e2a0103d69801fb16516fe3a0b0",
+        "press-kit/screens/kleidos-screen-sticks3.png": "ce4548cfe238ff251a58f349e600078064e4da37f02174493b5eab8b06012660",
+        "press-kit/screens/kleidos-screen-m5stickc-plus2.png": "83f080ae27414d761a63c3ef42be67fb9393ce522ea2af3174c24b2f2f506915",
+        "press-kit/screens/kleidos-screen-m5stickc-plus1.png": "f797eae6a35fc5cbba40e6ad489340d9ae30e7a8ceaf93116c8474bfd029179f",
+        "press-kit/screens/kleidos-screen-m5stickc-plus-se.png": "d666c92ed10d9a7355bf193e07a188457c72fc368c0cad42c11523a7bd8205d3",
+        "press-kit/screens/kleidos-screen-coreink.png": "424536b9dffe1271faaebdf1c7ff936459e636d779b24cd19c1aa26a6e03cea9",
+        "press-kit/screens/kleidos-screen-cores3-se.png": "9cb7831e0dec53bc7d2de8bf86bec333d1f78e50b468d92c4d3234ea009755e0",
+        "press-kit/screens/kleidos-screen-m5stack-core2-v13.png": "a73016793851d0a46c9853dade250beb9a920e92129998a86374d6e48f52ca93",
+        "press-kit/screens/kleidos-screen-cardputer.png": "57d77d274dff42c4cb4d10f6c484745bfe456a764c4f37de16f987002342efc9",
+        "press-kit/screens/kleidos-screen-tdeck-plus.png": "802cdf42c4676770e3bea58e5f6fd679a510b9c2e06582ae52abd4a7a572e0f7",
         "boards/boards.json": "2fc93598d2f55a45e56618cf53496ffc3eb1d1b6c4d17efe6f4937796f2358f1",
         "boards/sticks3.svg": "0c893adb838469d0a5b503130061349feaeeb0d6064d1d62e8a69fa03c2c855f",
         "boards/m5stickc-plus2.svg": "170040d38f2c50673eb334000859a443728ca72bcc36b6045c2c99739c0d7c0d",
@@ -1418,30 +1539,30 @@
       }
     },
     "press-kit/images/kleidos-boards-16x9-light-es-1920.png": {
-      "sha256": "dcd831409b7cabb0c3dc3f22faaf9a56d4c4eb6155613a7bc768c6e2134d96d9",
-      "bytes": 377179,
+      "sha256": "96329092c8a8b3e668ce3d33cbe206171713fa8050f2d0bf177c28437ee8ed70",
+      "bytes": 383592,
       "size": [
         1920,
         1080
       ],
-      "drawn_from": "1adf86cb8530d5f7e4c7468c022b86bbe1f5129846306b97cb74c5109f823cf3",
+      "drawn_from": "22f07eb2e3bc018bb593ed8f8b93b2547cf27ab5bb7fec2eb825f65819bba35e",
       "inputs": {
-        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/mark.svg": "7ec13579b19170cd8a0679d1a15ec185fe1a17e5c47af951b9b81436361256b7",
         "logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
         "tokens/tokens.json": "02adc61017345c669b22aebcccda5713fd31c72f88936ae8964014dfe9ca5c96",
         "fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435",
         "fonts/mona-sans/MonaSansMonoVF[wght].ttf": "e1d0ba93b9abf682de1bd67d20b58d312fab5d0cbe8fe012e2b1ab7687b42219",
-        "press-kit/src/press.json": "8b266a23f3999b4d4b8655d32eb250acc7bf3b5b8da1a0b5c9b198acce1dfa90",
-        "press-kit/src/boards-16x9.svg": "590127260e1ad2384d49b20421c26d45705ef4c91189067073d20cacc3ca3cc9",
-        "press-kit/screens/kleidos-screen-sticks3.png": "dcd8457f76e3325008a506cb4ce79262b4e5c2b62dcb88ebba6f5603a6465bfd",
-        "press-kit/screens/kleidos-screen-m5stickc-plus2.png": "80f170e144bd88c8e1af234305419ad51c44addfdb4c1252e408ef11688bf996",
-        "press-kit/screens/kleidos-screen-m5stickc-plus1.png": "80f170e144bd88c8e1af234305419ad51c44addfdb4c1252e408ef11688bf996",
-        "press-kit/screens/kleidos-screen-m5stickc-plus-se.png": "80f170e144bd88c8e1af234305419ad51c44addfdb4c1252e408ef11688bf996",
-        "press-kit/screens/kleidos-screen-coreink.png": "78cc9bf8a31b9e653f9c4fb9103e37ca74409e4d496dc63ef39615660a45275c",
-        "press-kit/screens/kleidos-screen-cores3-se.png": "b9c566b1af2c831bc3dcfdb57e19f699c1a230af70a06a6ddc3f4aebcda9cb70",
-        "press-kit/screens/kleidos-screen-m5stack-core2-v13.png": "9f660bf0984693441bf8575f67c02ea6ef5d64005fcf1d0b99d5ea22e671846a",
-        "press-kit/screens/kleidos-screen-cardputer.png": "280637e53867d7f1886188e866acca6b93752de9cca3978f16190b373be7b4ad",
-        "press-kit/screens/kleidos-screen-tdeck-plus.png": "e413748d412d687e5a4a6f84fa6022a4cbc49a6bf1b14286042c8ad8ed040b5f",
+        "press-kit/src/press.json": "3b77cd83744216b458cc6b97f1e9f7ee43b97182163728d49eb4fa8450e67ae0",
+        "press-kit/src/boards-16x9.svg": "8b1cc9a80ecaaa45741038d7d9dd9546a1462e2a0103d69801fb16516fe3a0b0",
+        "press-kit/screens/kleidos-screen-sticks3.png": "ce4548cfe238ff251a58f349e600078064e4da37f02174493b5eab8b06012660",
+        "press-kit/screens/kleidos-screen-m5stickc-plus2.png": "83f080ae27414d761a63c3ef42be67fb9393ce522ea2af3174c24b2f2f506915",
+        "press-kit/screens/kleidos-screen-m5stickc-plus1.png": "f797eae6a35fc5cbba40e6ad489340d9ae30e7a8ceaf93116c8474bfd029179f",
+        "press-kit/screens/kleidos-screen-m5stickc-plus-se.png": "d666c92ed10d9a7355bf193e07a188457c72fc368c0cad42c11523a7bd8205d3",
+        "press-kit/screens/kleidos-screen-coreink.png": "424536b9dffe1271faaebdf1c7ff936459e636d779b24cd19c1aa26a6e03cea9",
+        "press-kit/screens/kleidos-screen-cores3-se.png": "9cb7831e0dec53bc7d2de8bf86bec333d1f78e50b468d92c4d3234ea009755e0",
+        "press-kit/screens/kleidos-screen-m5stack-core2-v13.png": "a73016793851d0a46c9853dade250beb9a920e92129998a86374d6e48f52ca93",
+        "press-kit/screens/kleidos-screen-cardputer.png": "57d77d274dff42c4cb4d10f6c484745bfe456a764c4f37de16f987002342efc9",
+        "press-kit/screens/kleidos-screen-tdeck-plus.png": "802cdf42c4676770e3bea58e5f6fd679a510b9c2e06582ae52abd4a7a572e0f7",
         "boards/boards.json": "2fc93598d2f55a45e56618cf53496ffc3eb1d1b6c4d17efe6f4937796f2358f1",
         "boards/sticks3.svg": "0c893adb838469d0a5b503130061349feaeeb0d6064d1d62e8a69fa03c2c855f",
         "boards/m5stickc-plus2.svg": "170040d38f2c50673eb334000859a443728ca72bcc36b6045c2c99739c0d7c0d",
@@ -1458,30 +1579,30 @@
       }
     },
     "press-kit/images/kleidos-boards-4x5.png": {
-      "sha256": "c428193f1855afcb79f259592c56ee034a21a5e8832c95fb88bd32db1666b8cb",
-      "bytes": 574246,
+      "sha256": "11eba98bc840bf590d36fd466620c1b54823a80fe32f10376ba7c951cabbf4fd",
+      "bytes": 578857,
       "size": [
         2160,
         2700
       ],
-      "drawn_from": "1dbe5c5d734a84ab3bda911845e37a6951ef0e77baee149c47074ef4f1a50a85",
+      "drawn_from": "4b267d9f4e51bd2eff97a18f52022bfe06a804fc17c6809819686097214d8888",
       "inputs": {
-        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/mark.svg": "7ec13579b19170cd8a0679d1a15ec185fe1a17e5c47af951b9b81436361256b7",
         "logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
         "tokens/tokens.json": "02adc61017345c669b22aebcccda5713fd31c72f88936ae8964014dfe9ca5c96",
         "fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435",
         "fonts/mona-sans/MonaSansMonoVF[wght].ttf": "e1d0ba93b9abf682de1bd67d20b58d312fab5d0cbe8fe012e2b1ab7687b42219",
-        "press-kit/src/press.json": "8b266a23f3999b4d4b8655d32eb250acc7bf3b5b8da1a0b5c9b198acce1dfa90",
-        "press-kit/src/boards-4x5.svg": "384223fa45c4c788744071f3b57376b6e76c3e2907a464f79233a2b71ec21bb6",
-        "press-kit/screens/kleidos-screen-sticks3.png": "dcd8457f76e3325008a506cb4ce79262b4e5c2b62dcb88ebba6f5603a6465bfd",
-        "press-kit/screens/kleidos-screen-m5stickc-plus2.png": "80f170e144bd88c8e1af234305419ad51c44addfdb4c1252e408ef11688bf996",
-        "press-kit/screens/kleidos-screen-m5stickc-plus1.png": "80f170e144bd88c8e1af234305419ad51c44addfdb4c1252e408ef11688bf996",
-        "press-kit/screens/kleidos-screen-m5stickc-plus-se.png": "80f170e144bd88c8e1af234305419ad51c44addfdb4c1252e408ef11688bf996",
-        "press-kit/screens/kleidos-screen-coreink.png": "78cc9bf8a31b9e653f9c4fb9103e37ca74409e4d496dc63ef39615660a45275c",
-        "press-kit/screens/kleidos-screen-cores3-se.png": "b9c566b1af2c831bc3dcfdb57e19f699c1a230af70a06a6ddc3f4aebcda9cb70",
-        "press-kit/screens/kleidos-screen-m5stack-core2-v13.png": "9f660bf0984693441bf8575f67c02ea6ef5d64005fcf1d0b99d5ea22e671846a",
-        "press-kit/screens/kleidos-screen-cardputer.png": "280637e53867d7f1886188e866acca6b93752de9cca3978f16190b373be7b4ad",
-        "press-kit/screens/kleidos-screen-tdeck-plus.png": "e413748d412d687e5a4a6f84fa6022a4cbc49a6bf1b14286042c8ad8ed040b5f",
+        "press-kit/src/press.json": "3b77cd83744216b458cc6b97f1e9f7ee43b97182163728d49eb4fa8450e67ae0",
+        "press-kit/src/boards-4x5.svg": "efc9460169db94a58b2e3a11352254cb85505ae80496c38b9952338da442c88d",
+        "press-kit/screens/kleidos-screen-sticks3.png": "ce4548cfe238ff251a58f349e600078064e4da37f02174493b5eab8b06012660",
+        "press-kit/screens/kleidos-screen-m5stickc-plus2.png": "83f080ae27414d761a63c3ef42be67fb9393ce522ea2af3174c24b2f2f506915",
+        "press-kit/screens/kleidos-screen-m5stickc-plus1.png": "f797eae6a35fc5cbba40e6ad489340d9ae30e7a8ceaf93116c8474bfd029179f",
+        "press-kit/screens/kleidos-screen-m5stickc-plus-se.png": "d666c92ed10d9a7355bf193e07a188457c72fc368c0cad42c11523a7bd8205d3",
+        "press-kit/screens/kleidos-screen-coreink.png": "424536b9dffe1271faaebdf1c7ff936459e636d779b24cd19c1aa26a6e03cea9",
+        "press-kit/screens/kleidos-screen-cores3-se.png": "9cb7831e0dec53bc7d2de8bf86bec333d1f78e50b468d92c4d3234ea009755e0",
+        "press-kit/screens/kleidos-screen-m5stack-core2-v13.png": "a73016793851d0a46c9853dade250beb9a920e92129998a86374d6e48f52ca93",
+        "press-kit/screens/kleidos-screen-cardputer.png": "57d77d274dff42c4cb4d10f6c484745bfe456a764c4f37de16f987002342efc9",
+        "press-kit/screens/kleidos-screen-tdeck-plus.png": "802cdf42c4676770e3bea58e5f6fd679a510b9c2e06582ae52abd4a7a572e0f7",
         "boards/boards.json": "2fc93598d2f55a45e56618cf53496ffc3eb1d1b6c4d17efe6f4937796f2358f1",
         "boards/sticks3.svg": "0c893adb838469d0a5b503130061349feaeeb0d6064d1d62e8a69fa03c2c855f",
         "boards/m5stickc-plus2.svg": "170040d38f2c50673eb334000859a443728ca72bcc36b6045c2c99739c0d7c0d",
@@ -1498,30 +1619,30 @@
       }
     },
     "press-kit/images/kleidos-boards-4x5-es.png": {
-      "sha256": "1ae9ba3be7e33b41c3461ddbc9e09389e3c4b1c436707dfbf27e7b63db6d5376",
-      "bytes": 584047,
+      "sha256": "212bd8ac762eff3254af975a7cae3e5fc2fd2b8b335a33c94aa31468b7b4f08a",
+      "bytes": 590308,
       "size": [
         2160,
         2700
       ],
-      "drawn_from": "f0dbd1e1b74303a7485d1620141e00896c9ce44985d563b7ada613f46276ce44",
+      "drawn_from": "f137d3cb27fcce07eeec1e3422f2679956196b102c0dc3d7d2a87c1d04328352",
       "inputs": {
-        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/mark.svg": "7ec13579b19170cd8a0679d1a15ec185fe1a17e5c47af951b9b81436361256b7",
         "logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
         "tokens/tokens.json": "02adc61017345c669b22aebcccda5713fd31c72f88936ae8964014dfe9ca5c96",
         "fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435",
         "fonts/mona-sans/MonaSansMonoVF[wght].ttf": "e1d0ba93b9abf682de1bd67d20b58d312fab5d0cbe8fe012e2b1ab7687b42219",
-        "press-kit/src/press.json": "8b266a23f3999b4d4b8655d32eb250acc7bf3b5b8da1a0b5c9b198acce1dfa90",
-        "press-kit/src/boards-4x5.svg": "384223fa45c4c788744071f3b57376b6e76c3e2907a464f79233a2b71ec21bb6",
-        "press-kit/screens/kleidos-screen-sticks3.png": "dcd8457f76e3325008a506cb4ce79262b4e5c2b62dcb88ebba6f5603a6465bfd",
-        "press-kit/screens/kleidos-screen-m5stickc-plus2.png": "80f170e144bd88c8e1af234305419ad51c44addfdb4c1252e408ef11688bf996",
-        "press-kit/screens/kleidos-screen-m5stickc-plus1.png": "80f170e144bd88c8e1af234305419ad51c44addfdb4c1252e408ef11688bf996",
-        "press-kit/screens/kleidos-screen-m5stickc-plus-se.png": "80f170e144bd88c8e1af234305419ad51c44addfdb4c1252e408ef11688bf996",
-        "press-kit/screens/kleidos-screen-coreink.png": "78cc9bf8a31b9e653f9c4fb9103e37ca74409e4d496dc63ef39615660a45275c",
-        "press-kit/screens/kleidos-screen-cores3-se.png": "b9c566b1af2c831bc3dcfdb57e19f699c1a230af70a06a6ddc3f4aebcda9cb70",
-        "press-kit/screens/kleidos-screen-m5stack-core2-v13.png": "9f660bf0984693441bf8575f67c02ea6ef5d64005fcf1d0b99d5ea22e671846a",
-        "press-kit/screens/kleidos-screen-cardputer.png": "280637e53867d7f1886188e866acca6b93752de9cca3978f16190b373be7b4ad",
-        "press-kit/screens/kleidos-screen-tdeck-plus.png": "e413748d412d687e5a4a6f84fa6022a4cbc49a6bf1b14286042c8ad8ed040b5f",
+        "press-kit/src/press.json": "3b77cd83744216b458cc6b97f1e9f7ee43b97182163728d49eb4fa8450e67ae0",
+        "press-kit/src/boards-4x5.svg": "efc9460169db94a58b2e3a11352254cb85505ae80496c38b9952338da442c88d",
+        "press-kit/screens/kleidos-screen-sticks3.png": "ce4548cfe238ff251a58f349e600078064e4da37f02174493b5eab8b06012660",
+        "press-kit/screens/kleidos-screen-m5stickc-plus2.png": "83f080ae27414d761a63c3ef42be67fb9393ce522ea2af3174c24b2f2f506915",
+        "press-kit/screens/kleidos-screen-m5stickc-plus1.png": "f797eae6a35fc5cbba40e6ad489340d9ae30e7a8ceaf93116c8474bfd029179f",
+        "press-kit/screens/kleidos-screen-m5stickc-plus-se.png": "d666c92ed10d9a7355bf193e07a188457c72fc368c0cad42c11523a7bd8205d3",
+        "press-kit/screens/kleidos-screen-coreink.png": "424536b9dffe1271faaebdf1c7ff936459e636d779b24cd19c1aa26a6e03cea9",
+        "press-kit/screens/kleidos-screen-cores3-se.png": "9cb7831e0dec53bc7d2de8bf86bec333d1f78e50b468d92c4d3234ea009755e0",
+        "press-kit/screens/kleidos-screen-m5stack-core2-v13.png": "a73016793851d0a46c9853dade250beb9a920e92129998a86374d6e48f52ca93",
+        "press-kit/screens/kleidos-screen-cardputer.png": "57d77d274dff42c4cb4d10f6c484745bfe456a764c4f37de16f987002342efc9",
+        "press-kit/screens/kleidos-screen-tdeck-plus.png": "802cdf42c4676770e3bea58e5f6fd679a510b9c2e06582ae52abd4a7a572e0f7",
         "boards/boards.json": "2fc93598d2f55a45e56618cf53496ffc3eb1d1b6c4d17efe6f4937796f2358f1",
         "boards/sticks3.svg": "0c893adb838469d0a5b503130061349feaeeb0d6064d1d62e8a69fa03c2c855f",
         "boards/m5stickc-plus2.svg": "170040d38f2c50673eb334000859a443728ca72bcc36b6045c2c99739c0d7c0d",
@@ -1538,30 +1659,30 @@
       }
     },
     "press-kit/images/kleidos-boards-4x5-light.png": {
-      "sha256": "fcb01e72b1b57fa1ddbc980cb468d235d87ee7f1e88161d62d7701601e86d84f",
-      "bytes": 572722,
+      "sha256": "73700b265123891e1484260e8103e3246b5bbde49d972ac0fc15676f0371b688",
+      "bytes": 577350,
       "size": [
         2160,
         2700
       ],
-      "drawn_from": "4d0c22e58a642b42d9fc01730c777b90ce96223fe65fabc10824027092f0cd48",
+      "drawn_from": "02c8cdea1ac8368640969973feff622354da5bce4afaba0c4abc7d1b3dbc7b2f",
       "inputs": {
-        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/mark.svg": "7ec13579b19170cd8a0679d1a15ec185fe1a17e5c47af951b9b81436361256b7",
         "logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
         "tokens/tokens.json": "02adc61017345c669b22aebcccda5713fd31c72f88936ae8964014dfe9ca5c96",
         "fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435",
         "fonts/mona-sans/MonaSansMonoVF[wght].ttf": "e1d0ba93b9abf682de1bd67d20b58d312fab5d0cbe8fe012e2b1ab7687b42219",
-        "press-kit/src/press.json": "8b266a23f3999b4d4b8655d32eb250acc7bf3b5b8da1a0b5c9b198acce1dfa90",
-        "press-kit/src/boards-4x5.svg": "384223fa45c4c788744071f3b57376b6e76c3e2907a464f79233a2b71ec21bb6",
-        "press-kit/screens/kleidos-screen-sticks3.png": "dcd8457f76e3325008a506cb4ce79262b4e5c2b62dcb88ebba6f5603a6465bfd",
-        "press-kit/screens/kleidos-screen-m5stickc-plus2.png": "80f170e144bd88c8e1af234305419ad51c44addfdb4c1252e408ef11688bf996",
-        "press-kit/screens/kleidos-screen-m5stickc-plus1.png": "80f170e144bd88c8e1af234305419ad51c44addfdb4c1252e408ef11688bf996",
-        "press-kit/screens/kleidos-screen-m5stickc-plus-se.png": "80f170e144bd88c8e1af234305419ad51c44addfdb4c1252e408ef11688bf996",
-        "press-kit/screens/kleidos-screen-coreink.png": "78cc9bf8a31b9e653f9c4fb9103e37ca74409e4d496dc63ef39615660a45275c",
-        "press-kit/screens/kleidos-screen-cores3-se.png": "b9c566b1af2c831bc3dcfdb57e19f699c1a230af70a06a6ddc3f4aebcda9cb70",
-        "press-kit/screens/kleidos-screen-m5stack-core2-v13.png": "9f660bf0984693441bf8575f67c02ea6ef5d64005fcf1d0b99d5ea22e671846a",
-        "press-kit/screens/kleidos-screen-cardputer.png": "280637e53867d7f1886188e866acca6b93752de9cca3978f16190b373be7b4ad",
-        "press-kit/screens/kleidos-screen-tdeck-plus.png": "e413748d412d687e5a4a6f84fa6022a4cbc49a6bf1b14286042c8ad8ed040b5f",
+        "press-kit/src/press.json": "3b77cd83744216b458cc6b97f1e9f7ee43b97182163728d49eb4fa8450e67ae0",
+        "press-kit/src/boards-4x5.svg": "efc9460169db94a58b2e3a11352254cb85505ae80496c38b9952338da442c88d",
+        "press-kit/screens/kleidos-screen-sticks3.png": "ce4548cfe238ff251a58f349e600078064e4da37f02174493b5eab8b06012660",
+        "press-kit/screens/kleidos-screen-m5stickc-plus2.png": "83f080ae27414d761a63c3ef42be67fb9393ce522ea2af3174c24b2f2f506915",
+        "press-kit/screens/kleidos-screen-m5stickc-plus1.png": "f797eae6a35fc5cbba40e6ad489340d9ae30e7a8ceaf93116c8474bfd029179f",
+        "press-kit/screens/kleidos-screen-m5stickc-plus-se.png": "d666c92ed10d9a7355bf193e07a188457c72fc368c0cad42c11523a7bd8205d3",
+        "press-kit/screens/kleidos-screen-coreink.png": "424536b9dffe1271faaebdf1c7ff936459e636d779b24cd19c1aa26a6e03cea9",
+        "press-kit/screens/kleidos-screen-cores3-se.png": "9cb7831e0dec53bc7d2de8bf86bec333d1f78e50b468d92c4d3234ea009755e0",
+        "press-kit/screens/kleidos-screen-m5stack-core2-v13.png": "a73016793851d0a46c9853dade250beb9a920e92129998a86374d6e48f52ca93",
+        "press-kit/screens/kleidos-screen-cardputer.png": "57d77d274dff42c4cb4d10f6c484745bfe456a764c4f37de16f987002342efc9",
+        "press-kit/screens/kleidos-screen-tdeck-plus.png": "802cdf42c4676770e3bea58e5f6fd679a510b9c2e06582ae52abd4a7a572e0f7",
         "boards/boards.json": "2fc93598d2f55a45e56618cf53496ffc3eb1d1b6c4d17efe6f4937796f2358f1",
         "boards/sticks3.svg": "0c893adb838469d0a5b503130061349feaeeb0d6064d1d62e8a69fa03c2c855f",
         "boards/m5stickc-plus2.svg": "170040d38f2c50673eb334000859a443728ca72bcc36b6045c2c99739c0d7c0d",
@@ -1578,30 +1699,30 @@
       }
     },
     "press-kit/images/kleidos-boards-4x5-light-es.png": {
-      "sha256": "f3b29e4a64786f5e3fc362ad60e7070ad0954f9277a06479fdd5c92c9e6a14ba",
-      "bytes": 582144,
+      "sha256": "3e052bb6af58d185da63af2fe95eaa5421143423975cd41b05aa85fe785bdfdb",
+      "bytes": 588421,
       "size": [
         2160,
         2700
       ],
-      "drawn_from": "9f7e4e46d1db9185fdbc8f04595542010b5cf327db15be9fcaac88fb986965dd",
+      "drawn_from": "ab8250305be56c278ad59fd780570926c58a8bf0841637176b1b35f32cde52df",
       "inputs": {
-        "logo/src/mark.svg": "2d3826535604d936d3c5b6b10378fd325e17cdad11880437195d88cd4775a5f0",
+        "logo/src/mark.svg": "7ec13579b19170cd8a0679d1a15ec185fe1a17e5c47af951b9b81436361256b7",
         "logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
         "tokens/tokens.json": "02adc61017345c669b22aebcccda5713fd31c72f88936ae8964014dfe9ca5c96",
         "fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435",
         "fonts/mona-sans/MonaSansMonoVF[wght].ttf": "e1d0ba93b9abf682de1bd67d20b58d312fab5d0cbe8fe012e2b1ab7687b42219",
-        "press-kit/src/press.json": "8b266a23f3999b4d4b8655d32eb250acc7bf3b5b8da1a0b5c9b198acce1dfa90",
-        "press-kit/src/boards-4x5.svg": "384223fa45c4c788744071f3b57376b6e76c3e2907a464f79233a2b71ec21bb6",
-        "press-kit/screens/kleidos-screen-sticks3.png": "dcd8457f76e3325008a506cb4ce79262b4e5c2b62dcb88ebba6f5603a6465bfd",
-        "press-kit/screens/kleidos-screen-m5stickc-plus2.png": "80f170e144bd88c8e1af234305419ad51c44addfdb4c1252e408ef11688bf996",
-        "press-kit/screens/kleidos-screen-m5stickc-plus1.png": "80f170e144bd88c8e1af234305419ad51c44addfdb4c1252e408ef11688bf996",
-        "press-kit/screens/kleidos-screen-m5stickc-plus-se.png": "80f170e144bd88c8e1af234305419ad51c44addfdb4c1252e408ef11688bf996",
-        "press-kit/screens/kleidos-screen-coreink.png": "78cc9bf8a31b9e653f9c4fb9103e37ca74409e4d496dc63ef39615660a45275c",
-        "press-kit/screens/kleidos-screen-cores3-se.png": "b9c566b1af2c831bc3dcfdb57e19f699c1a230af70a06a6ddc3f4aebcda9cb70",
-        "press-kit/screens/kleidos-screen-m5stack-core2-v13.png": "9f660bf0984693441bf8575f67c02ea6ef5d64005fcf1d0b99d5ea22e671846a",
-        "press-kit/screens/kleidos-screen-cardputer.png": "280637e53867d7f1886188e866acca6b93752de9cca3978f16190b373be7b4ad",
-        "press-kit/screens/kleidos-screen-tdeck-plus.png": "e413748d412d687e5a4a6f84fa6022a4cbc49a6bf1b14286042c8ad8ed040b5f",
+        "press-kit/src/press.json": "3b77cd83744216b458cc6b97f1e9f7ee43b97182163728d49eb4fa8450e67ae0",
+        "press-kit/src/boards-4x5.svg": "efc9460169db94a58b2e3a11352254cb85505ae80496c38b9952338da442c88d",
+        "press-kit/screens/kleidos-screen-sticks3.png": "ce4548cfe238ff251a58f349e600078064e4da37f02174493b5eab8b06012660",
+        "press-kit/screens/kleidos-screen-m5stickc-plus2.png": "83f080ae27414d761a63c3ef42be67fb9393ce522ea2af3174c24b2f2f506915",
+        "press-kit/screens/kleidos-screen-m5stickc-plus1.png": "f797eae6a35fc5cbba40e6ad489340d9ae30e7a8ceaf93116c8474bfd029179f",
+        "press-kit/screens/kleidos-screen-m5stickc-plus-se.png": "d666c92ed10d9a7355bf193e07a188457c72fc368c0cad42c11523a7bd8205d3",
+        "press-kit/screens/kleidos-screen-coreink.png": "424536b9dffe1271faaebdf1c7ff936459e636d779b24cd19c1aa26a6e03cea9",
+        "press-kit/screens/kleidos-screen-cores3-se.png": "9cb7831e0dec53bc7d2de8bf86bec333d1f78e50b468d92c4d3234ea009755e0",
+        "press-kit/screens/kleidos-screen-m5stack-core2-v13.png": "a73016793851d0a46c9853dade250beb9a920e92129998a86374d6e48f52ca93",
+        "press-kit/screens/kleidos-screen-cardputer.png": "57d77d274dff42c4cb4d10f6c484745bfe456a764c4f37de16f987002342efc9",
+        "press-kit/screens/kleidos-screen-tdeck-plus.png": "802cdf42c4676770e3bea58e5f6fd679a510b9c2e06582ae52abd4a7a572e0f7",
         "boards/boards.json": "2fc93598d2f55a45e56618cf53496ffc3eb1d1b6c4d17efe6f4937796f2358f1",
         "boards/sticks3.svg": "0c893adb838469d0a5b503130061349feaeeb0d6064d1d62e8a69fa03c2c855f",
         "boards/m5stickc-plus2.svg": "170040d38f2c50673eb334000859a443728ca72bcc36b6045c2c99739c0d7c0d",
@@ -1618,146 +1739,146 @@
       }
     },
     "press-kit/screens/kleidos-screen-sticks3-8x.png": {
-      "sha256": "090b6daf8d8ea73a15057e6579804ae28da38b147e1143c3671d0e758c1b24f3",
-      "bytes": 18435,
+      "sha256": "e1c2e050a7a155cf4cb9c70fe780dac190f6659bba9bc6bbaaf289379a40aa63",
+      "bytes": 22551,
       "size": [
         1080,
         1920
       ],
       "drawn_from": "dcd8457f76e3325008a506cb4ce79262b4e5c2b62dcb88ebba6f5603a6465bfd",
       "inputs": {
-        "press-kit/screens/kleidos-screen-sticks3.png": "dcd8457f76e3325008a506cb4ce79262b4e5c2b62dcb88ebba6f5603a6465bfd",
-        "press-kit/src/press.json": "8b266a23f3999b4d4b8655d32eb250acc7bf3b5b8da1a0b5c9b198acce1dfa90"
+        "press-kit/screens/kleidos-screen-sticks3.png": "ce4548cfe238ff251a58f349e600078064e4da37f02174493b5eab8b06012660",
+        "press-kit/src/press.json": "3b77cd83744216b458cc6b97f1e9f7ee43b97182163728d49eb4fa8450e67ae0"
       }
     },
     "press-kit/screens/kleidos-screen-m5stickc-plus2-8x.png": {
-      "sha256": "de8afd0b3e538a35d7075acef1e18b7667b2cc46d55033e8288a30a53638270a",
-      "bytes": 18399,
+      "sha256": "6e22afc9a0602679f0c2ec39a85b5d1446c884258afe1df78f71ce497905c162",
+      "bytes": 22566,
       "size": [
         1080,
         1920
       ],
       "drawn_from": "80f170e144bd88c8e1af234305419ad51c44addfdb4c1252e408ef11688bf996",
       "inputs": {
-        "press-kit/screens/kleidos-screen-m5stickc-plus2.png": "80f170e144bd88c8e1af234305419ad51c44addfdb4c1252e408ef11688bf996",
-        "press-kit/src/press.json": "8b266a23f3999b4d4b8655d32eb250acc7bf3b5b8da1a0b5c9b198acce1dfa90"
+        "press-kit/screens/kleidos-screen-m5stickc-plus2.png": "83f080ae27414d761a63c3ef42be67fb9393ce522ea2af3174c24b2f2f506915",
+        "press-kit/src/press.json": "3b77cd83744216b458cc6b97f1e9f7ee43b97182163728d49eb4fa8450e67ae0"
       }
     },
     "press-kit/screens/kleidos-screen-m5stickc-plus1-8x.png": {
-      "sha256": "de8afd0b3e538a35d7075acef1e18b7667b2cc46d55033e8288a30a53638270a",
-      "bytes": 18399,
+      "sha256": "2c89f2aa13d41c80e6cbcd8294fa34d9386240d43c5f20442edd0c29238b9d19",
+      "bytes": 22584,
       "size": [
         1080,
         1920
       ],
       "drawn_from": "80f170e144bd88c8e1af234305419ad51c44addfdb4c1252e408ef11688bf996",
       "inputs": {
-        "press-kit/screens/kleidos-screen-m5stickc-plus1.png": "80f170e144bd88c8e1af234305419ad51c44addfdb4c1252e408ef11688bf996",
-        "press-kit/src/press.json": "8b266a23f3999b4d4b8655d32eb250acc7bf3b5b8da1a0b5c9b198acce1dfa90"
+        "press-kit/screens/kleidos-screen-m5stickc-plus1.png": "f797eae6a35fc5cbba40e6ad489340d9ae30e7a8ceaf93116c8474bfd029179f",
+        "press-kit/src/press.json": "3b77cd83744216b458cc6b97f1e9f7ee43b97182163728d49eb4fa8450e67ae0"
       }
     },
     "press-kit/screens/kleidos-screen-m5stickc-plus-se-8x.png": {
-      "sha256": "de8afd0b3e538a35d7075acef1e18b7667b2cc46d55033e8288a30a53638270a",
-      "bytes": 18399,
+      "sha256": "f0343aa1d1ea13afabece73d4f86df8f9c26cc0b814b025b97a2f598244fa16c",
+      "bytes": 22584,
       "size": [
         1080,
         1920
       ],
       "drawn_from": "80f170e144bd88c8e1af234305419ad51c44addfdb4c1252e408ef11688bf996",
       "inputs": {
-        "press-kit/screens/kleidos-screen-m5stickc-plus-se.png": "80f170e144bd88c8e1af234305419ad51c44addfdb4c1252e408ef11688bf996",
-        "press-kit/src/press.json": "8b266a23f3999b4d4b8655d32eb250acc7bf3b5b8da1a0b5c9b198acce1dfa90"
+        "press-kit/screens/kleidos-screen-m5stickc-plus-se.png": "d666c92ed10d9a7355bf193e07a188457c72fc368c0cad42c11523a7bd8205d3",
+        "press-kit/src/press.json": "3b77cd83744216b458cc6b97f1e9f7ee43b97182163728d49eb4fa8450e67ae0"
       }
     },
     "press-kit/screens/kleidos-screen-coreink-6x.png": {
-      "sha256": "8b58ea8f7fd9811f54f92d1800639d242efce02de904e282adcf973186a647e3",
-      "bytes": 8118,
+      "sha256": "dbdfd10ad1b4c0017822dfe0f496627820fa6393db530e022fb19a68aefb9b29",
+      "bytes": 12270,
       "size": [
         1200,
         1200
       ],
       "drawn_from": "78cc9bf8a31b9e653f9c4fb9103e37ca74409e4d496dc63ef39615660a45275c",
       "inputs": {
-        "press-kit/screens/kleidos-screen-coreink.png": "78cc9bf8a31b9e653f9c4fb9103e37ca74409e4d496dc63ef39615660a45275c",
-        "press-kit/src/press.json": "8b266a23f3999b4d4b8655d32eb250acc7bf3b5b8da1a0b5c9b198acce1dfa90"
+        "press-kit/screens/kleidos-screen-coreink.png": "424536b9dffe1271faaebdf1c7ff936459e636d779b24cd19c1aa26a6e03cea9",
+        "press-kit/src/press.json": "3b77cd83744216b458cc6b97f1e9f7ee43b97182163728d49eb4fa8450e67ae0"
       }
     },
     "press-kit/screens/kleidos-screen-cardputer-8x.png": {
-      "sha256": "50fc82a5651983539131261cb75721cfb3b454b35c6ed0911eb4528804ed6c15",
-      "bytes": 12923,
+      "sha256": "a0c057ec530c9597cb4bd848d7ca645c6ab9da397fe6663d18101ac307aa58ee",
+      "bytes": 17117,
       "size": [
         1920,
         1080
       ],
       "drawn_from": "280637e53867d7f1886188e866acca6b93752de9cca3978f16190b373be7b4ad",
       "inputs": {
-        "press-kit/screens/kleidos-screen-cardputer.png": "280637e53867d7f1886188e866acca6b93752de9cca3978f16190b373be7b4ad",
-        "press-kit/src/press.json": "8b266a23f3999b4d4b8655d32eb250acc7bf3b5b8da1a0b5c9b198acce1dfa90"
+        "press-kit/screens/kleidos-screen-cardputer.png": "57d77d274dff42c4cb4d10f6c484745bfe456a764c4f37de16f987002342efc9",
+        "press-kit/src/press.json": "3b77cd83744216b458cc6b97f1e9f7ee43b97182163728d49eb4fa8450e67ae0"
       }
     },
     "press-kit/screens/kleidos-screen-tdeck-plus-6x.png": {
-      "sha256": "f7292880b57e873d00285933c879ef61c7934c1e73714b483f0a3b489df306b1",
-      "bytes": 16588,
+      "sha256": "45f0642cefda482e7edeae253a2357b31a8869c736bd8c7ff2d21263f2d33600",
+      "bytes": 20768,
       "size": [
         1920,
         1440
       ],
       "drawn_from": "e413748d412d687e5a4a6f84fa6022a4cbc49a6bf1b14286042c8ad8ed040b5f",
       "inputs": {
-        "press-kit/screens/kleidos-screen-tdeck-plus.png": "e413748d412d687e5a4a6f84fa6022a4cbc49a6bf1b14286042c8ad8ed040b5f",
-        "press-kit/src/press.json": "8b266a23f3999b4d4b8655d32eb250acc7bf3b5b8da1a0b5c9b198acce1dfa90"
+        "press-kit/screens/kleidos-screen-tdeck-plus.png": "802cdf42c4676770e3bea58e5f6fd679a510b9c2e06582ae52abd4a7a572e0f7",
+        "press-kit/src/press.json": "3b77cd83744216b458cc6b97f1e9f7ee43b97182163728d49eb4fa8450e67ae0"
       }
     },
     "press-kit/screens/kleidos-screen-cores3-se-6x.png": {
-      "sha256": "15e4f5eafc9682217a8f73b30b1cb17f25bbfb8a8a6c69420d497cf84c26c392",
-      "bytes": 20607,
+      "sha256": "068546cfc9d958f130a8083be08c7c0c38f1f7d5e04c913aade72b0008b642c3",
+      "bytes": 24777,
       "size": [
         1920,
         1440
       ],
       "drawn_from": "b9c566b1af2c831bc3dcfdb57e19f699c1a230af70a06a6ddc3f4aebcda9cb70",
       "inputs": {
-        "press-kit/screens/kleidos-screen-cores3-se.png": "b9c566b1af2c831bc3dcfdb57e19f699c1a230af70a06a6ddc3f4aebcda9cb70",
-        "press-kit/src/press.json": "8b266a23f3999b4d4b8655d32eb250acc7bf3b5b8da1a0b5c9b198acce1dfa90"
+        "press-kit/screens/kleidos-screen-cores3-se.png": "9cb7831e0dec53bc7d2de8bf86bec333d1f78e50b468d92c4d3234ea009755e0",
+        "press-kit/src/press.json": "3b77cd83744216b458cc6b97f1e9f7ee43b97182163728d49eb4fa8450e67ae0"
       }
     },
     "press-kit/screens/kleidos-screen-m5stack-core2-v13-6x.png": {
-      "sha256": "4d9f81d28c8c16f24bedcd270eb9ed70ec7a8ce74e3cd59e54a81f13899a9487",
-      "bytes": 20944,
+      "sha256": "7b6d975eb665e2064bcdbdf20419b49b20ec98a7a33824c49ade88251b5c7cc1",
+      "bytes": 25144,
       "size": [
         1920,
         1440
       ],
       "drawn_from": "9f660bf0984693441bf8575f67c02ea6ef5d64005fcf1d0b99d5ea22e671846a",
       "inputs": {
-        "press-kit/screens/kleidos-screen-m5stack-core2-v13.png": "9f660bf0984693441bf8575f67c02ea6ef5d64005fcf1d0b99d5ea22e671846a",
-        "press-kit/src/press.json": "8b266a23f3999b4d4b8655d32eb250acc7bf3b5b8da1a0b5c9b198acce1dfa90"
+        "press-kit/screens/kleidos-screen-m5stack-core2-v13.png": "a73016793851d0a46c9853dade250beb9a920e92129998a86374d6e48f52ca93",
+        "press-kit/src/press.json": "3b77cd83744216b458cc6b97f1e9f7ee43b97182163728d49eb4fa8450e67ae0"
       }
     },
     "press-kit/photos/kleidos-photo-four-boards-1920.jpg": {
-      "sha256": "a46ee7b9e6a4fea9f3874e400b0e9f20a840b88942db4d5d478941e6a11c448b",
-      "bytes": 927964,
+      "sha256": "6c2b6d010e336b2eef5a667b8bbee4a5f03cc44338c7e7af60fd443f4f21eb7e",
+      "bytes": 932492,
       "size": [
         1920,
         1440
       ],
       "drawn_from": "36b9c9ed30bfd25397063ed824c87ed94d817439adbd14827a11f1b1a79dec4c",
       "inputs": {
-        "press-kit/photos/kleidos-photo-four-boards.jpg": "36b9c9ed30bfd25397063ed824c87ed94d817439adbd14827a11f1b1a79dec4c",
-        "press-kit/src/press.json": "8b266a23f3999b4d4b8655d32eb250acc7bf3b5b8da1a0b5c9b198acce1dfa90"
+        "press-kit/photos/kleidos-photo-four-boards.jpg": "1d41394cca778628f2fe035d058f6000e73d0b58b5e9f8c56abc3a60d894abb3",
+        "press-kit/src/press.json": "3b77cd83744216b458cc6b97f1e9f7ee43b97182163728d49eb4fa8450e67ae0"
       }
     },
     "press-kit/photos/kleidos-photo-four-boards-1200.jpg": {
-      "sha256": "3c403f96a025f1ff6747f65120d471b1d36a76dd38f5c00f25112cf2a4929c6c",
-      "bytes": 415219,
+      "sha256": "768b9dad636b4930cd9591dad7d737c844c29011c8de410954885638e4a203c7",
+      "bytes": 419747,
       "size": [
         1200,
         900
       ],
       "drawn_from": "36b9c9ed30bfd25397063ed824c87ed94d817439adbd14827a11f1b1a79dec4c",
       "inputs": {
-        "press-kit/photos/kleidos-photo-four-boards.jpg": "36b9c9ed30bfd25397063ed824c87ed94d817439adbd14827a11f1b1a79dec4c",
-        "press-kit/src/press.json": "8b266a23f3999b4d4b8655d32eb250acc7bf3b5b8da1a0b5c9b198acce1dfa90"
+        "press-kit/photos/kleidos-photo-four-boards.jpg": "1d41394cca778628f2fe035d058f6000e73d0b58b5e9f8c56abc3a60d894abb3",
+        "press-kit/src/press.json": "3b77cd83744216b458cc6b97f1e9f7ee43b97182163728d49eb4fa8450e67ae0"
       }
     }
   }

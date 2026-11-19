@@ -1,23 +1,35 @@
 # SPDX-License-Identifier: MIT
-"""Photographs: JPEG files that hold pixels and nothing else.
+"""Photographs: JPEG files that hold pixels, and the record of what they are.
 
 A camera writes far more than pixels into a file: the time, the place, the
 device, its settings, a thumbnail, sometimes the owner's name. A photograph
 in this project is the owner's own, given for publication, and goes into the
 tree only as :func:`clean` writes it: turned upright, its colors converted to
-sRGB, encoded again from its pixels with no EXIF, XMP, IPTC, ICC profile or
-comment. The narrower copies are drawn from that file by :func:`narrowed`,
-with the same settings, so the builder can make them again and compare.
+sRGB, encoded again from its pixels with no EXIF, ICC profile or comment. The
+narrower copies are drawn from that file by :func:`narrowed`, with the same
+settings, so the builder can make them again and compare.
+
+The one thing added is the record of what the picture is (:mod:`.meta`): an
+XMP packet in APP1 and its IIM twin in APP13, right after the JFIF header.
+:func:`stamp` writes them on a published file without touching a byte from
+its first table on, so the builder restamps the full-resolution file from its
+record without encoding it again.
 
 :func:`findings` reads every segment of a JPEG, through its scans to its end,
-and refuses any that is not pixels, tables or the bare JFIF header, and any
-byte after the end-of-image marker.
+and refuses any that is not pixels, tables, the bare JFIF header or the
+profile's two metadata segments, and any byte after the end-of-image marker.
+Camera data never comes back: no EXIF segment is ever accepted.
 """
 from __future__ import annotations
 
 import io
 from pathlib import Path
-from typing import Any
+from typing import TYPE_CHECKING, Any
+
+from . import meta as media
+
+if TYPE_CHECKING:
+    from .meta import MediaMeta
 
 PHOTOS_DIR = Path("press-kit/photos")
 
@@ -31,18 +43,37 @@ SUBSAMPLING = 0
 #: bare JFIF header (APP0), quantization and Huffman tables, the frame
 #: header, the restart interval and the scans.
 ALLOWED_MARKERS = frozenset({0xD8, 0xD9, 0xE0, 0xDB, 0xC4, 0xC0, 0xC1, 0xC2, 0xDD, 0xDA})
+#: And, with a record, the profile's XMP (APP1) and IIM (APP13), holding exactly what the record gives.
+METADATA_MARKERS = frozenset({0xE1, 0xED})
 MARKER_NAMES = {0xE1: "APP1 (EXIF or XMP)", 0xE2: "APP2 (ICC profile)", 0xED: "APP13 (IPTC)", 0xFE: "COM (a comment)"}
 
 
-def encode(image: Any) -> bytes:
-    """Return *image* as a JPEG that holds its pixels and nothing else."""
+def encode(image: Any, meta: MediaMeta | None = None) -> bytes:
+    """Return *image* as a JPEG that holds its pixels and, given a record, its metadata.
+
+    The image's ``info`` is left behind, so Pillow never writes EXIF, XMP or a
+    color profile it carried in.
+    """
+    bare_image = image.copy()
+    bare_image.info = {}
     buffer = io.BytesIO()
-    image.save(buffer, "JPEG", quality=QUALITY, subsampling=SUBSAMPLING, optimize=True, progressive=False)
-    return buffer.getvalue()
+    bare_image.save(buffer, "JPEG", quality=QUALITY, subsampling=SUBSAMPLING, optimize=True, progressive=False)
+    data = buffer.getvalue()
+    return data if meta is None else media.jpeg_stamp(data, meta)
 
 
-def clean(data: bytes) -> bytes:
-    """Return a camera's JPEG as this project publishes it: upright, sRGB, pixels only."""
+def stamp(data: bytes, meta: MediaMeta) -> bytes:
+    """Return a published JPEG with its metadata replaced by the record's, every byte from its first table on unchanged."""
+    return media.jpeg_stamp(data, meta)
+
+
+def bare(data: bytes) -> bytes:
+    """Return a JPEG with only its JFIF header before its tables."""
+    return media.jpeg_bare(data)
+
+
+def clean(data: bytes, meta: MediaMeta | None = None) -> bytes:
+    """Return a camera's JPEG as this project publishes it: upright, sRGB, pixels only, then the record given."""
     from PIL import Image, ImageCms, ImageOps  # noqa: PLC0415
 
     with Image.open(io.BytesIO(data)) as opened:
@@ -55,16 +86,16 @@ def clean(data: bytes) -> bytes:
                                            renderingIntent=ImageCms.Intent.RELATIVE_COLORIMETRIC, outputMode="RGB")
     fresh = Image.new("RGB", pixels.size)
     fresh.paste(pixels)
-    return encode(fresh)
+    return encode(fresh, meta)
 
 
-def narrowed(data: bytes, width: int) -> bytes:
-    """Return a copy of a published photograph *width* pixels wide."""
+def narrowed(data: bytes, width: int, meta: MediaMeta | None = None) -> bytes:
+    """Return a copy of a published photograph *width* pixels wide, with the record given."""
     from PIL import Image  # noqa: PLC0415
 
     with Image.open(io.BytesIO(data)) as opened:
         height = round(width * opened.height / opened.width)
-        return encode(opened.convert("RGB").resize((width, height), Image.Resampling.LANCZOS))
+        return encode(opened.convert("RGB").resize((width, height), Image.Resampling.LANCZOS), meta)
 
 
 #: Inside a scan's coded data, 0xFF is followed by a stuffed zero or a restart marker; any other
@@ -116,8 +147,12 @@ def size(data: bytes) -> tuple[int, int]:
         return opened.size
 
 
-def findings(name: str, data: bytes, expected: tuple[int, int] | None = None, limit: int | None = None) -> list[str]:
-    """Return what is wrong with a published photograph: its segments, its size, its weight."""
+def findings(name: str, data: bytes, expected: tuple[int, int] | None = None, limit: int | None = None,
+             meta: MediaMeta | None = None) -> list[str]:
+    """Return what is wrong with a published photograph: its segments, its metadata, its size, its weight.
+
+    :param meta: The file's record. Without one, any metadata segment is refused.
+    """
     try:
         (found_markers, end), actual = walk(data), size(data)
     except (ValueError, OSError):
@@ -125,10 +160,14 @@ def findings(name: str, data: bytes, expected: tuple[int, int] | None = None, li
     found = []
     if end != len(data):
         found.append(f"{name}: carries {len(data) - end:,} bytes after its end-of-image marker")
-    extra = sorted({marker for marker in found_markers if marker not in ALLOWED_MARKERS})
+    allowed = ALLOWED_MARKERS | (METADATA_MARKERS if meta is not None else frozenset())
+    extra = sorted({marker for marker in found_markers if marker not in allowed})
     if extra:
         what = ", ".join(MARKER_NAMES.get(marker, f"marker 0x{marker:02X}") for marker in extra)
-        found.append(f"{name}: holds {what}; a published photograph holds pixels and tables only")
+        holds = "pixels, tables and the profile's metadata" if meta is not None else "pixels and tables only"
+        found.append(f"{name}: holds {what}; a published photograph holds {holds}")
+    if meta is not None:
+        found += media.jpeg_findings(name, data, meta)
     if 0xE0 in found_markers:
         app0 = data.index(b"\xff\xe0")
         length = int.from_bytes(data[app0 + 2 : app0 + 4], "big")

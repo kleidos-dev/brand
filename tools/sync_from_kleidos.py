@@ -28,7 +28,7 @@ from typing import Any
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-from kleidos_brand import BRAND_ROOT, mark, press, public_tree, tokens  # noqa: E402
+from kleidos_brand import BRAND_ROOT, mark, png, press, public_tree, tokens  # noqa: E402
 
 MIRROR_JSON = Path("tokens/mirror.json")
 SKILL_TOKENS = ".claude/skills/kleidos-design-system/assets/tokens.json"
@@ -149,10 +149,11 @@ def other_findings(kleidos: Path, boards: Path | None, root: Path = BRAND_ROOT) 
         for name, text in copied.items():
             if (root / name).read_text(encoding="utf-8").strip() != text:
                 found.append(f"{name}: is not the site's sentence ({text[:60]}…)")
+    # A capture here carries its own metadata (kleidos_brand.meta), so it is held to its master's pixels, not its bytes.
     for board, screen in data["screens"].items():
         native = root / press.SCREENS_DIR / f"kleidos-screen-{board}.png"
-        if native.read_bytes() != (kleidos / screen["from"]).read_bytes():
-            found.append(f"{native.relative_to(root)}: is not a byte copy of {screen['from']}")
+        if png.differing(native.read_bytes(), (kleidos / screen["from"]).read_bytes()) != 0:
+            found.append(f"{native.relative_to(root)}: does not hold the pixels of {screen['from']}")
     return found
 
 

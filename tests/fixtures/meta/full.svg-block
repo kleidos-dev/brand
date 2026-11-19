@@ -1,0 +1,26 @@
+  <title id="kl-fixture-t">Imagen de prensa de Kleidos: un ejemplo, 16:9</title>
+  <desc id="kl-fixture-d">Un ejemplo: el registro que cada copia del módulo convierte en los mismos bytes.</desc>
+  <!-- REUSE-IgnoreStart -->
+  <metadata id="kl-fixture-m">
+    <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+             xmlns:dc="http://purl.org/dc/elements/1.1/"
+             xmlns:cc="http://creativecommons.org/ns#"
+             xmlns:Iptc4xmpExt="http://iptc.org/std/Iptc4xmpExt/2008-02-29/">
+      <cc:Work rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+        <dc:title><rdf:Alt><rdf:li xml:lang="x-default">Kleidos press image: a fixture, 16:9</rdf:li><rdf:li xml:lang="es">Imagen de prensa de Kleidos: un ejemplo, 16:9</rdf:li></rdf:Alt></dc:title>
+        <dc:description><rdf:Alt><rdf:li xml:lang="x-default">A fixture: the record every copy of the module turns into the same bytes. It holds &lt;, &gt; &amp; &quot;.</rdf:li><rdf:li xml:lang="es">Un ejemplo: el registro que cada copia del módulo convierte en los mismos bytes.</rdf:li></rdf:Alt></dc:description>
+        <dc:creator><cc:Agent><dc:title>José M. Requena Plens</dc:title></cc:Agent></dc:creator>
+        <dc:publisher><cc:Agent><dc:title>Kleidos</dc:title></cc:Agent></dc:publisher>
+        <dc:rights><cc:Agent><dc:title>© 2026 José M. Requena Plens; © 2021 M5Stack. GPL-3.0-or-later AND MIT.</dc:title></cc:Agent></dc:rights>
+        <dc:identifier>https://github.com/kleidos-dev/brand/blob/main/tests/fixtures/meta/full.png</dc:identifier>
+        <dc:source>https://github.com/kleidos-dev/brand/blob/main/tests/fixtures/meta/full.svg</dc:source>
+        <dc:language>es</dc:language>
+        <dc:subject><rdf:Bag><rdf:li>Kleidos</rdf:li><rdf:li>hardware password manager</rdf:li><rdf:li>open source</rdf:li><rdf:li>fixture</rdf:li><rdf:li>M5Stack</rdf:li><rdf:li>LILYGO</rdf:li></rdf:Bag></dc:subject>
+        <Iptc4xmpExt:DigitalSourceType rdf:resource="http://cv.iptc.org/newscodes/digitalsourcetype/composite"/>
+        <cc:license rdf:resource="https://spdx.org/licenses/GPL-3.0-or-later.html"/>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <!-- REUSE-IgnoreEnd -->

@@ -3,8 +3,32 @@
   SPDX-License-Identifier: GPL-3.0-or-later
   Additional terms under section 7 of the GNU GPL version 3: TRADEMARKS.md
 -->
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2444 2222" width="2444" height="2222" role="img">
-  <title>The Kleidos palette: every color with its name and its value</title>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2444 2222" width="2444" height="2222" role="img" aria-labelledby="kl-palette-t kl-palette-d" lang="en">
+  <title id="kl-palette-t">Kleidos color palette</title>
+  <desc id="kl-palette-d">The Kleidos palette: every brand, web and device color with its token name and its hex value.</desc>
+  <!-- REUSE-IgnoreStart -->
+  <metadata id="kl-palette-m">
+    <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+             xmlns:dc="http://purl.org/dc/elements/1.1/"
+             xmlns:cc="http://creativecommons.org/ns#"
+             xmlns:Iptc4xmpExt="http://iptc.org/std/Iptc4xmpExt/2008-02-29/">
+      <cc:Work rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+        <dc:title>Kleidos color palette</dc:title>
+        <dc:description>The Kleidos palette: every brand, web and device color with its token name and its hex value.</dc:description>
+        <dc:creator><cc:Agent><dc:title>José M. Requena Plens</dc:title></cc:Agent></dc:creator>
+        <dc:publisher><cc:Agent><dc:title>Kleidos</dc:title></cc:Agent></dc:publisher>
+        <dc:rights><cc:Agent><dc:title>© 2026 José M. Requena Plens. GPL-3.0-or-later.</dc:title></cc:Agent></dc:rights>
+        <dc:identifier>https://github.com/kleidos-dev/brand/blob/main/colors/palette.svg</dc:identifier>
+        <dc:language>en</dc:language>
+        <dc:subject><rdf:Bag><rdf:li>Kleidos</rdf:li><rdf:li>hardware password manager</rdf:li><rdf:li>open source</rdf:li><rdf:li>color palette</rdf:li><rdf:li>design tokens</rdf:li><rdf:li>brand</rdf:li></rdf:Bag></dc:subject>
+        <Iptc4xmpExt:DigitalSourceType rdf:resource="http://cv.iptc.org/newscodes/digitalsourcetype/digitalCreation"/>
+        <cc:license rdf:resource="https://spdx.org/licenses/GPL-3.0-or-later.html"/>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <!-- REUSE-IgnoreEnd -->
   <rect x="0" y="0" width="2444" height="2222" fill="#0a0c0f"/>
   <path fill="#9aa3ad" transform="translate(120 150) scale(0.03 -0.03)" d="M542 542Q542 482 516.5 440Q491 398 444 384V374Q500 361 529 316Q558 271 558 206Q558 107 504.5 53.5Q451 0 353 0H89V729H368Q453 729 497.5 678.5Q542 628 542 542ZM438 212Q438 268 413.5 298.5Q389 329 346 329H203V92H340Q389 92 413.5 124Q438 156 438 212ZM424 526Q424 579 400.5 608.5Q377 638 336 638H203V417H340Q382 417 403 446Q424 475 424 526ZM1296 532Q1296 465 1268 420Q1240 375 1191 357V348Q1239 338 1261.5 302.5Q1284 267 1284 204V80Q1284 54 1285.5 36Q1287 18 1294 0H1174Q1168 14 1166 33.5Q1164 53 1164 81V184Q1164 240 1145.5 266.5Q1127 293 1077 293H936V0H818V729H1107Q1195 729 1245.5 678.5Q1296 628 1296 532ZM1174 512Q1174 573 1149 602Q1124 631 1080 631H936V387H1080Q1128 387 1151 420.5Q1174 454 1174 512ZM1868 729 2065 0H1944L1901 166H1668L1626 0H1505L1701 729ZM1810 542 1791 641H1780L1759 542L1686 258H1884ZM2423 729 2631 197H2642L2639 430V729H2743V0H2631L2422 528H2410L2413 310V0H2303V729ZM3525 364Q3525 254 3494.5 172Q3464 90 3405.5 45Q3347 0 3265 0H3024V729H3265Q3347 729 3405.5 684Q3464 639 3494.5 556.5Q3525 474 3525 364ZM3404 366Q3404 452 3385.5 510.5Q3367 569 3331.5 599Q3296 629 3245 629H3142V101H3245Q3297 101 3332.5 131.5Q3368 162 3386 221Q3404 280 3404 366Z"><title>BRAND</title></path>
   <rect x="118" y="182" width="224" height="136" fill="#2e3033"/>
