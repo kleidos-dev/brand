@@ -1,5 +1,13 @@
 # SPDX-License-Identifier: MIT
-name: check
+#
+# The repository's gate on every push and pull request, cheapest first
+# (the project's CI convention): the licences, the tree's rules and the
+# generated files take seconds and need no browser, and the two jobs that
+# do the slow work wait for them, so a red rule skips them.
+#
+#   🧹 Licences, tree rules and generated files ─┬─ 🧪 Tests and pictures
+#                                                 └─ 🧫 KiCad kit
+name: CI
 
 on:
   push:
@@ -10,17 +18,45 @@ on:
 permissions:
   contents: read
 
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+# The identity patterns of the metadata check's deny-list are private: they
+# come from the KLEIDOS_DENY_EXTRA secret, one pattern per line. A run
+# without it (a fork, Dependabot, or the secret not set yet) checks every
+# other class and warns that identity was not checked.
+env:
+  KLEIDOS_DENY_EXTRA: ${{ secrets.KLEIDOS_DENY_EXTRA }}
+  KLEIDOS_DENY_OPTIONAL: ${{ secrets.KLEIDOS_DENY_EXTRA == '' && '1' || '0' }}
+
 jobs:
+  lint:
+    name: "🧹 Licences, tree rules and generated files"
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        with:
+          python-version-file: .python-version
+          cache: pip
+      - name: Install the pinned stack
+        run: pip install -r requirements.txt
+      - name: Licenses (REUSE)
+        run: reuse lint
+      - name: The tree's rules
+        run: python tools/check.py
+      - name: Every generated file is what its sources give (no browser)
+        run: python tools/build.py --check --static
+
   check:
+    name: "🧪 Tests and pictures"
+    needs: lint
     runs-on: ubuntu-latest
     timeout-minutes: 45
-    # The identity patterns of the metadata check's deny-list are private:
-    # they come from the KLEIDOS_DENY_EXTRA secret, one pattern per line. A
-    # run without it (a fork, Dependabot, or the secret not set yet) checks
-    # every other class and warns that identity was not checked.
-    env:
-      KLEIDOS_DENY_EXTRA: ${{ secrets.KLEIDOS_DENY_EXTRA }}
-      KLEIDOS_DENY_OPTIONAL: ${{ secrets.KLEIDOS_DENY_EXTRA == '' && '1' || '0' }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -33,12 +69,6 @@ jobs:
         run: pip install -r requirements.txt
       - name: Install the browser the pictures are drawn with
         run: python -m playwright install --with-deps chromium
-      - name: Licenses (REUSE)
-        run: reuse lint
-      - name: The tree's rules
-        run: python tools/check.py
-      - name: Every generated file is what its sources give (no browser)
-        run: python tools/build.py --check --static
       - name: Tests
         run: python -m pytest -rs tests
       # Exact pixels are the exporting machine's to compare: this runner's
@@ -52,6 +82,8 @@ jobs:
   # the theme found and one wire width, so a drawing sheet or a theme KiCad
   # cannot read never merges. Standard library only: the image's own Python.
   kicad:
+    name: "🧫 KiCad kit (fixture exported on each ground)"
+    needs: lint
     runs-on: ubuntu-latest
     timeout-minutes: 20
     container:

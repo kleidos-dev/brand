@@ -30,7 +30,7 @@ Rules for any agent changing this repository. [README.md](README.md) says what i
 .venv/bin/python tools/build.py --kicad --check --static                                     # after a change to kicad/: draw the previews again with kicad-cli first (--kicad)
 ```
 
-Regenerate what the builder owns (`.venv/bin/python tools/build.py`) instead of editing it, commit the regenerated files with the change that caused them, and **look at every image you produced** before committing it, small sizes and both grounds included. CI (`.github/workflows/check.yml`) runs `reuse lint`, `tools/check.py`, the tests, and the builder's static and tolerant checks.
+Regenerate what the builder owns (`.venv/bin/python tools/build.py`) instead of editing it, commit the regenerated files with the change that caused them, and **look at every image you produced** before committing it, small sizes and both grounds included. CI (`.github/workflows/check.yml`, workflow `CI`) runs `reuse lint`, `tools/check.py` and the builder's static check first, then, once they pass, the tests and the builder's tolerant check beside the KiCad kit's export.
 
 ## Rules
 
