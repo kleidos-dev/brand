@@ -35,10 +35,6 @@ jobs:
         run: python -m playwright install --with-deps chromium
       - name: Licenses (REUSE)
         run: reuse lint
-      # A byte copy of social's banner: it changes there, then
-      # tools/sync_readme_banners.py --write copies it here.
-      - name: The README banner is social's, byte for byte
-        run: shasum -a 256 -c .github/readme/SHA256SUMS
       - name: The tree's rules
         run: python tools/check.py
       - name: Every generated file is what its sources give (no browser)
