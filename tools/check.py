@@ -72,8 +72,6 @@ MEDIA_SUFFIXES = frozenset({".png", ".jpg", ".jpeg", ".webp", ".avif", ".gif", "
 METADATA_EXEMPT = (
     ("fonts/**", "third-party font files, unmodified, pinned by SHA-256 in fonts/VERSIONS.md; their name tables say what they are"),
     ("boards/*.svg", "byte copies of the boards repository's fronts: their metadata is written there and comes with each copy"),
-    (".github/readme/*.svg", "byte copies of the social repository's README banner: their metadata is written there and comes with each"
-                             " copy; .github/readme/SHA256SUMS holds their bytes"),
 )
 #: The hand-made SVG sources the builder reads: held to the license header, a title and a description, and no RDF.
 METADATA_SOURCES = ("logo/src/mark.svg", "press-kit/src/*.svg")

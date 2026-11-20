@@ -1,9 +1,9 @@
 <!-- BEGIN GENERATED: banner (kleidos-dev/social, tools/sync_readme_banners.py); do not edit by hand -->
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset=".github/readme/banner-dark.svg">
-  <source media="(prefers-color-scheme: light)" srcset=".github/readme/banner-light.svg">
-  <img src=".github/readme/banner-light.svg" width="100%" alt="Kleidos Brand: The logo, type, colors, tokens and press kit.">
+  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/kleidos-dev/social/main/svg/readme/brand/banner-dark.svg">
+  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/kleidos-dev/social/main/svg/readme/brand/banner-light.svg">
+  <img src="https://raw.githubusercontent.com/kleidos-dev/social/main/svg/readme/brand/banner-light.svg" width="100%" alt="Kleidos Brand: The logo, type, colors, tokens and press kit.">
 </picture>
 
 <!-- END GENERATED: banner -->
