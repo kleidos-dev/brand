@@ -106,9 +106,17 @@ jobs:
         run: python3 tools/check_kicad.py
 
   # The Python code (tools/, the KiCad helper and the tests) on SonarQube
-  # Cloud: sonar-project.properties holds the project.
+  # Cloud: sonar-project.properties holds the project. Secretless: the job
+  # trades its GitHub OIDC token for a short-lived token scoped to this one
+  # project (SonarSource/sonarqube-auth-action), so no SONAR_TOKEN secret
+  # exists. It analyses every push to main and every pull request against
+  # main; GitHub gives no OIDC token to a pull request from a fork, so there
+  # the job prints a notice and analyses nothing.
   sonarcloud:
     name: "📊 SonarCloud"
+    if: >-
+      (github.event_name == 'push' && github.ref == 'refs/heads/main')
+      || (github.event_name == 'pull_request' && github.base_ref == 'main')
     runs-on: ubuntu-latest
     # A bound for a hung scanner, with room for the scan to grow (15 minutes
     # is the owner's value in gitlab-mcp-server, where 5 cut off the upload).
@@ -118,42 +126,50 @@ jobs:
     needs: [check]
     permissions:
       contents: read
-      pull-requests: read
-    # Mandatory: no `if:` on the token and no continue-on-error. Every code
-    # repository holds SONAR_TOKEN, so a missing token, a scanner error or an
-    # analysis the server refuses is a red job, never a silent green.
+      id-token: write
+    env:
+      FORK_PR: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name != github.repository }}
+    # No continue-on-error: on main and on this repository's own pull
+    # requests, a failed token exchange, a scanner error or an analysis the
+    # server refuses is a red job, never a silent green.
     steps:
-      # Full history: blame and the new-code period need it. The scan holds
-      # SONAR_TOKEN, so the checkout leaves no git credential behind.
+      - name: A pull request from a fork is not analysed
+        if: env.FORK_PR == 'true'
+        run: echo "::notice title=SonarCloud skipped::GitHub gives no OIDC token to a pull request from a fork, so SonarCloud does not analyse it. The push to main after the merge is analysed."
+
+      # Full history: blame and the new-code period need it. The checkout
+      # leaves no git credential behind for the steps that hold the token.
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        if: env.FORK_PR != 'true'
         with:
           fetch-depth: 0
           persist-credentials: false
 
       - name: Fetch the coverage report
+        if: env.FORK_PR != 'true'
         uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
         with:
           name: coverage
 
+      # Right before the scan: the token lasts 30 minutes. It is exported as
+      # SONAR_TOKEN for the later steps of this job only.
+      - name: SonarCloud token (OIDC, no secret)
+        if: env.FORK_PR != 'true'
+        uses: SonarSource/sonarqube-auth-action@b372e2c2930aadfcc4f4399446da1e12772709ad # v1.2
+
       # The scanner detects the branch or pull request from the GitHub event;
       # sonar-project.properties holds the rest.
       - name: SonarCloud Scan
+        if: env.FORK_PR != 'true'
         uses: SonarSource/sonarqube-scan-action@59202af334b4ba7b5db01b701b8e79f8b3bef0f4 # v8.5.0
         env:
           SONAR_HOST_URL: https://sonarcloud.io
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      # The scanner's success means the report was uploaded; whether the
-      # server accepted it is decided afterwards by a Compute Engine task (the
-      # private plan's line limit, a broken report). This waits for that task
-      # and fails the job unless it succeeded. The quality gate is not judged
-      # here: SonarCloud's GitHub App reports it on the pull request.
       - name: SonarCloud accepted the analysis
+        if: env.FORK_PR != 'true'
         timeout-minutes: 10
         env:
           SONAR_HOST_URL: https://sonarcloud.io
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
           set -euo pipefail
           task="$(sed -n 's/^ceTaskId=//p' .scannerwork/report-task.txt)"
