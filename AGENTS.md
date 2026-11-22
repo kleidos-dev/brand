@@ -30,7 +30,9 @@ Rules for any agent changing this repository. [README.md](README.md) says what i
 .venv/bin/python tools/build.py --kicad --check --static                                     # after a change to kicad/: draw the previews again with kicad-cli first (--kicad)
 ```
 
-Regenerate what the builder owns (`.venv/bin/python tools/build.py`) instead of editing it, commit the regenerated files with the change that caused them, and **look at every image you produced** before committing it, small sizes and both grounds included. CI (`.github/workflows/check.yml`, workflow `CI`) runs `reuse lint`, `tools/check.py` and the builder's static check first, then, once they pass, the tests and the builder's tolerant check beside the KiCad kit's export.
+Regenerate what the builder owns (`.venv/bin/python tools/build.py`) instead of editing it, commit the regenerated files with the change that caused them, and **look at every image you produced** before committing it, small sizes and both grounds included. CI (`.github/workflows/check.yml`, workflow `CI`) runs `reuse lint`, `tools/check.py` and the builder's static check first, then, once they pass, the tests and the builder's tolerant check beside the KiCad kit's export, and last the `📊 SonarCloud` job, which analyses the Python code (`sonar-project.properties`, with the tests' coverage through `.coveragerc`) and fails when `SONAR_TOKEN` is missing or the server refuses the analysis.
+
+Pull requests are also reviewed by CodeRabbit (`.coderabbit.yaml`) and Greptile (`.greptile/`), set to inline comments and suggestions only: they never touch the title or the description and post no summary. Their path rules restate this file's rules and their ignore lists name the generated and copied paths above, so a change to either here changes them too.
 
 ## Rules
 

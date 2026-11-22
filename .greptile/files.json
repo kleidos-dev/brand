@@ -1,0 +1,28 @@
+{
+  "files": [
+    {
+      "path": "AGENTS.md",
+      "description": "The repository's rules for every contributor and agent: what is where, the checks before a commit, the mark, colors, text, fonts, licenses, metadata and privacy rules. Review findings cite these rules."
+    },
+    {
+      "path": "kicad/README.md",
+      "description": "The Kleidos KiCad style's rules: the numbers and rules every Kleidos schematic is drawn to, and how the kit is built and synced.",
+      "scope": [
+        "kicad/**",
+        "tools/kleidos_brand/kicad*.py",
+        "tools/sync_kicad.py",
+        "tools/check_kicad.py"
+      ]
+    },
+    {
+      "path": "logo/README.md",
+      "description": "The logo's rules of use: the mark always whole, the small mark under 24 px, the lockups and their grounds.",
+      "scope": [
+        "logo/**",
+        "press-kit/src/**",
+        "tools/kleidos_brand/mark.py",
+        "tools/kleidos_brand/logo.py"
+      ]
+    }
+  ]
+}

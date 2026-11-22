@@ -30,7 +30,7 @@ SPDX-License-Identifier = "GPL-3.0-or-later"
 # What is more useful to everyone under the MIT License: the tokens and what
 # is generated from them, the tooling (the builders, the checks, their tests,
 # the CI, the commit-message gate copied from the agents repository, the
-# pins), the texts that describe the project (about/ and the fact
+# review bots' and the analysis's settings, the pins), the texts that describe the project (about/ and the fact
 # sheets), so anyone can reuse and quote them freely, and the KiCad kit's
 # numbers, themes, helper and fixture. The kit's two drawing sheets and its
 # previews hold the mark: they stay under the artwork's line above.
@@ -45,6 +45,11 @@ path = [
   ".editorconfig",
   ".gitignore",
   ".python-version",
+  ".coderabbit.yaml",
+  ".greptile/**",
+  ".markdownlint.json",
+  ".coveragerc",
+  "sonar-project.properties",
   "about/**",
   "press-kit/en/fact-sheet.md",
   "press-kit/es/fact-sheet.md",

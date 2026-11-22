@@ -1,0 +1,123 @@
+{
+  "strictness": 2,
+  "commentTypes": [
+    "logic",
+    "syntax",
+    "style"
+  ],
+  "autoReview": [
+    "open",
+    "push"
+  ],
+  "excludeAuthors": [
+    "dependabot[bot]",
+    "github-actions[bot]"
+  ],
+  "shouldUpdateDescription": false,
+  "updateSummaryOnly": false,
+  "statusCheck": true,
+  "statusCommentsEnabled": false,
+  "summarySection": {
+    "included": false
+  },
+  "issuesTableSection": {
+    "included": false
+  },
+  "confidenceScoreSection": {
+    "included": false
+  },
+  "sequenceDiagramSection": {
+    "included": false
+  },
+  "fixWithAI": true,
+  "hideFooter": true,
+  "instructions": "Review the diff and post inline comments with concrete suggestions. The rules of this repository are in AGENTS.md, kicad/README.md and logo/README.md (listed in files.json): cite the rule a finding breaks. Generated files are reviewed through their sources (tools/build.py writes them and CI fails when one is stale), so the ignored paths are not missing from the review. Never comment on the pull request's title or description.",
+  "ignorePatterns": "*.png\n*.webp\n*.jpg\nfonts/**/*.ttf\nfonts/**/OFL.txt\nLICENSE\nLICENSES/\nlogo/svg/\npress-kit/svg/\ncolors/palette.svg\ntokens/dist/\nexports.json\nkicad/style.json\nkicad/kleidos-*.json\nkicad/kleidos-*.kicad_wks\ntokens/mirror.json\nboards/\n.github/commit-check/\n.github/workflows/commit-check*.yml",
+  "rules": [
+    {
+      "id": "mark-whole",
+      "rule": "The mark is always whole: the keyhole inside its ring at every size, never ringless, redrawn or recolored; under 24 px only the small mark at a size logo/src/small-mark.json lists.",
+      "scope": [
+        "logo/src/**",
+        "press-kit/src/**",
+        "tools/kleidos_brand/**"
+      ],
+      "severity": "high"
+    },
+    {
+      "id": "token-colors",
+      "rule": "Every color in a source is a token's value from tokens/tokens.json; no opacity, tint, gradient, shadow or filter. A new color is a new token first.",
+      "scope": [
+        "logo/src/**",
+        "press-kit/src/**",
+        "kicad/src/**",
+        "tokens/tokens.json"
+      ],
+      "severity": "high"
+    },
+    {
+      "id": "no-live-text",
+      "rule": "No live text in anything published: words are outlines made by tools/kleidos_brand/lettering.py from the pinned fonts, and the fonts under fonts/ are never subset, instanced or converted.",
+      "scope": [
+        "press-kit/src/**",
+        "logo/src/**",
+        "fonts/**",
+        "tools/kleidos_brand/**"
+      ],
+      "severity": "high"
+    },
+    {
+      "id": "nothing-private",
+      "rule": "Nothing private: no home-directory path, private network or hardware address, serial port, host name, token, key, private setting, or e-mail address other than mail@kleidos.dev and jmrplens@kleidos.dev; metadata records hold no date, tool name, path, host or camera data.",
+      "severity": "high"
+    },
+    {
+      "id": "licenses",
+      "rule": "Declared licenses are GPL-3.0-or-later, MIT or OFL-1.1 only, as REUSE.toml draws them; a new kind of file is covered by REUSE.toml in the same change, and a new third-party source gets its notice in NOTICE.md.",
+      "scope": [
+        "REUSE.toml",
+        "NOTICE.md",
+        "**/*.py",
+        "**/*.yml",
+        "**/*.yaml",
+        "**/*.svg"
+      ],
+      "severity": "medium"
+    },
+    {
+      "id": "markdown-unwrapped",
+      "rule": "Markdown prose is never hard-wrapped: one line per paragraph and per list item. Text between BEGIN GENERATED and END GENERATED markers is never edited by hand.",
+      "scope": [
+        "**/*.md"
+      ],
+      "severity": "medium"
+    },
+    {
+      "id": "words",
+      "rule": "Write the vendors M5Stack and LILYGO; the glyph is a keyhole (Spanish cerradura), never a key or llave; Spanish never says vault or bóveda (the container is llavero); never the registered-trademark sign beside Kleidos; facts only as about/facts.json states them.",
+      "scope": [
+        "**/*.md",
+        "about/**",
+        "press-kit/src/press.json"
+      ],
+      "severity": "medium"
+    },
+    {
+      "id": "shared-package",
+      "rule": "tools/kleidos_brand/ is imported by the social repository from its submodule: a rename or signature change of a public name breaks social. A new rule of tools/check.py comes with a test in tests/ that plants the defect in the throwaway tree copy.",
+      "scope": [
+        "tools/**",
+        "tests/**"
+      ],
+      "severity": "medium"
+    },
+    {
+      "id": "pinned-actions",
+      "rule": "Workflow actions are pinned to a full commit SHA with the version in a comment, checkout sets persist-credentials: false, every job has an emoji name and timeout-minutes, and slow jobs wait for the cheap gates through needs.",
+      "scope": [
+        ".github/workflows/**"
+      ],
+      "severity": "medium"
+    }
+  ]
+}

@@ -1,0 +1,263 @@
+# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json
+# SPDX-License-Identifier: MIT
+#
+# CodeRabbit for the Kleidos repositories: line reviews and committable
+# suggestions, nothing else. The pull request's title and description are the
+# author's and stay exactly as written, and no summary of the pull request is
+# generated anywhere: not in the description, not in the walkthrough comment.
+#
+# This file is the whole configuration. It does not set inheritance, so no
+# value comes from a central repository or the web interface: what is not
+# written here is the schema default (reference/configuration, V2). The
+# canonical copy lives beside the commit-message gate in kleidos-dev/agents
+# and is synced into each repository; a repository adds only its own
+# path_filters, path_instructions, tools and guideline files, marked
+# "brand's own" below.
+language: en-US
+
+reviews:
+  # Balanced feedback, the default every owner repository has used so far.
+  # "assertive" is the knob for more comments; "quiet" for fewer.
+  profile: chill
+
+  # The summary is off, not relocated. high_level_summary: false keeps it out
+  # of the description; high_level_summary_in_walkthrough: false keeps it out
+  # of the walkthrough comment too. CodeRabbit still writes a summary wherever
+  # its placeholder appears in a description, so the placeholder is a string
+  # nobody types. The same goes for the title, which is only rewritten when its
+  # placeholder appears in the title (there is no boolean for it).
+  high_level_summary: false
+  high_level_summary_in_walkthrough: false
+  high_level_summary_placeholder: "coderabbit-summary-disabled"
+  auto_title_placeholder: "coderabbit-title-disabled"
+
+  # The walkthrough comment cannot be turned off (no V2 or V3 key removes it),
+  # so it is collapsed and every section it can drop is dropped. What stays is
+  # the review status (why a review was skipped or paused) and Merge Risk,
+  # which has no toggle.
+  collapse_walkthrough: true
+  changed_files_summary: false
+  sequence_diagrams: false
+  estimate_code_review_effort: false
+  assess_linked_issues: false
+  related_issues: false
+  related_prs: false
+  suggested_labels: false
+  auto_apply_labels: false
+  suggested_reviewers: false
+  auto_assign_reviewers: false
+  in_progress_fortune: false
+  poem: false
+  review_info: false
+  review_details: false
+  review_status: true
+
+  # Inline comments keep their "Prompt for Coding Agents" block: most fixes
+  # here are applied by an agent reading the review.
+  enable_prompt_for_ai_agents: true
+
+  # --- brand's own: what is not reviewed --------------------------------------
+  # Generated files are reviewed through their sources (tools/build.py writes
+  # them and CI fails when one is stale), copies through their origin, and
+  # pictures and fonts are binary. What stays in the review: the hand-made
+  # sources (logo/src/, press-kit/src/, tokens/tokens.json, kicad/src/, the
+  # KiCad helper and fixture), the texts, the tooling, tests and CI.
+  path_filters:
+    # Pictures, fonts and their upstream license texts.
+    - "!**/*.png"
+    - "!**/*.webp"
+    - "!**/*.jpg"
+    - "!fonts/**/*.ttf"
+    - "!fonts/**/OFL.txt"
+    - "!LICENSE"
+    - "!LICENSES/**"
+    # Written by tools/build.py from the sources.
+    - "!logo/svg/**"
+    - "!press-kit/svg/**"
+    - "!colors/palette.svg"
+    - "!tokens/dist/**"
+    - "!exports.json"
+    - "!kicad/style.json"
+    - "!kicad/kleidos-*.json"
+    - "!kicad/kleidos-*.kicad_wks"
+    # Written by tools/sync_from_kleidos.py --record.
+    - "!tokens/mirror.json"
+    # Byte copies of the boards repository's fronts and their manifest,
+    # written by tools/sync_from_boards.py --copy: reviewed in boards.
+    - "!boards/**"
+    # The commit-message gate synced from kleidos-dev/agents: reviewed there.
+    - "!.github/commit-check/**"
+    - "!.github/workflows/commit-check*.yml"
+
+  # --- brand's own: the rules of AGENTS.md, by path ---------------------------
+  # CodeRabbit also reads AGENTS.md itself (code guidelines, below); these
+  # point each path at the rules that bite there.
+  path_instructions:
+    - path: "**"
+      instructions: >-
+        Flag anything private: a home-directory path, a private network or
+        hardware address, a serial port, a host name, a token or key, the name
+        or value of a private setting, or an e-mail address other than
+        mail@kleidos.dev and jmrplens@kleidos.dev. Files are in English except
+        the Spanish texts. Never the registered-trademark sign beside the name
+        Kleidos.
+    - path: "**/*.md"
+      instructions: >-
+        Markdown prose is never hard-wrapped: one line per paragraph and per
+        list item; flag a paragraph or list item broken across lines (code,
+        tables and fenced blocks keep their layout). The vendors are written
+        "M5Stack" and "LILYGO". The mark's glyph is a "keyhole" (Spanish
+        "cerradura"), never a "key" or "llave". Spanish never says "vault" or
+        "bóveda": the container is "llavero". Text between "BEGIN GENERATED"
+        and "END GENERATED" markers is written by tools/build.py, or for the
+        README banner by the social repository's sync_readme_banners.py: an
+        edit by hand there is a finding. Where boards or screens appear, not
+        only the StickS3.
+    - path: "about/**"
+      instructions: >-
+        about/facts.json holds only what a public page of the project already
+        states or what the owner gave for publication (its `source` says so),
+        with `as_of` on what ages. The texts agree with facts.json and say
+        nothing about unpublished work.
+    - path: "{TRADEMARKS.md,LICENSE,REUSE.toml,NOTICE.md}"
+      instructions: >-
+        TRADEMARKS.md changes only with the owner's yes: flag any wording
+        change for his attention. Declared licenses are GPL-3.0-or-later (the
+        artwork), MIT (tokens, tooling, tests, CI, about/, the fact sheets,
+        the board copies) or OFL-1.1 (the fonts); no Creative Commons, custom
+        terms or "all rights reserved". A new kind of file is covered by
+        REUSE.toml in the same change, and a new third-party source gets its
+        notice in NOTICE.md.
+    - path: "logo/src/**"
+      instructions: >-
+        logo/src/mark.svg is the only drawing kept by hand. The mark is always
+        whole: the keyhole inside its ring at every size, never a ringless,
+        redrawn or recolored copy. Under 24 px it is the small mark at a size
+        small-mark.json lists (odd, under 24). Every color is a token's value;
+        no opacity, tint, gradient, shadow or filter. A change here comes with
+        the regenerated files of tools/build.py in the same pull request.
+    - path: "press-kit/src/**"
+      instructions: >-
+        Templates use token colors only (no opacity, tint, gradient, shadow,
+        filter or embedded picture), the two families, and no live text:
+        words are outlines from tools/kleidos_brand/lettering.py and live in
+        press.json, whose lines join into its words. The lockup is pasted from
+        logo/svg/. Photographs enter only through kleidos_brand.photos.clean,
+        with credit and alt text in press.json. No capture showing another
+        company's mark and no vendor file.
+    - path: "tokens/tokens.json"
+      instructions: >-
+        The one file of values, DTCG-shaped ($value, $type; $compose is
+        computed, never stored). A new color is a new token first. A change
+        comes with tokens/dist/, colors/ and every picture rebuilt, and with
+        tools/sync_from_kleidos.py --check against the firmware repository.
+    - path: "tools/**"
+      instructions: >-
+        Python 3.15. tools/kleidos_brand/ is imported by the social repository
+        from its submodule: flag a rename or signature change of what social
+        may use. Pictures are drawn by Playwright's Chromium from outline-only
+        SVG and re-encoded from pixels; metadata comes only from the records
+        of records.py in the order of meta.py's profile, with no date, tool
+        name, path, host or e-mail address, and no camera data. The private
+        deny-list never enters the tree. A new rule of tools/check.py gets a
+        test in tests/ that plants the defect. Long lines (well over 100
+        columns) are this code's style: do not flag line length.
+    - path: "tests/**"
+      instructions: >-
+        A test plants its defect in the throwaway `tree` copy from conftest.py,
+        never in the real tree. A test that draws with Chromium carries the
+        `browser` marker so it skips where the browser is not installed.
+    - path: "kicad/**"
+      instructions: >-
+        The KiCad kit's rules are in kicad/README.md. kicad/src/style.json,
+        kicad/kleidos_kicad.py and kicad/fixture/ are by hand; the drawing
+        sheets, the themes and kicad/style.json are generated, and every theme
+        color is a token's value. kicad-cli is 10.0.8. A kit change is synced
+        to boards and the meter with tools/sync_kicad.py.
+    - path: "fonts/**"
+      instructions: >-
+        Only the pinned upstream files, byte for byte (fonts/VERSIONS.md holds
+        each SHA-256): never a subset, instance or converted copy, which would
+        be a Modified Version under the OFL.
+    - path: "requirements.txt"
+      instructions: >-
+        Every dependency pinned with ==. Playwright and Pillow are the versions
+        the pictures in exports.json were drawn with: a bump changes pixels
+        and needs the pictures rebuilt on the exporting machine.
+    - path: ".github/workflows/**"
+      instructions: >-
+        Actions pinned to a full commit SHA with the version in a comment,
+        checkout with persist-credentials: false, top-level permissions
+        read-only, an emoji job name and a timeout-minutes on every job, and
+        the cheap gates first with the slow jobs behind them through needs.
+        commit-check*.yml are synced copies from kleidos-dev/agents.
+
+  # Python is linted by Ruff (the owner's linter here). Flake8 and Pylint are
+  # off: with no configuration in the repository they would flag every line
+  # over 79 or 100 columns, and this code base has hundreds of longer ones.
+  tools:
+    ruff:
+      enabled: true
+    flake8:
+      enabled: false
+    pylint:
+      enabled: false
+    markdownlint:
+      enabled: true
+
+  auto_review:
+    enabled: true
+    drafts: false
+    # Any base branch, so a stacked pull request is reviewed on its own diff
+    # rather than skipped for not targeting main (the default list is empty,
+    # which means the default branch only).
+    base_branches:
+      - ".*"
+    # Bot commits (dependency bumps, generated files) carry no reviewable
+    # intent.
+    ignore_usernames:
+      - "dependabot[bot]"
+      - "github-actions[bot]"
+
+  # Reviews and suggestions only: no bot writes code into a pull request, and
+  # none of these adds its checkbox to the walkthrough. Committable suggestion
+  # blocks in inline comments are unaffected; the author applies them.
+  finishing_touches:
+    autofix:
+      enabled: false
+    unit_tests:
+      enabled: false
+    simplify:
+      enabled: false
+    fix_ci:
+      enabled: false
+    resolve_merge_conflict:
+      enabled: false
+
+  # These never edit the title or description, but each posts a verdict on
+  # them. Commit messages are already gated by commit-check.yml.
+  pre_merge_checks:
+    title:
+      mode: "off"
+    description:
+      mode: "off"
+    issue_assessment:
+      mode: "off"
+
+knowledge_base:
+  code_guidelines:
+    # Added to the defaults (which already read AGENTS.md): the two pages
+    # that hold rules of their own, the KiCad kit's and the logo's rules of
+    # use.
+    filePatterns:
+      - "kicad/README.md"
+      - "logo/README.md"
+
+chat:
+  # Replies stay plain text.
+  art: false
+
+issue_enrichment:
+  # No implementation plans posted on issues: the review is the product.
+  planning:
+    enabled: false
