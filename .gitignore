@@ -7,6 +7,11 @@ __pycache__/
 # Build output that is not committed: the press-kit archive
 /dist/
 
+# Coverage written by pytest --cov (CI hands coverage.xml to SonarQube Cloud)
+.coverage
+.coverage.*
+coverage.xml
+
 # The private deny-list of the metadata check (tools/kleidos_brand/meta.py): kept out of the tree
 tools/deny-local.txt
 

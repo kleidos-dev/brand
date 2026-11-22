@@ -18,13 +18,15 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "tools"))
 
 SKIPPED_ANYWHERE = {".venv", ".git", "__pycache__", ".pytest_cache", ".ruff_cache"}
+#: What the root holds that is not part of the tree: the press-kit archive and the coverage pytest --cov writes.
+ROOT_OUTPUT = {"dist", ".coverage", "coverage.xml"}
 
 
 def skipped(folder: str, names: list[str]) -> set[str]:
-    """Leave out what is not part of the tree: caches, the environment, and the root's build output."""
+    """Leave out what is not part of the tree: caches, the environment, and the root's build and coverage output."""
     out = {name for name in names if name in SKIPPED_ANYWHERE}
     if Path(folder) == ROOT:
-        out |= {name for name in names if name == "dist"}
+        out |= {name for name in names if name in ROOT_OUTPUT or name.startswith(".coverage.")}
     return out
 
 

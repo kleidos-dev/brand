@@ -1,0 +1,12 @@
+# SPDX-License-Identifier: MIT
+#
+# coverage.py for the CI's test job (pytest --cov), whose report SonarQube
+# Cloud reads. Paths are written relative to the repository root, as the
+# scanner on GitHub Actions needs, and branches are measured too. The sources
+# are the two code roots of sonar-project.properties.
+[run]
+relative_files = True
+branch = True
+source =
+    tools
+    kicad
