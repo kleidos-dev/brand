@@ -8,6 +8,7 @@ import io
 import shutil
 import subprocess
 import sys
+import time
 from pathlib import Path
 
 import check
@@ -480,6 +481,18 @@ def test_a_creative_commons_text_or_annotation_is_refused(tree: Path) -> None:
         )
     assert found(tree, "LICENSES/CC-BY-SA-4.0.txt")
     assert found(tree, "REUSE.toml", "CC0-1.0")
+
+
+def test_a_tag_whose_operator_lacks_its_spaces_names_no_license(tree: Path) -> None:
+    tag = CC_TAG.replace("CC-BY-SA-4.0", "MIT ANDMIT")
+    (tree / "about/extra.md").write_text(f"<!-- {tag} -->\n\nText.\n", encoding="utf-8")
+    (line,) = public_tree.license_findings(tree, [Path("about/extra.md")], check.ALLOWED_LICENSES)
+    assert "its license tag reads 'MIT ANDMIT'" in line
+    start = time.process_time()
+    tag = CC_TAG.replace("CC-BY-SA-4.0", "MIT" + " " * 40_000 + "MIT")
+    (tree / "about/extra.md").write_text(f"{tag}\n\nText.\n", encoding="utf-8")
+    assert public_tree.license_findings(tree, [Path("about/extra.md")], check.ALLOWED_LICENSES)
+    assert time.process_time() - start < 1
 
 
 def test_prose_may_name_another_license(tree: Path) -> None:

@@ -14,8 +14,11 @@ and refuses a checkout whose fronts differ from its last commit; ``--check``
 prints every copy that is not the checkout's file. Regenerate the images
 after a copy (``tools/build.py``) and look at them.
 
-The checkout's path is an argument and is stored nowhere. CI cannot run this:
-it holds the copies to the manifest instead (``tools/check.py``).
+The checkout's path is an argument and is stored nowhere. It must name the top
+of a git checkout (:func:`checkout_folder`); git runs inside it and is given no
+path but the fronts' own, and a front that leads out of the checkout is
+refused. CI cannot run this: it holds the copies to the manifest instead
+(``tools/check.py``).
 """
 
 from __future__ import annotations
@@ -55,11 +58,37 @@ def source(slug: str) -> str:
     return f"{slug}/svg/front.svg"
 
 
+def checkout_folder(value: str) -> Path:
+    """Return the checkout *value* names, resolved; refuse what is not the top of one."""
+    try:
+        path = Path(value).resolve(strict=True)
+    except OSError as error:
+        raise argparse.ArgumentTypeError(f"{value!r} is not there: {error.strerror}") from error
+    if not (path / ".git").exists():
+        raise argparse.ArgumentTypeError(f"{value!r} is not the top of a git checkout")
+    return path
+
+
+def front(checkout: Path, slug: str) -> Path:
+    """Return a front's file in the checkout; refuse one that leads out of it."""
+    path = (checkout / source(slug)).resolve()
+    if not path.is_relative_to(checkout.resolve()):
+        raise SystemExit(f"{source(slug)}: leads out of the checkout")
+    return path
+
+
+def git(checkout: Path, *arguments: str) -> str:
+    """Return what git prints in the checkout."""
+    return subprocess.run(
+        ["git", *arguments], cwd=checkout, check=True, capture_output=True, text=True
+    ).stdout
+
+
 def check(checkout: Path, root: Path = BRAND_ROOT) -> list[str]:
     """Return every copy that is not the checkout's file."""
     found = []
     for slug in BOARDS:
-        theirs, ours = checkout / source(slug), root / boards.front_path(slug)
+        theirs, ours = front(checkout, slug), root / boards.front_path(slug)
         if not theirs.is_file():
             found.append(f"{source(slug)}: not in the checkout")
         elif not ours.is_file() or ours.read_bytes() != theirs.read_bytes():
@@ -72,28 +101,19 @@ def check(checkout: Path, root: Path = BRAND_ROOT) -> list[str]:
 def copy(checkout: Path, root: Path = BRAND_ROOT) -> int:
     """Copy every front and write the manifest."""
     paths = [source(slug) for slug in BOARDS]
-    dirty = subprocess.run(
-        ["git", "-C", str(checkout), "status", "--porcelain", "--", *paths],
-        check=True,
-        capture_output=True,
-        text=True,
-    ).stdout
+    dirty = git(checkout, "status", "--porcelain", "--", *paths)
     if dirty.strip():
         print(
             f"the checkout's fronts differ from its last commit; commit them there first:\n{dirty}"
         )
         return 1
-    commit = subprocess.run(
-        ["git", "-C", str(checkout), "rev-parse", "HEAD"],
-        check=True,
-        capture_output=True,
-        text=True,
-    ).stdout.strip()
+    commit = git(checkout, "rev-parse", "HEAD").strip()
+    fronts = {slug: front(checkout, slug).read_bytes() for slug in BOARDS}
     (root / boards.BOARDS_DIR).mkdir(exist_ok=True)
     entries = {}
     for slug, name in BOARDS.items():
         target = root / boards.front_path(slug)
-        target.write_bytes((checkout / source(slug)).read_bytes())
+        target.write_bytes(fronts[slug])
         entries[slug] = {"name": name, "from": source(slug), "sha256": boards.digest(target)}
     manifest = {
         "$comment": COMMENT,
@@ -118,13 +138,13 @@ def main(argv: list[str] | None = None) -> int:
     mode.add_argument(
         "--check",
         metavar="BOARDS",
-        type=Path,
+        type=checkout_folder,
         help="print every copy that is not this checkout's file",
     )
     mode.add_argument(
         "--copy",
         metavar="BOARDS",
-        type=Path,
+        type=checkout_folder,
         help="copy every front from this checkout and write the manifest",
     )
     args = parser.parse_args(argv)

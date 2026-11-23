@@ -7,7 +7,10 @@ from __future__ import annotations
 import hashlib
 import json
 import re
+import time
 from pathlib import Path
+
+import pytest
 
 from kleidos_brand import lettering, logo, mark, svgtext, xmlsafe
 
@@ -97,3 +100,24 @@ def test_text_becomes_outlines_with_its_words_kept() -> None:
     left, _, right, _ = sets["line"].box()
     assert abs((left + right) / 2 - 400) < 12, "a middle-anchored line is centered on its x"
     assert not [element for element in tree.iter() if element.tag.endswith("text")]
+
+
+@pytest.mark.parametrize(
+    "style",
+    [
+        "font-variation-settings:'opsz' 96",
+        'font-variation-settings : "opsz" 96;',
+        " font-variation-settings:'opsz'  96 ; ",
+    ],
+)
+def test_a_style_may_hold_the_optical_size(style: str) -> None:
+    match = svgtext.OPSZ.fullmatch(style)
+    assert match is not None and match.group(1) == "96"
+
+
+def test_a_style_may_hold_nothing_else_and_is_refused_in_linear_time() -> None:
+    size = "font-variation-settings:'opsz' 96"
+    start = time.process_time()
+    for style in (size + ";;", size + "; fill:red", size + " " * 40_000 + "x"):
+        assert svgtext.OPSZ.fullmatch(style) is None
+    assert time.process_time() - start < 1

@@ -31,7 +31,7 @@ import subprocess
 import tomllib
 from pathlib import Path
 
-from . import PROJECT_CONTACT, PROJECT_SUPPLIER
+from . import PROJECT_CONTACT, PROJECT_SUPPLIER, meta
 
 TEXT_SUFFIXES = frozenset(
     {
@@ -227,11 +227,7 @@ def license_findings(root: Path, files: list[Path], allowed: frozenset[str]) -> 
             continue
         for match in SPDX_TAG.finditer(IGNORE_BLOCK.sub("", text)):
             expression = match.group(1).strip().rstrip("*/ ->").strip()
-            parts = [
-                part.strip()
-                for part in re.split(r"\s+(?:AND|OR|WITH)\s+|[()]", expression)
-                if part.strip()
-            ]
+            parts = meta.spdx_ids(expression)
             if not parts or any(part not in allowed for part in parts):
                 found.append(
                     f"{path}: its license tag reads {expression!r}; a tag stands alone on its line "

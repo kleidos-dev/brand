@@ -86,8 +86,8 @@ RIGHTS_URLS = {
     ".github": f"{ORG_URL}/.github/blob/main/LICENSE",
 }
 
-#: IPTC NewsCodes ``digitalsourcetype``: how a picture was made.
-DIGITAL_SOURCE_TYPE_BASE = "http://cv.iptc.org/newscodes/digitalsourcetype/"
+#: IPTC NewsCodes ``digitalsourcetype``: how a picture was made. Each writer states the concept's
+#: whole URI in the markup it writes.
 DIGITAL_SOURCE_TYPES = frozenset(
     {
         "digitalCapture",
@@ -128,12 +128,13 @@ for _repo in ("brand", "social"):
 
 # --- Licenses ------------------------------------------------------------------------------
 
-SPDX_SPLIT = re.compile(r"\s+(?:AND|OR|WITH)\s+|[()]")
+SPDX_SPLIT = re.compile(r" (?:AND|OR|WITH) |[()]")
 
 
 def spdx_ids(expression: str) -> list[str]:
     """Return the identifiers of an SPDX expression, in order."""
-    return [part.strip() for part in SPDX_SPLIT.split(expression) if part.strip()]
+    spaced = " ".join(expression.split())
+    return [part.strip() for part in SPDX_SPLIT.split(spaced) if part.strip()]
 
 
 def license_url(identifier: str, repo: str = "brand") -> str:
@@ -158,7 +159,11 @@ def identifier_url(repo: str, path: str | Path) -> str:
 
 def strip_email(holder: str) -> str:
     """Return a REUSE copyright line without its ``<address>``."""
-    return re.sub(r"\s*<[^>]*>", "", holder).strip()
+    kept, start = [], 0
+    while (opened := holder.find("<", start)) >= 0 and (closed := holder.find(">", opened)) >= 0:
+        kept.append(holder[start:opened].rstrip())
+        start = closed + 1
+    return "".join([*kept, holder[start:]]).strip()
 
 
 # --- The record ----------------------------------------------------------------------------
@@ -283,15 +288,18 @@ def profile_for(size: tuple[int, int]) -> str:
 
 # --- XMP -----------------------------------------------------------------------------------
 
-NAMESPACES = (
-    ("dc", "http://purl.org/dc/elements/1.1/"),
-    ("photoshop", "http://ns.adobe.com/photoshop/1.0/"),
-    ("Iptc4xmpCore", "http://iptc.org/std/Iptc4xmpCore/1.0/xmlns/"),
-    ("Iptc4xmpExt", "http://iptc.org/std/Iptc4xmpExt/2008-02-29/"),
-    ("plus", "http://ns.useplus.org/ldf/xmp/1.0/"),
-    ("xmpRights", "http://ns.adobe.com/xap/1.0/rights/"),
-    ("cc", "http://creativecommons.org/ns#"),
-)
+#: Each prefix and its declaration, in the packet's order. A namespace URI is a name that readers
+#: compare character by character and nothing fetches, so it is written as its vocabulary
+#: publishes it, scheme included.
+NAMESPACES = {
+    "dc": 'xmlns:dc="http://purl.org/dc/elements/1.1/"',
+    "photoshop": 'xmlns:photoshop="http://ns.adobe.com/photoshop/1.0/"',
+    "Iptc4xmpCore": 'xmlns:Iptc4xmpCore="http://iptc.org/std/Iptc4xmpCore/1.0/xmlns/"',
+    "Iptc4xmpExt": 'xmlns:Iptc4xmpExt="http://iptc.org/std/Iptc4xmpExt/2008-02-29/"',
+    "plus": 'xmlns:plus="http://ns.useplus.org/ldf/xmp/1.0/"',
+    "xmpRights": 'xmlns:xmpRights="http://ns.adobe.com/xap/1.0/rights/"',
+    "cc": 'xmlns:cc="http://creativecommons.org/ns#"',
+}
 SHORT_NAMESPACES = ("dc", "Iptc4xmpExt", "xmpRights", "cc")
 XMP_BEGIN = '<?xpacket begin="﻿" id="W5M0MpCehiHzreSzNTczkc9d"?>'
 XMP_END = '<?xpacket end="r"?>'
@@ -315,11 +323,11 @@ def xmp_packet(meta: MediaMeta) -> bytes:
     """Return the record as an XMP packet, in the profile's fixed order, UTF-8, without padding."""
     es = meta.language == "es"
     short = meta.profile == "short"
-    names = [name for name, _ in NAMESPACES if not short or name in SHORT_NAMESPACES]
     declared = "\n".join(
-        f'        xmlns:{name}="{uri}"' for name, uri in NAMESPACES if name in names
+        f"        {declaration}"
+        for name, declaration in NAMESPACES.items()
+        if not short or name in SHORT_NAMESPACES
     )
-    dst = f"{DIGITAL_SOURCE_TYPE_BASE}{meta.digital_source_type}"
     rows = [f"      <dc:title>{_alt(meta.title, meta.title_es if es else None)}</dc:title>"]
     if not short:
         rows.append(
@@ -352,7 +360,8 @@ def xmp_packet(meta: MediaMeta) -> bytes:
         )
         rows.append("      </Iptc4xmpCore:CreatorContactInfo>")
     rows.append(
-        f"      <Iptc4xmpExt:DigitalSourceType>{escape(dst)}</Iptc4xmpExt:DigitalSourceType>"
+        "      <Iptc4xmpExt:DigitalSourceType>http://cv.iptc.org/newscodes/digitalsourcetype/"
+        f"{meta.digital_source_type}</Iptc4xmpExt:DigitalSourceType>"
     )
     if not short:
         rows.append('      <plus:Licensor><rdf:Seq><rdf:li rdf:parseType="Resource">')
@@ -589,14 +598,19 @@ def _segment(marker: int, payload: bytes) -> bytes:
 
 
 def jpeg_segments(meta: MediaMeta) -> tuple[bytes, bytes]:
-    """Return the record's APP1 (XMP) and APP13 (IIM with its MD5 digest) segments."""
+    """Return the record's APP1 (XMP) and APP13 (IIM with its MD5 digest) segments.
+
+    MWG's digest (Photoshop resource 1061) is an MD5 by its definition: a reader compares it to
+    know whether the IIM was edited after the XMP. It authenticates nothing.
+    """
     packet = xmp_packet(meta)
     if len(packet) > XMP_JPEG_LIMIT:
         raise ValueError(
             f"the XMP packet is {len(packet)} bytes; one APP1 segment holds {XMP_JPEG_LIMIT}"
         )
     iim = iim_block(meta)
-    app13 = PHOTOSHOP_HEADER + _resource(0x0404, iim) + _resource(0x0425, hashlib.md5(iim).digest())  # noqa: S324 - MWG's digest
+    digest = hashlib.md5(iim, usedforsecurity=False).digest()
+    app13 = PHOTOSHOP_HEADER + _resource(0x0404, iim) + _resource(0x0425, digest)
     return _segment(0xE1, XMP_APP1_HEADER + packet), _segment(0xED, app13)
 
 
@@ -831,9 +845,9 @@ def svg_block(meta: MediaMeta, slug: str) -> str:
         f"  {SVG_IGNORE_START}",
         f'  <metadata id="{slug}-m">',
         '    <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"',
-        '             xmlns:dc="http://purl.org/dc/elements/1.1/"',
-        '             xmlns:cc="http://creativecommons.org/ns#"',
-        '             xmlns:Iptc4xmpExt="http://iptc.org/std/Iptc4xmpExt/2008-02-29/">',
+        f"             {NAMESPACES['dc']}",
+        f"             {NAMESPACES['cc']}",
+        f"             {NAMESPACES['Iptc4xmpExt']}>",
         '      <cc:Work rdf:about="">',
         "        <dc:format>image/svg+xml</dc:format>",
         '        <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>',
@@ -853,7 +867,8 @@ def svg_block(meta: MediaMeta, slug: str) -> str:
         f"        <dc:language>{meta.language}</dc:language>",
         f"        <dc:subject><rdf:Bag>{bag}</rdf:Bag></dc:subject>",
         "        <Iptc4xmpExt:DigitalSourceType "
-        f'rdf:resource="{DIGITAL_SOURCE_TYPE_BASE}{meta.digital_source_type}"/>',
+        'rdf:resource="http://cv.iptc.org/newscodes/digitalsourcetype/'
+        f'{meta.digital_source_type}"/>',
         f'        <cc:license rdf:resource="{escape(meta.web_statement)}"/>',
         "      </cc:Work>",
         "    </rdf:RDF>",
@@ -915,8 +930,8 @@ def svg_findings(name: str, svg: str, meta: MediaMeta, slug: str) -> list[str]:
 # --- REUSE ---------------------------------------------------------------------------------
 
 # REUSE-IgnoreStart
-IN_FILE_LICENSE = re.compile(r"SPDX-License-Identifier:[ \t]*(.*?)[ \t]*(?:-->|\*/)?[ \t]*$", re.M)
-IN_FILE_COPYRIGHT = re.compile(r"SPDX-FileCopyrightText:[ \t]*(.*?)[ \t]*(?:-->|\*/)?[ \t]*$", re.M)
+IN_FILE_LICENSE = re.compile(r"SPDX-License-Identifier:(.*)")
+IN_FILE_COPYRIGHT = re.compile(r"SPDX-FileCopyrightText:(.*)")
 # REUSE-IgnoreEnd
 IGNORE_BLOCK = re.compile(r"REUSE-IgnoreStart.*?REUSE-IgnoreEnd", re.S)
 TEXT_SUFFIXES = frozenset(
@@ -956,6 +971,18 @@ def _glob(pattern: str) -> re.Pattern[str]:
     return re.compile(out)
 
 
+def _tag_values(tag: re.Pattern[str], text: str) -> list[str]:
+    """Return what the lines of *text* state under *tag*, without the comment's closing mark."""
+    values = []
+    for line in tag.findall(text):
+        value = line.strip()
+        closing = next((mark for mark in ("-->", "*/") if value.endswith(mark)), "")
+        value = value.removesuffix(closing).strip()
+        if value:
+            values.append(value)
+    return values
+
+
 def _as_list(value: str | list[str] | None) -> list[str]:
     if value is None:
         return []
@@ -977,8 +1004,8 @@ def reuse_truth(root: Path, path: str | Path, strip: bool = True) -> tuple[str, 
     file = root / name
     if file.suffix.lower() in TEXT_SUFFIXES and file.is_file():
         text = IGNORE_BLOCK.sub("", file.read_text(encoding="utf-8", errors="replace"))
-        licenses = [match.strip() for match in IN_FILE_LICENSE.findall(text) if match.strip()]
-        holders = [match.strip() for match in IN_FILE_COPYRIGHT.findall(text) if match.strip()]
+        licenses = _tag_values(IN_FILE_LICENSE, text)
+        holders = _tag_values(IN_FILE_COPYRIGHT, text)
     chosen = None
     toml = root / "REUSE.toml"
     if toml.is_file():

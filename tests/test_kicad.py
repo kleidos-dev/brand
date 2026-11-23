@@ -6,7 +6,10 @@ from __future__ import annotations
 
 import importlib.util
 import json
+import os
 import shutil
+import subprocess
+import sys
 from pathlib import Path
 from types import ModuleType
 
@@ -26,8 +29,26 @@ def helper() -> ModuleType:
     return module
 
 
-def test_the_builder_gives_the_same_bytes_twice() -> None:
-    assert kicad.texts(ROOT) == kicad.texts(ROOT)
+def kit_digest(hash_seed: str) -> str:
+    """Return the digest of the kit an interpreter of its own builds under a hash seed."""
+    return subprocess.run(
+        [
+            sys.executable,
+            "-c",
+            "import hashlib; from pathlib import Path; from kleidos_brand import kicad; "
+            "kit = {path.as_posix(): text for path, text in kicad.texts(Path.cwd()).items()}; "
+            "print(hashlib.sha256(repr(kit).encode()).hexdigest())",
+        ],
+        cwd=ROOT,
+        env={**os.environ, "PYTHONHASHSEED": hash_seed, "PYTHONPATH": str(ROOT / "tools")},
+        capture_output=True,
+        text=True,
+        check=True,
+    ).stdout
+
+
+def test_the_builder_gives_the_same_bytes_under_any_hash_seed() -> None:
+    assert kit_digest("1") == kit_digest("2")
 
 
 def test_the_committed_kit_is_what_the_builder_gives() -> None:

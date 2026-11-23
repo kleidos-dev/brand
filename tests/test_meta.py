@@ -11,18 +11,22 @@ when the profile changes, they change everywhere at once, with
 
 from __future__ import annotations
 
+import hashlib
 import io
 import os
 import re
 import shutil
 import subprocess
 import sys
+import time
+import xml.etree.ElementTree as ET
+from collections.abc import Callable
 from pathlib import Path
 
 import build
 import pytest
 
-from kleidos_brand import meta
+from kleidos_brand import meta, xmlsafe
 
 ROOT = Path(__file__).resolve().parents[1]
 FIXTURES = ROOT / "tests/fixtures/meta"
@@ -313,6 +317,105 @@ def test_the_deny_list_names_each_class() -> None:
         meta.strip_email("2026 José M. Requena Plens <someone" + "@" + "example.org>")
         == "2026 José M. Requena Plens"
     )
+
+
+def test_an_identifier_stands_between_the_operators_of_its_expression() -> None:
+    assert meta.spdx_ids("MIT") == ["MIT"]
+    assert meta.spdx_ids("GPL-3.0-or-later  AND\t(MIT OR Apache-2.0 WITH LLVM-exception)") == [
+        "GPL-3.0-or-later",
+        "MIT",
+        "Apache-2.0",
+        "LLVM-exception",
+    ]
+    assert meta.spdx_ids("MIT. More words") == ["MIT. More words"], "no license, and kept as it is"
+
+
+def test_an_address_is_left_out_wherever_it_stands() -> None:
+    assert meta.strip_email("2026 One <one> and Two  <two>") == "2026 One and Two"
+    assert meta.strip_email("2026 One <not closed") == "2026 One <not closed"
+    assert meta.strip_email("2026 One > Two") == "2026 One > Two"
+
+
+# REUSE-IgnoreStart
+def test_a_file_s_own_tags_are_read_without_the_comment_s_closing_mark(tmp_path: Path) -> None:
+    (tmp_path / "page.md").write_text(
+        "<!-- SPDX-FileCopyrightText: 2026 One -->\n"
+        "/* SPDX-FileCopyrightText: 2021 Two */\n"
+        "# SPDX-License-Identifier: \n"
+        "SPDX-License-Identifier:\tMIT  -->  \n",
+        encoding="utf-8",
+    )
+    assert meta.reuse_truth(tmp_path, "page.md") == ("MIT", ("2026 One", "2021 Two"))
+
+
+# REUSE-IgnoreEnd
+
+
+def own_tags(root: Path, tag: str) -> tuple[str, tuple[str, ...]]:
+    (root / "page.md").write_text(f"{tag}: x" + " " * 2_000 + "y\n", encoding="utf-8")
+    return meta.reuse_truth(root, "page.md")
+
+
+@pytest.mark.parametrize(
+    "read",
+    [
+        lambda root: meta.spdx_ids("MIT" + " " * 40_000 + "x"),
+        lambda root: meta.strip_email("a" + " " * 40_000 + "b"),
+        lambda root: meta.strip_email("<" * 40_000),
+        lambda root: meta.strip_email("<>" * 40_000 + "a"),
+        lambda root: own_tags(root, "SPDX-License-" + "Identifier"),
+        lambda root: own_tags(root, "SPDX-FileCopyright" + "Text"),
+    ],
+)
+def test_a_hostile_text_is_read_in_linear_time(
+    read: Callable[[Path], object], tmp_path: Path
+) -> None:
+    start = time.process_time()
+    assert read(tmp_path)
+    assert time.process_time() - start < 1
+
+
+def test_the_iim_digest_needs_no_security_use_of_md5(monkeypatch: pytest.MonkeyPatch) -> None:
+    """A Python built for FIPS refuses MD5 unless the caller says it is not for security."""
+
+    def fips(data: bytes, *, usedforsecurity: bool = True) -> object:
+        if usedforsecurity:
+            raise ValueError("disabled for FIPS")
+        return hashlib.new("md5", data, usedforsecurity=False)
+
+    monkeypatch.setattr("hashlib.md5", fips)
+    _, app13 = meta.jpeg_segments(FULL)
+    digest = hashlib.new("md5", meta.iim_block(FULL), usedforsecurity=False).digest()
+    assert app13.endswith(digest)
+
+
+def test_the_vocabularies_are_named_as_they_publish_themselves() -> None:
+    """A namespace is compared character by character, so its scheme is part of its name."""
+    iptc = "http://iptc.org/std/Iptc4xmpExt/2008-02-29/"
+    packet = xmlsafe.fromstring(meta.xmp_packet(FULL))
+    used = {element.tag[1:].split("}")[0] for element in packet.iter()}
+    assert used == {
+        "adobe:ns:meta/",
+        "http://creativecommons.org/ns#",
+        "http://iptc.org/std/Iptc4xmpCore/1.0/xmlns/",
+        iptc,
+        "http://ns.adobe.com/photoshop/1.0/",
+        "http://ns.adobe.com/xap/1.0/rights/",
+        "http://ns.useplus.org/ldf/xmp/1.0/",
+        "http://purl.org/dc/elements/1.1/",
+        "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+    }
+    block = xmlsafe.fromstring(f"<svg>{meta.svg_block(FULL, 'kl-x')}</svg>")
+    kind = "http://cv.iptc.org/newscodes/digitalsourcetype/composite"
+
+    def source_type(root: ET.Element) -> ET.Element:
+        found = root.find(f".//{{{iptc}}}DigitalSourceType")
+        assert found is not None
+        return found
+
+    assert source_type(packet).text == kind
+    resource = "{http://www.w3.org/1999/02/22-rdf-syntax-ns#}resource"
+    assert source_type(block).get(resource) == kind
 
 
 def test_every_record_agrees_with_the_reuse_tool() -> None:
