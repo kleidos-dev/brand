@@ -18,8 +18,9 @@ commit. This script checks, from the repository's root:
                (ruff, mypy, gitleaks, OSV, Dependabot, CI conventions,
                markdownlint, tsconfig, ESLint, clang-tidy, inline
                suppressions) unless .github/quality/waivers.toml records why
-  pins         every Python target, kit-known action and kit-known hook rev
-               is at the latest stable release this kit knows, unless a
+  pins         every Python target, kit-known action, kit-known hook rev and
+               kit-known container image is at the latest stable release
+               this kit knows (an image by that release's digest), unless a
                "below-latest:" comment beside it and a waiver say why
   waivers      every waiver has a reason, matches a weakening, and is live
 
@@ -172,6 +173,20 @@ LATEST_HOOKS = {
     "https://github.com/zizmorcore/zizmor-pre-commit": "v1.33.1",
     "https://github.com/shellcheck-py/shellcheck-py": "v0.11.0.1",
 }
+# The newest stable tag of each container image a workflow runs in, and the
+# digest that tag names on its registry (Docker Hub), as this kit release
+# knows them. No kit workflow runs in a container, so these are not the kit's
+# own pins: the weekly job compares them with the registry directly. A
+# job's container (its image: or the shorthand) or a service's image: of one
+# of them is pinned by digest with its tag in a comment beside it (name@sha256:<digest> # <tag>):
+# a tag alone, a digest with no tag and the latest tag with another digest
+# are findings no waiver clears; an older tag is held like any other pin.
+LATEST_IMAGES = {
+    "kicad/kicad": (
+        "10.0.8",
+        "sha256:3f4a01786dfbe803a65f345c3342b765db9add913f5e9448f8356793714ddc34",
+    ),
+}
 BELOW_LATEST = re.compile(r"#.*\bbelow-latest:\s*\S")
 VERSION_NUMBER = re.compile(r"\bv?(\d+(?:\.\d+)*)\b")
 PY_DOTTED = re.compile(r"(?<![\d.])(\d+)\.(\d+)(?:\.\d+)?(?![\d.])")
@@ -194,6 +209,11 @@ KIT_USES = re.compile(
 )
 USES_LINE = re.compile(r"^\s*(?:-\s+)?uses:\s*(['\"]?)(?P<ref>[^\s'\"#]+)\1\s*(?P<comment>#.*)?$")
 PINNED_REF = re.compile(r"^[\w.-]+/[\w.-]+(?:/[^@\s]+)?@[0-9a-f]{40}$")
+IMAGE_LINE = re.compile(r"^\s*(?:-\s+)?(?:image|container):\s*(['\"]?)(?P<ref>[^\s'\"#{]+)\1")
+IMAGE_REF = re.compile(
+    r"^(?:docker://)?(?:(?:docker\.io|index\.docker\.io|registry-1\.docker\.io)/)?"
+    r"(?P<name>[a-z0-9][\w./-]*?)(?::(?P<tag>[\w][\w.-]*))?(?:@(?P<digest>sha256:[0-9a-f]{64}))?$"
+)
 
 PY_SUFFIXES = (".py", ".pyi")
 SHELL_SUFFIXES = (".sh", ".bash")
@@ -2204,10 +2224,98 @@ def check_hook_pins(repo: Repo, report: Report) -> None:
         pin_below(report, rel, num, f"hook:{url}@{shown}", latest, reasoned)
 
 
+def workflow_images(wf: Any) -> list[str]:
+    """The images a workflow's jobs run in: each job's container and each service's image."""
+    images: list[str] = []
+    jobs = wf.get("jobs") if isinstance(wf, dict) else None
+    for job in (jobs or {}).values() if isinstance(jobs, dict) else ():
+        if not isinstance(job, dict):
+            continue
+        containers = [job.get("container")]
+        services = job.get("services")
+        if isinstance(services, dict):
+            containers += list(services.values())
+        for container in containers:
+            image = container.get("image") if isinstance(container, dict) else container
+            if isinstance(image, str) and image.strip():
+                images.append(image.strip())
+    return images
+
+
+def image_line(lines: list[str], ref: str, taken: set[int]) -> int:
+    """The index of the line that names an image: its image: or container: key, else any line."""
+    candidates = [i for i, line in enumerate(lines) if ref in line and i not in taken]
+    for i in candidates:
+        m = IMAGE_LINE.match(lines[i])
+        if m and m.group("ref") == ref:
+            return i
+    keyed = [i for i in candidates if re.search(r"\b(image|container)\s*:", lines[i])]
+    return (keyed or candidates or [-1])[0]
+
+
+def check_image_pins(repo: Repo, report: Report) -> None:
+    """Every container image the kit knows, at its latest tag and pinned by that tag's digest."""
+    for rel in workflow_files(repo):
+        if rel in repo.foreign:
+            continue
+        text = repo.text(rel)
+        try:
+            wf = yaml.safe_load(text) or {}
+        except yaml.YAMLError:
+            continue
+        lines = text.splitlines()
+        taken: set[int] = set()
+        for image in workflow_images(wf):
+            ref = IMAGE_REF.match(image)
+            if not ref:
+                continue
+            name = ref.group("name").lower().removeprefix("library/")
+            if name not in LATEST_IMAGES:
+                continue
+            index = image_line(lines, image, taken)
+            taken.add(index)
+            line = lines[index] if index >= 0 else ""
+            after = line[line.index(image) + len(image) :] if image in line else ""
+            comment = after[after.index("#") :] if "#" in after else ""
+            latest, digest = LATEST_IMAGES[name]
+            num = index + 1
+            where = f"{rel}:{num}"
+            if not ref.group("digest"):
+                report.add(
+                    "pins",
+                    where,
+                    f"image:{name} is pinned by tag only: pin it by digest,"
+                    f" its tag in a comment ({name}@{digest} # {latest})",
+                )
+                continue
+            tag = ref.group("tag") or comment.strip("# ").split(" ")[0]
+            have, want = version_tuple(tag), version_tuple(latest)
+            if not tag or have is None or want is None:
+                report.add(
+                    "pins",
+                    where,
+                    f"image:{name} pins a digest and names no tag: add it in a comment"
+                    f" (# {latest}), so it can be held to {latest}",
+                )
+                continue
+            if is_below(have, want):
+                reasoned = index >= 0 and reason_beside(lines, index)
+                pin_below(report, rel, num, f"image:{name}:{tag}", latest, reasoned)
+                continue
+            if have == want and ref.group("digest") != digest:
+                report.add(
+                    "pins",
+                    where,
+                    f"image:{name}:{tag} pins {ref.group('digest')}, not the digest the tag"
+                    f" names ({digest}): pin that one",
+                )
+
+
 def check_pins(repo: Repo, report: Report) -> None:
     check_python_pins(repo, report)
     check_action_pins(repo, report)
     check_hook_pins(repo, report)
+    check_image_pins(repo, report)
 
 
 # --------------------------------------------------------------------------
