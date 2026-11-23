@@ -27,6 +27,9 @@ pytest-cov==7.1.0
 reuse==6.3.0
 # reuse needs one module that detects a file's encoding
 charset-normalizer==3.5.2
+# The quality kit's checker, which the drift test (tests/test_quality_kit.py)
+# runs, reads workflows and dependabot.yml with PyYAML: the kit's pin.
+pyyaml==6.0.4
 
 # The KiCad kit's helper (kicad/kleidos_kicad.py) reads and rewrites the PDF
 # exports of boards and the meter with pypdf, the version they pin; it is
