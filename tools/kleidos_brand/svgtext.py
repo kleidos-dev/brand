@@ -31,7 +31,9 @@ from pathlib import Path
 from . import BRAND_ROOT, lettering
 
 SVG_NS = "http://www.w3.org/2000/svg"
-OPSZ = re.compile(r"""\s*font-variation-settings\s*:\s*["']opsz["']\s+(\d+(?:\.\d+)?)\s*;?\s*""")
+OPSZ = re.compile(
+    r"""\s*font-variation-settings\s*:\s*["']opsz["']\s+(\d+(?:\.\d+)?)\s*(?:;\s*)?"""
+)
 EM = re.compile(r"(-?\d+(?:\.\d+)?)em")
 
 

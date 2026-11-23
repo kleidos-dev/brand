@@ -29,7 +29,7 @@ from typing import Any
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-from kleidos_brand import BRAND_ROOT, mark, png, press, public_tree, tokens, xmlsafe
+from kleidos_brand import BRAND_ROOT, mark, meta, png, press, public_tree, tokens, xmlsafe
 
 MIRROR_JSON = Path("tokens/mirror.json")
 SKILL_TOKENS = ".claude/skills/kleidos-design-system/assets/tokens.json"
@@ -48,7 +48,6 @@ MIRRORED = (
     STRINGS.format(lang="es"),
 )
 
-DECLARATION = re.compile(r"--([a-z0-9-]+)\s*:\s*([^;]+);")
 CONSTANT = re.compile(r"constexpr\s+uint32_t\s+(k\w+)\s*=\s*0x([0-9a-fA-F]{6})\s*;")
 DIGEST = re.compile(r"`([^`\s]+\.(?:ttf|otf|txt))`\s+`([0-9a-f]{64})`")
 
@@ -57,10 +56,21 @@ def _flat(value: str) -> str:
     return re.sub(r"\s+", " ", value).strip().lower()
 
 
+def custom_properties(body: str) -> dict[str, str]:
+    """Return the custom properties a block's body declares, each value's white space made one
+    space."""
+    found = {}
+    for statement in body.split(";")[:-1]:
+        name, _, value = statement.partition(":")
+        if name.strip().startswith("--") and value:
+            found[name.strip().removeprefix("--")] = " ".join(value.split())
+    return found
+
+
 def css_blocks(sheet: str) -> dict[str, dict[str, str]]:
     """Return the declarations of the sheet's three token blocks: dark, and the light theme written
     twice."""
-    sheet = re.sub(r"/\*.*?\*/", "", sheet, flags=re.S)
+    sheet = meta.replace_blocks(sheet, "/*", "*/")
     start = sheet.index("@layer tokens {")
     heads = {
         "dark": sheet.index(":root {", start),
@@ -70,9 +80,7 @@ def css_blocks(sheet: str) -> dict[str, dict[str, str]]:
     blocks = {}
     for name, at in heads.items():
         body = sheet[sheet.index("{", at) + 1 : sheet.index("}", at)]
-        blocks[name] = {
-            key: re.sub(r"\s+", " ", value).strip() for key, value in DECLARATION.findall(body)
-        }
+        blocks[name] = custom_properties(body)
     return blocks
 
 
@@ -142,6 +150,12 @@ def token_findings(kleidos: Path, root: Path = BRAND_ROOT) -> list[str]:
     return found
 
 
+def font_pins(page: str) -> dict[str, str]:
+    """Return the digest the firmware repository's page pins each font at, by its path here; a
+    digest may stand on the line after its file's name."""
+    return {f"fonts/{name}": digest for name, digest in DIGEST.findall(page)}
+
+
 def other_findings(kleidos: Path, boards: Path | None, root: Path = BRAND_ROOT) -> list[str]:
     """Return what else differs: the mark, the fonts, the copied words, the screens."""
     found = []
@@ -154,12 +168,7 @@ def other_findings(kleidos: Path, boards: Path | None, root: Path = BRAND_ROOT) 
         found.append(f"{mark.MARK_SVG}: its shapes are not those of {MARK_SOURCE}")
 
     ours = public_tree.font_pins(root)
-    pins = {
-        f"fonts/{name}": digest
-        for name, digest in DIGEST.findall(
-            re.sub(r"`\s*\n\s*`", "` `", (kleidos / FONT_PINS).read_text(encoding="utf-8"))
-        )
-    }
+    pins = font_pins((kleidos / FONT_PINS).read_text(encoding="utf-8"))
     for name in sorted(set(ours) | set(pins)):
         if name in pins and ours.get(name) != pins[name]:
             found.append(

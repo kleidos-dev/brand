@@ -31,7 +31,7 @@ import subprocess
 import tomllib
 from pathlib import Path
 
-from . import PROJECT_CONTACT, PROJECT_SUPPLIER
+from . import PROJECT_CONTACT, PROJECT_SUPPLIER, meta
 
 TEXT_SUFFIXES = frozenset(
     {
@@ -80,6 +80,7 @@ MAC = re.compile(r"(?<![0-9A-Fa-f:-])([0-9A-Fa-f]{2}(?:[:-][0-9A-Fa-f]{2}){5})(?
 EMAIL = re.compile(
     r"(?<![\w.%+-])([A-Za-z0-9._%+-]+@([A-Za-z0-9-]+(?:\.[A-Za-z0-9-]+)*\.[A-Za-z]{2,}))\b"
 )
+#: A pattern whose ``shown`` group is not the whole match shows that group in its finding.
 PRIVATE = [
     (
         "a home-directory path",
@@ -95,11 +96,15 @@ PRIVATE = [
     ),
     (
         "a local host name",
-        re.compile(r"\b[a-z0-9][\w-]*\.(?:local|lan|home\.arpa)(?![\w.-])", re.I),
+        re.compile(
+            r"(?<![\w-])(?:(?![a-z0-9])\w*+-)*+"
+            r"(?P<shown>[a-z0-9][\w-]*+\.(?:local|lan|home\.arpa))(?![\w.-])",
+            re.I,
+        ),
     ),
     (
         "the name of a private setting",
-        re.compile(r"\bKLEIDOS_[A-Z0-9_]*(?:MAC|IP|HOST|PORT|TOKEN|KEY|PASS)[A-Z0-9_]*\b"),
+        re.compile(r"\bKLEIDOS_(?=[A-Z0-9_]*(?:MAC|IP|HOST|PORT|TOKEN|KEY|PASS))[A-Z0-9_]++\b"),
     ),
     (
         "a token or a key",
@@ -114,7 +119,6 @@ PRIVATE = [
 # REUSE-IgnoreStart
 SPDX_TAG = re.compile(r"SPDX-License-Identifier:[ \t]*([^\n\r]*)")
 # REUSE-IgnoreEnd
-IGNORE_BLOCK = re.compile(r"REUSE-IgnoreStart.*?REUSE-IgnoreEnd", re.S)
 #: The licensing header a Markdown file opens with: an HTML comment of SPDX lines.
 LICENSING_HEADER = re.compile(r"\A<!--\n(?:SPDX-[^\n]*\n)+-->\n")
 
@@ -156,7 +160,7 @@ def private_findings(
 ) -> list[str]:
     """Return the private data in one file's text."""
     found = [
-        f"{name}: holds {what} ({match.group(0)[:60]})"
+        f"{name}: holds {what} ({match[match.lastgroup or 0][:60]})"
         for what, pattern in PRIVATE
         for match in pattern.finditer(text)
     ]
@@ -225,13 +229,9 @@ def license_findings(root: Path, files: list[Path], allowed: frozenset[str]) -> 
             text = (root / path).read_text(encoding="utf-8")
         except UnicodeDecodeError:
             continue
-        for match in SPDX_TAG.finditer(IGNORE_BLOCK.sub("", text)):
+        for match in SPDX_TAG.finditer(meta.without_ignore_blocks(text)):
             expression = match.group(1).strip().rstrip("*/ ->").strip()
-            parts = [
-                part.strip()
-                for part in re.split(r"\s+(?:AND|OR|WITH)\s+|[()]", expression)
-                if part.strip()
-            ]
+            parts = meta.spdx_ids(expression)
             if not parts or any(part not in allowed for part in parts):
                 found.append(
                     f"{path}: its license tag reads {expression!r}; a tag stands alone on its line "

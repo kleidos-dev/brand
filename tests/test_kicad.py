@@ -6,7 +6,11 @@ from __future__ import annotations
 
 import importlib.util
 import json
+import os
 import shutil
+import subprocess
+import sys
+import time
 from pathlib import Path
 from types import ModuleType
 
@@ -26,8 +30,26 @@ def helper() -> ModuleType:
     return module
 
 
-def test_the_builder_gives_the_same_bytes_twice() -> None:
-    assert kicad.texts(ROOT) == kicad.texts(ROOT)
+def kit_digest(hash_seed: str) -> str:
+    """Return the digest of the kit an interpreter of its own builds under a hash seed."""
+    return subprocess.run(
+        [
+            sys.executable,
+            "-c",
+            "import hashlib; from pathlib import Path; from kleidos_brand import kicad; "
+            "kit = {path.as_posix(): text for path, text in kicad.texts(Path.cwd()).items()}; "
+            "print(hashlib.sha256(repr(kit).encode()).hexdigest())",
+        ],
+        cwd=ROOT,
+        env={**os.environ, "PYTHONHASHSEED": hash_seed, "PYTHONPATH": str(ROOT / "tools")},
+        capture_output=True,
+        text=True,
+        check=True,
+    ).stdout
+
+
+def test_the_builder_gives_the_same_bytes_under_any_hash_seed() -> None:
+    assert kit_digest("1") == kit_digest("2")
 
 
 def test_the_committed_kit_is_what_the_builder_gives() -> None:
@@ -40,6 +62,18 @@ def test_each_sheet_embeds_its_logo_file_unchanged_once(ground: str) -> None:
     style = kicad.load(ROOT)
     text = (ROOT / kicad.sheet_path(ground)).read_text(encoding="utf-8")
     assert kicad.embedded_marks(text) == [(ROOT / style["grounds"][ground]["mark"]).read_bytes()]
+
+
+def test_a_bitmap_s_data_is_the_first_that_follows_it() -> None:
+    assert kicad.embedded_marks('(data "Tg==") (bitmap (data) (data "QU"\n"I="))') == [b"AB"]
+    sheet = '(bitmap (data "QQ==")) (data "Tg==") (bitmaps (data "Tg==")) (bitmap (data "Qg=="))'
+    assert kicad.embedded_marks(sheet) == [b"A", b"B"]
+
+
+def test_a_hostile_sheet_is_read_in_linear_time() -> None:
+    start = time.process_time()
+    assert kicad.embedded_marks("(bitmap " * 40_000) == []
+    assert time.process_time() - start < 1
 
 
 def test_the_mark_is_nine_millimeters_in_its_cell() -> None:

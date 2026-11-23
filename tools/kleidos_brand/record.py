@@ -12,9 +12,10 @@ from __future__ import annotations
 
 import hashlib
 import json
-import re
 from pathlib import Path
 from typing import Any
+
+from . import meta
 
 EXPORTS_JSON = Path("exports.json")
 COMMENT = (
@@ -62,10 +63,9 @@ def block_markers(name: str) -> tuple[str, str]:
 def with_block(text: str, name: str, body: str) -> str:
     """Return *text* with its generated block *name* holding *body*."""
     begin, end = block_markers(name)
-    pattern = re.compile(re.escape(begin) + r".*?" + re.escape(end), re.S)
-    if not pattern.search(text):
+    if not any(meta.block_spans(text, begin, end)):
         raise ValueError(f"the page has no generated block {name!r}")
-    return pattern.sub(lambda _: f"{begin}\n\n{body}\n\n{end}", text)
+    return meta.replace_blocks(text, begin, end, f"{begin}\n\n{body}\n\n{end}")
 
 
 def human_bytes(count: int) -> str:
