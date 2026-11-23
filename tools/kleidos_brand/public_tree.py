@@ -179,6 +179,16 @@ def private_findings(
     return found
 
 
+#: The operators of an SPDX expression, which name no license.
+SPDX_OPERATORS = frozenset({"AND", "OR", "WITH"})
+
+
+def license_ids(expression: str) -> list[str]:
+    """Return the license (and exception) identifiers of an SPDX expression, in order."""
+    words = expression.replace("(", " ").replace(")", " ").split()
+    return [word for word in words if word not in SPDX_OPERATORS]
+
+
 def license_findings(root: Path, files: list[Path], allowed: frozenset[str]) -> list[str]:
     """Return every license declaration that is not one of *allowed*.
 
@@ -203,8 +213,8 @@ def license_findings(root: Path, files: list[Path], allowed: frozenset[str]) -> 
             found.extend(
                 f"REUSE.toml: declares {part.strip()!r} for {annotation.get('path')}; only "
                 f"{', '.join(sorted(allowed))} are declared here"
-                for part in re.split(r"\s+(?:AND|OR|WITH)\s+|[()]", identifier)
-                if part.strip() and part.strip() not in allowed
+                for part in license_ids(identifier)
+                if part not in allowed
             )
     else:
         found.append("REUSE.toml: missing")
