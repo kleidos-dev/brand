@@ -23,6 +23,6 @@ concurrency:
 jobs:
   commit-messages:
     name: "✍️ Commit messages"
-    uses: kleidos-dev/.github/.github/workflows/reusable-commit-check.yml@dd76a0850b26c2db6b5e56c884acaf40abb9e12c # quality-v2.1.0
+    uses: kleidos-dev/.github/.github/workflows/reusable-commit-check.yml@f3cb9fc380dea5a33c4539f013c0b1dab8ca6b1d # quality-v2.3.0
     permissions:
       contents: read
