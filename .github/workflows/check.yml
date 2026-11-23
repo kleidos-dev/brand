@@ -118,7 +118,12 @@ jobs:
   # The KiCad kit through the KiCad that boards and the meter export with
   # (10.0.8): the fixture on each ground, ERC clean, both exports written with
   # the theme found and one wire width, so a drawing sheet or a theme KiCad
-  # cannot read never merges. Standard library only: the image's own Python.
+  # cannot read never merges. The image is pinned by digest, its tag beside
+  # it (the quality kit's pins rule holds both to the newest KiCad release).
+  # The image's own Python is Debian's 3.13, older than the one the code is
+  # written for, so the script runs on the Python .python-version names,
+  # which uv (at the version requirements.txt pins) installs beside it, as
+  # boards' schematic job does. Standard library only: nothing else installed.
   kicad:
     name: "🧫 KiCad kit (fixture exported on each ground)"
     needs: [lint, reuse, tree]
@@ -126,12 +131,33 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 20
     container:
-      image: kicad/kicad:10.0.8
+      image: kicad/kicad@sha256:3f4a01786dfbe803a65f345c3342b765db9add913f5e9448f8356793714ddc34 # 10.0.8
       options: --user root
+    defaults:
+      run:
+        shell: bash
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
+      - name: The Python .python-version names, through uv as requirements.txt pins and hashes it
+        run: |
+          set -euo pipefail
+          apt-get update
+          apt-get install -y --no-install-recommends python3-pip
+          # uv's pin with its hashes: the line and the --hash lines it continues.
+          awk '/^uv==/ { p = 1 } p { print } p && !/\\$/ { p = 0 }' requirements.txt > "$RUNNER_TEMP/uv.txt"
+          [[ $(grep -c '^uv==' "$RUNNER_TEMP/uv.txt") -eq 1 ]] || { echo "requirements.txt must pin uv"; exit 1; }
+          python3 -m pip install --break-system-packages --root-user-action=ignore --require-hashes -r "$RUNNER_TEMP/uv.txt"
+          # uv reads .python-version and downloads that Python when the image lacks it.
+          uv venv --managed-python "$RUNNER_TEMP/python"
+          echo "$RUNNER_TEMP/python/bin" >> "$GITHUB_PATH"
+      - name: The script runs on that Python
+        run: |
+          set -euo pipefail
+          want=$(grep -Ev '^[[:space:]]*(#|$)' .python-version | head -n 1)
+          got=$(python3 -c 'import sys; print(f"{sys.version_info[0]}.{sys.version_info[1]}")')
+          [[ "$got" == "$want" ]] || { echo "python3 is $got, .python-version names $want"; exit 1; }
       - name: The kit's fixture, exported on each ground
         run: python3 tools/check_kicad.py
 
