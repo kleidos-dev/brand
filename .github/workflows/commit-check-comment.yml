@@ -27,7 +27,7 @@ concurrency:
 jobs:
   comment:
     name: "🙋 Commit-check comment"
-    uses: kleidos-dev/.github/.github/workflows/reusable-commit-check-comment.yml@dd76a0850b26c2db6b5e56c884acaf40abb9e12c # quality-v2.1.0
+    uses: kleidos-dev/.github/.github/workflows/reusable-commit-check-comment.yml@f3cb9fc380dea5a33c4539f013c0b1dab8ca6b1d # quality-v2.3.0
     permissions:
       actions: read
       contents: read
