@@ -1,4 +1,5 @@
 # yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json
+# SPDX-FileCopyrightText: 2026 José M. Requena Plens
 # SPDX-License-Identifier: MIT
 #
 # CodeRabbit for the Kleidos repositories: line reviews and committable
@@ -85,9 +86,19 @@ reviews:
     # Byte copies of the boards repository's fronts and their manifest,
     # written by tools/sync_from_boards.py --copy: reviewed in boards.
     - "!boards/**"
-    # The commit-message gate synced from kleidos-dev/agents: reviewed there.
+    # The commit-message checker synced from kleidos-dev/agents: reviewed there.
     - "!.github/commit-check/**"
-    - "!.github/workflows/commit-check*.yml"
+    # The quality kit's byte copies, synced from kleidos-dev/.github and
+    # recorded in .github/quality/SOURCE.json: reviewed there. The waivers
+    # (.github/quality/waivers.toml) and every config that extends a copy are
+    # this repository's own and stay in the review.
+    - "!.github/quality/*.py"
+    - "!.github/quality/*.jsonc"
+    - "!.github/quality/ruff.toml"
+    - "!.github/quality/SOURCE.json"
+    - "!.github/zizmor.yml"
+    - "!.gitleaks-mac.toml"
+    - "!tests/test_quality_kit.py"
 
   # --- brand's own: the rules of AGENTS.md, by path ---------------------------
   # CodeRabbit also reads AGENTS.md itself (code guidelines, below); these

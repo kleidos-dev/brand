@@ -1,3 +1,8 @@
+<!--
+SPDX-FileCopyrightText: 2026 José M. Requena Plens
+SPDX-License-Identifier: GPL-3.0-or-later
+-->
+
 # The name and the mark
 
 **Kleidos is not a registered trademark.** "Kleidos" and the keyhole inside its ring are the name and the sign this project has been known by since 2026. They are used by José M. Requena Plens, who makes the project.

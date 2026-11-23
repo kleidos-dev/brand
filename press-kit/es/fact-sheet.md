@@ -1,3 +1,8 @@
+<!--
+SPDX-FileCopyrightText: 2026 José M. Requena Plens
+SPDX-License-Identifier: MIT
+-->
+
 # Kleidos: ficha informativa
 
 Datos a 17 de noviembre de 2026.

@@ -1,3 +1,4 @@
+# SPDX-FileCopyrightText: 2026 José M. Requena Plens
 # SPDX-License-Identifier: MIT
 """The logo files: every SVG under ``logo/svg/``, drawn from the mark and the lockups' numbers.
 
@@ -55,7 +56,8 @@ def _svg(
     box = f"{_number(origin[0])} {_number(origin[1])} {_number(width)} {_number(height)}"
     return (
         SVG_HEADER
-        + f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="{box}" width="{_number(width)}" height="{_number(height)}" role="img">\n'
+        + f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="{box}" width="{_number(width)}" '
+        f'height="{_number(height)}" role="img">\n'
         + f"  <title>{title}</title>\n"
         + "\n".join(body)
         + "\n</svg>\n"
@@ -64,7 +66,8 @@ def _svg(
 
 def _lettering_path(line: lettering.Line, x: float, baseline: float, ink: str) -> str:
     return (
-        f'  <path class="lettering" fill="{ink}" transform="translate({_number(x)} {_number(baseline)}) scale(1 -1)"'
+        f'  <path class="lettering" fill="{ink}" transform="translate({_number(x)} '
+        f'{_number(baseline)}) scale(1 -1)"'
         f' d="{line.path()}"/>'
     )
 
@@ -121,7 +124,8 @@ def _build(root: Path) -> list[Logo]:
     ) -> None:
         if ground is not None:
             body = [
-                f'  <rect x="{_number(origin[0] - pad)}" y="{_number(origin[1] - pad)}" width="{_number(width + 2 * pad)}"'
+                f'  <rect x="{_number(origin[0] - pad)}" y="{_number(origin[1] - pad)}" '
+                f'width="{_number(width + 2 * pad)}"'
                 f' height="{_number(height + 2 * pad)}" fill="{ground}"/>',
                 *body,
             ]
@@ -172,7 +176,8 @@ def _build(root: Path) -> list[Logo]:
             box,
             [mark.group(shapes)],
             0.5,
-            f"the mark on its {'dark tile' if name == 'on-dark' else 'white tile'} ({ground}), clear space included",
+            f"the mark on its {'dark tile' if name == 'on-dark' else 'white tile'} ({ground}), "
+            "clear space included",
             ground=ground,
             pad=half,
             origin=(-half, -half),
@@ -239,7 +244,8 @@ def _build(root: Path) -> list[Logo]:
             side,
             horizontal(ink),
             1.0,
-            f"the mark and the name side by side, {name.replace('-', ' a ')} ground, on transparency",
+            f"the mark and the name side by side, {name.replace('-', ' a ')} ground, on "
+            "transparency",
         )
     for name, ink in one_ink.items():
         add(
@@ -269,7 +275,7 @@ def _build(root: Path) -> list[Logo]:
     side = s["mark_side_em"] * em
     scale = side / box
     inset = mark.RING_INSET * scale
-    cap = float(lettering._instance(root, line.family, line.axes)[0]["OS/2"].sCapHeight)  # noqa: SLF001
+    cap = float(lettering._instance(root, line.family, line.axes)[0]["OS/2"].sCapHeight)
     baseline = side + s["cap_top_below_mark_em"] * em + cap
     ink_width = ink_x1 - ink_x0
     width = max(side, ink_width + 2 * inset)
@@ -325,14 +331,16 @@ def _build(root: Path) -> list[Logo]:
             ink_y1 - ink_y0,
             [_lettering_path(line, -ink_x0, ink_y1, ink)],
             0.0,
-            f"the name alone, {name.replace('-', ' a ')} ground, for a layout where the mark already stands nearby",
+            f"the name alone, {name.replace('-', ' a ')} ground, for a layout where the mark "
+            "already stands nearby",
         )
     return logos
 
 
 @dataclass(frozen=True)
 class Opaque:
-    """The opaque copy of a logo PNG that stands on transparency: what it copies, its ground and its path."""
+    """The opaque copy of a logo PNG that stands on transparency: what it copies, its ground and its
+    path."""
 
     item: Logo
     source: Path  # the PNG on transparency it is flattened from
@@ -358,7 +366,8 @@ def variant(family: str) -> str:
 
 
 def opaque_plan(root: Path = BRAND_ROOT) -> list[Opaque]:
-    """Return the opaque copy of every logo PNG on transparency, on the ground ``logo/src/opaque.json`` gives its variant."""
+    """Return the opaque copy of every logo PNG on transparency, on the ground
+    ``logo/src/opaque.json`` gives its variant."""
     numbers = json.loads((root / OPAQUE_JSON).read_text(encoding="utf-8"))
     values = tokens.resolve(tokens.load(root))
     plan = []

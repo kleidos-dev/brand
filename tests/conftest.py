@@ -1,3 +1,4 @@
+# SPDX-FileCopyrightText: 2026 José M. Requena Plens
 # SPDX-License-Identifier: MIT
 """What the tests share: the tools on the path, a throwaway copy of the tree, the browser marker.
 
@@ -11,20 +12,27 @@ from __future__ import annotations
 
 import shutil
 import sys
+from collections.abc import Iterator
 from pathlib import Path
+from typing import TYPE_CHECKING
 
 import pytest
+
+if TYPE_CHECKING:
+    from kleidos_brand.raster import Browser
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "tools"))
 
 SKIPPED_ANYWHERE = {".venv", ".git", "__pycache__", ".pytest_cache", ".ruff_cache"}
-#: What the root holds that is not part of the tree: the press-kit archive and the coverage pytest --cov writes.
+#: What the root holds that is not part of the tree: the press-kit archive and the coverage pytest
+#: --cov writes.
 ROOT_OUTPUT = {"dist", ".coverage", "coverage.xml"}
 
 
 def skipped(folder: str, names: list[str]) -> set[str]:
-    """Leave out what is not part of the tree: caches, the environment, and the root's build and coverage output."""
+    """Leave out what is not part of the tree: caches, the environment, and the root's build and
+    coverage output."""
     out = {name for name in names if name in SKIPPED_ANYWHERE}
     if Path(folder) == ROOT:
         out |= {name for name in names if name in ROOT_OUTPUT or name.startswith(".coverage.")}
@@ -44,7 +52,7 @@ def tree(tmp_path: Path) -> Path:
 
 
 @pytest.fixture(scope="session")
-def chromium():
+def chromium() -> Iterator[Browser]:
     """Return an open browser, or skip when Playwright's Chromium is not installed."""
     from kleidos_brand import raster
 

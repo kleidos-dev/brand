@@ -1,3 +1,4 @@
+# SPDX-FileCopyrightText: 2026 José M. Requena Plens
 # SPDX-License-Identifier: MIT
 """Photographs: JPEG files that hold pixels, and the record of what they are.
 
@@ -44,7 +45,8 @@ SUBSAMPLING = 0
 #: bare JFIF header (APP0), quantization and Huffman tables, the frame
 #: header, the restart interval and the scans.
 ALLOWED_MARKERS = frozenset({0xD8, 0xD9, 0xE0, 0xDB, 0xC4, 0xC0, 0xC1, 0xC2, 0xDD, 0xDA})
-#: And, with a record, the profile's XMP (APP1) and IIM (APP13), holding exactly what the record gives.
+#: And, with a record, the profile's XMP (APP1) and IIM (APP13), holding exactly what the record
+#: gives.
 METADATA_MARKERS = frozenset({0xE1, 0xED})
 MARKER_NAMES = {
     0xE1: "APP1 (EXIF or XMP)",
@@ -71,7 +73,8 @@ def encode(image: Any, meta: MediaMeta | None = None) -> bytes:
 
 
 def stamp(data: bytes, meta: MediaMeta) -> bytes:
-    """Return a published JPEG with its metadata replaced by the record's, every byte from its first table on unchanged."""
+    """Return a published JPEG with its metadata replaced by the record's, every byte from its first
+    table on unchanged."""
     return media.jpeg_stamp(data, meta)
 
 
@@ -81,8 +84,9 @@ def bare(data: bytes) -> bytes:
 
 
 def clean(data: bytes, meta: MediaMeta | None = None) -> bytes:
-    """Return a camera's JPEG as this project publishes it: upright, sRGB, pixels only, then the record given."""
-    from PIL import Image, ImageCms, ImageOps  # noqa: PLC0415
+    """Return a camera's JPEG as this project publishes it: upright, sRGB, pixels only, then the
+    record given."""
+    from PIL import Image, ImageCms, ImageOps
 
     with Image.open(io.BytesIO(data)) as opened:
         upright = ImageOps.exif_transpose(opened)
@@ -90,13 +94,16 @@ def clean(data: bytes, meta: MediaMeta | None = None) -> bytes:
         pixels = upright.convert("RGB")
     if profile:
         source = ImageCms.ImageCmsProfile(io.BytesIO(profile))
-        pixels = ImageCms.profileToProfile(
+        converted = ImageCms.profileToProfile(
             pixels,
             source,
             ImageCms.createProfile("sRGB"),
             renderingIntent=ImageCms.Intent.RELATIVE_COLORIMETRIC,
             outputMode="RGB",
         )
+        if converted is None:  # only an in-place conversion returns nothing
+            raise ValueError("the camera's color profile could not be converted to sRGB")
+        pixels = converted
     fresh = Image.new("RGB", pixels.size)
     fresh.paste(pixels)
     return encode(fresh, meta)
@@ -104,7 +111,7 @@ def clean(data: bytes, meta: MediaMeta | None = None) -> bytes:
 
 def narrowed(data: bytes, width: int, meta: MediaMeta | None = None) -> bytes:
     """Return a copy of a published photograph *width* pixels wide, with the record given."""
-    from PIL import Image  # noqa: PLC0415
+    from PIL import Image
 
     with Image.open(io.BytesIO(data)) as opened:
         height = round(width * opened.height / opened.width)
@@ -112,8 +119,9 @@ def narrowed(data: bytes, width: int, meta: MediaMeta | None = None) -> bytes:
 
 
 def resized(data: bytes, size: tuple[int, int]) -> Any:
-    """Return a published photograph's pixels at *size*, resampled as the narrower copies are; at its own size, as they are."""
-    from PIL import Image  # noqa: PLC0415
+    """Return a published photograph's pixels at *size*, resampled as the narrower copies are; at
+    its own size, as they are."""
+    from PIL import Image
 
     with Image.open(io.BytesIO(data)) as opened:
         pixels = opened.convert("RGB")
@@ -163,7 +171,7 @@ def markers(data: bytes) -> list[int]:
 
 def size(data: bytes) -> tuple[int, int]:
     """Return a JPEG's width and height."""
-    from PIL import Image  # noqa: PLC0415
+    from PIL import Image
 
     with Image.open(io.BytesIO(data)) as opened:
         if opened.format != "JPEG":
@@ -178,7 +186,8 @@ def findings(
     limit: int | None = None,
     meta: MediaMeta | None = None,
 ) -> list[str]:
-    """Return what is wrong with a published photograph: its segments, its metadata, its size, its weight.
+    """Return what is wrong with a published photograph: its segments, its metadata, its size, its
+    weight.
 
     :param meta: The file's record. Without one, any metadata segment is refused.
     """
@@ -206,7 +215,8 @@ def findings(
         length = int.from_bytes(data[app0 + 2 : app0 + 4], "big")
         if data[app0 + 4 : app0 + 9] != b"JFIF\x00" or length != 16:
             found.append(
-                f"{name}: its APP0 segment is not the bare JFIF header (a thumbnail or an extension)"
+                f"{name}: its APP0 segment is not the bare JFIF header (a thumbnail or an "
+                "extension)"
             )
     if expected is not None and actual != expected:
         found.append(f"{name}: is {actual[0]} x {actual[1]}, not {expected[0]} x {expected[1]}")

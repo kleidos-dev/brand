@@ -1,3 +1,8 @@
+<!--
+SPDX-FileCopyrightText: 2026 José M. Requena Plens
+SPDX-License-Identifier: MIT
+-->
+
 # Tokens
 
 [`tokens.json`](tokens.json) is the one file that holds the brand's values: the mark's two colors and its construction, the site's palette and type roles, the device's palette and sizes, and the colors an image is painted with. It is DTCG-shaped (a token is an object with `$value` and `$type`); a color's value is a CSS color string, a hex where it is opaque; and a token with `$compose` is one color at an alpha over another, computed and never stored.

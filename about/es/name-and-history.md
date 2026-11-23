@@ -1,3 +1,8 @@
+<!--
+SPDX-FileCopyrightText: 2026 José M. Requena Plens
+SPDX-License-Identifier: MIT
+-->
+
 # Kleidos: el nombre y cómo llegó hasta aquí
 
 ## De dónde viene el nombre

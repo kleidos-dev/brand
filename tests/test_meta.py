@@ -1,5 +1,7 @@
+# SPDX-FileCopyrightText: 2026 José M. Requena Plens
 # SPDX-License-Identifier: MIT
-"""The metadata profile (``kleidos_brand.meta``): golden bytes, limits, the short profile, Spanish, REUSE.
+"""The metadata profile (``kleidos_brand.meta``): golden bytes, limits, the short profile, Spanish,
+REUSE.
 
 The files under ``tests/fixtures/meta/`` are the profile's bytes for two fixed
 records. Every repository that keeps a copy of the module reproduces them;
@@ -19,15 +21,18 @@ from pathlib import Path
 
 import build
 import pytest
+
 from kleidos_brand import meta
 
 ROOT = Path(__file__).resolve().parents[1]
 FIXTURES = ROOT / "tests/fixtures/meta"
 
-#: A full record, in Spanish, with a credit, the trademark notes and the extra terms: every slot written.
+#: A full record, in Spanish, with a credit, the trademark notes and the extra terms: every slot
+#: written.
 FULL = meta.MediaMeta(
     title="Kleidos press image: a fixture, 16:9",
-    description='A fixture: the record every copy of the module turns into the same bytes. It holds <, > & ".',
+    description="A fixture: the record every copy of the module turns into the same bytes. It "
+    'holds <, > & ".',
     alt="A fixture for the golden files",
     keywords=(*meta.BASE_KEYWORDS, "fixture", "M5Stack", "LILYGO"),
     digital_source_type="composite",
@@ -42,7 +47,8 @@ FULL = meta.MediaMeta(
     source_url=meta.identifier_url("brand", "tests/fixtures/meta/full.svg"),
     language="es",
     title_es="Imagen de prensa de Kleidos: un ejemplo, 16:9",
-    description_es="Un ejemplo: el registro que cada copia del módulo convierte en los mismos bytes.",
+    description_es="Un ejemplo: el registro que cada copia del módulo convierte en los mismos "
+    "bytes.",
     alt_es="Un ejemplo para los archivos de referencia",
     spanish={"A credit sentence.": "Una frase de crédito."},
 )
@@ -80,7 +86,7 @@ def bare_jpeg() -> bytes:
 
 
 def png_chunks_bytes(record: meta.MediaMeta) -> bytes:
-    return b"".join(meta._chunk(name, body) for name, body in meta.png_chunks(record))  # noqa: SLF001 - the chunks' exact bytes
+    return b"".join(meta._chunk(name, body) for name, body in meta.png_chunks(record))
 
 
 GOLDEN = {
@@ -121,8 +127,8 @@ def test_the_packet_is_deterministic_unpadded_and_escaped() -> None:
     assert "<dc:language><rdf:Bag><rdf:li>es</rdf:li></rdf:Bag></dc:language>" in packet
     assert "Una frase de crédito." in packet and "no está afiliado a M5Stack" in packet
     assert (
-        '<dc:rights><rdf:Alt><rdf:li xml:lang="x-default">© 2026 José M. Requena Plens; © 2021 M5Stack. GPL-3.0-or-later AND MIT.</rdf:li>'
-        in packet
+        '<dc:rights><rdf:Alt><rdf:li xml:lang="x-default">© 2026 José M. Requena Plens; © 2021 '
+        "M5Stack. GPL-3.0-or-later AND MIT.</rdf:li>" in packet
     )
     assert (
         packet.count("https://spdx.org/licenses/GPL-3.0-or-later.html") == 4
@@ -178,7 +184,7 @@ def test_a_jpeg_stamp_keeps_every_byte_from_the_first_table() -> None:
     assert stamped[stamped.index(b"\xff\xdb") :] == data[tables:]
     assert meta.jpeg_bare(stamped) == data
     assert meta.jpeg_findings("x.jpg", stamped, FULL) == []
-    segments, _ = meta._jpeg_head(stamped)  # noqa: SLF001 - the segment order itself
+    segments, _ = meta._jpeg_head(stamped)
     assert [marker for marker, _ in segments] == [0xE0, 0xE1, 0xED]
 
 
@@ -259,7 +265,7 @@ def test_the_limits_refuse_a_record_and_never_cut_it() -> None:
     with pytest.raises(ValueError, match="lacks a Spanish"):
         meta.MediaMeta(**{**SHORT.__dict__, "language": "es"})
     with pytest.raises(ValueError, match="IIM 2:80"):
-        meta._iim((2, 80), b"z" * 33)  # noqa: SLF001 - the IIM limit itself
+        meta._iim((2, 80), b"z" * 33)
     with pytest.raises(ValueError, match="no public repository"):
         meta.license_url("LicenseRef-Kleidos-Brand-Marks", "firmware")
 
@@ -269,7 +275,10 @@ def test_the_svg_block_sits_inside_the_reuse_markers() -> None:
     start, end = block.index(meta.SVG_IGNORE_START), block.index(meta.SVG_IGNORE_END)
     assert start < block.index("<metadata") < block.index("</metadata>") < end
     assert block.index("©") > start
-    svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10"><title>old</title><rect width="10" height="10"/></svg>'
+    svg = (
+        '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10"><title>old</title><rect '
+        'width="10" height="10"/></svg>'
+    )
     stamped = meta.svg_stamp(svg, FULL, "kl-fixture")
     assert (
         'role="img" aria-labelledby="kl-fixture-t kl-fixture-d" lang="es">' in stamped
@@ -307,7 +316,8 @@ def test_the_deny_list_names_each_class() -> None:
 
 
 def test_every_record_agrees_with_the_reuse_tool() -> None:
-    """The small resolver against REUSE itself, for every published file, and the metadata adds no copyright line REUSE would read."""
+    """The small resolver against REUSE itself, for every published file, and the metadata adds no
+    copyright line REUSE would read."""
     reuse = shutil.which("reuse") or str(Path(sys.executable).with_name("reuse"))
     if not Path(reuse).is_file():
         pytest.skip("the reuse tool is not installed")
@@ -327,8 +337,8 @@ def test_every_record_agrees_with_the_reuse_tool() -> None:
         ]
         files[name] = (licenses, holders)
     texts, pictures = build.collect(ROOT)
-    records = {
-        item.path.as_posix(): item.meta for item in [*texts, *pictures] if item.meta is not None
+    records = {item.path.as_posix(): item.meta for item in texts if item.meta is not None} | {
+        item.path.as_posix(): item.meta for item in pictures if item.meta is not None
     }
     assert records, "the builder makes records"
     for name, record in records.items():

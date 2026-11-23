@@ -1,8 +1,13 @@
+<!--
+SPDX-FileCopyrightText: 2026 José M. Requena Plens
+SPDX-License-Identifier: MIT
+-->
+
 # The Kleidos KiCad style
 
 One look for every Kleidos schematic: the drawing sheet with the Kleidos mark in its title block, the color theme, and the rules below, owned here and drawn alike by [`boards`](https://github.com/kleidos-dev/boards) (the nine boards' schematics) and the bench meter. KiCad 10 (kicad-cli 10.0.8, the `kicad/kicad:10.0.8` container CI uses).
 
-![The kit's fixture on the dark ground: cyan connections, labelled nets, a legend table, and the title block with the Kleidos mark](preview/kleidos-kicad-fixture-dark.png)
+![The kit's fixture on the dark ground: cyan connections, labeled nets, a legend table, and the title block with the Kleidos mark](preview/kleidos-kicad-fixture-dark.png)
 
 ![The same fixture on the light ground, the print companion](preview/kleidos-kicad-fixture-light.png)
 

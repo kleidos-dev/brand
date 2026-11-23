@@ -1,3 +1,4 @@
+# SPDX-FileCopyrightText: 2026 José M. Requena Plens
 # SPDX-License-Identifier: MIT
 """The nine boards Kleidos runs on: their fronts, set side by side on a shelf at one scale.
 
@@ -13,7 +14,7 @@ space-separated list of boards) with ``fill="none"``, whose box the boards
 stand in, their cases' bottom edges on its bottom edge. Every shelf of one
 drawing shares one scale, the largest at which each shelf's boards fit their
 box, so the boards keep their true sizes against each other. ``data-gap``
-(millimetres, 8 by default) is the space between two boards and ``data-align``
+(millimeters, 8 by default) is the space between two boards and ``data-align``
 (``center``, ``start`` or ``end``) where a row shorter than its box sits.
 
 :func:`fill` puts the fronts in place of the shelves. Each front is drawn as
@@ -37,11 +38,11 @@ import math
 import re
 import xml.etree.ElementTree as ET
 from dataclasses import dataclass
-from functools import lru_cache
+from functools import cache
 from pathlib import Path
 from typing import Any
 
-from . import BRAND_ROOT
+from . import BRAND_ROOT, xmlsafe
 
 BOARDS_DIR = Path("boards")
 MANIFEST = BOARDS_DIR / "boards.json"
@@ -68,7 +69,7 @@ Box = tuple[float, float, float, float]  # left, top, right, bottom
 
 @dataclass(frozen=True)
 class Front:
-    """One board's front: its name, its case's size and its panel's active area, in millimetres."""
+    """One board's front: its name, its case's size and its panel's active area, in millimeters."""
 
     slug: str
     name: str
@@ -80,7 +81,8 @@ class Front:
 
 @dataclass(frozen=True)
 class Placement:
-    """Where a front is drawn: its board, its case's top left corner and its scale, in the drawing's units."""
+    """Where a front is drawn: its board, its case's top left corner and its scale, in the drawing's
+    units."""
 
     slug: str
     x: float
@@ -119,13 +121,15 @@ def _number(value: float) -> str:
 
 
 def _factor(value: float) -> str:
-    """Return a scale factor to six significant digits: font units to millimetres are ten-thousandths."""
+    """Return a scale factor to six significant digits: font units to millimeters are
+    ten-thousandths."""
     return f"{value:.6g}"
 
 
 def load(root: Path = BRAND_ROOT) -> dict[str, Any]:
     """Return ``boards/boards.json``."""
-    return json.loads((root / MANIFEST).read_text(encoding="utf-8"))
+    data: dict[str, Any] = json.loads((root / MANIFEST).read_text(encoding="utf-8"))
+    return data
 
 
 def order(root: Path = BRAND_ROOT) -> list[str]:
@@ -144,7 +148,8 @@ def screen_path(slug: str) -> Path:
 
 
 def inputs(root: Path = BRAND_ROOT) -> tuple[Path, ...]:
-    """Return every file a line-up is drawn from: the manifest, the fronts, the screens and the faces."""
+    """Return every file a line-up is drawn from: the manifest, the fronts, the screens and the
+    faces."""
     slugs = order(root)
     return (
         MANIFEST,
@@ -156,7 +161,7 @@ def inputs(root: Path = BRAND_ROOT) -> tuple[Path, ...]:
 
 def front(slug: str, root: Path = BRAND_ROOT) -> Front:
     """Return what a line-up measures on a board's front."""
-    tree = ET.parse(root / front_path(slug)).getroot()
+    tree = xmlsafe.parse(root / front_path(slug))
     _, _, view_w, view_h = (float(part) for part in tree.get("viewBox", "").split())
     width, height = view_w - MARGINS[0] - MARGINS[2], view_h - MARGINS[1] - MARGINS[3]
     marker = next(element for element in tree.iter() if element.get("id") == "screen-active")
@@ -176,7 +181,8 @@ def front(slug: str, root: Path = BRAND_ROOT) -> Front:
 
 
 def face_for(weight: int) -> Path:
-    """Return the pinned face CSS picks for *weight*: 400 and 500 try each other, heavier ones go up, lighter ones down."""
+    """Return the pinned face CSS picks for *weight*: 400 and 500 try each other, heavier ones go
+    up, lighter ones down."""
     have = sorted(INTER)
     if weight in INTER:
         return INTER[weight]
@@ -185,26 +191,27 @@ def face_for(weight: int) -> Path:
     return INTER[max((w for w in have if w < weight), default=min(have))]
 
 
-@lru_cache(maxsize=None)
+@cache
 def _face(path: str) -> tuple[Any, Any]:
-    import uharfbuzz as hb  # noqa: PLC0415
-    from fontTools.ttLib import TTFont  # noqa: PLC0415
+    import uharfbuzz as hb
+    from fontTools.ttLib import TTFont
 
     data = Path(path).read_bytes()
     return TTFont(io.BytesIO(data)), hb.Font(hb.Face(data))
 
 
 def legend_path(element: ET.Element, root: Path = BRAND_ROOT) -> ET.Element:
-    """Return a ``<text>`` of a front as one ``<path>``: the same words, at the same place, in Inter's outlines.
+    """Return a ``<text>`` of a front as one ``<path>``: the same words, at the same place, in
+    Inter's outlines.
 
     The words are shaped with HarfBuzz as a browser shapes them (kerning and
     ligatures on). A run whose width the drawing pins (``textLength`` with
     ``lengthAdjust="spacingAndGlyphs"``) is stretched to that width, as a
     browser stretches it.
     """
-    import uharfbuzz as hb  # noqa: PLC0415
-    from fontTools.pens.svgPathPen import SVGPathPen  # noqa: PLC0415
-    from fontTools.pens.transformPen import TransformPen  # noqa: PLC0415
+    import uharfbuzz as hb
+    from fontTools.pens.svgPathPen import SVGPathPen
+    from fontTools.pens.transformPen import TransformPen
 
     if len(element):
         raise ValueError("a legend is one plain run of characters")
@@ -231,7 +238,8 @@ def legend_path(element: ET.Element, root: Path = BRAND_ROOT) -> ET.Element:
     if element.get("textLength") is not None:
         if element.get("lengthAdjust") != "spacingAndGlyphs":
             raise ValueError(
-                "a legend whose width is pinned stretches its glyphs (lengthAdjust='spacingAndGlyphs')"
+                "a legend whose width is pinned stretches its glyphs "
+                "(lengthAdjust='spacingAndGlyphs')"
             )
         widen = float(element.get("textLength", "0")) / (advance * scale)
     x = (
@@ -266,7 +274,7 @@ def drawing(slug: str, root: Path = BRAND_ROOT, prefix: str | None = None) -> li
     marker and the drop shadow. Every legend's live text becomes a path.
     """
     ET.register_namespace("", SVG_NS)
-    tree = ET.parse(root / front_path(slug)).getroot()
+    tree = xmlsafe.parse(root / front_path(slug))
     prefix = f"{slug}-" if prefix is None else prefix
     shadows = {
         element.get("id")
@@ -361,7 +369,8 @@ def arrange(shelves: list[Shelf], root: Path = BRAND_ROOT) -> list[Placement]:
 
 
 def _offset(parents: dict[ET.Element, ET.Element], element: ET.Element) -> tuple[float, float]:
-    """Return the translation every ancestor of *element* adds; only ``translate(x y)`` and a plain scale of 1 are read."""
+    """Return the translation every ancestor of *element* adds; only ``translate(x y)`` and a plain
+    scale of 1 are read."""
     dx = dy = 0.0
     node = parents.get(element)
     while node is not None:
@@ -372,7 +381,8 @@ def _offset(parents: dict[ET.Element, ET.Element], element: ET.Element) -> tuple
             )
             if not match:
                 raise ValueError(
-                    f"a shelf sits inside a group moved by {transform!r}; only translate(x y) is read"
+                    f"a shelf sits inside a group moved by {transform!r}; only translate(x y) is "
+                    "read"
                 )
             dx, dy = dx + float(match.group(1)), dy + float(match.group(2))
         node = parents.get(node)
@@ -430,7 +440,10 @@ def fill(tree: ET.Element, root: Path = BRAND_ROOT) -> list[Placement]:
                 f"{{{SVG_NS}}}g",
                 {
                     "class": f"board {placed.slug}",
-                    "transform": f"translate({_number(placed.x - dx)} {_number(placed.y - dy)}) scale({_number(placed.scale)})",
+                    "transform": (
+                        f"translate({_number(placed.x - dx)} {_number(placed.y - dy)})"
+                        f" scale({_number(placed.scale)})"
+                    ),
                 },
             )
             board.extend(drawing(placed.slug, root))
@@ -447,7 +460,7 @@ def paste_glass(
 
     :param factor: The image's pixels per unit of the drawing the placements were made in.
     """
-    from PIL import Image  # noqa: PLC0415
+    from PIL import Image
 
     for placed in placements:
         left, top, right, bottom = (value * factor for value in placed.glass())
@@ -457,10 +470,12 @@ def paste_glass(
             screen = opened.convert("RGB")
         if (screen.width, screen.height) != placed.front.resolution:
             raise ValueError(
-                f"{screen_path(placed.slug)}: is {screen.width} x {screen.height}; the front's panel is {placed.front.resolution}"
+                f"{screen_path(placed.slug)}: is {screen.width} x {screen.height}; the front's "
+                f"panel is {placed.front.resolution}"
             )
         if width > screen.width or height > screen.height:
-            # Enlarged pixel for pixel first, so the screen's edges stay sharp, then brought to the panel's size.
+            # Enlarged pixel for pixel first, so the screen's edges stay sharp, then brought to the
+            # panel's size.
             whole = math.ceil(max(width / screen.width, height / screen.height))
             screen = screen.resize(
                 (screen.width * whole, screen.height * whole), Image.Resampling.NEAREST
@@ -475,15 +490,18 @@ def digest(path: Path) -> str:
 
 
 def findings(root: Path = BRAND_ROOT) -> list[str]:
-    """Return every copied front that is not the file the manifest records, and every front a line-up cannot draw."""
-    found = []
+    """Return every copied front that is not the file the manifest records, and every front a
+    line-up cannot draw."""
+    found: list[str] = []
     try:
         manifest = load(root)
     except (OSError, ValueError) as error:
         return [f"{MANIFEST}: cannot be read ({error})"]
-    for key in ("repository", "commit", "license", "boards"):
-        if key not in manifest:
-            found.append(f"{MANIFEST}: has no {key!r}")
+    found.extend(
+        f"{MANIFEST}: has no {key!r}"
+        for key in ("repository", "commit", "license", "boards")
+        if key not in manifest
+    )
     if manifest.get("license") != "MIT":
         found.append(
             f"{MANIFEST}: the fronts are copied under the MIT License, the boards repository's"
@@ -492,9 +510,11 @@ def findings(root: Path = BRAND_ROOT) -> list[str]:
         MANIFEST.as_posix()
     }
     if (root / BOARDS_DIR).is_dir():
-        for path in sorted((root / BOARDS_DIR).iterdir()):
-            if path.is_file() and path.relative_to(root).as_posix() not in listed:
-                found.append(f"{path.relative_to(root).as_posix()}: the manifest does not list it")
+        found.extend(
+            f"{path.relative_to(root).as_posix()}: the manifest does not list it"
+            for path in sorted((root / BOARDS_DIR).iterdir())
+            if path.is_file() and path.relative_to(root).as_posix() not in listed
+        )
     for slug, entry in manifest.get("boards", {}).items():
         path = root / front_path(slug)
         if not path.is_file():
@@ -502,7 +522,8 @@ def findings(root: Path = BRAND_ROOT) -> list[str]:
             continue
         if digest(path) != entry.get("sha256"):
             found.append(
-                f"{front_path(slug)}: its bytes are not the ones {MANIFEST} records; copy it again with tools/sync_from_boards.py"
+                f"{front_path(slug)}: its bytes are not the ones {MANIFEST} records; copy it again "
+                "with tools/sync_from_boards.py"
             )
         if not (root / screen_path(slug)).is_file():
             found.append(

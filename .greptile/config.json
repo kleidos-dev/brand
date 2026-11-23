@@ -32,7 +32,7 @@
   "fixWithAI": true,
   "hideFooter": true,
   "instructions": "Review the diff and post inline comments with concrete suggestions. The rules of this repository are in AGENTS.md, kicad/README.md and logo/README.md (listed in files.json): cite the rule a finding breaks. Generated files are reviewed through their sources (tools/build.py writes them and CI fails when one is stale), so the ignored paths are not missing from the review. Never comment on the pull request's title or description.",
-  "ignorePatterns": "*.png\n*.webp\n*.jpg\nfonts/**/*.ttf\nfonts/**/OFL.txt\nLICENSE\nLICENSES/\nlogo/svg/\npress-kit/svg/\ncolors/palette.svg\ntokens/dist/\nexports.json\nkicad/style.json\nkicad/kleidos-*.json\nkicad/kleidos-*.kicad_wks\ntokens/mirror.json\nboards/\n.github/commit-check/\n.github/workflows/commit-check*.yml",
+  "ignorePatterns": "*.png\n*.webp\n*.jpg\nfonts/**/*.ttf\nfonts/**/OFL.txt\nLICENSE\nLICENSES/\nlogo/svg/\npress-kit/svg/\ncolors/palette.svg\ntokens/dist/\nexports.json\nkicad/style.json\nkicad/kleidos-*.json\nkicad/kleidos-*.kicad_wks\ntokens/mirror.json\nboards/\n.github/commit-check/\n.github/quality/*.py\n.github/quality/*.jsonc\n.github/quality/ruff.toml\n.github/quality/SOURCE.json\n.github/zizmor.yml\n.gitleaks-mac.toml\ntests/test_quality_kit.py",
   "rules": [
     {
       "id": "mark-whole",

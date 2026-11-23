@@ -1,3 +1,4 @@
+# SPDX-FileCopyrightText: 2026 José M. Requena Plens
 # SPDX-License-Identifier: MIT
 """Words as outlines: shaped with HarfBuzz, drawn from the pinned fonts with fontTools.
 
@@ -17,7 +18,7 @@ from __future__ import annotations
 import hashlib
 import io
 from dataclasses import dataclass
-from functools import lru_cache
+from functools import cache
 from pathlib import Path
 
 import uharfbuzz as hb
@@ -72,7 +73,8 @@ class Line:
         for glyph in self.glyphs:
             if first <= glyph.cluster < end:
                 glyph_set[glyph.name].draw(TransformPen(pen, (1, 0, 0, 1, glyph.x, glyph.y)))
-        return pen.getCommands()
+        commands: str = pen.getCommands()
+        return commands
 
     def bounds(self) -> tuple[float, float, float, float]:
         """Return the ink box of the line: ``(x_min, y_min, x_max, y_max)``, y pointing up."""
@@ -81,9 +83,10 @@ class Line:
         pen = BoundsPen(glyph_set)
         for glyph in self.glyphs:
             glyph_set[glyph.name].draw(TransformPen(pen, (1, 0, 0, 1, glyph.x, glyph.y)))
-        if pen.bounds is None:
+        bounds: tuple[float, float, float, float] | None = pen.bounds
+        if bounds is None:
             return 0.0, 0.0, 0.0, 0.0
-        return pen.bounds
+        return bounds
 
 
 def _number(value: float) -> str:
@@ -92,7 +95,7 @@ def _number(value: float) -> str:
     return str(int(rounded)) if rounded == int(rounded) else repr(rounded)
 
 
-@lru_cache(maxsize=None)
+@cache
 def _digest(path: str, modified: int, size: int) -> str:
     """Return the SHA-256 of a font file, read once per state of the file."""
     return hashlib.sha256(Path(path).read_bytes()).hexdigest()

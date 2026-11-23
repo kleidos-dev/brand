@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
+# SPDX-FileCopyrightText: 2026 José M. Requena Plens
 # SPDX-License-Identifier: MIT
-"""Check the embedded metadata of every published picture and SVG, alone (tools/check.py runs it too).
+"""Check the embedded metadata of every published picture and SVG, alone (tools/check.py runs it
+too).
 
     tools/check_metadata.py              every media file of the tree
     tools/check_metadata.py PATH ...     these files only
@@ -37,8 +39,9 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-import check  # noqa: E402
-from kleidos_brand import BRAND_ROOT  # noqa: E402
+import check
+
+from kleidos_brand import BRAND_ROOT
 
 FINDING = re.compile(r"^(?P<path>[^:]+): (?P<rule>M\d{3}): (?P<message>.*)$")
 

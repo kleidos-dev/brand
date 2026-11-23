@@ -1,3 +1,4 @@
+# SPDX-FileCopyrightText: 2026 José M. Requena Plens
 # SPDX-License-Identifier: MIT
 """The press images: one SVG template per layout, the words from one data file.
 
@@ -31,7 +32,7 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any
 
-from . import BRAND_ROOT, SVG_HEADER, boards, logo, svg_rules, svgtext, tokens
+from . import BRAND_ROOT, SVG_HEADER, boards, logo, svg_rules, svgtext, tokens, xmlsafe
 
 PRESS_JSON = Path("press-kit/src/press.json")
 SRC_DIR = Path("press-kit/src")
@@ -53,7 +54,8 @@ def _local(element: ET.Element) -> str:
 
 def load(root: Path = BRAND_ROOT) -> dict[str, Any]:
     """Return ``press-kit/src/press.json``."""
-    return json.loads((root / PRESS_JSON).read_text(encoding="utf-8"))
+    data: dict[str, Any] = json.loads((root / PRESS_JSON).read_text(encoding="utf-8"))
+    return data
 
 
 @dataclass(frozen=True)
@@ -103,7 +105,7 @@ class Image:
 def _lockup_children(root: Path, kind: str, theme: str) -> tuple[list[ET.Element], logo.Logo]:
     stem = f"kleidos-lockup-{kind}-for-{theme}"
     chosen = next(item for item in logo.build(root) if item.stem == stem)
-    tree = ET.fromstring(chosen.svg)
+    tree = xmlsafe.fromstring(chosen.svg)
     return [child for child in tree if _local(child) not in ("title", "desc", "metadata")], chosen
 
 
@@ -123,7 +125,10 @@ def _set_words(element: ET.Element, text: str, accent: str | None, accent_fill: 
 
 def lines_for(data: dict[str, Any], layout: str, lang: str, key: str) -> list[str]:
     """Return the lines a layout breaks the words *key* into, in *lang*."""
-    return data["lines"].get(layout, {}).get(key, {}).get(lang, [data["words"][lang][key]])
+    lines: list[str] = (
+        data["lines"].get(layout, {}).get(key, {}).get(lang, [data["words"][lang][key]])
+    )
+    return lines
 
 
 def render(root: Path, entry: dict[str, Any], lang: str, data: dict[str, Any]) -> Image:
@@ -131,9 +136,10 @@ def render(root: Path, entry: dict[str, Any], lang: str, data: dict[str, Any]) -
     values = tokens.resolve(tokens.load(root))
     layout, theme = entry["layout"], entry["theme"]
     ET.register_namespace("", SVG_NS)
-    tree = ET.fromstring((root / SRC_DIR / f"{layout}.svg").read_text(encoding="utf-8"))
+    tree = xmlsafe.fromstring((root / SRC_DIR / f"{layout}.svg").read_text(encoding="utf-8"))
     size = svg_rules.canvas(tree)
-    assert size is not None, f"{layout}.svg has no canvas"
+    if size is None:
+        raise ValueError(f"{layout}.svg has no canvas")
     words = data["words"][lang]
     accent_fill = values["social.signal"]
 
@@ -152,7 +158,8 @@ def render(root: Path, entry: dict[str, Any], lang: str, data: dict[str, Any]) -
             continue
         if len(lines) > len(targets):
             raise ValueError(
-                f"{layout}: {key!r} has {len(lines)} lines in {lang} and the layout has room for {len(targets)}"
+                f"{layout}: {key!r} has {len(lines)} lines in {lang} and the layout has room for "
+                f"{len(targets)}"
             )
         for index, target in enumerate(targets):
             if index < len(lines):
@@ -255,11 +262,11 @@ def _placed_box(transform: str, width: float, height: float) -> tuple[float, flo
 def images(root: Path = BRAND_ROOT) -> list[Image]:
     """Return every press image, in the order ``press.json`` lists them."""
     data = load(root)
-    out = []
-    for entry in data["images"]:
-        for lang in entry.get("langs", data["langs"]):
-            out.append(render(root, entry, lang, data))
-    return out
+    return [
+        render(root, entry, lang, data)
+        for entry in data["images"]
+        for lang in entry.get("langs", data["langs"])
+    ]
 
 
 def findings(image: Image) -> list[str]:
@@ -279,14 +286,15 @@ def findings(image: Image) -> list[str]:
     for what, (x0, y0, x1, y1) in boxes.items():
         if x0 < left or y0 < top or x1 > right or y1 > bottom:
             found.append(
-                f"{image.stem}: {what} reaches outside the safe area ({x0:.0f}, {y0:.0f}, {x1:.0f}, {y1:.0f} against {left:.0f}, {top:.0f}, {right:.0f}, {bottom:.0f})"
+                f"{image.stem}: {what} reaches outside the safe area ({x0:.0f}, {y0:.0f}, "
+                f"{x1:.0f}, {y1:.0f} against {left:.0f}, {top:.0f}, {right:.0f}, {bottom:.0f})"
             )
     return found
 
 
 def paste_screens(image: Image, drawn: Any, root: Path = BRAND_ROOT) -> Any:
     """Return *drawn* (a Pillow image) with each of the image's screens pasted on its plate."""
-    from PIL import Image as Pillow  # noqa: PLC0415
+    from PIL import Image as Pillow
 
     for plate in image.plates:
         with Pillow.open(root / SCREENS_DIR / f"kleidos-screen-{plate.board}.png") as screen:
@@ -299,14 +307,14 @@ def paste_screens(image: Image, drawn: Any, root: Path = BRAND_ROOT) -> Any:
 
 def narrowed(full: Any, size: tuple[int, int]) -> Any:
     """Return a narrower copy of an image that holds screens: the full one, resampled."""
-    from PIL import Image as Pillow  # noqa: PLC0415
+    from PIL import Image as Pillow
 
     return full.resize(size, Pillow.Resampling.LANCZOS)
 
 
 def enlarged_screen(data: bytes, scale: int) -> Any:
     """Return a capture at *scale* times its own pixels, each pixel a square."""
-    from PIL import Image as Pillow  # noqa: PLC0415
+    from PIL import Image as Pillow
 
     with Pillow.open(io.BytesIO(data)) as screen:
         return screen.convert("RGB").resize(
@@ -316,7 +324,7 @@ def enlarged_screen(data: bytes, scale: int) -> Any:
 
 def template_lockup_matches(root: Path, layout: str) -> bool:
     """Tell whether a layout's own copy of the lockup is the dark lockup the logo files draw."""
-    tree = ET.fromstring((root / SRC_DIR / f"{layout}.svg").read_text(encoding="utf-8"))
+    tree = xmlsafe.fromstring((root / SRC_DIR / f"{layout}.svg").read_text(encoding="utf-8"))
     holder = next((element for element in tree.iter() if element.get("id") == "lockup"), None)
     if holder is None:
         return True

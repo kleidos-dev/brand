@@ -1,3 +1,8 @@
+<!--
+SPDX-FileCopyrightText: 2026 José M. Requena Plens
+SPDX-License-Identifier: GPL-3.0-or-later
+-->
+
 # The logo
 
 The Kleidos mark is a keyhole inside its ring. It is always drawn whole: the keyhole never appears without the ring, at any size. Under 24 px it is drawn as the small mark: the same ring, with the body solid in the ring's color and the keyhole cut out of it. The name beside or under it is one fixed piece of lettering.

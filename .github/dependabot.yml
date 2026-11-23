@@ -1,11 +1,32 @@
+# SPDX-FileCopyrightText: 2026 José M. Requena Plens
 # SPDX-License-Identifier: MIT
+#
+# Keeps the GitHub Actions this repository pins by commit and the Python
+# stack pinned in requirements.txt current. Those are the only two
+# ecosystems in the tree: pyproject.toml holds tool settings and no
+# dependency. Dependabot authors its own commit messages, so the
+# commit-message gate skips its pull requests.
+#
+# A bump of Pillow or Playwright changes how the pictures are drawn: its
+# pull request also draws them again (tools/build.py) and records the new
+# versions in exports.json.
 version: 2
 updates:
   - package-ecosystem: github-actions
     directory: /
     schedule:
       interval: weekly
+    # A release is proposed only once it is a week old, so a compromised or
+    # yanked version has time to be noticed first.
+    cooldown:
+      default-days: 7
+    # The quality kit's workflow references move with the kit's sync
+    # (kleidos-dev/.github docs/quality.md), never one by one.
+    ignore:
+      - dependency-name: "kleidos-dev/.github*"
   - package-ecosystem: pip
     directory: /
     schedule:
       interval: weekly
+    cooldown:
+      default-days: 7

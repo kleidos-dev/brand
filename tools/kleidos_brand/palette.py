@@ -1,3 +1,4 @@
+# SPDX-FileCopyrightText: 2026 José M. Requena Plens
 # SPDX-License-Identifier: MIT
 """The palette's own pages: the swatch sheet and the tables of ``colors/README.md``."""
 
@@ -11,7 +12,8 @@ from . import BRAND_ROOT, SVG_HEADER, lettering, tokens
 PALETTE_SVG = Path("colors/palette.svg")
 PALETTE_PNG = Path("colors/palette.png")
 
-#: The rows of the sheet: a heading, then the tokens it shows and the ground their contrast is read on.
+#: The rows of the sheet: a heading, then the tokens it shows and the ground their contrast is read
+#: on.
 ROWS: tuple[tuple[str, tuple[str, ...]], ...] = (
     ("Brand", ("brand.signal", "brand.select")),
     (
@@ -82,7 +84,8 @@ ROWS: tuple[tuple[str, tuple[str, ...]], ...] = (
     ),
 )
 
-#: The pairs whose contrast the colors page states: a color, the ground it is read on, and what the pair is.
+#: The pairs whose contrast the colors page states: a color, the ground it is read on, and what the
+#: pair is.
 PAIRS: tuple[tuple[str, str, str], ...] = (
     ("brand.signal", "web.dark.stage", "the mark's ring on the brand's ground"),
     ("brand.signal", "web.dark.ground", "the accent on the site's page"),
@@ -137,13 +140,15 @@ def _words(
     line = lettering.shape(text, family, axes, tracking, root)
     scale = size / line.upem
     return (
-        f'  <path fill="{fill}" transform="translate({x:g} {y:g}) scale({scale:g} {-scale:g})" d="{line.path()}">'
+        f'  <path fill="{fill}" transform="translate({x:g} {y:g}) scale({scale:g} {-scale:g})" '
+        f'd="{line.path()}">'
         f"<title>{text}</title></path>"
     )
 
 
 def svg(root: Path = BRAND_ROOT) -> tuple[str, tuple[int, int]]:
-    """Return the swatch sheet and its canvas: every color with its name and its hex, words as outlines."""
+    """Return the swatch sheet and its canvas: every color with its name and its hex, words as
+    outlines."""
     values = tokens.resolve(tokens.load(root))
     ground, ink, ink_2, rule = (
         values[f"social.{name}"] for name in ("ground", "ink", "ink-2", "rule")
@@ -160,10 +165,12 @@ def svg(root: Path = BRAND_ROOT) -> tuple[str, tuple[int, int]]:
         for index, name in enumerate(names):
             x = left + index * (chip + gap)
             body.append(
-                f'  <rect x="{x - 2}" y="{y - 2}" width="{chip + 4}" height="{chip * 0.6 + 4:g}" fill="{rule}"/>'
+                f'  <rect x="{x - 2}" y="{y - 2}" width="{chip + 4}" height="{chip * 0.6 + 4:g}" '
+                f'fill="{rule}"/>'
             )
             body.append(
-                f'  <rect x="{x}" y="{y}" width="{chip}" height="{chip * 0.6:g}" fill="{values[name]}"/>'
+                f'  <rect x="{x}" y="{y}" width="{chip}" height="{chip * 0.6:g}" '
+                f'fill="{values[name]}"/>'
             )
             label = name.split(".", 2)[-1] if name.count(".") > 1 else name.split(".")[-1]
             body.append(_words(label, "Mona Sans", SANS, 26, x, y + chip * 0.6 + 44, ink, 0, root))
@@ -176,7 +183,8 @@ def svg(root: Path = BRAND_ROOT) -> tuple[str, tuple[int, int]]:
     height = y - 30 + top - 64
     head = (
         SVG_HEADER
-        + f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {width} {height}" width="{width}" height="{height}" role="img">\n'
+        + f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {width} {height}" width="{width}" '
+        f'height="{height}" role="img">\n'
         + "  <title>The Kleidos palette: every color with its name and its value</title>\n"
         + f'  <rect x="0" y="0" width="{width}" height="{height}" fill="{ground}"/>\n'
     )
@@ -188,7 +196,8 @@ def _swatch(color: str) -> str:
 
 
 def roles_table(root: Path = BRAND_ROOT) -> str:
-    """Return the table of the colors page: every color with its value, its print start and its role."""
+    """Return the table of the colors page: every color with its value, its print start and its
+    role."""
     loaded = tokens.load(root)
     values = tokens.resolve(loaded)
     found = tokens.leaves(loaded)
@@ -203,7 +212,8 @@ def roles_table(root: Path = BRAND_ROOT) -> str:
             cyan, magenta, yellow, black = tokens.cmyk(color)
             role = found[name].get("$description", "")
             lines.append(
-                f"| `{name}` | {_swatch(color)} | {red}, {green}, {blue} | {cyan}, {magenta}, {yellow}, {black} | {role} |"
+                f"| `{name}` | {_swatch(color)} | {red}, {green}, {blue} | {cyan}, {magenta}, "
+                f"{yellow}, {black} | {role} |"
             )
     return "\n".join(lines)
 
@@ -215,13 +225,15 @@ def contrast_table(root: Path = BRAND_ROOT) -> str:
     for color, ground, what in PAIRS:
         ratio = tokens.contrast(values[color], values[ground])
         lines.append(
-            f"| `{color}` {_swatch(values[color])} | `{ground}` {_swatch(values[ground])} | {ratio:.2f}:1 | {what} |"
+            f"| `{color}` {_swatch(values[color])} | `{ground}` {_swatch(values[ground])} | "
+            f"{ratio:.2f}:1 | {what} |"
         )
     return "\n".join(lines)
 
 
 def device_table(root: Path = BRAND_ROOT) -> str:
-    """Return the device's colors with the constant that holds each in the firmware and its 16-bit value."""
+    """Return the device's colors with the constant that holds each in the firmware and its 16-bit
+    value."""
     loaded = tokens.load(root)
     values = tokens.resolve(loaded)
     lines = ["| Token | Hex | RGB565 | Constant in `theme.h` |", "| --- | --- | --- | --- |"]

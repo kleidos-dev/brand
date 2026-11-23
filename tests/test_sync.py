@@ -1,3 +1,4 @@
+# SPDX-FileCopyrightText: 2026 José M. Requena Plens
 # SPDX-License-Identifier: MIT
 """The sync script, against a small tree shaped like the firmware repository."""
 
@@ -5,9 +6,11 @@ from __future__ import annotations
 
 import json
 from pathlib import Path
+from typing import Any
 
 import pytest
 import sync_from_kleidos as sync
+
 from kleidos_brand import mark, png, press, public_tree, tokens
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -15,13 +18,14 @@ ROOT = Path(__file__).resolve().parents[1]
 
 @pytest.fixture
 def firmware(tmp_path: Path) -> Path:
-    """Return a tree that holds, where the firmware repository holds them, the values this one mirrors."""
+    """Return a tree that holds, where the firmware repository holds them, the values this one
+    mirrors."""
     base = tmp_path / "firmware"
     loaded = tokens.load(ROOT)
     values = tokens.resolve(loaded)
 
     # The design-system skill's tokens and the firmware's header.
-    skill: dict = {"color": {}}
+    skill: dict[str, Any] = {"color": {}}
     constants = []
     for name, token in tokens.leaves(loaded["device"]["dark"]).items():
         node = skill["color"]
@@ -30,7 +34,8 @@ def firmware(tmp_path: Path) -> Path:
             node = node.setdefault(folder, {})
         node[leaf] = {"$value": token["$value"].upper()}
         constants.append(
-            f"constexpr uint32_t {token['$extensions']['dev.kleidos']['theme_h']} = 0x{token['$value'][1:]};"
+            f"constexpr uint32_t {token['$extensions']['dev.kleidos']['theme_h']} = "
+            f"0x{token['$value'][1:]};"
         )
     for group in ("density", "radius", "stroke", "opacity", "motion", "font"):
         skill[group] = json.loads(json.dumps(loaded["device"][group]))
@@ -80,12 +85,10 @@ def firmware(tmp_path: Path) -> Path:
     data = press.load(ROOT)
     for lang in data["langs"]:
         strings = {source: data["words"][lang][key] for key, source in data["from"].items()}
-        strings["home.lede"] = (
-            (ROOT / f"about/{lang}/one-paragraph.md").read_text(encoding="utf-8").strip()
+        strings["home.lede"] = public_tree.prose(ROOT / f"about/{lang}/one-paragraph.md")
+        strings["home.meta_description"] = (
+            public_tree.prose(ROOT / f"about/{lang}/one-line.md") + " More."
         )
-        strings["home.meta_description"] = (ROOT / f"about/{lang}/one-line.md").read_text(
-            encoding="utf-8"
-        ).strip() + " More."
         write(base / sync.STRINGS.format(lang=lang), json.dumps(strings))
     for board, screen in data["screens"].items():
         (base / screen["from"]).parent.mkdir(parents=True, exist_ok=True)

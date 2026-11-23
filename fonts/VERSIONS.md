@@ -1,3 +1,8 @@
+<!--
+SPDX-FileCopyrightText: 2026 José M. Requena Plens
+SPDX-License-Identifier: GPL-3.0-or-later
+-->
+
 # Pinned fonts
 
 The upstream files, unmodified, each family with its own `OFL.txt`. `tools/check.py` reads the digests below, refuses a pinned file whose bytes differ, and refuses any other font file in the tree.

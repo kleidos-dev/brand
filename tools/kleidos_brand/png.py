@@ -1,3 +1,4 @@
+# SPDX-FileCopyrightText: 2026 José M. Requena Plens
 # SPDX-License-Identifier: MIT
 """PNG files built from pixels alone, and the checks on the ones in the tree.
 
@@ -32,7 +33,7 @@ def clean(shot: bytes, flatten: str | None = None) -> Any:
 
     :param flatten: A ``#rrggbb`` ground to composite on, which drops the alpha channel.
     """
-    from PIL import Image  # noqa: PLC0415
+    from PIL import Image
 
     with Image.open(io.BytesIO(shot)) as opened:
         pixels = opened.convert("RGBA")
@@ -60,7 +61,8 @@ def encode(image: Any, meta: MediaMeta | None = None) -> bytes:
 
 
 def stamp(data: bytes, meta: MediaMeta) -> bytes:
-    """Return a PNG with its metadata replaced by the record's, every other chunk's bytes unchanged."""
+    """Return a PNG with its metadata replaced by the record's, every other chunk's bytes
+    unchanged."""
     return media.png_stamp(data, meta)
 
 
@@ -90,7 +92,7 @@ def size(data: bytes) -> tuple[int, int]:
 
 def differing(first: bytes, second: bytes) -> int | None:
     """Return how many pixels two pictures differ in, or ``None`` when their sizes differ."""
-    from PIL import Image, ImageChops  # noqa: PLC0415
+    from PIL import Image, ImageChops
 
     with Image.open(io.BytesIO(first)) as one, Image.open(io.BytesIO(second)) as two:
         if one.size != two.size:
@@ -106,13 +108,14 @@ def differing(first: bytes, second: bytes) -> int | None:
 
 
 def drift(first: bytes, second: bytes, step: int = 24) -> float | None:
-    """Return the share of pixels that differ by more than *step* in any channel, or ``None`` on another size.
+    """Return the share of pixels that differ by more than *step* in any channel, or ``None`` on
+    another size.
 
     This is the tolerant comparison a machine other than the exporting one
     runs: an edge drawn a shade apart passes, a word in a fallback face or a
     shape out of place does not.
     """
-    from PIL import Image, ImageChops  # noqa: PLC0415
+    from PIL import Image, ImageChops
 
     with Image.open(io.BytesIO(first)) as one, Image.open(io.BytesIO(second)) as two:
         if one.size != two.size:

@@ -1,3 +1,8 @@
+<!--
+SPDX-FileCopyrightText: 2026 José M. Requena Plens
+SPDX-License-Identifier: GPL-3.0-or-later
+-->
+
 # Typography
 
 Three families, all under the SIL Open Font License 1.1, kept here as their upstream files, unmodified, each beside its own `OFL.txt`. Pins: [`VERSIONS.md`](VERSIONS.md).

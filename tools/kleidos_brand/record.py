@@ -1,3 +1,4 @@
+# SPDX-FileCopyrightText: 2026 José M. Requena Plens
 # SPDX-License-Identifier: MIT
 """The record of what was built (``exports.json``) and the generated blocks of the README pages.
 
@@ -16,7 +17,10 @@ from pathlib import Path
 from typing import Any
 
 EXPORTS_JSON = Path("exports.json")
-COMMENT = "Written by tools/build.py: the bytes of each picture and of what it was drawn from. Do not edit; run the builder."
+COMMENT = (
+    "Written by tools/build.py: the bytes of each picture and of what it was drawn from. Do "
+    "not edit; run the builder."
+)
 
 
 def sha256(data: bytes) -> str:
@@ -34,7 +38,8 @@ def load(root: Path) -> dict[str, Any]:
     path = root / EXPORTS_JSON
     if not path.is_file():
         return {"files": {}}
-    return json.loads(path.read_text(encoding="utf-8"))
+    data: dict[str, Any] = json.loads(path.read_text(encoding="utf-8"))
+    return data
 
 
 def dump(record: dict[str, Any]) -> str:

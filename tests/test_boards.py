@@ -1,5 +1,7 @@
+# SPDX-FileCopyrightText: 2026 José M. Requena Plens
 # SPDX-License-Identifier: MIT
-"""The board fronts: byte copies held to their manifest, drawn without live text, set at one true scale."""
+"""The board fronts: byte copies held to their manifest, drawn without live text, set at one true
+scale."""
 
 from __future__ import annotations
 
@@ -9,14 +11,22 @@ from pathlib import Path
 
 import check
 import pytest
-from kleidos_brand import boards
+
+from kleidos_brand import boards, xmlsafe
 
 ROOT = Path(__file__).resolve().parents[1]
 SVG = "http://www.w3.org/2000/svg"
 
 
+def transform(element: ET.Element) -> str:
+    """Return the ``transform`` a drawn legend carries."""
+    value = element.get("transform")
+    assert value is not None, "a drawn legend is placed by its transform"
+    return value
+
+
 def shelf_tree(*shelves: str) -> ET.Element:
-    return ET.fromstring(
+    return xmlsafe.fromstring(
         f'<svg xmlns="{SVG}" viewBox="0 0 4000 2000"><g id="content">{"".join(shelves)}</g></svg>'
     )
 
@@ -57,20 +67,22 @@ def test_a_front_is_drawn_without_what_it_says_about_itself() -> None:
 
 
 def test_a_legend_keeps_its_anchor_and_its_pinned_width() -> None:
-    middle = ET.fromstring(
-        f'<text xmlns="{SVG}" x="10" y="5" font-size="2" font-weight="700" text-anchor="middle" fill="#111111">M5</text>'
+    middle = xmlsafe.fromstring(
+        f'<text xmlns="{SVG}" x="10" y="5" font-size="2" font-weight="700" text-anchor="middle" '
+        'fill="#111111">M5</text>'
     )
-    start = ET.fromstring(
+    start = xmlsafe.fromstring(
         f'<text xmlns="{SVG}" x="10" y="5" font-size="2" font-weight="700" fill="#111111">M5</text>'
     )
-    pinned = ET.fromstring(
-        f'<text xmlns="{SVG}" x="0" y="0" font-size="2" textLength="6" lengthAdjust="spacingAndGlyphs" fill="#111111">ABC</text>'
+    pinned = xmlsafe.fromstring(
+        f'<text xmlns="{SVG}" x="0" y="0" font-size="2" textLength="6" '
+        'lengthAdjust="spacingAndGlyphs" fill="#111111">ABC</text>'
     )
-    assert boards.legend_path(middle, ROOT).get("transform").startswith("translate(")
-    x_middle = float(boards.legend_path(middle, ROOT).get("transform").split("(")[1].split()[0])
-    x_start = float(boards.legend_path(start, ROOT).get("transform").split("(")[1].split()[0])
+    assert transform(boards.legend_path(middle, ROOT)).startswith("translate(")
+    x_middle = float(transform(boards.legend_path(middle, ROOT)).split("(")[1].split()[0])
+    x_start = float(transform(boards.legend_path(start, ROOT)).split("(")[1].split()[0])
     assert x_middle < x_start == 10
-    assert "scale(" in boards.legend_path(pinned, ROOT).get("transform")
+    assert "scale(" in transform(boards.legend_path(pinned, ROOT))
     assert (
         boards.face_for(300) == boards.INTER[400]
         and boards.face_for(600) == boards.INTER[700]
@@ -80,14 +92,15 @@ def test_a_legend_keeps_its_anchor_and_its_pinned_width() -> None:
 
 @pytest.mark.parametrize("size", ["0.55", "1.18", "1.51", "2.34", "3.2"])
 def test_a_legend_is_drawn_at_its_own_size(size: str) -> None:
-    """The glyphs are scaled to the font size exactly, however small the factor from font units is."""
-    plain = ET.fromstring(
-        f'<text xmlns="{SVG}" x="0" y="0" font-size="{size}" font-weight="700" fill="#111111">del</text>'
+    """The glyphs are scaled to the font size exactly, however small the factor from font units
+    is."""
+    plain = xmlsafe.fromstring(
+        f'<text xmlns="{SVG}" x="0" y="0" font-size="{size}" font-weight="700" '
+        'fill="#111111">del</text>'
     )
     sx, sy = (
         float(value)
-        for value in boards.legend_path(plain, ROOT)
-        .get("transform")
+        for value in transform(boards.legend_path(plain, ROOT))
         .rsplit("scale(", 1)[1]
         .rstrip(")")
         .split()
@@ -95,26 +108,28 @@ def test_a_legend_is_drawn_at_its_own_size(size: str) -> None:
     assert sx == pytest.approx(float(size) / 2048, rel=1e-4) and sy == pytest.approx(
         -float(size) / 2048, rel=1e-4
     )
-    pinned = ET.fromstring(
-        f'<text xmlns="{SVG}" x="0" y="0" font-size="{size}" font-weight="700" textLength="2.028" lengthAdjust="spacingAndGlyphs" fill="#111111">del</text>'
+    pinned = xmlsafe.fromstring(
+        f'<text xmlns="{SVG}" x="0" y="0" font-size="{size}" font-weight="700" textLength="2.028" '
+        'lengthAdjust="spacingAndGlyphs" fill="#111111">del</text>'
     )
     sx, sy = (
         float(value)
-        for value in boards.legend_path(pinned, ROOT)
-        .get("transform")
+        for value in transform(boards.legend_path(pinned, ROOT))
         .rsplit("scale(", 1)[1]
         .rstrip(")")
         .split()
     )
     assert sy == pytest.approx(-float(size) / 2048, rel=1e-4)
-    x = float(boards.legend_path(pinned, ROOT).get("transform").split("(")[1].split()[0])
+    x = float(transform(boards.legend_path(pinned, ROOT)).split("(")[1].split()[0])
     assert x == 0
 
 
 def test_every_shelf_of_a_drawing_shares_one_true_scale() -> None:
     tree = shelf_tree(
-        '<rect data-boards="sticks3 coreink" x="100" y="100" width="3800" height="500" fill="none"/>',
-        '<rect data-boards="cardputer tdeck-plus" x="100" y="800" width="3800" height="1100" fill="none"/>',
+        '<rect data-boards="sticks3 coreink" x="100" y="100" width="3800" height="500" '
+        'fill="none"/>',
+        '<rect data-boards="cardputer tdeck-plus" x="100" y="800" width="3800" height="1100" '
+        'fill="none"/>',
     )
     placed = boards.fill(tree, ROOT)
     assert len({round(item.scale, 9) for item in placed}) == 1

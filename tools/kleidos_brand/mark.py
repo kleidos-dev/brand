@@ -1,3 +1,4 @@
+# SPDX-FileCopyrightText: 2026 José M. Requena Plens
 # SPDX-License-Identifier: MIT
 """The mark: its five shapes, and the checks that hold every copy of it to them.
 
@@ -23,7 +24,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
-from . import BRAND_ROOT
+from . import BRAND_ROOT, xmlsafe
 
 MARK_SVG = Path("logo/src/mark.svg")
 SVG_NS = "http://www.w3.org/2000/svg"
@@ -56,8 +57,9 @@ def _drawn(element: ET.Element) -> list[ET.Element]:
 
 
 def shapes(root: Path = BRAND_ROOT) -> list[Shape]:
-    """Return the mark's shapes as ``logo/src/mark.svg`` draws them, in order (its title and description are not shapes)."""
-    tree = ET.parse(root / MARK_SVG).getroot()
+    """Return the mark's shapes as ``logo/src/mark.svg`` draws them, in order (its title and
+    description are not shapes)."""
+    tree = xmlsafe.parse(root / MARK_SVG)
     return [_shape(child) for child in _drawn(tree)]
 
 
@@ -106,7 +108,8 @@ def markup(mark: list[Shape], indent: str = "  ") -> str:
 def group(
     mark: list[Shape], transform: str | None = None, ink: str | None = None, indent: str = "  "
 ) -> str:
-    """Return the mark as a group: ``class="mark"``, or ``"mark mark-ink"`` when drawn in one *ink*."""
+    """Return the mark as a group: ``class="mark"``, or ``"mark mark-ink"`` when drawn in one
+    *ink*."""
     drawn = mark if ink is None else ink_shapes(mark, ink)
     attributes = 'class="mark"' if ink is None else 'class="mark mark-ink"'
     if transform:
@@ -134,9 +137,10 @@ class SmallFit:
     stem_length: int  # from the eye's center down, without the half pixel that closes it
 
 
-def small_numbers(root: Path = BRAND_ROOT) -> dict:
+def small_numbers(root: Path = BRAND_ROOT) -> dict[str, Any]:
     """Return ``logo/src/small-mark.json``."""
-    return json.loads((root / SMALL_JSON).read_text(encoding="utf-8"))
+    data: dict[str, Any] = json.loads((root / SMALL_JSON).read_text(encoding="utf-8"))
+    return data
 
 
 def _odd_near(value: float) -> int:
@@ -167,7 +171,7 @@ def ring_color(mark: list[Shape]) -> str:
     return _parts(mark)["ring"]["stroke"]
 
 
-def small_fit(mark: list[Shape], px: int, numbers: dict) -> SmallFit:
+def small_fit(mark: list[Shape], px: int, numbers: dict[str, Any]) -> SmallFit:
     """Fit the small mark to *px* pixels from the mark's own numbers.
 
     Every length is the mark's, scaled so that the ring's outer diameter is the
@@ -202,7 +206,8 @@ def _n(value: float) -> str:
 
 
 def small_shapes(fit: SmallFit, color: str) -> list[Shape]:
-    """Return the small mark in *color*: the ring, and the body as one path with the keyhole cut out.
+    """Return the small mark in *color*: the ring, and the body as one path with the keyhole cut
+    out.
 
     The body and the keyhole are one ``evenodd`` path, so the keyhole is a hole
     that shows whatever ground the mark stands on, never a second color.
@@ -220,7 +225,8 @@ def small_shapes(fit: SmallFit, color: str) -> list[Shape]:
     drop = math.sqrt(fit.eye_radius**2 - half**2)  # where the stem's sides meet the eye
     foot = eye_y + fit.stem_length + 0.5
     keyhole = (
-        f"M{_n(c + half)} {_n(eye_y + drop)}A{_n(fit.eye_radius)} {_n(fit.eye_radius)} 0 1 0 {_n(c - half)} {_n(eye_y + drop)}"
+        f"M{_n(c + half)} {_n(eye_y + drop)}A{_n(fit.eye_radius)} {_n(fit.eye_radius)} 0 1 0 "
+        f"{_n(c - half)} {_n(eye_y + drop)}"
         f"V{_n(foot)}H{_n(c + half)}Z"
     )
     ring = (
@@ -240,7 +246,8 @@ SAMPLES = 16
 
 
 def small_pixels(fit: SmallFit, color: str) -> Any:
-    """Return the small mark as an RGBA image of *fit*'s pixels, each pixel's alpha its exact coverage.
+    """Return the small mark as an RGBA image of *fit*'s pixels, each pixel's alpha its exact
+    coverage.
 
     A browser draws an edge a shade apart from one system to the next, and at
     19 px that shade is a large share of the picture. These pixels are counted
@@ -248,7 +255,7 @@ def small_pixels(fit: SmallFit, color: str) -> Any:
     points that fall inside the shapes ``small_shapes`` draws, the same on
     every machine.
     """
-    from PIL import Image  # noqa: PLC0415
+    from PIL import Image
 
     c = fit.ring / 2
     outer, inner = c**2, (c - fit.ring_width) ** 2
@@ -291,7 +298,8 @@ def small_group(shapes_: list[Shape], indent: str = "  ") -> str:
 def small_marks(
     mark: list[Shape], colors: frozenset[str] | set[str], root: Path = BRAND_ROOT
 ) -> list[list[Shape]]:
-    """Return every small mark the builder may draw: each size of ``small-mark.json`` in each of *colors*."""
+    """Return every small mark the builder may draw: each size of ``small-mark.json`` in each of
+    *colors*."""
     numbers = small_numbers(root)
     return [
         small_shapes(small_fit(mark, px, numbers), color)
@@ -350,13 +358,14 @@ def findings(
     :param mark: The shapes of ``logo/src/mark.svg``.
     :param inks: The colors a one-ink mark may be drawn in.
     :param name: What to call the file in a finding.
-    :param small: Every small mark the builder may draw (``small_marks``); without it, none is accepted.
+    :param small: Every small mark the builder may draw (``small_marks``); without it, none is
+        accepted.
     """
     small = small or []
     small_bodies = {dict(shapes_[1][1])["d"] for shapes_ in small}
     name = name or str(svg)
     try:
-        root = ET.parse(svg).getroot()
+        root = xmlsafe.parse(svg)
     except ET.ParseError as error:
         return [f"{name}: not well-formed XML ({error})"]
     found: list[str] = []
@@ -388,11 +397,13 @@ def findings(
         labels = f"{element.get('id', '')} {element.get('class', '')}".lower()
         if "glyph" in labels:
             found.append(
-                f"{name}: an element named for the ringless glyph ({labels.strip()}); the keyhole is never drawn without its ring"
+                f"{name}: an element named for the ringless glyph ({labels.strip()}); the keyhole "
+                "is never drawn without its ring"
             )
         if _is_glyph(element):
             found.append(
-                f"{name}: draws the ringless glyph's 40 x 76 body; the keyhole is never drawn without its ring"
+                f"{name}: draws the ringless glyph's 40 x 76 body; the keyhole is never drawn "
+                "without its ring"
             )
         classes = element.get("class", "").split()
         if tag_name(element) != "g" or "mark" not in classes:
@@ -401,14 +412,16 @@ def findings(
         if "mark-small" in classes:
             if drawn not in small:
                 found.append(
-                    f"{name}: its small mark is not one the builder fits from {MARK_SVG} and {SMALL_JSON},"
+                    f"{name}: its small mark is not one the builder fits from {MARK_SVG} and "
+                    f"{SMALL_JSON},"
                     " at one of its sizes, in the ring's color or one of the inks"
                 )
         elif "mark-ink" in classes:
             ink = dict(drawn[0][1]).get("stroke") if drawn else None
             if ink not in inks:
                 found.append(
-                    f"{name}: a one-ink mark drawn in {ink}, which is not one of the inks ({', '.join(sorted(inks))})"
+                    f"{name}: a one-ink mark drawn in {ink}, which is not one of the inks "
+                    f"({', '.join(sorted(inks))})"
                 )
             elif drawn != ink_shapes(mark, ink):
                 found.append(f"{name}: its one-ink mark is not {MARK_SVG}'s shapes in one ink")
@@ -419,11 +432,14 @@ def findings(
             ] == geometry
             what = "recolored" if same_geometry else "redrawn"
             found.append(
-                f"{name}: its mark is {what}: the group's shapes are not {MARK_SVG}'s, attribute for attribute"
+                f"{name}: its mark is {what}: the group's shapes are not {MARK_SVG}'s, attribute "
+                "for attribute"
             )
     if loose:
         found.append(
-            f"{name}: draws the mark's keyhole outside a <g class=\"mark\"> ({loose} shape(s) with its body's size);"
-            " the keyhole is never drawn without its ring, and a copy of the mark is that group, whole"
+            f'{name}: draws the mark\'s keyhole outside a <g class="mark"> ({loose} shape(s) with '
+            "its body's size);"
+            " the keyhole is never drawn without its ring, and a copy of the mark is that group, "
+            "whole"
         )
     return found
