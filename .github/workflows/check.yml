@@ -105,6 +105,7 @@ jobs:
     if: github.event_name != 'schedule'
     uses: kleidos-dev/.github/.github/workflows/reusable-python-tests.yml@30f0dc69833e0917c7865eb93770237fedacff59 # quality-v2.0.0
     with:
+      install: python -m pip install --require-hashes -r requirements.txt
       run: >-
         python -m playwright install --with-deps chromium
         && export KLEIDOS_DENY_OPTIONAL=1
