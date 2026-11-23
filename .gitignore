@@ -20,3 +20,6 @@ tools/deny-local.txt
 
 # KiCad writes a project's local settings beside it on every run
 *.kicad_prl
+
+# One person's Claude Code preferences for this repository; never committed
+CLAUDE.local.md
