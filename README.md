@@ -41,7 +41,7 @@ Every image and every generated file comes from a few sources: `logo/src/mark.sv
 
 ```sh
 python3 -m venv .venv
-.venv/bin/pip install -r requirements.txt
+.venv/bin/pip install --require-hashes -r requirements.txt
 .venv/bin/python -m playwright install chromium
 
 .venv/bin/python tools/build.py                     # regenerate everything

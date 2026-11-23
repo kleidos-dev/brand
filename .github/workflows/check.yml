@@ -71,7 +71,7 @@ jobs:
           python-version-file: .python-version
           cache: pip
       - name: Install the pinned stack
-        run: pip install -r requirements.txt
+        run: pip install --require-hashes -r requirements.txt
       - name: The tree's rules
         env:
           KLEIDOS_DENY_EXTRA: ${{ secrets.KLEIDOS_DENY_EXTRA }}
@@ -88,7 +88,7 @@ jobs:
     needs: [lint, reuse, tree]
     uses: kleidos-dev/.github/.github/workflows/reusable-mypy.yml@dd76a0850b26c2db6b5e56c884acaf40abb9e12c # quality-v2.1.0
     with:
-      install: python -m pip install -r requirements.txt
+      install: python -m pip install --require-hashes -r requirements.txt
     permissions:
       contents: read
 
@@ -105,6 +105,7 @@ jobs:
     if: github.event_name != 'schedule'
     uses: kleidos-dev/.github/.github/workflows/reusable-python-tests.yml@dd76a0850b26c2db6b5e56c884acaf40abb9e12c # quality-v2.1.0
     with:
+      install: python -m pip install --require-hashes -r requirements.txt
       run: >-
         python -m playwright install --with-deps chromium
         && export KLEIDOS_DENY_OPTIONAL=1
@@ -139,14 +140,15 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
-      - name: The Python .python-version names, through uv as requirements.txt pins it
+      - name: The Python .python-version names, through uv as requirements.txt pins and hashes it
         run: |
           set -euo pipefail
           apt-get update
           apt-get install -y --no-install-recommends python3-pip
-          mapfile -t uv < <(grep -E '^uv==' requirements.txt)
-          [[ ${#uv[@]} -eq 1 ]] || { echo "requirements.txt must pin uv"; exit 1; }
-          python3 -m pip install --break-system-packages --root-user-action=ignore "${uv[@]}"
+          # uv's pin with its hashes: the line and the --hash lines it continues.
+          awk '/^uv==/ { p = 1 } p { print } p && !/\\$/ { p = 0 }' requirements.txt > "$RUNNER_TEMP/uv.txt"
+          [[ $(grep -c '^uv==' "$RUNNER_TEMP/uv.txt") -eq 1 ]] || { echo "requirements.txt must pin uv"; exit 1; }
+          python3 -m pip install --break-system-packages --root-user-action=ignore --require-hashes -r "$RUNNER_TEMP/uv.txt"
           # uv reads .python-version and downloads that Python when the image lacks it.
           uv venv --managed-python "$RUNNER_TEMP/python"
           echo "$RUNNER_TEMP/python/bin" >> "$GITHUB_PATH"
