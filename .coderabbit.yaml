@@ -192,9 +192,12 @@ reviews:
         be a Modified Version under the OFL.
     - path: "requirements.txt"
       instructions: >-
-        Every dependency pinned with ==. Playwright and Pillow are the versions
-        the pictures in exports.json were drawn with: a bump changes pixels
-        and needs the pictures rebuilt on the exporting machine.
+        Every dependency pinned with == and its hashes, compiled from the
+        direct pins with the command in the header (never a hash edited by
+        hand); CI installs it with --require-hashes. Playwright and Pillow are
+        the versions the pictures in exports.json were drawn with: a bump
+        changes pixels and needs the pictures rebuilt on the exporting
+        machine.
     - path: ".github/workflows/**"
       instructions: >-
         Actions pinned to a full commit SHA with the version in a comment,

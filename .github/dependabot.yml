@@ -7,6 +7,12 @@
 # dependency. Dependabot authors its own commit messages, so the
 # commit-message gate skips its pull requests.
 #
+# requirements.txt holds every dependency with its hashes and no .in file,
+# so each line is a direct pin here: Dependabot bumps every one of them,
+# hashes included. A bump that needs a dependency the file lacks fails the
+# hash-checked install in CI until the file is compiled again (the command
+# is in its header).
+#
 # A bump of Pillow or Playwright changes how the pictures are drawn: its
 # pull request also draws them again (tools/build.py) and records the new
 # versions in exports.json.
