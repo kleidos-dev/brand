@@ -6,6 +6,7 @@
 - ``browser`` marker: a test that draws with Chromium; skipped when Playwright's browser is not
   installed.
 """
+
 from __future__ import annotations
 
 import shutil

@@ -7,6 +7,7 @@ and no trace of the machine that drew it; then the record of what it is
 (:mod:`.meta`) is added as the profile's fixed text chunks and XMP packet,
 right before the pixels, and nothing else.
 """
+
 from __future__ import annotations
 
 import io
@@ -20,7 +21,9 @@ if TYPE_CHECKING:
 #: The chunks a published PNG may hold: pixels, color and layout, and the
 #: profile's text chunks (``tEXt`` and the XMP ``iTXt``), only with the values
 #: its record gives.
-ALLOWED_CHUNKS = frozenset({"IHDR", "PLTE", "IDAT", "IEND", "tRNS", "gAMA", "cHRM", "sRGB", "iCCP", "sBIT", "bKGD", "pHYs"})
+ALLOWED_CHUNKS = frozenset(
+    {"IHDR", "PLTE", "IDAT", "IEND", "tRNS", "gAMA", "cHRM", "sRGB", "iCCP", "sBIT", "bKGD", "pHYs"}
+)
 METADATA_CHUNKS = media.PNG_TEXT_CHUNKS
 
 
@@ -122,8 +125,13 @@ def drift(first: bytes, second: bytes, step: int = 24) -> float | None:
         return far / (one.size[0] * one.size[1])
 
 
-def findings(name: str, data: bytes, expected: tuple[int, int] | None = None, limit: int | None = None,
-             meta: MediaMeta | None = None) -> list[str]:
+def findings(
+    name: str,
+    data: bytes,
+    expected: tuple[int, int] | None = None,
+    limit: int | None = None,
+    meta: MediaMeta | None = None,
+) -> list[str]:
     """Return what is wrong with a published PNG: its chunks, its metadata, its size, its weight.
 
     :param meta: The file's record. Without one, a text chunk is refused like any other.
@@ -136,7 +144,11 @@ def findings(name: str, data: bytes, expected: tuple[int, int] | None = None, li
     allowed = ALLOWED_CHUNKS | (METADATA_CHUNKS if meta is not None else frozenset())
     extra = sorted(set(chunk_names(data)) - allowed)
     if extra:
-        what = "pixels, color and layout chunks and the profile's metadata" if meta is not None else "pixels, color and layout chunks only"
+        what = (
+            "pixels, color and layout chunks and the profile's metadata"
+            if meta is not None
+            else "pixels, color and layout chunks only"
+        )
         found.append(f"{name}: holds {', '.join(extra)}; a published PNG holds {what}")
     if meta is not None:
         found += media.png_findings(name, data, meta)

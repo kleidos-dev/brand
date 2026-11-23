@@ -18,6 +18,7 @@ KiCad needed:
 
 The same sources always give the same bytes.
 """
+
 from __future__ import annotations
 
 import base64
@@ -58,7 +59,12 @@ def theme_path(ground: str) -> Path:
 def kit_files(root: Path = BRAND_ROOT) -> list[Path]:
     """Return the files a consumer copies, in the order the sync tool writes them."""
     grounds = list(load(root)["grounds"])
-    return [*(sheet_path(g) for g in grounds), *(theme_path(g) for g in grounds), STYLE_JSON, HELPER]
+    return [
+        *(sheet_path(g) for g in grounds),
+        *(theme_path(g) for g in grounds),
+        STYLE_JSON,
+        HELPER,
+    ]
 
 
 def png_size(data: bytes) -> tuple[int, int]:
@@ -69,11 +75,16 @@ def png_size(data: bytes) -> tuple[int, int]:
     return width, height
 
 
-def colors(root: Path = BRAND_ROOT, style: dict[str, Any] | None = None) -> dict[str, dict[str, str]]:
+def colors(
+    root: Path = BRAND_ROOT, style: dict[str, Any] | None = None
+) -> dict[str, dict[str, str]]:
     """Return every role's color on each ground, as ``#rrggbb``, from the ``schematic`` tokens."""
     style = style or load(root)
     values = tokens.resolve(tokens.load(root))
-    return {ground: {role: values[f"schematic.{ground}.{role}"] for role in style["colors"]["roles"]} for ground in style["grounds"]}
+    return {
+        ground: {role: values[f"schematic.{ground}.{role}"] for role in style["colors"]["roles"]}
+        for ground in style["grounds"]
+    }
 
 
 def _rgb(color: str) -> str:
@@ -85,7 +96,11 @@ def theme(ground: str, root: Path = BRAND_ROOT) -> str:
     """Return the text of ``kicad/kleidos-<ground>.json``: KiCad's color theme, every value a token's."""
     style = load(root)
     by_role = colors(root, style)[ground]
-    keys = {key: _rgb(by_role[role]) for role, names in style["colors"]["theme_keys"].items() for key in names}
+    keys = {
+        key: _rgb(by_role[role])
+        for role, names in style["colors"]["theme_keys"].items()
+        for key in names
+    }
     body = {
         "meta": {"name": style["grounds"][ground]["name"], "version": 5},
         "schematic": {"override_item_colors": False, **dict(sorted(keys.items()))},
@@ -102,8 +117,15 @@ def _segments(cells: dict[str, Any], outer: list[float]) -> list[tuple[float, fl
     runs: dict[tuple[str, float], list[tuple[float, float]]] = {}
     for cell in cells.values():
         x0, y0, x1, y1 = cell["box"]
-        for kind, at, lo, hi in (("h", y0, x0, x1), ("h", y1, x0, x1), ("v", x0, y0, y1), ("v", x1, y0, y1)):
-            on_outer = (kind == "h" and at in (outer[1], outer[3])) or (kind == "v" and at in (outer[0], outer[2]))
+        for kind, at, lo, hi in (
+            ("h", y0, x0, x1),
+            ("h", y1, x0, x1),
+            ("v", x0, y0, y1),
+            ("v", x1, y0, y1),
+        ):
+            on_outer = (kind == "h" and at in (outer[1], outer[3])) or (
+                kind == "v" and at in (outer[0], outer[2])
+            )
             if not on_outer:
                 runs.setdefault((kind, at), []).append((lo, hi))
     out = []
@@ -155,9 +177,11 @@ def sheet(ground: str, root: Path = BRAND_ROOT) -> str:
     for ax, ay, bx, by in _segments(geo["cells"], geo["block"]):
         rows.append(f'  (line (name "") (start {_num(ax)} {_num(ay)}) (end {_num(bx)} {_num(by)}))')
     data = base64.b64encode(png).decode("ascii")
-    lines = "\n".join(f'      "{data[i:i + B64_LINE]}"' for i in range(0, len(data), B64_LINE))
+    lines = "\n".join(f'      "{data[i : i + B64_LINE]}"' for i in range(0, len(data), B64_LINE))
     cx, cy = mark["center"]
-    rows.append(f'  (bitmap (name "mark") (pos {_num(cx)} {_num(cy)}) (scale {scale:.6f})\n    (data\n{lines}\n    ))')
+    rows.append(
+        f'  (bitmap (name "mark") (pos {_num(cx)} {_num(cy)}) (scale {scale:.6f})\n    (data\n{lines}\n    ))'
+    )
     inset = geo["text_inset"]
     for name, cell in geo["cells"].items():
         bx0, by0, bx1, by1 = cell["box"]
@@ -165,10 +189,27 @@ def sheet(ground: str, root: Path = BRAND_ROOT) -> str:
         if name == "comments":
             last = len(cell["lines"]) - 1
             for index, text in enumerate(cell["lines"]):
-                rows.append(_text(text, bx1 - inset, cell["first"] - index * cell["pitch"], cell["size"],
-                                  cell.get("bold_last", False) and index == last, maxlen))
+                rows.append(
+                    _text(
+                        text,
+                        bx1 - inset,
+                        cell["first"] - index * cell["pitch"],
+                        cell["size"],
+                        cell.get("bold_last", False) and index == last,
+                        maxlen,
+                    )
+                )
         elif "text" in cell:
-            rows.append(_text(cell["text"], bx1 - inset, (by0 + by1) / 2, cell["size"], cell.get("bold", False), maxlen))
+            rows.append(
+                _text(
+                    cell["text"],
+                    bx1 - inset,
+                    (by0 + by1) / 2,
+                    cell["size"],
+                    cell.get("bold", False),
+                    maxlen,
+                )
+            )
     rows.append(")")
     return "\n".join(rows) + "\n"
 
@@ -176,16 +217,29 @@ def sheet(ground: str, root: Path = BRAND_ROOT) -> str:
 def resolved(root: Path = BRAND_ROOT) -> str:
     """Return the text of ``kicad/style.json``: the source, every role's color resolved, every mark's digest named."""
     style = load(root)
-    out = {"$comment": "Generated by tools/build.py from kicad/src/style.json and tokens/tokens.json. Do not edit; change those and build again."}
+    out = {
+        "$comment": "Generated by tools/build.py from kicad/src/style.json and tokens/tokens.json. Do not edit; change those and build again."
+    }
     out.update({key: value for key, value in style.items() if key != "$comment"})
-    out["colors"] = {"roles": style["colors"]["roles"], "theme_keys": style["colors"]["theme_keys"], **colors(root, style)}
+    out["colors"] = {
+        "roles": style["colors"]["roles"],
+        "theme_keys": style["colors"]["theme_keys"],
+        **colors(root, style),
+    }
     out["sheet"] = {key: value for key, value in style["sheet"].items() if key != "$comment"}
     advances = json.loads((root / ADVANCES_JSON).read_text(encoding="utf-8"))
-    out["font"] = {**{key: value for key, value in style["font"].items() if key != "$comment"},
-                   "stroke_advance": advances["advances"]}
+    out["font"] = {
+        **{key: value for key, value in style["font"].items() if key != "$comment"},
+        "stroke_advance": advances["advances"],
+    }
     for ground, about in style["grounds"].items():
         data = (root / about["mark"]).read_bytes()
-        out["grounds"][ground] = {**about, "mark_px": list(png_size(data)), "sheet": sheet_path(ground).name, "theme": theme_path(ground).name}
+        out["grounds"][ground] = {
+            **about,
+            "mark_px": list(png_size(data)),
+            "sheet": sheet_path(ground).name,
+            "theme": theme_path(ground).name,
+        }
     return json.dumps(out, indent=2, ensure_ascii=False) + "\n"
 
 
@@ -209,7 +263,10 @@ COLOR = re.compile(r"\(color\b")
 
 def embedded_marks(text: str) -> list[bytes]:
     """Return the bytes of every bitmap a sheet embeds."""
-    return [base64.b64decode("".join(re.findall(r'"([^"]*)"', match.group(1)))) for match in BITMAP.finditer(text)]
+    return [
+        base64.b64decode("".join(re.findall(r'"([^"]*)"', match.group(1))))
+        for match in BITMAP.finditer(text)
+    ]
 
 
 def findings(root: Path = BRAND_ROOT) -> list[str]:
@@ -233,24 +290,42 @@ def findings(root: Path = BRAND_ROOT) -> list[str]:
             for key, value in data.get("schematic", {}).items():
                 if key == "override_item_colors":
                     if value is not False:
-                        found.append(f"{theme_path(ground)}: override_item_colors is false, so a drawing's explicit colors survive")
+                        found.append(
+                            f"{theme_path(ground)}: override_item_colors is false, so a drawing's explicit colors survive"
+                        )
                     continue
                 match = re.fullmatch(r"rgba?\((\d+), (\d+), (\d+)(?:, 1(?:\.0+)?)?\)", str(value))
-                if not match or tokens.rgb_hex(tuple(int(part) for part in match.groups())) not in palette:  # type: ignore[arg-type]
-                    found.append(f"{theme_path(ground)}: {key} is {value}, which is no token's value")
+                if (
+                    not match
+                    or tokens.rgb_hex(tuple(int(part) for part in match.groups())) not in palette
+                ):  # type: ignore[arg-type]
+                    found.append(
+                        f"{theme_path(ground)}: {key} is {value}, which is no token's value"
+                    )
         path = root / sheet_path(ground)
         if not path.is_file():
             continue
         text = path.read_text(encoding="utf-8")
         marks = embedded_marks(text)
-        logo_bytes = (root / about["mark"]).read_bytes() if (root / about["mark"]).is_file() else b""
+        logo_bytes = (
+            (root / about["mark"]).read_bytes() if (root / about["mark"]).is_file() else b""
+        )
         if marks != [logo_bytes]:
-            found.append(f"{sheet_path(ground)}: embeds {len(marks)} bitmap(s); it embeds {about['mark']}'s bytes, unchanged, once")
+            found.append(
+                f"{sheet_path(ground)}: embeds {len(marks)} bitmap(s); it embeds {about['mark']}'s bytes, unchanged, once"
+            )
         if FONT_FACE.search(text):
             found.append(f"{sheet_path(ground)}: names a font; the sheet takes the drawing's face")
         if COLOR.search(text):
-            found.append(f"{sheet_path(ground)}: names a color; every line and text of the sheet takes the theme's worksheet color")
-    for needed in (HELPER, KICAD_DIR / "README.md", FIXTURE_DIR / "fixture.kicad_sch", FIXTURE_DIR / "fixture.kicad_pro"):
+            found.append(
+                f"{sheet_path(ground)}: names a color; every line and text of the sheet takes the theme's worksheet color"
+            )
+    for needed in (
+        HELPER,
+        KICAD_DIR / "README.md",
+        FIXTURE_DIR / "fixture.kicad_sch",
+        FIXTURE_DIR / "fixture.kicad_pro",
+    ):
         if not (root / needed).is_file():
             found.append(f"{needed}: missing")
     return found

@@ -30,6 +30,7 @@ the profile's fixed order, never by hand. The screen captures and the
 full-resolution photograph are not drawn again: the builder writes their
 metadata on them and leaves their pixels' bytes as they are.
 """
+
 from __future__ import annotations
 
 import argparse
@@ -43,8 +44,25 @@ from typing import Any
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-from kleidos_brand import (BRAND_ROOT, boards, kicad, kicad_preview, lettering, logo, mark, meta, palette, photos, png, press, raster,  # noqa: E402
-                           record, records, tokens, webp)
+from kleidos_brand import (
+    BRAND_ROOT,
+    boards,
+    kicad,
+    kicad_preview,
+    lettering,
+    logo,
+    mark,
+    meta,
+    palette,
+    photos,
+    png,
+    press,
+    raster,  # noqa: E402
+    record,
+    records,
+    tokens,
+    webp,
+)
 
 #: The share of pixels that may differ by more than a shade under another browser.
 TOLERANCE = 0.005
@@ -53,7 +71,15 @@ MONA = lettering.FAMILIES["Mona Sans"]
 MONO = lettering.FAMILIES["Mona Sans Mono"]
 LOGO_INPUTS = (mark.MARK_SVG, logo.LOCKUPS_JSON, tokens.TOKENS_JSON, MONA)
 SMALL_INPUTS = (mark.MARK_SVG, mark.SMALL_JSON, tokens.TOKENS_JSON)
-GENERATED_DIRS = (logo.SVG_DIR, logo.PNG_DIR, logo.WEBP_DIR, press.SVG_DIR, press.IMAGES_DIR, Path("tokens/dist"), kicad.PREVIEW_DIR)
+GENERATED_DIRS = (
+    logo.SVG_DIR,
+    logo.PNG_DIR,
+    logo.WEBP_DIR,
+    press.SVG_DIR,
+    press.IMAGES_DIR,
+    Path("tokens/dist"),
+    kicad.PREVIEW_DIR,
+)
 #: How a README table names a language of press.json.
 LANGUAGES = {"en": "English", "es": "Spanish"}
 
@@ -119,23 +145,56 @@ def collect(root: Path = BRAND_ROOT) -> tuple[list[Text], list[Picture]]:
         about = records.logo(item, path, (width, height), records.url(published[item.stem].path))
         if item.px and item.paint:
             # A small mark's pixels are counted, not drawn by the browser: the same bytes on every machine.
-            def draw_small(_: raster.Browser | None, __: dict[str, Any], item: logo.Logo = item, about: meta.MediaMeta = about) -> bytes:
+            def draw_small(
+                _: raster.Browser | None,
+                __: dict[str, Any],
+                item: logo.Logo = item,
+                about: meta.MediaMeta = about,
+            ) -> bytes:
                 assert item.px and item.paint
                 image = mark.small_pixels(mark.small_fit(shapes, item.px, small), item.paint)
                 return png.encode(png.clean(png.encode(image), flatten=item.ground), about)
 
-            pictures.append(Picture(path, (width, height), record.sha256(svg.encode()), SMALL_INPUTS, draw_small,
-                                    item.what, needs_browser=False, meta=about))
+            pictures.append(
+                Picture(
+                    path,
+                    (width, height),
+                    record.sha256(svg.encode()),
+                    SMALL_INPUTS,
+                    draw_small,
+                    item.what,
+                    needs_browser=False,
+                    meta=about,
+                )
+            )
             continue
 
-        def draw_logo(browser: raster.Browser | None, _: dict[str, Any], item: logo.Logo = item, size: tuple[int, int] = (width, height),
-                      svg: str = svg, about: meta.MediaMeta = about) -> bytes:
+        def draw_logo(
+            browser: raster.Browser | None,
+            _: dict[str, Any],
+            item: logo.Logo = item,
+            size: tuple[int, int] = (width, height),
+            svg: str = svg,
+            about: meta.MediaMeta = about,
+        ) -> bytes:
             assert browser is not None
-            return png.encode(png.clean(browser.draw(svg, size, item.stem), flatten=item.ground), about)
+            return png.encode(
+                png.clean(browser.draw(svg, size, item.stem), flatten=item.ground), about
+            )
 
         box = round(height * item.mark_share)
         what = item.what + (f"; the mark box is {box} px" if box else "")
-        pictures.append(Picture(path, (width, height), record.sha256(svg.encode()), LOGO_INPUTS, draw_logo, what, meta=about))
+        pictures.append(
+            Picture(
+                path,
+                (width, height),
+                record.sha256(svg.encode()),
+                LOGO_INPUTS,
+                draw_logo,
+                what,
+                meta=about,
+            )
+        )
 
     # --- The palette ---------------------------------------------------------------------
     bare_sheet, sheet_size = palette.svg(root)
@@ -147,10 +206,21 @@ def collect(root: Path = BRAND_ROOT) -> tuple[list[Text], list[Picture]]:
 
     def draw_palette(browser: raster.Browser | None, _: dict[str, Any]) -> bytes:
         assert browser is not None
-        return png.encode(png.clean(browser.draw(sheet, sheet_size, "palette"), flatten=ground), sheet_meta)
+        return png.encode(
+            png.clean(browser.draw(sheet, sheet_size, "palette"), flatten=ground), sheet_meta
+        )
 
-    pictures.append(Picture(palette.PALETTE_PNG, sheet_size, record.sha256(sheet.encode()), (tokens.TOKENS_JSON, MONA, MONO),
-                            draw_palette, "the swatch sheet", meta=sheet_meta))
+    pictures.append(
+        Picture(
+            palette.PALETTE_PNG,
+            sheet_size,
+            record.sha256(sheet.encode()),
+            (tokens.TOKENS_JSON, MONA, MONO),
+            draw_palette,
+            "the swatch sheet",
+            meta=sheet_meta,
+        )
+    )
 
     # --- Press images --------------------------------------------------------------------
     data = press.load(root)
@@ -161,60 +231,149 @@ def collect(root: Path = BRAND_ROOT) -> tuple[list[Text], list[Picture]]:
         size = tuple(screen["size"])
         about = records.screen(screen, native, size, source=meta.FIRMWARE_REPO_URL)
 
-        def stamp_screen(_: raster.Browser | None, __: dict[str, Any], native: Path = native, about: meta.MediaMeta = about) -> bytes:
+        def stamp_screen(
+            _: raster.Browser | None,
+            __: dict[str, Any],
+            native: Path = native,
+            about: meta.MediaMeta = about,
+        ) -> bytes:
             return png.stamp((root / native).read_bytes(), about)
 
-        pictures.append(Picture(native, size, record.sha256(png.bare((root / native).read_bytes())), (press.PRESS_JSON,), stamp_screen,
-                                f"the {screen['name']}'s unlock screen, as captured", needs_browser=False, meta=about, row=False))
+        pictures.append(
+            Picture(
+                native,
+                size,
+                record.sha256(png.bare((root / native).read_bytes())),
+                (press.PRESS_JSON,),
+                stamp_screen,
+                f"the {screen['name']}'s unlock screen, as captured",
+                needs_browser=False,
+                meta=about,
+                row=False,
+            )
+        )
     for photo in data.get("photos", {}).values():
         whole = photos.PHOTOS_DIR / f"{photo['file']}.jpg"
         about = records.photo(photo, whole, tuple(photo["size"]))
 
-        def stamp_photo(_: raster.Browser | None, __: dict[str, Any], whole: Path = whole, about: meta.MediaMeta = about) -> bytes:
+        def stamp_photo(
+            _: raster.Browser | None,
+            __: dict[str, Any],
+            whole: Path = whole,
+            about: meta.MediaMeta = about,
+        ) -> bytes:
             return photos.stamp((root / whole).read_bytes(), about)
 
-        pictures.append(Picture(whole, tuple(photo["size"]), record.sha256(photos.bare((root / whole).read_bytes())), (press.PRESS_JSON,),
-                                stamp_photo, f"{photo['what']}, at full resolution", needs_browser=False, meta=about, row=False))
+        pictures.append(
+            Picture(
+                whole,
+                tuple(photo["size"]),
+                record.sha256(photos.bare((root / whole).read_bytes())),
+                (press.PRESS_JSON,),
+                stamp_photo,
+                f"{photo['what']}, at full resolution",
+                needs_browser=False,
+                meta=about,
+                row=False,
+            )
+        )
 
     entries = {entry["file"]: entry for entry in data["images"]}
     for image in press.images(root):
-        entry = entries[image.stem.removesuffix(f"-{image.lang}") if image.lang != data["default_lang"] else image.stem]
+        entry = entries[
+            image.stem.removesuffix(f"-{image.lang}")
+            if image.lang != data["default_lang"]
+            else image.stem
+        ]
         svg_path = press.SVG_DIR / f"{image.stem}.svg"
         if image.publish_svg:
-            published_press = stamped_svg(svg_path, image.svg, records.press(image, entry, svg_path))
+            published_press = stamped_svg(
+                svg_path, image.svg, records.press(image, entry, svg_path)
+            )
             texts.append(published_press)
             image = dataclasses.replace(image, svg=published_press.content)
-        screens = tuple(press.SCREENS_DIR / f"kleidos-screen-{plate.board}.png" for plate in image.plates)
+        screens = tuple(
+            press.SCREENS_DIR / f"kleidos-screen-{plate.board}.png" for plate in image.plates
+        )
         screens += tuple(boards.screen_path(placed.slug) for placed in image.fronts)
-        lineup = tuple(path for path in boards.inputs(root) if path not in screens) if image.fronts else ()
-        inputs = (*LOGO_INPUTS, MONO, press.PRESS_JSON, press.SRC_DIR / f"{image.layout}.svg", *screens, *lineup)
+        lineup = (
+            tuple(path for path in boards.inputs(root) if path not in screens)
+            if image.fronts
+            else ()
+        )
+        inputs = (
+            *LOGO_INPUTS,
+            MONO,
+            press.PRESS_JSON,
+            press.SRC_DIR / f"{image.layout}.svg",
+            *screens,
+            *lineup,
+        )
         # A capture's metadata is not part of what an image is drawn from: its pixels' chunks are.
-        source = record.sha256(image.svg.encode() + b"".join(png.bare((root / screen).read_bytes()) for screen in screens))
-        what = image.what + ("" if image.lang == data["default_lang"] else f", in {LANGUAGES.get(image.lang, image.lang)}")
+        source = record.sha256(
+            image.svg.encode()
+            + b"".join(png.bare((root / screen).read_bytes()) for screen in screens)
+        )
+        what = image.what + (
+            ""
+            if image.lang == data["default_lang"]
+            else f", in {LANGUAGES.get(image.lang, image.lang)}"
+        )
 
-        def full(browser: raster.Browser | None, cache: dict[str, Any], image: press.Image = image) -> Any:
+        def full(
+            browser: raster.Browser | None, cache: dict[str, Any], image: press.Image = image
+        ) -> Any:
             if image.stem not in cache:
                 assert browser is not None
-                drawn = png.clean(browser.draw(image.svg, image.size, image.stem), flatten=image.ground)
+                drawn = png.clean(
+                    browser.draw(image.svg, image.size, image.stem), flatten=image.ground
+                )
                 cache[image.stem] = press.paste_screens(image, drawn, root)
             return cache[image.stem]
 
         full_path = image.png_paths()[0][0]
         for index, (path, size) in enumerate(image.png_paths()):
-            upstream = (records.url(svg_path) if image.publish_svg else None) if index == 0 else records.url(full_path)
+            upstream = (
+                (records.url(svg_path) if image.publish_svg else None)
+                if index == 0
+                else records.url(full_path)
+            )
             about = records.press(image, entry, path, size, upstream)
 
-            def draw_press(browser: raster.Browser | None, cache: dict[str, Any], image: press.Image = image,
-                           size: tuple[int, int] = size, whole: bool = index == 0, about: meta.MediaMeta = about) -> bytes:
+            def draw_press(
+                browser: raster.Browser | None,
+                cache: dict[str, Any],
+                image: press.Image = image,
+                size: tuple[int, int] = size,
+                whole: bool = index == 0,
+                about: meta.MediaMeta = about,
+            ) -> bytes:
                 if whole:
                     return png.encode(full(browser, cache, image), about)
                 if image.plates or image.fronts:
                     return png.encode(press.narrowed(full(browser, cache, image), size), about)
                 assert browser is not None
-                return png.encode(png.clean(browser.draw(image.svg, size, f"{image.stem}-{size[0]}"), flatten=image.ground), about)
+                return png.encode(
+                    png.clean(
+                        browser.draw(image.svg, size, f"{image.stem}-{size[0]}"),
+                        flatten=image.ground,
+                    ),
+                    about,
+                )
 
             copy_note = "" if index == 0 else f", {size[0]} px wide"
-            pictures.append(Picture(path, size, source, inputs, draw_press, what + copy_note, press.BYTE_LIMIT, meta=about))
+            pictures.append(
+                Picture(
+                    path,
+                    size,
+                    source,
+                    inputs,
+                    draw_press,
+                    what + copy_note,
+                    press.BYTE_LIMIT,
+                    meta=about,
+                )
+            )
 
     # --- Screens, enlarged ---------------------------------------------------------------
     for board, screen in data["screens"].items():
@@ -225,13 +384,28 @@ def collect(root: Path = BRAND_ROOT) -> tuple[list[Text], list[Picture]]:
         enlarged = press.SCREENS_DIR / f"kleidos-screen-{board}-{scale}x.png"
         about = records.screen(screen, enlarged, size, scale, records.url(native))
 
-        def draw_screen(_: raster.Browser | None, __: dict[str, Any], native: Path = native, scale: int = scale,
-                        about: meta.MediaMeta = about) -> bytes:
+        def draw_screen(
+            _: raster.Browser | None,
+            __: dict[str, Any],
+            native: Path = native,
+            scale: int = scale,
+            about: meta.MediaMeta = about,
+        ) -> bytes:
             return png.encode(press.enlarged_screen((root / native).read_bytes(), scale), about)
 
-        pictures.append(Picture(enlarged, size, record.sha256(png.bare((root / native).read_bytes())),
-                                (native, press.PRESS_JSON), draw_screen,
-                                f"the {screen['name']}'s unlock screen at {scale} times its own pixels", press.BYTE_LIMIT, False, about))
+        pictures.append(
+            Picture(
+                enlarged,
+                size,
+                record.sha256(png.bare((root / native).read_bytes())),
+                (native, press.PRESS_JSON),
+                draw_screen,
+                f"the {screen['name']}'s unlock screen at {scale} times its own pixels",
+                press.BYTE_LIMIT,
+                False,
+                about,
+            )
+        )
 
     # --- Photographs, narrower -----------------------------------------------------------
     for photo in data.get("photos", {}).values():
@@ -242,24 +416,56 @@ def collect(root: Path = BRAND_ROOT) -> tuple[list[Text], list[Picture]]:
             narrow_size = (copy_width, round(copy_width * height / width))
             about = records.photo(photo, narrow, narrow_size, records.url(whole))
 
-            def draw_photo(_: raster.Browser | None, __: dict[str, Any], whole: Path = whole, copy_width: int = copy_width,
-                           about: meta.MediaMeta = about) -> bytes:
+            def draw_photo(
+                _: raster.Browser | None,
+                __: dict[str, Any],
+                whole: Path = whole,
+                copy_width: int = copy_width,
+                about: meta.MediaMeta = about,
+            ) -> bytes:
                 return photos.narrowed((root / whole).read_bytes(), copy_width, about)
 
-            pictures.append(Picture(narrow, narrow_size, record.sha256(photos.bare((root / whole).read_bytes())), (whole, press.PRESS_JSON),
-                                    draw_photo, f"the same, {copy_width} px wide", press.BYTE_LIMIT, False, about))
+            pictures.append(
+                Picture(
+                    narrow,
+                    narrow_size,
+                    record.sha256(photos.bare((root / whole).read_bytes())),
+                    (whole, press.PRESS_JSON),
+                    draw_photo,
+                    f"the same, {copy_width} px wide",
+                    press.BYTE_LIMIT,
+                    False,
+                    about,
+                )
+            )
     # --- The KiCad kit's previews --------------------------------------------------------
     # (Not named ``ground``: draw_palette reads that name when it runs.)
     for kicad_ground in kicad.load(root)["grounds"]:
         preview = kicad_preview.path(kicad_ground)
         about = records.kicad_preview(kicad_ground, preview, kicad_preview.SIZE)
 
-        def draw_kicad(browser: raster.Browser | None, _: dict[str, Any], side: str = kicad_ground, about: meta.MediaMeta = about) -> bytes:
+        def draw_kicad(
+            browser: raster.Browser | None,
+            _: dict[str, Any],
+            side: str = kicad_ground,
+            about: meta.MediaMeta = about,
+        ) -> bytes:
             assert browser is not None
             return png.encode(kicad_preview.draw(side, browser, root), about)
 
-        pictures.append(Picture(preview, kicad_preview.SIZE, kicad_preview.source(kicad_ground, root), kicad_preview.inputs(kicad_ground, root),
-                                draw_kicad, f"the KiCad kit's fixture on the {kicad_ground} ground", meta=about, row=False, needs_kicad=True))
+        pictures.append(
+            Picture(
+                preview,
+                kicad_preview.SIZE,
+                kicad_preview.source(kicad_ground, root),
+                kicad_preview.inputs(kicad_ground, root),
+                draw_kicad,
+                f"the KiCad kit's fixture on the {kicad_ground} ground",
+                meta=about,
+                row=False,
+                needs_kicad=True,
+            )
+        )
     pictures += opaque_copies(root, pictures)
     pictures += webp_copies(root, pictures, data)
     return texts, pictures
@@ -273,18 +479,39 @@ def opaque_copies(root: Path, pictures: list[Picture]) -> list[Picture]:
         drawn = by_path[copy.source]
         about = records.opaque(copy, (copy.width, copy.height))
 
-        def draw_opaque(_: raster.Browser | None, __: dict[str, Any], copy: logo.Opaque = copy, about: meta.MediaMeta = about) -> bytes:
-            return png.encode(png.clean((root / copy.source).read_bytes(), flatten=copy.color), about)
+        def draw_opaque(
+            _: raster.Browser | None,
+            __: dict[str, Any],
+            copy: logo.Opaque = copy,
+            about: meta.MediaMeta = about,
+        ) -> bytes:
+            return png.encode(
+                png.clean((root / copy.source).read_bytes(), flatten=copy.color), about
+            )
 
         what = f"{copy.item.what.replace(', on transparency', '')}, flattened on {copy.ground} ({copy.color})"
-        out.append(Picture(copy.path, (copy.width, copy.height), drawn.source, (copy.source, logo.OPAQUE_JSON, tokens.TOKENS_JSON),
-                           draw_opaque, what, needs_browser=False, meta=about, copy_of=copy.source))
+        out.append(
+            Picture(
+                copy.path,
+                (copy.width, copy.height),
+                drawn.source,
+                (copy.source, logo.OPAQUE_JSON, tokens.TOKENS_JSON),
+                draw_opaque,
+                what,
+                needs_browser=False,
+                meta=about,
+                copy_of=copy.source,
+            )
+        )
     return out
 
 
 def webp_copies(root: Path, pictures: list[Picture], data: dict[str, Any]) -> list[Picture]:
     """Return the WebP copy of every published PNG and JPEG file: lossless from a PNG's pixels, lossy from a photograph's."""
-    wholes = {photos.PHOTOS_DIR / f"{photo['file']}.jpg": photo for photo in data.get("photos", {}).values()}
+    wholes = {
+        photos.PHOTOS_DIR / f"{photo['file']}.jpg": photo
+        for photo in data.get("photos", {}).values()
+    }
     out = []
     for picture in pictures:
         if picture.meta is None or picture.path.suffix not in (".png", ".jpg"):
@@ -295,34 +522,78 @@ def webp_copies(root: Path, pictures: list[Picture], data: dict[str, Any]) -> li
         if lossless:
             inputs: tuple[Path, ...] = (picture.path,)
 
-            def draw_webp(_: raster.Browser | None, __: dict[str, Any], picture: Picture = picture, about: meta.MediaMeta = about) -> bytes:
+            def draw_webp(
+                _: raster.Browser | None,
+                __: dict[str, Any],
+                picture: Picture = picture,
+                about: meta.MediaMeta = about,
+            ) -> bytes:
                 return webp.copy_of((root / picture.path).read_bytes(), about)
         else:
             # A narrower photograph's WebP is drawn from the full-resolution file, as its JPEG is: one lossy step, not two.
-            whole = picture.path if picture.path in wholes else next(path for path in picture.inputs if path in wholes)
+            whole = (
+                picture.path
+                if picture.path in wholes
+                else next(path for path in picture.inputs if path in wholes)
+            )
             inputs = (whole, press.PRESS_JSON)
 
-            def draw_webp(_: raster.Browser | None, __: dict[str, Any], whole: Path = whole, size: tuple[int, int] = picture.size,
-                          about: meta.MediaMeta = about) -> bytes:
-                return webp.encode(photos.resized((root / whole).read_bytes(), size), about, lossless=False)
+            def draw_webp(
+                _: raster.Browser | None,
+                __: dict[str, Any],
+                whole: Path = whole,
+                size: tuple[int, int] = picture.size,
+                about: meta.MediaMeta = about,
+            ) -> bytes:
+                return webp.encode(
+                    photos.resized((root / whole).read_bytes(), size), about, lossless=False
+                )
 
-        out.append(Picture(path, picture.size, picture.source, inputs, draw_webp, f"{picture.what}, as WebP", picture.limit,
-                           needs_browser=False, meta=about, row=False, copy_of=picture.path, lossless=lossless))
+        out.append(
+            Picture(
+                path,
+                picture.size,
+                picture.source,
+                inputs,
+                draw_webp,
+                f"{picture.what}, as WebP",
+                picture.limit,
+                needs_browser=False,
+                meta=about,
+                row=False,
+                copy_of=picture.path,
+                lossless=lossless,
+            )
+        )
     return out
 
 
-def picture_findings(name: str, data: bytes, size: tuple[int, int] | None = None, limit: int | None = None,
-                     about: meta.MediaMeta | None = None) -> list[str]:
+def picture_findings(
+    name: str,
+    data: bytes,
+    size: tuple[int, int] | None = None,
+    limit: int | None = None,
+    about: meta.MediaMeta | None = None,
+) -> list[str]:
     """Return what is wrong with a published picture, a PNG, a WebP copy or a photograph's JPEG, its metadata included."""
-    check = photos.findings if name.endswith(".jpg") else webp.findings if name.endswith(".webp") else png.findings
+    check = (
+        photos.findings
+        if name.endswith(".jpg")
+        else webp.findings
+        if name.endswith(".webp")
+        else png.findings
+    )
     return check(name, data, size, limit, about)
 
 
 # --- The pages' generated tables ---------------------------------------------------------
 
 
-def blocks(root: Path, pictures: list[Picture], files: dict[str, Any]) -> dict[Path, dict[str, str]]:
+def blocks(
+    root: Path, pictures: list[Picture], files: dict[str, Any]
+) -> dict[Path, dict[str, str]]:
     """Return every generated block of every README page, by page and by name."""
+
     def weight(path: Path) -> str:
         entry = files.get(path.as_posix())
         return record.human_bytes(entry["bytes"]) if entry else "not built"
@@ -333,14 +604,27 @@ def blocks(root: Path, pictures: list[Picture], files: dict[str, Any]) -> dict[P
         if picture.path.parent == logo.PNG_DIR:
             by_family.setdefault(picture.path.stem.rsplit("-", 1)[0], []).append(picture)
     opaque = {copy.item.family: copy for copy in logo.opaque_plan(root)}
-    webps = {picture.copy_of: picture for picture in pictures if picture.copy_of is not None and picture.path.suffix == ".webp"}
+    webps = {
+        picture.copy_of: picture
+        for picture in pictures
+        if picture.copy_of is not None and picture.path.suffix == ".webp"
+    }
 
     def copies(family: str) -> tuple[str, str]:
         drawn = by_family.get(family, [])
-        return (", ".join(f"[{picture.size[1]}](png/{picture.path.name})" for picture in drawn),
-                ", ".join(f"[{picture.size[1]}](webp/{webps[picture.path].path.name})" for picture in drawn if picture.path in webps))
+        return (
+            ", ".join(f"[{picture.size[1]}](png/{picture.path.name})" for picture in drawn),
+            ", ".join(
+                f"[{picture.size[1]}](webp/{webps[picture.path].path.name})"
+                for picture in drawn
+                if picture.path in webps
+            ),
+        )
 
-    logo_rows = ["| File | What it is | SVG | PNG, by height in pixels | WebP, by height in pixels |", "| --- | --- | --- | --- | --- |"]
+    logo_rows = [
+        "| File | What it is | SVG | PNG, by height in pixels | WebP, by height in pixels |",
+        "| --- | --- | --- | --- | --- |",
+    ]
     listed: set[str] = set()
     for item in logos:
         if item.family in listed:
@@ -348,14 +632,22 @@ def blocks(root: Path, pictures: list[Picture], files: dict[str, Any]) -> dict[P
         listed.add(item.family)
         named = f"{item.family}-<px>" if item.px else item.family
         if item.px:
-            svgs = ", ".join(f"[{other.px}](svg/{other.stem}.svg)" for other in logos if other.family == item.family)
+            svgs = ", ".join(
+                f"[{other.px}](svg/{other.stem}.svg)"
+                for other in logos
+                if other.family == item.family
+            )
         else:
             svgs = f"[svg](svg/{item.stem}.svg)"
-        logo_rows.append(f"| `{named}` | {item.what} | {svgs} | {' | '.join(copies(item.family))} |")
+        logo_rows.append(
+            f"| `{named}` | {item.what} | {svgs} | {' | '.join(copies(item.family))} |"
+        )
         if item.family in opaque:
             copy = opaque[item.family]
             flat = f"{item.what.replace(', on transparency', '')}, flattened on {copy.ground} ({copy.color}): no transparency, no clear space added"
-            logo_rows.append(f"| `{copy.family}{'-<px>' if item.px else ''}` | {flat} | | {' | '.join(copies(copy.family))} |")
+            logo_rows.append(
+                f"| `{copy.family}{'-<px>' if item.px else ''}` | {flat} | | {' | '.join(copies(copy.family))} |"
+            )
 
     def webp_cell(path: Path, folder: str) -> str:
         twin = webps.get(path)
@@ -366,20 +658,30 @@ def blocks(root: Path, pictures: list[Picture], files: dict[str, Any]) -> dict[P
     data = press.load(root)
     for photo in data.get("photos", {}).values():
         whole = photos.PHOTOS_DIR / f"{photo['file']}.jpg"
-        weight_now = record.human_bytes((root / whole).stat().st_size) if (root / whole).is_file() else "missing"
-        photo_rows.append(f"| [`{whole.name}`](photos/{whole.name}) | {photo['size'][0]} x {photo['size'][1]} | {weight_now} |"
-                          f" {webp_cell(whole, 'photos')} | {photo['what']}, at full resolution |")
+        weight_now = (
+            record.human_bytes((root / whole).stat().st_size)
+            if (root / whole).is_file()
+            else "missing"
+        )
+        photo_rows.append(
+            f"| [`{whole.name}`](photos/{whole.name}) | {photo['size'][0]} x {photo['size'][1]} | {weight_now} |"
+            f" {webp_cell(whole, 'photos')} | {photo['what']}, at full resolution |"
+        )
     for board, screen in data["screens"].items():
         native = press.SCREENS_DIR / f"kleidos-screen-{board}.png"
-        screen_rows.append(f"| [`{native.name}`](screens/{native.name}) | {screen['size'][0]} x {screen['size'][1]} |"
-                           f" {record.human_bytes((root / native).stat().st_size)} | {webp_cell(native, 'screens')} |"
-                           f" the {screen['name']}'s unlock screen, as captured |")
+        screen_rows.append(
+            f"| [`{native.name}`](screens/{native.name}) | {screen['size'][0]} x {screen['size'][1]} |"
+            f" {record.human_bytes((root / native).stat().st_size)} | {webp_cell(native, 'screens')} |"
+            f" the {screen['name']}'s unlock screen, as captured |"
+        )
     for picture in pictures:
         if picture.path.parts[0] != "press-kit" or not picture.row:
             continue
         folder = picture.path.parent.relative_to("press-kit").as_posix()
-        row = (f"| [`{picture.path.name}`]({picture.path.relative_to('press-kit').as_posix()}) | {picture.size[0]} x {picture.size[1]} |"
-               f" {weight(picture.path)} | {webp_cell(picture.path, folder)} | {picture.what} |")
+        row = (
+            f"| [`{picture.path.name}`]({picture.path.relative_to('press-kit').as_posix()}) | {picture.size[0]} x {picture.size[1]} |"
+            f" {weight(picture.path)} | {webp_cell(picture.path, folder)} | {picture.what} |"
+        )
         if picture.path.parent == press.IMAGES_DIR:
             press_rows.append(row)
         elif picture.path.parent == press.SCREENS_DIR:
@@ -393,7 +695,11 @@ def blocks(root: Path, pictures: list[Picture], files: dict[str, Any]) -> dict[P
             "contrast": palette.contrast_table(root),
             "device": palette.device_table(root),
         },
-        Path("press-kit/README.md"): {"images": "\n".join(press_rows), "screens": "\n".join(screen_rows), "photos": "\n".join(photo_rows)},
+        Path("press-kit/README.md"): {
+            "images": "\n".join(press_rows),
+            "screens": "\n".join(screen_rows),
+            "photos": "\n".join(photo_rows),
+        },
     }
 
 
@@ -417,7 +723,11 @@ def stale(root: Path, texts: list[Text], pictures: list[Picture]) -> list[Path]:
     found = []
     for folder in GENERATED_DIRS:
         if (root / folder).is_dir():
-            found += [path.relative_to(root) for path in sorted((root / folder).iterdir()) if path.is_file() and path.relative_to(root) not in owned]
+            found += [
+                path.relative_to(root)
+                for path in sorted((root / folder).iterdir())
+                if path.is_file() and path.relative_to(root) not in owned
+            ]
     return found
 
 
@@ -439,7 +749,9 @@ def write(root: Path = BRAND_ROOT, with_kicad: bool = False) -> int:
                 if picture.path.as_posix() in kept and (root / picture.path).is_file():
                     files[picture.path.as_posix()] = kept[picture.path.as_posix()]
                     continue
-                raise SystemExit(f"{picture.path}: missing; run tools/build.py --kicad (kicad-cli 10.0.8)")
+                raise SystemExit(
+                    f"{picture.path}: missing; run tools/build.py --kicad (kicad-cli 10.0.8)"
+                )
             data = picture.draw(browser, cache)
             (root / picture.path).parent.mkdir(parents=True, exist_ok=True)
             (root / picture.path).write_bytes(data)
@@ -448,14 +760,23 @@ def write(root: Path = BRAND_ROOT, with_kicad: bool = False) -> int:
                 "bytes": len(data),
                 "size": list(picture.size),
                 "drawn_from": picture.source,
-                "inputs": {path.as_posix(): record.file_sha256(root / path) for path in picture.inputs},
+                "inputs": {
+                    path.as_posix(): record.file_sha256(root / path) for path in picture.inputs
+                },
             }
         version = browser.version
-    record_ = {"chromium": version, "webp": webp.settings(), "meta_profile": meta.META_PROFILE, "files": files}
+    record_ = {
+        "chromium": version,
+        "webp": webp.settings(),
+        "meta_profile": meta.META_PROFILE,
+        "files": files,
+    }
     (root / record.EXPORTS_JSON).write_text(record.dump(record_), encoding="utf-8")
     for page in pages(root, pictures, files):
         (root / page.path).write_text(page.content, encoding="utf-8")
-    print(f"wrote {len(texts)} text files and {len(pictures)} pictures, drawn with Chromium {version}")
+    print(
+        f"wrote {len(texts)} text files and {len(pictures)} pictures, drawn with Chromium {version}"
+    )
     return 0
 
 
@@ -469,10 +790,14 @@ def static_findings(root: Path = BRAND_ROOT) -> list[str]:
     files = recorded.get("files", {})
     found = []
     if files and recorded.get("meta_profile") != meta.META_PROFILE:
-        found.append(f"exports.json: the pictures carry metadata profile {recorded.get('meta_profile')!r}, not {meta.META_PROFILE!r}; run tools/build.py")
+        found.append(
+            f"exports.json: the pictures carry metadata profile {recorded.get('meta_profile')!r}, not {meta.META_PROFILE!r}; run tools/build.py"
+        )
     encoder = recorded.get("webp") or {}
     if files and (encoder.get("lossless"), encoder.get("lossy")) != (webp.LOSSLESS, webp.LOSSY):
-        found.append("exports.json: the WebP copies were encoded with other settings than kleidos_brand.webp's; run tools/build.py")
+        found.append(
+            "exports.json: the WebP copies were encoded with other settings than kleidos_brand.webp's; run tools/build.py"
+        )
     for text in [*texts, *pages(root, pictures, files)]:
         path = root / text.path
         if not path.is_file():
@@ -494,18 +819,26 @@ def static_findings(root: Path = BRAND_ROOT) -> list[str]:
             found.append(f"{name}: exports.json has no record of it; run tools/build.py")
             continue
         if entry["sha256"] != record.sha256(data):
-            found.append(f"{name}: its bytes are not the ones exports.json records; run tools/build.py")
+            found.append(
+                f"{name}: its bytes are not the ones exports.json records; run tools/build.py"
+            )
         if entry["drawn_from"] != picture.source:
-            found.append(f"{name}: stale: what it is drawn from changed since it was drawn; run tools/build.py")
+            found.append(
+                f"{name}: stale: what it is drawn from changed since it was drawn; run tools/build.py"
+            )
         for source, digest in entry["inputs"].items():
             if not (root / source).is_file() or record.file_sha256(root / source) != digest:
-                found.append(f"{name}: stale: {source} changed since it was drawn; run tools/build.py")
+                found.append(
+                    f"{name}: stale: {source} changed since it was drawn; run tools/build.py"
+                )
     for name in sorted(set(files) - {picture.path.as_posix() for picture in pictures}):
         found.append(f"exports.json: records {name}, which nothing generates; run tools/build.py")
     return found
 
 
-def drawn_findings(root: Path = BRAND_ROOT, tolerant: bool = False, with_kicad: bool = False) -> list[str]:
+def drawn_findings(
+    root: Path = BRAND_ROOT, tolerant: bool = False, with_kicad: bool = False
+) -> list[str]:
     """Return every picture that, drawn again, is not the committed one; the KiCad previews only *with_kicad*."""
     _, pictures = collect(root)
     recorded = record.load(root)
@@ -532,7 +865,11 @@ def drawn_findings(root: Path = BRAND_ROOT, tolerant: bool = False, with_kicad: 
                 # A lossless copy is held to its file's pixels exactly, under any browser and any libwebp.
                 count = png.differing((root / picture.copy_of).read_bytes(), path.read_bytes())
                 if count != 0:
-                    how = "is another size" if count is None else f"differs from {picture.copy_of.name} in {count} pixels"
+                    how = (
+                        "is another size"
+                        if count is None
+                        else f"differs from {picture.copy_of.name} in {count} pixels"
+                    )
                     found.append(f"{picture.path}: a lossless copy that {how}; run tools/build.py")
                 continue
             if picture.needs_kicad and not with_kicad:
@@ -541,21 +878,45 @@ def drawn_findings(root: Path = BRAND_ROOT, tolerant: bool = False, with_kicad: 
             if tolerant:
                 share = png.drift(again, kept)
                 if share is None or share > TOLERANCE:
-                    how = "is another size" if share is None else f"differs in {share:.2%} of its pixels"
-                    found.append(f"{picture.path}: drawn again under Chromium {browser.version}, it {how}; the limit is {TOLERANCE:.1%}")
+                    how = (
+                        "is another size"
+                        if share is None
+                        else f"differs in {share:.2%} of its pixels"
+                    )
+                    found.append(
+                        f"{picture.path}: drawn again under Chromium {browser.version}, it {how}; the limit is {TOLERANCE:.1%}"
+                    )
             else:
                 count = png.differing(again, kept)
                 if count != 0:
                     how = "is another size" if count is None else f"differs in {count} pixels"
-                    found.append(f"{picture.path}: drawn again, it {how}; run tools/build.py and look at it")
+                    found.append(
+                        f"{picture.path}: drawn again, it {how}; run tools/build.py and look at it"
+                    )
     return found
 
 
 # --- The press kit as one archive --------------------------------------------------------
 
-ZIP_PATHS = ("press-kit/README.md", "press-kit/USAGE.md", "press-kit/en", "press-kit/es", "press-kit/images", "press-kit/screens",
-             "press-kit/photos", "press-kit/svg", "logo/README.md", "logo/svg", "logo/png", "logo/webp", "about", "LICENSE", "LICENSES",
-             "NOTICE.md", "TRADEMARKS.md")
+ZIP_PATHS = (
+    "press-kit/README.md",
+    "press-kit/USAGE.md",
+    "press-kit/en",
+    "press-kit/es",
+    "press-kit/images",
+    "press-kit/screens",
+    "press-kit/photos",
+    "press-kit/svg",
+    "logo/README.md",
+    "logo/svg",
+    "logo/png",
+    "logo/webp",
+    "about",
+    "LICENSE",
+    "LICENSES",
+    "NOTICE.md",
+    "TRADEMARKS.md",
+)
 
 
 def write_zip(root: Path = BRAND_ROOT) -> Path:
@@ -565,10 +926,15 @@ def write_zip(root: Path = BRAND_ROOT) -> Path:
     members: list[Path] = []
     for name in ZIP_PATHS:
         path = root / name
-        members += sorted(item for item in path.rglob("*") if item.is_file()) if path.is_dir() else [path]
+        members += (
+            sorted(item for item in path.rglob("*") if item.is_file()) if path.is_dir() else [path]
+        )
     with zipfile.ZipFile(target, "w", zipfile.ZIP_DEFLATED, compresslevel=9) as archive:
         for member in members:
-            info = zipfile.ZipInfo(f"kleidos-press-kit/{member.relative_to(root).as_posix()}", date_time=(1980, 1, 1, 0, 0, 0))
+            info = zipfile.ZipInfo(
+                f"kleidos-press-kit/{member.relative_to(root).as_posix()}",
+                date_time=(1980, 1, 1, 0, 0, 0),
+            )
             info.compress_type = zipfile.ZIP_DEFLATED
             info.external_attr = 0o644 << 16
             archive.writestr(info, member.read_bytes())
@@ -578,10 +944,20 @@ def write_zip(root: Path = BRAND_ROOT) -> Path:
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=(__doc__ or "").split("\n\n")[0])
     parser.add_argument("--check", action="store_true", help="compare instead of writing")
-    parser.add_argument("--static", action="store_true", help="with --check: only what needs no browser")
-    parser.add_argument("--tolerant", action="store_true", help="with --check: draw again and fail on gross drift only")
+    parser.add_argument(
+        "--static", action="store_true", help="with --check: only what needs no browser"
+    )
+    parser.add_argument(
+        "--tolerant",
+        action="store_true",
+        help="with --check: draw again and fail on gross drift only",
+    )
     parser.add_argument("--zip", action="store_true", help="write dist/kleidos-press-kit.zip")
-    parser.add_argument("--kicad", action="store_true", help="also export the KiCad kit's previews with kicad-cli (writing or checking)")
+    parser.add_argument(
+        "--kicad",
+        action="store_true",
+        help="also export the KiCad kit's previews with kicad-cli (writing or checking)",
+    )
     args = parser.parse_args(argv)
     if args.zip:
         print(f"wrote {write_zip().relative_to(BRAND_ROOT)}")

@@ -1903,13 +1903,13 @@
         2000,
         1414
       ],
-      "drawn_from": "ccf5313baf1d292fc8d81a5e4f515015fde6b75d93dbda29a5c65ca9650ee017",
+      "drawn_from": "da6f57c219e58e1ffd1387bcd6df50ad1b764a916c4dfb31fee88350550afa3c",
       "inputs": {
         "kicad/fixture/fixture.kicad_sch": "b1fd15e97314405c9f141361cd1dea422ec27b1444ced6a143f14ad6d0eae128",
         "kicad/fixture/fixture.kicad_pro": "be83a99b3919a924ae4e2679b0a590d048eb5878c58bf8a5f6347d159b15723d",
         "kicad/src/style.json": "c8e1940e0e68baa8509c454b171015b2ae45120b8983f1fad9317560d95d87a8",
         "kicad/src/stroke-advances.json": "bb107bffbbec6e781c1bbeb86b4b425b2dda208f913e39eef61f9fc7d1f9bcc4",
-        "kicad/kleidos_kicad.py": "3ba4a4e380023b29cf542b1c981a8e6fa1adbd9708a160272d3b0caadc5f956e",
+        "kicad/kleidos_kicad.py": "8a605adde802c0f823d4d2e291c8ba8381ad7d13879101f00dc11c909e1b6d68",
         "tokens/tokens.json": "07d2aa8c3ae6df685c580ef1ee83a51c6111a06b9c2d8b8174b2170781534666",
         "logo/png/kleidos-mark-1024.png": "e42948777ada49af899d31967e124d1e6dd961093c69e5b1472f94f326c701d9"
       }
@@ -1921,13 +1921,13 @@
         2000,
         1414
       ],
-      "drawn_from": "4e4cbf8770d73c90bf23771016ac54ce688ab7ef5918877aee5601eb4e4f4283",
+      "drawn_from": "39fd68ae606236babf4f34d5ffd802e3f1e13dcff4af338e348ab6803640489c",
       "inputs": {
         "kicad/fixture/fixture.kicad_sch": "b1fd15e97314405c9f141361cd1dea422ec27b1444ced6a143f14ad6d0eae128",
         "kicad/fixture/fixture.kicad_pro": "be83a99b3919a924ae4e2679b0a590d048eb5878c58bf8a5f6347d159b15723d",
         "kicad/src/style.json": "c8e1940e0e68baa8509c454b171015b2ae45120b8983f1fad9317560d95d87a8",
         "kicad/src/stroke-advances.json": "bb107bffbbec6e781c1bbeb86b4b425b2dda208f913e39eef61f9fc7d1f9bcc4",
-        "kicad/kleidos_kicad.py": "3ba4a4e380023b29cf542b1c981a8e6fa1adbd9708a160272d3b0caadc5f956e",
+        "kicad/kleidos_kicad.py": "8a605adde802c0f823d4d2e291c8ba8381ad7d13879101f00dc11c909e1b6d68",
         "tokens/tokens.json": "07d2aa8c3ae6df685c580ef1ee83a51c6111a06b9c2d8b8174b2170781534666",
         "logo/png/kleidos-mark-ink-dark-1024.png": "b4df039d9d1e5d7b41d10756eeb559ac11a0842a29e305b7efc4c07eadd16494"
       }
@@ -3734,7 +3734,7 @@
         2000,
         1414
       ],
-      "drawn_from": "ccf5313baf1d292fc8d81a5e4f515015fde6b75d93dbda29a5c65ca9650ee017",
+      "drawn_from": "da6f57c219e58e1ffd1387bcd6df50ad1b764a916c4dfb31fee88350550afa3c",
       "inputs": {
         "kicad/preview/kleidos-kicad-fixture-dark.png": "5c2c72e6dbe5fd628dbc01de0657c337fc93747d51494da8a60cb177cc86363d"
       }
@@ -3746,7 +3746,7 @@
         2000,
         1414
       ],
-      "drawn_from": "4e4cbf8770d73c90bf23771016ac54ce688ab7ef5918877aee5601eb4e4f4283",
+      "drawn_from": "39fd68ae606236babf4f34d5ffd802e3f1e13dcff4af338e348ab6803640489c",
       "inputs": {
         "kicad/preview/kleidos-kicad-fixture-light.png": "9871384497da4e47a4f2b4f1659ec1768f03d3bd49f20ef0d98dfdcb699bc698"
       }

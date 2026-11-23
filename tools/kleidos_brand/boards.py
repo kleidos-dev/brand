@@ -26,6 +26,7 @@ the marks printed on the products included, are the boards repository's.
 :func:`paste_glass` then lays each board's own unlock screen, a real capture
 from ``press-kit/screens/``, on its panel's active area.
 """
+
 from __future__ import annotations
 
 import copy
@@ -54,7 +55,11 @@ SIDE_MM = 1.0
 #: The ids of what a front says about itself rather than what the board shows.
 DROPPED_IDS = frozenset({"annotations", "hotspots", "screen-active", "screen-demo"})
 #: The pinned Inter faces the legends are set in, by CSS weight.
-INTER = {400: Path("fonts/inter/Inter-Regular.ttf"), 500: Path("fonts/inter/Inter-Medium.ttf"), 700: Path("fonts/inter/Inter-Bold.ttf")}
+INTER = {
+    400: Path("fonts/inter/Inter-Regular.ttf"),
+    500: Path("fonts/inter/Inter-Medium.ttf"),
+    700: Path("fonts/inter/Inter-Bold.ttf"),
+}
 ANCHORS = {"start": 0.0, "middle": 0.5, "end": 1.0}
 URL_REF = re.compile(r"url\(#([^)]+)\)")
 
@@ -86,12 +91,22 @@ class Placement:
     def box(self) -> Box:
         """Return the board's footprint: its case, and the room for its side keys."""
         side = SIDE_MM * self.scale
-        return (self.x - side, self.y - side, self.x + self.front.width * self.scale + side, self.y + self.front.height * self.scale)
+        return (
+            self.x - side,
+            self.y - side,
+            self.x + self.front.width * self.scale + side,
+            self.y + self.front.height * self.scale,
+        )
 
     def glass(self) -> Box:
         """Return the panel's active area in the drawing's units."""
         left, top, right, bottom = self.front.glass
-        return (self.x + left * self.scale, self.y + top * self.scale, self.x + right * self.scale, self.y + bottom * self.scale)
+        return (
+            self.x + left * self.scale,
+            self.y + top * self.scale,
+            self.x + right * self.scale,
+            self.y + bottom * self.scale,
+        )
 
 
 def _local(element: ET.Element) -> str:
@@ -131,7 +146,12 @@ def screen_path(slug: str) -> Path:
 def inputs(root: Path = BRAND_ROOT) -> tuple[Path, ...]:
     """Return every file a line-up is drawn from: the manifest, the fronts, the screens and the faces."""
     slugs = order(root)
-    return (MANIFEST, *(front_path(slug) for slug in slugs), *(screen_path(slug) for slug in slugs), *INTER.values())
+    return (
+        MANIFEST,
+        *(front_path(slug) for slug in slugs),
+        *(screen_path(slug) for slug in slugs),
+        *INTER.values(),
+    )
 
 
 def front(slug: str, root: Path = BRAND_ROOT) -> Front:
@@ -142,7 +162,14 @@ def front(slug: str, root: Path = BRAND_ROOT) -> Front:
     marker = next(element for element in tree.iter() if element.get("id") == "screen-active")
     x, y, w, h = (float(marker.get(key, "0")) for key in ("x", "y", "width", "height"))
     columns, rows = (int(part) for part in marker.get("data-resolution", "0x0").split("x"))
-    return Front(slug, load(root)["boards"][slug]["name"], width, height, (x, y, x + w, y + h), (columns, rows))
+    return Front(
+        slug,
+        load(root)["boards"][slug]["name"],
+        width,
+        height,
+        (x, y, x + w, y + h),
+        (columns, rows),
+    )
 
 
 # --- The legends, as outlines --------------------------------------------------------------
@@ -195,20 +222,35 @@ def legend_path(element: ET.Element, root: Path = BRAND_ROOT) -> ET.Element:
     pen = SVGPathPen(glyph_set, ntos=_number)
     advance = 0.0
     for info, position in zip(buffer.glyph_infos, buffer.glyph_positions, strict=True):
-        glyph_set[order_[info.codepoint]].draw(TransformPen(pen, (1, 0, 0, 1, advance + position.x_offset, position.y_offset)))
+        glyph_set[order_[info.codepoint]].draw(
+            TransformPen(pen, (1, 0, 0, 1, advance + position.x_offset, position.y_offset))
+        )
         advance += position.x_advance
     scale = float(element.get("font-size", "0")) / font["head"].unitsPerEm
     widen = 1.0
     if element.get("textLength") is not None:
         if element.get("lengthAdjust") != "spacingAndGlyphs":
-            raise ValueError("a legend whose width is pinned stretches its glyphs (lengthAdjust='spacingAndGlyphs')")
+            raise ValueError(
+                "a legend whose width is pinned stretches its glyphs (lengthAdjust='spacingAndGlyphs')"
+            )
         widen = float(element.get("textLength", "0")) / (advance * scale)
-    x = float(element.get("x", "0")) - ANCHORS[element.get("text-anchor", "start")] * advance * scale * widen
+    x = (
+        float(element.get("x", "0"))
+        - ANCHORS[element.get("text-anchor", "start")] * advance * scale * widen
+    )
     y = float(element.get("y", "0"))
     own = element.get("transform", "")
-    placed = f"translate({_number(x)} {_number(y)}) scale({_factor(scale * widen)} {_factor(-scale)})"
-    path = ET.Element(f"{{{SVG_NS}}}path", {"fill": element.get("fill", "#000000"), "d": pen.getCommands(),
-                                             "transform": f"{own} {placed}".strip()})
+    placed = (
+        f"translate({_number(x)} {_number(y)}) scale({_factor(scale * widen)} {_factor(-scale)})"
+    )
+    path = ET.Element(
+        f"{{{SVG_NS}}}path",
+        {
+            "fill": element.get("fill", "#000000"),
+            "d": pen.getCommands(),
+            "transform": f"{own} {placed}".strip(),
+        },
+    )
     path.set("aria-label", text)
     path.tail = element.tail
     return path
@@ -226,12 +268,20 @@ def drawing(slug: str, root: Path = BRAND_ROOT, prefix: str | None = None) -> li
     ET.register_namespace("", SVG_NS)
     tree = ET.parse(root / front_path(slug)).getroot()
     prefix = f"{slug}-" if prefix is None else prefix
-    shadows = {element.get("id") for element in tree.iter() if _local(element) == "filter" and (element.get("id") or "").startswith("shadow_")}
+    shadows = {
+        element.get("id")
+        for element in tree.iter()
+        if _local(element) == "filter" and (element.get("id") or "").startswith("shadow_")
+    }
 
     def prune(parent: ET.Element) -> None:
         for index, child in reversed(list(enumerate(list(parent)))):
             name = _local(child)
-            if name in ("title", "desc", "metadata") or child.get("id") in DROPPED_IDS or child.get("id") in shadows:
+            if (
+                name in ("title", "desc", "metadata")
+                or child.get("id") in DROPPED_IDS
+                or child.get("id") in shadows
+            ):
                 parent.remove(child)
             elif name == "text":
                 parent.remove(child)
@@ -250,7 +300,9 @@ def drawing(slug: str, root: Path = BRAND_ROOT, prefix: str | None = None) -> li
             element.set("id", prefix + element.get("id", ""))
         for key, value in list(element.attrib.items()):
             if "url(#" in value:
-                element.set(key, URL_REF.sub(lambda match: f"url(#{prefix}{match.group(1)})", value))
+                element.set(
+                    key, URL_REF.sub(lambda match: f"url(#{prefix}{match.group(1)})", value)
+                )
             elif key in ("href", XLINK) and value.startswith("#"):
                 element.set(key, f"#{prefix}{value[1:]}")
 
@@ -282,11 +334,19 @@ def arrange(shelves: list[Shelf], root: Path = BRAND_ROOT) -> list[Placement]:
     fronts = {slug: front(slug, root) for shelf in shelves for slug in shelf.slugs}
 
     def span(shelf: Shelf) -> tuple[float, float]:
-        width = sum(fronts[slug].width + 2 * SIDE_MM for slug in shelf.slugs) + shelf.gap_mm * (len(shelf.slugs) - 1)
+        width = sum(fronts[slug].width + 2 * SIDE_MM for slug in shelf.slugs) + shelf.gap_mm * (
+            len(shelf.slugs) - 1
+        )
         height = max(fronts[slug].height + SIDE_MM for slug in shelf.slugs)
         return width, height
 
-    scale = min(min((shelf.box[2] - shelf.box[0]) / span(shelf)[0], (shelf.box[3] - shelf.box[1]) / span(shelf)[1]) for shelf in shelves)
+    scale = min(
+        min(
+            (shelf.box[2] - shelf.box[0]) / span(shelf)[0],
+            (shelf.box[3] - shelf.box[1]) / span(shelf)[1],
+        )
+        for shelf in shelves
+    )
     out = []
     for shelf in shelves:
         width = span(shelf)[0] * scale
@@ -307,9 +367,13 @@ def _offset(parents: dict[ET.Element, ET.Element], element: ET.Element) -> tuple
     while node is not None:
         transform = node.get("transform", "")
         if transform:
-            match = re.fullmatch(r"translate\((-?[\d.]+)[ ,](-?[\d.]+)\)(?: scale\(1\))?", transform.strip())
+            match = re.fullmatch(
+                r"translate\((-?[\d.]+)[ ,](-?[\d.]+)\)(?: scale\(1\))?", transform.strip()
+            )
             if not match:
-                raise ValueError(f"a shelf sits inside a group moved by {transform!r}; only translate(x y) is read")
+                raise ValueError(
+                    f"a shelf sits inside a group moved by {transform!r}; only translate(x y) is read"
+                )
             dx, dy = dx + float(match.group(1)), dy + float(match.group(2))
         node = parents.get(node)
     return dx, dy
@@ -323,8 +387,12 @@ def shelves_in(tree: ET.Element, root: Path = BRAND_ROOT) -> list[tuple[ET.Eleme
         asked = element.get("data-boards")
         if asked is None:
             continue
-        if _local(element) != "rect" or element.get("fill") != "none" or element.get("stroke", "none") != "none":
-            raise ValueError("a shelf is a <rect data-boards=\"…\" fill=\"none\"> that draws nothing")
+        if (
+            _local(element) != "rect"
+            or element.get("fill") != "none"
+            or element.get("stroke", "none") != "none"
+        ):
+            raise ValueError('a shelf is a <rect data-boards="…" fill="none"> that draws nothing')
         slugs = tuple(order(root)) if asked.strip() == "all" else tuple(asked.split())
         unknown = [slug for slug in slugs if slug not in load(root)["boards"]]
         if unknown or not slugs:
@@ -357,10 +425,14 @@ def fill(tree: ET.Element, root: Path = BRAND_ROOT) -> list[Placement]:
         group = ET.Element(f"{{{SVG_NS}}}g", {"class": "boards"})
         for _ in shelf.slugs:
             placed = queue.pop(0)
-            board = ET.SubElement(group, f"{{{SVG_NS}}}g", {
-                "class": f"board {placed.slug}",
-                "transform": f"translate({_number(placed.x - dx)} {_number(placed.y - dy)}) scale({_number(placed.scale)})",
-            })
+            board = ET.SubElement(
+                group,
+                f"{{{SVG_NS}}}g",
+                {
+                    "class": f"board {placed.slug}",
+                    "transform": f"translate({_number(placed.x - dx)} {_number(placed.y - dy)}) scale({_number(placed.scale)})",
+                },
+            )
             board.extend(drawing(placed.slug, root))
         group.tail = element.tail
         parent.insert(list(parent).index(element), group)
@@ -368,7 +440,9 @@ def fill(tree: ET.Element, root: Path = BRAND_ROOT) -> list[Placement]:
     return placements
 
 
-def paste_glass(image: Any, placements: list[Placement], root: Path = BRAND_ROOT, factor: float = 1.0) -> Any:
+def paste_glass(
+    image: Any, placements: list[Placement], root: Path = BRAND_ROOT, factor: float = 1.0
+) -> Any:
     """Return *image* (a Pillow image) with each board's unlock screen on its panel's active area.
 
     :param factor: The image's pixels per unit of the drawing the placements were made in.
@@ -382,11 +456,15 @@ def paste_glass(image: Any, placements: list[Placement], root: Path = BRAND_ROOT
         with Image.open(root / screen_path(placed.slug)) as opened:
             screen = opened.convert("RGB")
         if (screen.width, screen.height) != placed.front.resolution:
-            raise ValueError(f"{screen_path(placed.slug)}: is {screen.width} x {screen.height}; the front's panel is {placed.front.resolution}")
+            raise ValueError(
+                f"{screen_path(placed.slug)}: is {screen.width} x {screen.height}; the front's panel is {placed.front.resolution}"
+            )
         if width > screen.width or height > screen.height:
             # Enlarged pixel for pixel first, so the screen's edges stay sharp, then brought to the panel's size.
             whole = math.ceil(max(width / screen.width, height / screen.height))
-            screen = screen.resize((screen.width * whole, screen.height * whole), Image.Resampling.NEAREST)
+            screen = screen.resize(
+                (screen.width * whole, screen.height * whole), Image.Resampling.NEAREST
+            )
         image.paste(screen.resize((width, height), Image.Resampling.LANCZOS), (x0, y0))
     return image
 
@@ -407,8 +485,12 @@ def findings(root: Path = BRAND_ROOT) -> list[str]:
         if key not in manifest:
             found.append(f"{MANIFEST}: has no {key!r}")
     if manifest.get("license") != "MIT":
-        found.append(f"{MANIFEST}: the fronts are copied under the MIT License, the boards repository's")
-    listed = {front_path(slug).as_posix() for slug in manifest.get("boards", {})} | {MANIFEST.as_posix()}
+        found.append(
+            f"{MANIFEST}: the fronts are copied under the MIT License, the boards repository's"
+        )
+    listed = {front_path(slug).as_posix() for slug in manifest.get("boards", {})} | {
+        MANIFEST.as_posix()
+    }
     if (root / BOARDS_DIR).is_dir():
         for path in sorted((root / BOARDS_DIR).iterdir()):
             if path.is_file() and path.relative_to(root).as_posix() not in listed:
@@ -419,12 +501,18 @@ def findings(root: Path = BRAND_ROOT) -> list[str]:
             found.append(f"{front_path(slug)}: missing")
             continue
         if digest(path) != entry.get("sha256"):
-            found.append(f"{front_path(slug)}: its bytes are not the ones {MANIFEST} records; copy it again with tools/sync_from_boards.py")
+            found.append(
+                f"{front_path(slug)}: its bytes are not the ones {MANIFEST} records; copy it again with tools/sync_from_boards.py"
+            )
         if not (root / screen_path(slug)).is_file():
-            found.append(f"{screen_path(slug)}: missing; every board in a line-up shows its unlock screen")
+            found.append(
+                f"{screen_path(slug)}: missing; every board in a line-up shows its unlock screen"
+            )
         try:
             drawing(slug, root)
             front(slug, root)
         except (ValueError, KeyError, StopIteration, ET.ParseError) as error:
-            found.append(f"{front_path(slug)}: a line-up cannot draw it ({error or type(error).__name__})")
+            found.append(
+                f"{front_path(slug)}: a line-up cannot draw it ({error or type(error).__name__})"
+            )
     return found

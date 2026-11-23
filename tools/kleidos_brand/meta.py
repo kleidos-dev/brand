@@ -42,6 +42,7 @@ name or an e-mail address, and the identity patterns kept out of the tree
 The other repositories keep a copy of it, and the golden files under
 ``tests/fixtures/meta/`` hold every copy to the same bytes.
 """
+
 from __future__ import annotations
 
 import fnmatch
@@ -67,8 +68,12 @@ ORG_URL = "https://github.com/kleidos-dev"
 #: Where a file of the firmware repository is pointed at until that repository is public.
 FIRMWARE_REPO_URL = "https://kleidos.dev"
 
-TRADEMARK_NOTE_M5 = "M5Stack and M5 are trademarks of their owner; Kleidos is not affiliated with M5Stack."
-TRADEMARK_NOTE_LILYGO = "LILYGO and T-Deck are trademarks of their owner; Kleidos is not affiliated with LILYGO."
+TRADEMARK_NOTE_M5 = (
+    "M5Stack and M5 are trademarks of their owner; Kleidos is not affiliated with M5Stack."
+)
+TRADEMARK_NOTE_LILYGO = (
+    "LILYGO and T-Deck are trademarks of their owner; Kleidos is not affiliated with LILYGO."
+)
 TRADEMARK_NOTE_KLEIDOS = "The Kleidos name and logo are subject to the terms in TRADEMARKS.md."
 
 #: The page that states each repository's terms: IPTC's Licensor URL.
@@ -81,10 +86,18 @@ RIGHTS_URLS = {
 
 #: IPTC NewsCodes ``digitalsourcetype``: how a picture was made.
 DIGITAL_SOURCE_TYPE_BASE = "http://cv.iptc.org/newscodes/digitalsourcetype/"
-DIGITAL_SOURCE_TYPES = frozenset({
-    "digitalCapture", "screenCapture", "digitalCreation", "dataDrivenMedia", "composite",
-    "trainedAlgorithmicMedia", "compositeWithTrainedAlgorithmicMedia", "compositeSynthetic",
-})
+DIGITAL_SOURCE_TYPES = frozenset(
+    {
+        "digitalCapture",
+        "screenCapture",
+        "digitalCreation",
+        "dataDrivenMedia",
+        "composite",
+        "trainedAlgorithmicMedia",
+        "compositeWithTrainedAlgorithmicMedia",
+        "compositeSynthetic",
+    }
+)
 
 #: A raster whose longer side is under this many pixels carries the short profile.
 SHORT_BELOW = 64
@@ -103,7 +116,9 @@ def extra_terms(repo: str) -> str:
 
 
 for _repo in ("brand", "social"):
-    SPANISH[extra_terms(_repo)] = f"Condiciones adicionales según la sección 7 de la GPL y el permiso de prensa: {RIGHTS_URLS[_repo]}."
+    SPANISH[extra_terms(_repo)] = (
+        f"Condiciones adicionales según la sección 7 de la GPL y el permiso de prensa: {RIGHTS_URLS[_repo]}."
+    )
 
 
 # --- Licenses ------------------------------------------------------------------------------
@@ -120,7 +135,9 @@ def license_url(identifier: str, repo: str = "brand") -> str:
     """Return the URL of a license's text: SPDX's page, or the ``LICENSES/`` file of the public repository that declares it."""
     if identifier.startswith("LicenseRef-"):
         if repo not in RIGHTS_URLS:
-            raise ValueError(f"{identifier} is declared in no public repository; a Web Statement never points to a page that is not a license")
+            raise ValueError(
+                f"{identifier} is declared in no public repository; a Web Statement never points to a page that is not a license"
+            )
         return f"{ORG_URL}/{repo}/blob/main/LICENSES/{identifier}.txt"
     if not re.fullmatch(r"[A-Za-z0-9.+-]+", identifier):
         raise ValueError(f"not an SPDX identifier: {identifier!r}")
@@ -184,8 +201,14 @@ class MediaMeta:
 
     def usage_terms(self, lang: str = "en") -> str:
         """Return the license, its URLs, the credits, the trademark notes and the extra terms, as one text."""
-        urls = ", ".join(license_url(identifier, self.repo) for identifier in dict.fromkeys(spdx_ids(self.spdx)))
-        lead = f"Licensed under {self.spdx}: {urls}." if lang == "en" else f"Con licencia {self.spdx}: {urls}."
+        urls = ", ".join(
+            license_url(identifier, self.repo) for identifier in dict.fromkeys(spdx_ids(self.spdx))
+        )
+        lead = (
+            f"Licensed under {self.spdx}: {urls}."
+            if lang == "en"
+            else f"Con licencia {self.spdx}: {urls}."
+        )
         sentences = [*self.credits, *self.trademarks, *self.extra_terms]
         if lang != "en":
             table = {**SPANISH, **self.spanish}
@@ -218,18 +241,24 @@ def record_problems(meta: MediaMeta) -> list[str]:
     if meta.own_license not in spdx_ids(meta.spdx):
         found.append(f"{meta.own_license} is not in the expression {meta.spdx!r}")
     if meta.digital_source_type not in DIGITAL_SOURCE_TYPES:
-        found.append(f"{meta.digital_source_type!r} is not an IPTC digital source type of this profile")
+        found.append(
+            f"{meta.digital_source_type!r} is not an IPTC digital source type of this profile"
+        )
     if meta.profile not in ("full", "short"):
         found.append(f"no profile {meta.profile!r}")
     if meta.language not in ("en", "es"):
         found.append(f"no language {meta.language!r}")
     if meta.language == "es" and not (meta.title_es and meta.description_es and meta.alt_es):
-        found.append(f"{meta.title!r} is in Spanish and lacks a Spanish title, description or alt text")
+        found.append(
+            f"{meta.title!r} is in Spanish and lacks a Spanish title, description or alt text"
+        )
     for name in ("title", "description"):
         try:
             getattr(meta, name).encode("latin-1")
         except UnicodeEncodeError:
-            found.append(f"the {name} of {meta.title!r} is not Latin-1, which a PNG text chunk needs; it is never transliterated")
+            found.append(
+                f"the {name} of {meta.title!r} is not Latin-1, which a PNG text chunk needs; it is never transliterated"
+            )
     try:
         meta.copyright.encode("latin-1")
     except UnicodeEncodeError:
@@ -260,7 +289,9 @@ XMP_END = '<?xpacket end="r"?>'
 
 def escape(text: str) -> str:
     """Return *text* escaped for XML: ``& < > "`` and nothing else."""
-    return text.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;").replace('"', "&quot;")
+    return (
+        text.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;").replace('"', "&quot;")
+    )
 
 
 def _alt(english: str, spanish: str | None) -> str:
@@ -275,12 +306,18 @@ def xmp_packet(meta: MediaMeta) -> bytes:
     es = meta.language == "es"
     short = meta.profile == "short"
     names = [name for name, _ in NAMESPACES if not short or name in SHORT_NAMESPACES]
-    declared = "\n".join(f'        xmlns:{name}="{uri}"' for name, uri in NAMESPACES if name in names)
+    declared = "\n".join(
+        f'        xmlns:{name}="{uri}"' for name, uri in NAMESPACES if name in names
+    )
     dst = f"{DIGITAL_SOURCE_TYPE_BASE}{meta.digital_source_type}"
     rows = [f"      <dc:title>{_alt(meta.title, meta.title_es if es else None)}</dc:title>"]
     if not short:
-        rows.append(f"      <dc:description>{_alt(meta.description, meta.description_es if es else None)}</dc:description>")
-    rows.append(f"      <dc:creator><rdf:Seq><rdf:li>{escape(CREATOR)}</rdf:li></rdf:Seq></dc:creator>")
+        rows.append(
+            f"      <dc:description>{_alt(meta.description, meta.description_es if es else None)}</dc:description>"
+        )
+    rows.append(
+        f"      <dc:creator><rdf:Seq><rdf:li>{escape(CREATOR)}</rdf:li></rdf:Seq></dc:creator>"
+    )
     rows.append(f"      <dc:rights>{_alt(meta.copyright, None)}</dc:rights>")
     if not short:
         bag = "".join(f"<rdf:li>{escape(keyword)}</rdf:li>" for keyword in meta.keywords)
@@ -292,44 +329,71 @@ def xmp_packet(meta: MediaMeta) -> bytes:
         if es:
             rows.append("      <dc:language><rdf:Bag><rdf:li>es</rdf:li></rdf:Bag></dc:language>")
         rows.append(f"      <photoshop:Credit>{escape(CREDIT)}</photoshop:Credit>")
-        rows.append(f"      <Iptc4xmpCore:AltTextAccessibility>{_alt(meta.alt, meta.alt_es if es else None)}</Iptc4xmpCore:AltTextAccessibility>")
+        rows.append(
+            f"      <Iptc4xmpCore:AltTextAccessibility>{_alt(meta.alt, meta.alt_es if es else None)}</Iptc4xmpCore:AltTextAccessibility>"
+        )
         rows.append('      <Iptc4xmpCore:CreatorContactInfo rdf:parseType="Resource">')
-        rows.append(f"        <Iptc4xmpCore:CiUrlWork>{escape(CREATOR_URL)}</Iptc4xmpCore:CiUrlWork>")
+        rows.append(
+            f"        <Iptc4xmpCore:CiUrlWork>{escape(CREATOR_URL)}</Iptc4xmpCore:CiUrlWork>"
+        )
         rows.append("      </Iptc4xmpCore:CreatorContactInfo>")
-    rows.append(f"      <Iptc4xmpExt:DigitalSourceType>{escape(dst)}</Iptc4xmpExt:DigitalSourceType>")
+    rows.append(
+        f"      <Iptc4xmpExt:DigitalSourceType>{escape(dst)}</Iptc4xmpExt:DigitalSourceType>"
+    )
     if not short:
         rows.append('      <plus:Licensor><rdf:Seq><rdf:li rdf:parseType="Resource">')
         rows.append(f"        <plus:LicensorName>{escape(CREATOR)}</plus:LicensorName>")
         rows.append(f"        <plus:LicensorURL>{escape(meta.rights_url)}</plus:LicensorURL>")
         rows.append("      </rdf:li></rdf:Seq></plus:Licensor>")
     rows.append("      <xmpRights:Marked>True</xmpRights:Marked>")
-    rows.append(f"      <xmpRights:WebStatement>{escape(meta.web_statement)}</xmpRights:WebStatement>")
+    rows.append(
+        f"      <xmpRights:WebStatement>{escape(meta.web_statement)}</xmpRights:WebStatement>"
+    )
     if not short:
-        rows.append(f"      <xmpRights:UsageTerms>{_alt(meta.usage_terms('en'), meta.usage_terms('es') if es else None)}</xmpRights:UsageTerms>")
+        rows.append(
+            f"      <xmpRights:UsageTerms>{_alt(meta.usage_terms('en'), meta.usage_terms('es') if es else None)}</xmpRights:UsageTerms>"
+        )
     rows.append(f'      <cc:license rdf:resource="{escape(meta.web_statement)}"/>')
-    text = "\n".join([
-        XMP_BEGIN,
-        '<x:xmpmeta xmlns:x="adobe:ns:meta/">',
-        '  <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">',
-        '    <rdf:Description rdf:about=""',
-        declared + ">",
-        *rows,
-        "    </rdf:Description>",
-        "  </rdf:RDF>",
-        "</x:xmpmeta>",
-        XMP_END,
-    ])
+    text = "\n".join(
+        [
+            XMP_BEGIN,
+            '<x:xmpmeta xmlns:x="adobe:ns:meta/">',
+            '  <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">',
+            '    <rdf:Description rdf:about=""',
+            declared + ">",
+            *rows,
+            "    </rdf:Description>",
+            "  </rdf:RDF>",
+            "</x:xmpmeta>",
+            XMP_END,
+        ]
+    )
     return text.encode("utf-8")
 
 
 def xmp_values(meta: MediaMeta) -> list[str]:
     """Return every value a record writes, for the deny-list."""
-    values = [meta.title, meta.description, meta.alt, *meta.keywords, meta.copyright, meta.identifier_url, meta.rights_url,
-              meta.web_statement, meta.usage_terms("en"), *(meta.holders)]
+    values = [
+        meta.title,
+        meta.description,
+        meta.alt,
+        *meta.keywords,
+        meta.copyright,
+        meta.identifier_url,
+        meta.rights_url,
+        meta.web_statement,
+        meta.usage_terms("en"),
+        *(meta.holders),
+    ]
     if meta.source_url:
         values.append(meta.source_url)
     if meta.language == "es":
-        values += [str(meta.title_es), str(meta.description_es), str(meta.alt_es), meta.usage_terms("es")]
+        values += [
+            str(meta.title_es),
+            str(meta.description_es),
+            str(meta.alt_es),
+            meta.usage_terms("es"),
+        ]
     return values
 
 
@@ -390,7 +454,11 @@ def png_chunks(meta: MediaMeta) -> list[tuple[str, bytes]]:
 
 def png_bare(data: bytes) -> bytes:
     """Return a PNG without any text, time or EXIF chunk: its pixel, color and layout chunks, bytes unchanged."""
-    kept = [(name, body) for name, body in png_chunks_of(data) if name not in PNG_TEXT_CHUNKS | PNG_REFUSED_CHUNKS]
+    kept = [
+        (name, body)
+        for name, body in png_chunks_of(data)
+        if name not in PNG_TEXT_CHUNKS | PNG_REFUSED_CHUNKS
+    ]
     return PNG_SIGNATURE + b"".join(_chunk(name, body) for name, body in kept)
 
 
@@ -418,10 +486,14 @@ def png_findings(name: str, data: bytes, meta: MediaMeta) -> list[str]:
     names = [chunk for chunk, _ in chunks]
     refused = sorted({chunk for chunk in names if chunk in PNG_REFUSED_CHUNKS})
     if refused:
-        found.append(f"{name}: M005: holds {', '.join(refused)}; a published PNG holds no time, compressed text or EXIF")
+        found.append(
+            f"{name}: M005: holds {', '.join(refused)}; a published PNG holds no time, compressed text or EXIF"
+        )
     profile = profile_for(png_size(data))
     if profile != meta.profile:
-        found.append(f"{name}: M009: a {png_size(data)[0]} x {png_size(data)[1]} picture carries the {profile} profile, not the {meta.profile} one")
+        found.append(
+            f"{name}: M009: a {png_size(data)[0]} x {png_size(data)[1]} picture carries the {profile} profile, not the {meta.profile} one"
+        )
     expected = png_chunks(meta)
     texts = [(chunk, body) for chunk, body in chunks if chunk in PNG_TEXT_CHUNKS]
     if not texts:
@@ -434,11 +506,16 @@ def png_findings(name: str, data: bytes, meta: MediaMeta) -> list[str]:
             found.append(f"{name}: M001: lacks its {chunk} {label!r}")
         elif have[keyword] != body:
             found.append(f"{name}: M002: its {chunk} {label!r} is not what its record gives")
-    extra = sorted({body.split(b"\0", 1)[0].decode("latin-1", "replace") for _, body in texts} - {body.split(b"\0", 1)[0].decode("latin-1") for _, body in expected})
+    extra = sorted(
+        {body.split(b"\0", 1)[0].decode("latin-1", "replace") for _, body in texts}
+        - {body.split(b"\0", 1)[0].decode("latin-1") for _, body in expected}
+    )
     if extra:
         found.append(f"{name}: M005: holds text chunks outside the profile ({', '.join(extra)})")
     if not found and data != png_stamp(data, meta):
-        found.append(f"{name}: M006: its metadata chunks are not in the profile's order, right before the first IDAT")
+        found.append(
+            f"{name}: M006: its metadata chunks are not in the profile's order, right before the first IDAT"
+        )
     return found
 
 
@@ -455,7 +532,9 @@ def _iim(dataset: tuple[int, int], value: bytes) -> bytes:
     record, number = dataset
     limit = IIM_LIMITS.get(number) if record == 2 else None
     if limit is not None and len(value) > limit:
-        raise ValueError(f"IIM {record}:{number:02d} holds {len(value)} bytes; the limit is {limit}")
+        raise ValueError(
+            f"IIM {record}:{number:02d} holds {len(value)} bytes; the limit is {limit}"
+        )
     return b"\x1c" + bytes([record, number]) + len(value).to_bytes(2, "big") + value
 
 
@@ -475,7 +554,9 @@ def iim_block(meta: MediaMeta) -> bytes:
 
 def _resource(number: int, payload: bytes) -> bytes:
     body = payload + (b"\x00" if len(payload) % 2 else b"")
-    return b"8BIM" + number.to_bytes(2, "big") + b"\x00\x00" + len(payload).to_bytes(4, "big") + body
+    return (
+        b"8BIM" + number.to_bytes(2, "big") + b"\x00\x00" + len(payload).to_bytes(4, "big") + body
+    )
 
 
 def _segment(marker: int, payload: bytes) -> bytes:
@@ -488,7 +569,9 @@ def jpeg_segments(meta: MediaMeta) -> tuple[bytes, bytes]:
     """Return the record's APP1 (XMP) and APP13 (IIM with its MD5 digest) segments."""
     packet = xmp_packet(meta)
     if len(packet) > XMP_JPEG_LIMIT:
-        raise ValueError(f"the XMP packet is {len(packet)} bytes; one APP1 segment holds {XMP_JPEG_LIMIT}")
+        raise ValueError(
+            f"the XMP packet is {len(packet)} bytes; one APP1 segment holds {XMP_JPEG_LIMIT}"
+        )
     iim = iim_block(meta)
     app13 = PHOTOSHOP_HEADER + _resource(0x0404, iim) + _resource(0x0425, hashlib.md5(iim).digest())  # noqa: S324 - MWG's digest
     return _segment(0xE1, XMP_APP1_HEADER + packet), _segment(0xED, app13)
@@ -535,17 +618,23 @@ def jpeg_findings(name: str, data: bytes, meta: MediaMeta) -> list[str]:
     have = dict.fromkeys(markers)
     foreign = sorted({marker for marker in markers if marker not in (0xE0, 0xE1, 0xED)})
     if foreign:
-        found.append(f"{name}: M005: holds {', '.join(f'0x{marker:02X}' for marker in foreign)}; a published JPEG holds JFIF, XMP and IIM only")
+        found.append(
+            f"{name}: M005: holds {', '.join(f'0x{marker:02X}' for marker in foreign)}; a published JPEG holds JFIF, XMP and IIM only"
+        )
     xmp = [whole for marker, whole in segments if marker == 0xE1]
     iim = [whole for marker, whole in segments if marker == 0xED]
     if 0xE1 not in have or 0xED not in have:
-        found.append(f"{name}: M001: lacks its {'XMP (APP1)' if 0xE1 not in have else 'IIM (APP13)'}; run tools/build.py")
+        found.append(
+            f"{name}: M001: lacks its {'XMP (APP1)' if 0xE1 not in have else 'IIM (APP13)'}; run tools/build.py"
+        )
     if any(whole[4:].startswith(b"Exif") for whole in xmp):
         found.append(f"{name}: M005: holds EXIF; a published JPEG holds none")
     if xmp and xmp != [app1]:
         found.append(f"{name}: M002: its XMP is not what its record gives")
     if iim and iim != [app13]:
-        found.append(f"{name}: M007: its IIM is not what its record gives, or disagrees with its XMP")
+        found.append(
+            f"{name}: M007: its IIM is not what its record gives, or disagrees with its XMP"
+        )
     if not found and markers != [0xE0, 0xE1, 0xED]:
         found.append(f"{name}: M006: its segments are not JFIF, XMP, IIM, in that order")
     return found
@@ -580,7 +669,12 @@ def webp_chunks_of(data: bytes) -> list[tuple[str, bytes]]:
 
 
 def _webp_chunk(name: str, body: bytes) -> bytes:
-    return name.encode("latin-1") + len(body).to_bytes(4, "little") + body + (b"\x00" if len(body) & 1 else b"")
+    return (
+        name.encode("latin-1")
+        + len(body).to_bytes(4, "little")
+        + body
+        + (b"\x00" if len(body) & 1 else b"")
+    )
 
 
 def _webp_file(chunks: list[tuple[str, bytes]]) -> bytes:
@@ -601,12 +695,20 @@ def webp_image(data: bytes) -> tuple[int, int, bool]:
         head = chunks["VP8 "]
         if len(head) < 10 or head[3:6] != b"\x9d\x01\x2a":
             raise ValueError("its VP8 chunk has no key frame")
-        return int.from_bytes(head[6:8], "little") & 0x3FFF, int.from_bytes(head[8:10], "little") & 0x3FFF, "ALPH" in chunks
+        return (
+            int.from_bytes(head[6:8], "little") & 0x3FFF,
+            int.from_bytes(head[8:10], "little") & 0x3FFF,
+            "ALPH" in chunks,
+        )
     raise ValueError("no VP8 or VP8L chunk")
 
 
 def _webp_vp8x(width: int, height: int, flags: int) -> bytes:
-    return bytes([flags, 0, 0, 0]) + (width - 1).to_bytes(3, "little") + (height - 1).to_bytes(3, "little")
+    return (
+        bytes([flags, 0, 0, 0])
+        + (width - 1).to_bytes(3, "little")
+        + (height - 1).to_bytes(3, "little")
+    )
 
 
 def webp_bare(data: bytes) -> bytes:
@@ -627,7 +729,9 @@ def webp_stamp(data: bytes, meta: MediaMeta) -> bytes:
     width, height, alpha = webp_image(data)
     pixels = [(name, body) for name, body in webp_chunks_of(data) if name in WEBP_IMAGE_CHUNKS]
     flags = WEBP_FLAG_XMP | (WEBP_FLAG_ALPHA if alpha else 0)
-    return _webp_file([("VP8X", _webp_vp8x(width, height, flags)), *pixels, ("XMP ", xmp_packet(meta))])
+    return _webp_file(
+        [("VP8X", _webp_vp8x(width, height, flags)), *pixels, ("XMP ", xmp_packet(meta))]
+    )
 
 
 def webp_size(data: bytes) -> tuple[int, int]:
@@ -645,19 +749,27 @@ def webp_findings(name: str, data: bytes, meta: MediaMeta) -> list[str]:
         return [f"{name}: M006: not a well-formed WebP file ({error})"]
     found = []
     names = [chunk for chunk, _ in chunks]
-    foreign = sorted({chunk.strip() for chunk in names if chunk not in WEBP_IMAGE_CHUNKS | {"VP8X", "XMP "}})
+    foreign = sorted(
+        {chunk.strip() for chunk in names if chunk not in WEBP_IMAGE_CHUNKS | {"VP8X", "XMP "}}
+    )
     if foreign:
-        found.append(f"{name}: M005: holds {', '.join(foreign)}; a published WebP file holds its pixels and the profile's XMP only")
+        found.append(
+            f"{name}: M005: holds {', '.join(foreign)}; a published WebP file holds its pixels and the profile's XMP only"
+        )
     profile = profile_for((width, height))
     if profile != meta.profile:
-        found.append(f"{name}: M009: a {width} x {height} picture carries the {profile} profile, not the {meta.profile} one")
+        found.append(
+            f"{name}: M009: a {width} x {height} picture carries the {profile} profile, not the {meta.profile} one"
+        )
     packets = [body for chunk, body in chunks if chunk == "XMP "]
     if not packets:
         return [*found, f"{name}: M001: carries no XMP; run tools/build.py"]
     if packets != [xmp_packet(meta)]:
         found.append(f"{name}: M002: its XMP is not what its record gives")
     if not found and data != webp_stamp(data, meta):
-        found.append(f"{name}: M006: its chunks are not VP8X, the pixels' chunks and XMP, in that order, with the flags they need")
+        found.append(
+            f"{name}: M006: its chunks are not VP8X, the pixels' chunks and XMP, in that order, with the flags they need"
+        )
     return found
 
 
@@ -715,7 +827,9 @@ ROOT_TAG = re.compile(r"<svg\b[^>]*>")
 ROOT_ACCESS = re.compile(r'\s(?:role|aria-labelledby|lang)="[^"]*"')
 LEADING_TITLE = re.compile(r"\A\s*<title\b[^>]*>.*?</title>", re.S)
 LEADING_DESC = re.compile(r"\A\s*<desc\b[^>]*>.*?</desc>", re.S)
-LEADING_METADATA = re.compile(r"\A\s*" + re.escape(SVG_IGNORE_START) + r".*?" + re.escape(SVG_IGNORE_END), re.S)
+LEADING_METADATA = re.compile(
+    r"\A\s*" + re.escape(SVG_IGNORE_START) + r".*?" + re.escape(SVG_IGNORE_END), re.S
+)
 LEADING_BARE_METADATA = re.compile(r"\A\s*<metadata\b.*?</metadata>", re.S)
 
 
@@ -743,11 +857,15 @@ def svg_findings(name: str, svg: str, meta: MediaMeta, slug: str) -> list[str]:
         return []
     found = []
     if "<metadata" in svg and not (SVG_IGNORE_START in svg and SVG_IGNORE_END in svg):
-        found.append(f"{name}: M011: its metadata stands outside REUSE-IgnoreStart and REUSE-IgnoreEnd")
+        found.append(
+            f"{name}: M011: its metadata stands outside REUSE-IgnoreStart and REUSE-IgnoreEnd"
+        )
     if "<metadata" not in svg or "<desc" not in svg:
         found.append(f"{name}: M001: lacks its <desc> or its <metadata>; run tools/build.py")
     if not found:
-        found.append(f"{name}: M002: its title, description, metadata or root attributes are not what its record gives")
+        found.append(
+            f"{name}: M002: its title, description, metadata or root attributes are not what its record gives"
+        )
     return found
 
 
@@ -758,7 +876,22 @@ IN_FILE_LICENSE = re.compile(r"SPDX-License-Identifier:[ \t]*(.*?)[ \t]*(?:-->|\
 IN_FILE_COPYRIGHT = re.compile(r"SPDX-FileCopyrightText:[ \t]*(.*?)[ \t]*(?:-->|\*/)?[ \t]*$", re.M)
 # REUSE-IgnoreEnd
 IGNORE_BLOCK = re.compile(r"REUSE-IgnoreStart.*?REUSE-IgnoreEnd", re.S)
-TEXT_SUFFIXES = frozenset({".svg", ".md", ".txt", ".json", ".py", ".toml", ".yml", ".yaml", ".css", ".obj", ".mtl", ".vtt"})
+TEXT_SUFFIXES = frozenset(
+    {
+        ".svg",
+        ".md",
+        ".txt",
+        ".json",
+        ".py",
+        ".toml",
+        ".yml",
+        ".yaml",
+        ".css",
+        ".obj",
+        ".mtl",
+        ".vtt",
+    }
+)
 
 
 def _glob(pattern: str) -> re.Pattern[str]:
@@ -821,7 +954,9 @@ def reuse_truth(root: Path, path: str | Path, strip: bool = True) -> tuple[str, 
             licenses = licenses or theirs_l
             holders = holders or theirs_c
     licenses = list(dict.fromkeys(licenses))
-    expression = " AND ".join(f"({item})" if " OR " in item and len(licenses) > 1 else item for item in licenses)
+    expression = " AND ".join(
+        f"({item})" if " OR " in item and len(licenses) > 1 else item for item in licenses
+    )
     cleaned = [strip_email(holder) if strip else holder for holder in holders]
     return expression, tuple(dict.fromkeys(cleaned))
 
@@ -830,12 +965,27 @@ def reuse_truth(root: Path, path: str | Path, strip: bool = True) -> tuple[str, 
 
 DENY = (
     ("an e-mail address", re.compile(r"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}")),
-    ("a local path", re.compile(r"/Users/|/home/|/private/|/var/folders/|/tmp/|/Volumes/|file://|~/|[A-Za-z]:\\|\\Users\\")),
-    ("a private host or address", re.compile(r"\.local\b|\.lan\b|\.home\b|\blocalhost\b|\b192\.168\.\d+\.\d+\b|\b10\.\d+\.\d+\.\d+\b"
-                                             r"|\b172\.(?:1[6-9]|2\d|3[01])\.\d+\.\d+\b|\bMacBook|\biMac\b|-mbp\b")),
+    (
+        "a local path",
+        re.compile(
+            r"/Users/|/home/|/private/|/var/folders/|/tmp/|/Volumes/|file://|~/|[A-Za-z]:\\|\\Users\\"
+        ),
+    ),
+    (
+        "a private host or address",
+        re.compile(
+            r"\.local\b|\.lan\b|\.home\b|\blocalhost\b|\b192\.168\.\d+\.\d+\b|\b10\.\d+\.\d+\.\d+\b"
+            r"|\b172\.(?:1[6-9]|2\d|3[01])\.\d+\.\d+\b|\bMacBook|\biMac\b|-mbp\b"
+        ),
+    ),
     ("a machine's time", re.compile(r"\d{4}[-:]\d{2}[-:]\d{2}[ T]\d{2}:\d{2}")),
-    ("a tool's name or version", re.compile(r"\bLavf\d|\bLavc\d|x264 - core|\blibx264\b|\bImageMagick\b|\bGIMP\b|\bInkscape\b|sodipodi:"
-                                            r"|\bIllustrator\b|\bPillow\b|\bHeadlessChrome\b|Eeschema-SVG|Image::ExifTool")),
+    (
+        "a tool's name or version",
+        re.compile(
+            r"\bLavf\d|\bLavc\d|x264 - core|\blibx264\b|\bImageMagick\b|\bGIMP\b|\bInkscape\b|sodipodi:"
+            r"|\bIllustrator\b|\bPillow\b|\bHeadlessChrome\b|Eeschema-SVG|Image::ExifTool"
+        ),
+    ),
 )
 #: The file of identity patterns kept out of the tree, one per line, beside the tools.
 DENY_LOCAL = Path(__file__).resolve().parents[1] / "deny-local.txt"
@@ -850,13 +1000,19 @@ def identity_patterns() -> tuple[list[re.Pattern[str]], str]:
     source = "environment"
     if not raw.strip() and DENY_LOCAL.is_file():
         raw, source = DENY_LOCAL.read_text(encoding="utf-8"), "file"
-    lines = [line.strip() for line in raw.splitlines() if line.strip() and not line.lstrip().startswith("#")]
+    lines = [
+        line.strip()
+        for line in raw.splitlines()
+        if line.strip() and not line.lstrip().startswith("#")
+    ]
     if not lines:
         return [], "missing"
     return [re.compile(line, re.I) for line in lines], source
 
 
-def deny_findings(name: str, values: list[str], identity: list[re.Pattern[str]] | None = None) -> list[str]:
+def deny_findings(
+    name: str, values: list[str], identity: list[re.Pattern[str]] | None = None
+) -> list[str]:
     """Return every value that holds what the deny-list refuses, naming the class (and never an identity match)."""
     found = []
     for value in values:
@@ -866,10 +1022,14 @@ def deny_findings(name: str, values: list[str], identity: list[re.Pattern[str]] 
                 found.append(f"{name}: M004: a metadata value holds {what} ({match.group(0)[:40]})")
         for pattern in identity or ():
             if pattern.search(value):
-                found.append(f"{name}: M004: a metadata value holds an identity pattern of the private deny-list")
+                found.append(
+                    f"{name}: M004: a metadata value holds an identity pattern of the private deny-list"
+                )
     return sorted(set(found))
 
 
 def matches(path: str, patterns: tuple[str, ...]) -> bool:
     """Tell whether a repository path matches one of the shell patterns (``**`` crossing folders)."""
-    return any(fnmatch.fnmatchcase(path, pattern) or _glob(pattern).fullmatch(path) for pattern in patterns)
+    return any(
+        fnmatch.fnmatchcase(path, pattern) or _glob(pattern).fullmatch(path) for pattern in patterns
+    )

@@ -7,6 +7,7 @@ the browser that draws it needs no font. The light preview is exported from a
 copy of the fixture with its explicit colors turned to the light ground's
 (``kleidos_kicad.recolor``), as every light export is.
 """
+
 from __future__ import annotations
 
 import hashlib
@@ -32,7 +33,15 @@ def path(ground: str) -> Path:
 def inputs(ground: str, root: Path = BRAND_ROOT) -> tuple[Path, ...]:
     """Return the files a preview is drawn from."""
     mark = Path(kicad.load(root)["grounds"][ground]["mark"])
-    return (FIXTURE, FIXTURE_PRO, kicad.SRC_JSON, kicad.ADVANCES_JSON, kicad.HELPER, Path("tokens/tokens.json"), mark)
+    return (
+        FIXTURE,
+        FIXTURE_PRO,
+        kicad.SRC_JSON,
+        kicad.ADVANCES_JSON,
+        kicad.HELPER,
+        Path("tokens/tokens.json"),
+        mark,
+    )
 
 
 def source(ground: str, root: Path = BRAND_ROOT) -> str:
@@ -63,10 +72,14 @@ def export_svg(ground: str, root: Path = BRAND_ROOT) -> str:
         work = Path(scratch) / "fixture"
         work.mkdir()
         shutil.copyfile(root / FIXTURE_PRO, work / FIXTURE_PRO.name)
-        (work / FIXTURE.name).write_text(kit.recolor((root / FIXTURE).read_text(encoding="utf-8"), ground), encoding="utf-8")
+        (work / FIXTURE.name).write_text(
+            kit.recolor((root / FIXTURE).read_text(encoding="utf-8"), ground), encoding="utf-8"
+        )
         count, report = kit.erc(work / FIXTURE.name, env)
         if count != 0:
-            raise RuntimeError(f"{FIXTURE}: ERC reports {count} message(s) on the {ground} ground:\n{report}")
+            raise RuntimeError(
+                f"{FIXTURE}: ERC reports {count} message(s) on the {ground} ground:\n{report}"
+            )
         out = Path(scratch) / "svg"
         done = kit.export_svg(work / FIXTURE.name, out, env, ground)
         svgs = sorted(out.glob("*.svg"))

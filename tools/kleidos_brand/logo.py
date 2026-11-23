@@ -5,6 +5,7 @@ A lockup's unit is the lettering's font unit (1000 to the em), so the
 lettering's path keeps the font's own numbers and the mark is placed with one
 ``transform``. A file never holds live text.
 """
+
 from __future__ import annotations
 
 import hashlib
@@ -48,7 +49,9 @@ def _number(value: float) -> str:
     return str(int(rounded)) if rounded == int(rounded) else repr(rounded)
 
 
-def _svg(width: float, height: float, body: list[str], title: str, origin: tuple[float, float] = (0, 0)) -> str:
+def _svg(
+    width: float, height: float, body: list[str], title: str, origin: tuple[float, float] = (0, 0)
+) -> str:
     box = f"{_number(origin[0])} {_number(origin[1])} {_number(width)} {_number(height)}"
     return (
         SVG_HEADER
@@ -71,7 +74,13 @@ _BUILT: dict[tuple[bytes, ...], list[Logo]] = {}
 
 def build(root: Path = BRAND_ROOT) -> list[Logo]:
     """Return every logo file, in the order the README lists them."""
-    sources = (LOCKUPS_JSON, mark.MARK_SVG, mark.SMALL_JSON, tokens.TOKENS_JSON, lettering.FAMILIES["Mona Sans"])
+    sources = (
+        LOCKUPS_JSON,
+        mark.MARK_SVG,
+        mark.SMALL_JSON,
+        tokens.TOKENS_JSON,
+        lettering.FAMILIES["Mona Sans"],
+    )
     key = tuple(hashlib.sha256((root / source).read_bytes()).digest() for source in sources)
     if key not in _BUILT:
         _BUILT[key] = _build(root)
@@ -90,42 +99,121 @@ def _build(root: Path) -> list[Logo]:
     # A one-ink file is named for its ink: "ink-dark" is the dark ink, for a light ground.
     one_ink = {"ink-dark": inks["for-light"], "ink-light": inks["for-dark"]}
     # What stands on a baked ground: the light lettering on dark, the dark one on light.
-    on = {"on-dark": ("for-dark", grounds["on-dark"]), "on-light": ("for-light", grounds["on-light"])}
+    on = {
+        "on-dark": ("for-dark", grounds["on-dark"]),
+        "on-light": ("for-light", grounds["on-light"]),
+    }
     logos: list[Logo] = []
 
-    def add(stem: str, kind: str, width: float, height: float, body: list[str], share: float, what: str,
-            ground: str | None = None, pad: float = 0.0, origin: tuple[float, float] = (0, 0), px: int | None = None,
-            paint: str | None = None) -> None:
+    def add(
+        stem: str,
+        kind: str,
+        width: float,
+        height: float,
+        body: list[str],
+        share: float,
+        what: str,
+        ground: str | None = None,
+        pad: float = 0.0,
+        origin: tuple[float, float] = (0, 0),
+        px: int | None = None,
+        paint: str | None = None,
+    ) -> None:
         if ground is not None:
-            body = [f'  <rect x="{_number(origin[0] - pad)}" y="{_number(origin[1] - pad)}" width="{_number(width + 2 * pad)}"'
-                    f' height="{_number(height + 2 * pad)}" fill="{ground}"/>', *body]
+            body = [
+                f'  <rect x="{_number(origin[0] - pad)}" y="{_number(origin[1] - pad)}" width="{_number(width + 2 * pad)}"'
+                f' height="{_number(height + 2 * pad)}" fill="{ground}"/>',
+                *body,
+            ]
         full_w, full_h = width + 2 * pad, height + 2 * pad
-        logos.append(Logo(stem, kind, _svg(full_w, full_h, body, "Kleidos", (origin[0] - pad, origin[1] - pad)),
-                          full_w, full_h, share, ground, what, px, paint))
+        logos.append(
+            Logo(
+                stem,
+                kind,
+                _svg(full_w, full_h, body, "Kleidos", (origin[0] - pad, origin[1] - pad)),
+                full_w,
+                full_h,
+                share,
+                ground,
+                what,
+                px,
+                paint,
+            )
+        )
 
     # --- The mark ------------------------------------------------------------------------
     box, half = mark.BOX, mark.BOX / 2
-    add("kleidos-mark", "mark", box, box, [mark.group(shapes)], 1.0,
-        "the mark, in color, on transparency", origin=(-half, -half))
+    add(
+        "kleidos-mark",
+        "mark",
+        box,
+        box,
+        [mark.group(shapes)],
+        1.0,
+        "the mark, in color, on transparency",
+        origin=(-half, -half),
+    )
     for name, ink in one_ink.items():
-        add(f"kleidos-mark-{name}", "mark", box, box, [mark.group(shapes, ink=ink)], 1.0,
-            f"the one-ink mark ({ink}), for one-color print and engraving", origin=(-half, -half))
+        add(
+            f"kleidos-mark-{name}",
+            "mark",
+            box,
+            box,
+            [mark.group(shapes, ink=ink)],
+            1.0,
+            f"the one-ink mark ({ink}), for one-color print and engraving",
+            origin=(-half, -half),
+        )
     for name, (_, ground) in on.items():
-        add(f"kleidos-mark-{name}", "mark", box, box, [mark.group(shapes)], 0.5,
+        add(
+            f"kleidos-mark-{name}",
+            "mark",
+            box,
+            box,
+            [mark.group(shapes)],
+            0.5,
             f"the mark on its {'dark tile' if name == 'on-dark' else 'white tile'} ({ground}), clear space included",
-            ground=ground, pad=half, origin=(-half, -half))
+            ground=ground,
+            pad=half,
+            origin=(-half, -half),
+        )
 
     # --- The small mark, one file per size ------------------------------------------------
     small = mark.small_numbers(root)
     color = mark.ring_color(shapes)
-    families = [("kleidos-mark-small", color, None, "the small mark, in color, on transparency, for a dark ground"),
-                *((f"kleidos-mark-small-{name}", ink, None, f"the small mark in one ink ({ink})") for name, ink in one_ink.items()),
-                ("kleidos-mark-small-on-dark", color, grounds["on-dark"], f"the small mark on its dark tile ({grounds['on-dark']})")]
+    families = [
+        (
+            "kleidos-mark-small",
+            color,
+            None,
+            "the small mark, in color, on transparency, for a dark ground",
+        ),
+        *(
+            (f"kleidos-mark-small-{name}", ink, None, f"the small mark in one ink ({ink})")
+            for name, ink in one_ink.items()
+        ),
+        (
+            "kleidos-mark-small-on-dark",
+            color,
+            grounds["on-dark"],
+            f"the small mark on its dark tile ({grounds['on-dark']})",
+        ),
+    ]
     for family, paint, ground, what in families:
         for px in small["sizes"]:
             fit = mark.small_fit(shapes, px, small)
-            add(f"{family}-{px}", "mark-small", px, px, [mark.small_group(mark.small_shapes(fit, paint))], 0.0,
-                what, ground=ground, px=px, paint=paint)
+            add(
+                f"{family}-{px}",
+                "mark-small",
+                px,
+                px,
+                [mark.small_group(mark.small_shapes(fit, paint))],
+                0.0,
+                what,
+                ground=ground,
+                px=px,
+                paint=paint,
+            )
 
     # --- The horizontal lockup -----------------------------------------------------------
     h = numbers["horizontal"]
@@ -138,17 +226,43 @@ def _build(root: Path) -> list[Logo]:
     placed = f"translate({_number(side / 2)} {_number(side / 2)}) scale({_number(scale)})"
 
     def horizontal(ink: str, mark_ink: str | None = None) -> list[str]:
-        return [mark.group(shapes, placed, mark_ink), _lettering_path(line, letter_x, baseline, ink)]
+        return [
+            mark.group(shapes, placed, mark_ink),
+            _lettering_path(line, letter_x, baseline, ink),
+        ]
 
     for name, ink in inks.items():
-        add(f"kleidos-lockup-horizontal-{name}", "lockup-horizontal", width, side, horizontal(ink), 1.0,
-            f"the mark and the name side by side, {name.replace('-', ' a ')} ground, on transparency")
+        add(
+            f"kleidos-lockup-horizontal-{name}",
+            "lockup-horizontal",
+            width,
+            side,
+            horizontal(ink),
+            1.0,
+            f"the mark and the name side by side, {name.replace('-', ' a ')} ground, on transparency",
+        )
     for name, ink in one_ink.items():
-        add(f"kleidos-lockup-horizontal-{name}", "lockup-horizontal", width, side, horizontal(ink, ink), 1.0,
-            f"the horizontal lockup in one ink ({ink})")
+        add(
+            f"kleidos-lockup-horizontal-{name}",
+            "lockup-horizontal",
+            width,
+            side,
+            horizontal(ink, ink),
+            1.0,
+            f"the horizontal lockup in one ink ({ink})",
+        )
     for name, (letters, ground) in on.items():
-        add(f"kleidos-lockup-horizontal-{name}", "lockup-horizontal", width, side, horizontal(inks[letters]), 0.5,
-            f"the horizontal lockup on {ground}, clear space included", ground=ground, pad=side / 2)
+        add(
+            f"kleidos-lockup-horizontal-{name}",
+            "lockup-horizontal",
+            width,
+            side,
+            horizontal(inks[letters]),
+            0.5,
+            f"the horizontal lockup on {ground}, clear space included",
+            ground=ground,
+            pad=side / 2,
+        )
 
     # --- The stacked lockup --------------------------------------------------------------
     s = numbers["stacked"]
@@ -164,23 +278,55 @@ def _build(root: Path) -> list[Logo]:
     placed = f"translate({_number(width / 2)} {_number(side / 2)}) scale({_number(scale)})"
 
     def stacked(ink: str, mark_ink: str | None = None) -> list[str]:
-        return [mark.group(shapes, placed, mark_ink), _lettering_path(line, letter_x, baseline, ink)]
+        return [
+            mark.group(shapes, placed, mark_ink),
+            _lettering_path(line, letter_x, baseline, ink),
+        ]
 
     for name, ink in inks.items():
-        add(f"kleidos-lockup-stacked-{name}", "lockup-stacked", width, height, stacked(ink), side / height,
-            f"the mark above the name, {name.replace('-', ' a ')} ground, on transparency")
+        add(
+            f"kleidos-lockup-stacked-{name}",
+            "lockup-stacked",
+            width,
+            height,
+            stacked(ink),
+            side / height,
+            f"the mark above the name, {name.replace('-', ' a ')} ground, on transparency",
+        )
     for name, ink in one_ink.items():
-        add(f"kleidos-lockup-stacked-{name}", "lockup-stacked", width, height, stacked(ink, ink), side / height,
-            f"the stacked lockup in one ink ({ink})")
+        add(
+            f"kleidos-lockup-stacked-{name}",
+            "lockup-stacked",
+            width,
+            height,
+            stacked(ink, ink),
+            side / height,
+            f"the stacked lockup in one ink ({ink})",
+        )
     for name, (letters, ground) in on.items():
-        add(f"kleidos-lockup-stacked-{name}", "lockup-stacked", width, height, stacked(inks[letters]),
-            side / (height + side), f"the stacked lockup on {ground}, clear space included", ground=ground, pad=side / 2)
+        add(
+            f"kleidos-lockup-stacked-{name}",
+            "lockup-stacked",
+            width,
+            height,
+            stacked(inks[letters]),
+            side / (height + side),
+            f"the stacked lockup on {ground}, clear space included",
+            ground=ground,
+            pad=side / 2,
+        )
 
     # --- The lettering alone -------------------------------------------------------------
     for name, ink in inks.items():
-        add(f"kleidos-lettering-{name}", "lettering", ink_width, ink_y1 - ink_y0,
-            [_lettering_path(line, -ink_x0, ink_y1, ink)], 0.0,
-            f"the name alone, {name.replace('-', ' a ')} ground, for a layout where the mark already stands nearby")
+        add(
+            f"kleidos-lettering-{name}",
+            "lettering",
+            ink_width,
+            ink_y1 - ink_y0,
+            [_lettering_path(line, -ink_x0, ink_y1, ink)],
+            0.0,
+            f"the name alone, {name.replace('-', ' a ')} ground, for a layout where the mark already stands nearby",
+        )
     return logos
 
 
@@ -221,8 +367,17 @@ def opaque_plan(root: Path = BRAND_ROOT) -> list[Opaque]:
             continue
         ground = numbers["variants"][variant(item.family)]
         size = item.px or height
-        plan.append(Opaque(item, path, width, height, ground, values[numbers["grounds"][ground]],
-                           PNG_DIR / f"{item.family}-opaque-{ground}-{size}.png"))
+        plan.append(
+            Opaque(
+                item,
+                path,
+                width,
+                height,
+                ground,
+                values[numbers["grounds"][ground]],
+                PNG_DIR / f"{item.family}-opaque-{ground}-{size}.png",
+            )
+        )
     return plan
 
 

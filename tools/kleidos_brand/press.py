@@ -19,6 +19,7 @@ in their own colors, after the words are set and the theme is painted, and
 each board's unlock screen is pasted on its panel after the drawing. An image
 with plates or boards publishes no SVG: what it shows is partly pixels.
 """
+
 from __future__ import annotations
 
 import copy
@@ -89,7 +90,13 @@ class Image:
         """Return each PNG of the image and its size: the full one, then its narrower copies."""
         width, height = self.size
         out = [(IMAGES_DIR / f"{self.stem}.png", self.size)]
-        out += [(IMAGES_DIR / f"{self.stem}-{copy_width}.png", (copy_width, round(copy_width * height / width))) for copy_width in self.copies]
+        out += [
+            (
+                IMAGES_DIR / f"{self.stem}-{copy_width}.png",
+                (copy_width, round(copy_width * height / width)),
+            )
+            for copy_width in self.copies
+        ]
         return out
 
 
@@ -136,11 +143,17 @@ def render(root: Path, entry: dict[str, Any], lang: str, data: dict[str, Any]) -
         if key.endswith("_accent"):
             continue
         lines = lines_for(data, layout, lang, key)
-        targets = [by_id[name] for name in ([key] if key in by_id else []) + [f"{key}.{index}" for index in range(8) if f"{key}.{index}" in by_id]]
+        targets = [
+            by_id[name]
+            for name in ([key] if key in by_id else [])
+            + [f"{key}.{index}" for index in range(8) if f"{key}.{index}" in by_id]
+        ]
         if not targets:
             continue
         if len(lines) > len(targets):
-            raise ValueError(f"{layout}: {key!r} has {len(lines)} lines in {lang} and the layout has room for {len(targets)}")
+            raise ValueError(
+                f"{layout}: {key!r} has {len(lines)} lines in {lang} and the layout has room for {len(targets)}"
+            )
         for index, target in enumerate(targets):
             if index < len(lines):
                 _set_words(target, lines[index], words.get(f"{key}_accent"), accent_fill)
@@ -181,7 +194,14 @@ def render(root: Path, entry: dict[str, Any], lang: str, data: dict[str, Any]) -
     for element in tree.iter():
         board = element.get("data-screen")
         if board:
-            plates.append(Plate(board, int(element.get("x", "0")), int(element.get("y", "0")), int(element.get("data-scale", "1"))))
+            plates.append(
+                Plate(
+                    board,
+                    int(element.get("x", "0")),
+                    int(element.get("y", "0")),
+                    int(element.get("data-scale", "1")),
+                )
+            )
 
     sets = svgtext.outline(tree, root)
     # The boards, after the theme: they keep their own colors on either ground.
@@ -190,13 +210,30 @@ def render(root: Path, entry: dict[str, Any], lang: str, data: dict[str, Any]) -
     if guides is not None:
         tree.remove(guides)
     for element in tree.iter():
-        for key in [key for key in element.attrib if key.startswith("data-") and key != "data-screen"]:
+        for key in [
+            key for key in element.attrib if key.startswith("data-") and key != "data-screen"
+        ]:
             del element.attrib[key]
     ET.indent(tree, "  ")
     svg = SVG_HEADER + ET.tostring(tree, encoding="unicode") + "\n"
     stem = entry["file"] + ("" if lang == data["default_lang"] else f"-{lang}")
-    return Image(stem, layout, theme, lang, size, svg, ground, sets, tuple(plates), safe, lockup_box,
-                 tuple(entry.get("copies", ())), not plates and not fronts, entry.get("what", ""), fronts)
+    return Image(
+        stem,
+        layout,
+        theme,
+        lang,
+        size,
+        svg,
+        ground,
+        sets,
+        tuple(plates),
+        safe,
+        lockup_box,
+        tuple(entry.get("copies", ())),
+        not plates and not fronts,
+        entry.get("what", ""),
+        fronts,
+    )
 
 
 def _parent_of(tree: ET.Element, target: ET.Element) -> ET.Element:
@@ -231,14 +268,19 @@ def findings(image: Image) -> list[str]:
         return [f"{image.stem}: its layout has no 'safe' guide to measure against"]
     left, top, right, bottom = image.safe
     found = []
-    boxes = {f"the words {name!r} ({placed.line.text!r})": placed.box() for name, placed in image.sets.items()}
+    boxes = {
+        f"the words {name!r} ({placed.line.text!r})": placed.box()
+        for name, placed in image.sets.items()
+    }
     if image.lockup_box is not None:
         boxes["the lockup"] = image.lockup_box
     for placed in image.fronts:
         boxes[f"the board {placed.front.name}"] = placed.box()
     for what, (x0, y0, x1, y1) in boxes.items():
         if x0 < left or y0 < top or x1 > right or y1 > bottom:
-            found.append(f"{image.stem}: {what} reaches outside the safe area ({x0:.0f}, {y0:.0f}, {x1:.0f}, {y1:.0f} against {left:.0f}, {top:.0f}, {right:.0f}, {bottom:.0f})")
+            found.append(
+                f"{image.stem}: {what} reaches outside the safe area ({x0:.0f}, {y0:.0f}, {x1:.0f}, {y1:.0f} against {left:.0f}, {top:.0f}, {right:.0f}, {bottom:.0f})"
+            )
     return found
 
 
@@ -248,7 +290,9 @@ def paste_screens(image: Image, drawn: Any, root: Path = BRAND_ROOT) -> Any:
 
     for plate in image.plates:
         with Pillow.open(root / SCREENS_DIR / f"kleidos-screen-{plate.board}.png") as screen:
-            enlarged = screen.convert("RGB").resize((screen.width * plate.scale, screen.height * plate.scale), Pillow.Resampling.NEAREST)
+            enlarged = screen.convert("RGB").resize(
+                (screen.width * plate.scale, screen.height * plate.scale), Pillow.Resampling.NEAREST
+            )
         drawn.paste(enlarged, (plate.x, plate.y))
     return boards.paste_glass(drawn, list(image.fronts), root, drawn.width / image.size[0])
 
@@ -265,7 +309,9 @@ def enlarged_screen(data: bytes, scale: int) -> Any:
     from PIL import Image as Pillow  # noqa: PLC0415
 
     with Pillow.open(io.BytesIO(data)) as screen:
-        return screen.convert("RGB").resize((screen.width * scale, screen.height * scale), Pillow.Resampling.NEAREST)
+        return screen.convert("RGB").resize(
+            (screen.width * scale, screen.height * scale), Pillow.Resampling.NEAREST
+        )
 
 
 def template_lockup_matches(root: Path, layout: str) -> bool:
@@ -276,7 +322,12 @@ def template_lockup_matches(root: Path, layout: str) -> bool:
         return True
     children, _ = _lockup_children(root, holder.get("data-lockup", "horizontal"), "dark")
 
-    def canon(elements: list[ET.Element]) -> list[tuple[str, tuple[tuple[str, str], ...], list[Any]]]:
-        return [(_local(element), tuple(sorted(element.attrib.items())), canon(list(element))) for element in elements]
+    def canon(
+        elements: list[ET.Element],
+    ) -> list[tuple[str, tuple[tuple[str, str], ...], list[Any]]]:
+        return [
+            (_local(element), tuple(sorted(element.attrib.items())), canon(list(element)))
+            for element in elements
+        ]
 
     return canon(copy.deepcopy(list(holder))) == canon(children)

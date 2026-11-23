@@ -10,6 +10,7 @@ one width for every wire-colored line; the PDF export is written. A sheet or a
 theme KiCad cannot read fails here. Standard library only, so it runs in
 KiCad's container with that image's own Python.
 """
+
 from __future__ import annotations
 
 import sys
@@ -32,10 +33,15 @@ def main() -> int:
             continue
         with tempfile.TemporaryDirectory(prefix="kleidos-kicad-pdf-") as scratch:
             pdf = Path(scratch) / "fixture.pdf"
-            done = kit.export_pdf(BRAND_ROOT / kicad_preview.FIXTURE, pdf, kit.environment(), ground)
+            done = kit.export_pdf(
+                BRAND_ROOT / kicad_preview.FIXTURE, pdf, kit.environment(), ground
+            )
             if done.returncode or not pdf.is_file() or pdf.stat().st_size == 0:
                 found.append(f"{ground}: kicad-cli wrote no PDF: {done.stdout}{done.stderr}")
-            elif b"/Subtype /Image" not in pdf.read_bytes() and b"/Subtype/Image" not in pdf.read_bytes():
+            elif (
+                b"/Subtype /Image" not in pdf.read_bytes()
+                and b"/Subtype/Image" not in pdf.read_bytes()
+            ):
                 found.append(f"{ground}: the PDF draws no image: the sheet's mark is missing")
         print(f"{ground}: ERC clean, the theme's background, one wire width, a PDF with the mark")
     for line in found:
