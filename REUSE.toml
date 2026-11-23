@@ -81,6 +81,7 @@ path = [
   ".gitleaks.toml",
   ".gitleaks-mac.toml",
   ".markdownlint-cli2.jsonc",
+  ".git-blame-ignore-revs",
 ]
 precedence = "closest"
 SPDX-FileCopyrightText = "2026 José M. Requena Plens"

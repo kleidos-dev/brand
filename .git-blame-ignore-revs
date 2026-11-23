@@ -1,0 +1,10 @@
+# SPDX-FileCopyrightText: 2026 José M. Requena Plens
+# SPDX-License-Identifier: MIT
+#
+# Commits that only change layout, for git blame to skip (GitHub reads this
+# file by its name; locally: git config blame.ignoreRevsFile
+# .git-blame-ignore-revs).
+
+# Format the Python code with ruff (#12): the quality kit's first ruff
+# format pass, no change of behavior.
+05ff4f09d241ca03a0459a94b70861c41a8e091a
