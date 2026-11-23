@@ -38,7 +38,7 @@ concurrency:
 jobs:
   lint:
     name: "🧹 Lint (quality kit)"
-    uses: kleidos-dev/.github/.github/workflows/reusable-lint.yml@fe956cffe83955b1f17a4121b906979dc9f8df6b # quality-v1.0.0
+    uses: kleidos-dev/.github/.github/workflows/reusable-lint.yml@76ecdbbacb7c3ed96a1ec42b65044e9557c42743 # quality-v1.1.0
     with:
       # brand-check runs tools/check.py from the local virtual environment;
       # the tree job below runs it with the pinned stack and the deny-list.
@@ -48,7 +48,7 @@ jobs:
 
   reuse:
     name: "⚖️ Licensing (REUSE)"
-    uses: kleidos-dev/.github/.github/workflows/reusable-reuse.yml@fe956cffe83955b1f17a4121b906979dc9f8df6b # quality-v1.0.0
+    uses: kleidos-dev/.github/.github/workflows/reusable-reuse.yml@76ecdbbacb7c3ed96a1ec42b65044e9557c42743 # quality-v1.1.0
     permissions:
       contents: read
 
@@ -86,7 +86,7 @@ jobs:
   types:
     name: "🔎 Types (mypy)"
     needs: [lint, reuse, tree]
-    uses: kleidos-dev/.github/.github/workflows/reusable-mypy.yml@fe956cffe83955b1f17a4121b906979dc9f8df6b # quality-v1.0.0
+    uses: kleidos-dev/.github/.github/workflows/reusable-mypy.yml@76ecdbbacb7c3ed96a1ec42b65044e9557c42743 # quality-v1.1.0
     with:
       install: python -m pip install -r requirements.txt
     permissions:
@@ -103,7 +103,7 @@ jobs:
     name: "🧪 Tests and pictures"
     needs: [lint, reuse, tree]
     if: github.event_name != 'schedule'
-    uses: kleidos-dev/.github/.github/workflows/reusable-python-tests.yml@fe956cffe83955b1f17a4121b906979dc9f8df6b # quality-v1.0.0
+    uses: kleidos-dev/.github/.github/workflows/reusable-python-tests.yml@76ecdbbacb7c3ed96a1ec42b65044e9557c42743 # quality-v1.1.0
     with:
       run: >-
         python -m playwright install --with-deps chromium
@@ -137,14 +137,14 @@ jobs:
   osv:
     name: "🛡️ Dependency vulnerabilities (OSV)"
     needs: [lint, reuse]
-    uses: kleidos-dev/.github/.github/workflows/reusable-osv.yml@fe956cffe83955b1f17a4121b906979dc9f8df6b # quality-v1.0.0
+    uses: kleidos-dev/.github/.github/workflows/reusable-osv.yml@76ecdbbacb7c3ed96a1ec42b65044e9557c42743 # quality-v1.1.0
     permissions:
       contents: read
 
   secrets:
     name: "🔐 Secrets and MAC scan (gitleaks)"
     needs: [lint, reuse]
-    uses: kleidos-dev/.github/.github/workflows/reusable-secrets.yml@fe956cffe83955b1f17a4121b906979dc9f8df6b # quality-v1.0.0
+    uses: kleidos-dev/.github/.github/workflows/reusable-secrets.yml@76ecdbbacb7c3ed96a1ec42b65044e9557c42743 # quality-v1.1.0
     permissions:
       contents: read
 
@@ -157,7 +157,7 @@ jobs:
     name: "📊 SonarCloud"
     needs: [tests]
     if: github.event_name != 'schedule'
-    uses: kleidos-dev/.github/.github/workflows/reusable-sonarcloud.yml@fe956cffe83955b1f17a4121b906979dc9f8df6b # quality-v1.0.0
+    uses: kleidos-dev/.github/.github/workflows/reusable-sonarcloud.yml@76ecdbbacb7c3ed96a1ec42b65044e9557c42743 # quality-v1.1.0
     permissions:
       contents: read
       id-token: write
