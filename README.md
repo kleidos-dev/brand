@@ -1,3 +1,8 @@
+<!--
+SPDX-FileCopyrightText: 2026 José M. Requena Plens
+SPDX-License-Identifier: GPL-3.0-or-later
+-->
+
 <!-- BEGIN GENERATED: banner (kleidos-dev/social, tools/sync_readme_banners.py); do not edit by hand -->
 
 <picture>
@@ -46,6 +51,7 @@ python3 -m venv .venv
 .venv/bin/python tools/check.py                     # the tree's rules
 .venv/bin/python -m pytest tests
 .venv/bin/reuse lint
+.venv/bin/pre-commit run --all-files                # the Kleidos quality kit's checks (AGENTS.md)
 .venv/bin/python tools/build.py --zip               # dist/kleidos-press-kit.zip, not committed
 .venv/bin/python tools/sync_from_boards.py --copy <boards checkout>   # copy the fronts again, with the commit
 .venv/bin/python tools/build.py --kicad             # also draw the KiCad kit's previews (needs kicad-cli 10.0.8)

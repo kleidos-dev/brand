@@ -1,3 +1,8 @@
+<!--
+SPDX-FileCopyrightText: 2026 José M. Requena Plens
+SPDX-License-Identifier: GPL-3.0-or-later
+-->
+
 # Notices
 
 ## What this repository holds, and under which license
@@ -15,7 +20,7 @@ Kleidos is not a registered trademark. Under section 7(e) of the GNU GPL version
 
 ## The board fronts
 
-`boards/<board>.svg` are byte copies of the nine `<board>/svg/front.svg` drawings of the project's `boards` repository (<https://github.com/kleidos-dev/boards>), the work of the same author, licensed there under the MIT License; `boards/boards.json` records the commit they were taken at and each file's SHA-256. They are kept under that license here, with the same copyright line (`LICENSES/MIT.txt`). The line-up images under `press-kit/images/kleidos-boards-*` are drawn from them, with each board's own unlock screen on its panel: the images are GPL-3.0-or-later like the rest of the press kit, and the drawings in them stay available under the MIT License from those files. The boards themselves are M5Stack's and LILYGO's products; the legends printed on them, the makers' marks included (M5, LILYGO, CARDPUTER and the like), are drawn as the products show them so that each one can be recognised, and remain their owners' marks.
+`boards/<board>.svg` are byte copies of the nine `<board>/svg/front.svg` drawings of the project's `boards` repository (<https://github.com/kleidos-dev/boards>), the work of the same author, licensed there under the MIT License; `boards/boards.json` records the commit they were taken at and each file's SHA-256. They are kept under that license here, with the same copyright line (`LICENSES/MIT.txt`). The line-up images under `press-kit/images/kleidos-boards-*` are drawn from them, with each board's own unlock screen on its panel: the images are GPL-3.0-or-later like the rest of the press kit, and the drawings in them stay available under the MIT License from those files. The boards themselves are M5Stack's and LILYGO's products; the legends printed on them, the makers' marks included (M5, LILYGO, CARDPUTER and the like), are drawn as the products show them so that each one can be recognized, and remain their owners' marks.
 
 ## The KiCad kit
 

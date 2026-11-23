@@ -1,3 +1,8 @@
+<!--
+SPDX-FileCopyrightText: 2026 José M. Requena Plens
+SPDX-License-Identifier: GPL-3.0-or-later
+-->
+
 # Colors
 
 Two colors make the mark: `signal`, the cyan of its ring and keyhole, and `select`, the deep blue of its body. Everything else is ground and ink. The values live in [`../tokens/tokens.json`](../tokens/tokens.json); this page and the swatch sheet are generated from it.

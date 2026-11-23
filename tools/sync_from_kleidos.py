@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# SPDX-FileCopyrightText: 2026 José M. Requena Plens
 # SPDX-License-Identifier: MIT
 """Hold what this repository mirrors to the firmware repository it mirrors.
 
@@ -23,13 +24,12 @@ import hashlib
 import json
 import re
 import sys
-import xml.etree.ElementTree as ET
 from pathlib import Path
 from typing import Any
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-from kleidos_brand import BRAND_ROOT, mark, png, press, public_tree, tokens  # noqa: E402
+from kleidos_brand import BRAND_ROOT, mark, png, press, public_tree, tokens, xmlsafe
 
 MIRROR_JSON = Path("tokens/mirror.json")
 SKILL_TOKENS = ".claude/skills/kleidos-design-system/assets/tokens.json"
@@ -58,7 +58,8 @@ def _flat(value: str) -> str:
 
 
 def css_blocks(sheet: str) -> dict[str, dict[str, str]]:
-    """Return the declarations of the sheet's three token blocks: dark, and the light theme written twice."""
+    """Return the declarations of the sheet's three token blocks: dark, and the light theme written
+    twice."""
     sheet = re.sub(r"/\*.*?\*/", "", sheet, flags=re.S)
     start = sheet.index("@layer tokens {")
     heads = {
@@ -100,20 +101,24 @@ def token_findings(kleidos: Path, root: Path = BRAND_ROOT) -> list[str]:
         seen.add(constant)
         if constants.get(constant) != token["$value"].lower():
             found.append(
-                f"device.dark.{name}: {token['$value']} here, {constants.get(constant)} as {constant} in {THEME_H}"
+                f"device.dark.{name}: {token['$value']} here, {constants.get(constant)} as "
+                f"{constant} in {THEME_H}"
             )
-    for constant in sorted(set(constants) - seen):
-        found.append(f"{THEME_H}: {constant} = {constants[constant]} has no token here")
+    found.extend(
+        f"{THEME_H}: {constant} = {constants[constant]} has no token here"
+        for constant in sorted(set(constants) - seen)
+    )
     for group in ("density", "radius", "stroke", "opacity", "motion", "font"):
         ours = {
             name: token["$value"] for name, token in tokens.leaves(loaded["device"][group]).items()
         }
         theirs = {name: token["$value"] for name, token in tokens.leaves(skill[group]).items()}
-        for name in sorted(set(ours) | set(theirs)):
-            if ours.get(name) != theirs.get(name):
-                found.append(
-                    f"device.{group}.{name}: {ours.get(name)!r} here, {theirs.get(name)!r} in the skill's tokens.json"
-                )
+        found.extend(
+            f"device.{group}.{name}: {ours.get(name)!r} here, {theirs.get(name)!r} in the "
+            "skill's tokens.json"
+            for name in sorted(set(ours) | set(theirs))
+            if ours.get(name) != theirs.get(name)
+        )
 
     # The site's tokens: the sheet's dark block, and its light theme, written twice.
     blocks = css_blocks((kleidos / STYLE_CSS).read_text(encoding="utf-8"))
@@ -130,10 +135,10 @@ def token_findings(kleidos: Path, root: Path = BRAND_ROOT) -> list[str]:
     for name, token in tokens.leaves(web["light"]).items():
         expected["light-system"][name] = expected["light-chosen"][name] = token["$value"]
     for block, names in expected.items():
-        for name, ours in names.items():
-            theirs = blocks[block].get(name)
-            if theirs is None or _flat(theirs) != _flat(ours):
-                found.append(f"web ({block}) --{name}: {ours!r} here, {theirs!r} in {STYLE_CSS}")
+        for name, value in names.items():
+            held = blocks[block].get(name)
+            if held is None or _flat(held) != _flat(value):
+                found.append(f"web ({block}) --{name}: {value!r} here, {held!r} in {STYLE_CSS}")
     return found
 
 
@@ -143,7 +148,7 @@ def other_findings(kleidos: Path, boards: Path | None, root: Path = BRAND_ROOT) 
 
     theirs = [
         (mark.tag_name(child), tuple(sorted(child.attrib.items())))
-        for child in ET.parse(kleidos / MARK_SOURCE).getroot()
+        for child in xmlsafe.parse(kleidos / MARK_SOURCE)
     ]
     if theirs != mark.shapes(root):
         found.append(f"{mark.MARK_SVG}: its shapes are not those of {MARK_SOURCE}")
@@ -167,7 +172,8 @@ def other_findings(kleidos: Path, boards: Path | None, root: Path = BRAND_ROOT) 
             digest = hashlib.sha256(path.read_bytes()).hexdigest()
             if ours.get(f"fonts/inter/{path.name}") != digest:
                 found.append(
-                    f"fonts/inter/{path.name}: the boards repository's copy has other bytes ({digest})"
+                    f"fonts/inter/{path.name}: the boards repository's copy has other bytes "
+                    f"({digest})"
                 )
 
     data = press.load(root)
@@ -176,16 +182,18 @@ def other_findings(kleidos: Path, boards: Path | None, root: Path = BRAND_ROOT) 
         for key, source in data["from"].items():
             if data["words"][lang][key] != strings.get(source):
                 found.append(
-                    f"press.json words.{lang}.{key}: {data['words'][lang][key]!r} here, {strings.get(source)!r} as {source} on the site"
+                    f"press.json words.{lang}.{key}: {data['words'][lang][key]!r} here, "
+                    f"{strings.get(source)!r} as {source} on the site"
                 )
         copied = {
             f"about/{lang}/one-paragraph.md": strings["home.lede"],
             f"about/{lang}/one-line.md": strings["home.meta_description"].split(". ")[0] + ".",
         }
         for name, text in copied.items():
-            if (root / name).read_text(encoding="utf-8").strip() != text:
+            if public_tree.prose(root / name) != text:
                 found.append(f"{name}: is not the site's sentence ({text[:60]}…)")
-    # A capture here carries its own metadata (kleidos_brand.meta), so it is held to its master's pixels, not its bytes.
+    # A capture here carries its own metadata (kleidos_brand.meta), so it is held to its master's
+    # pixels, not its bytes.
     for board, screen in data["screens"].items():
         native = root / press.SCREENS_DIR / f"kleidos-screen-{board}.png"
         if png.differing(native.read_bytes(), (kleidos / screen["from"]).read_bytes()) != 0:
@@ -230,7 +238,9 @@ def main(argv: list[str] | None = None) -> int:
             print(f"\n{len(found)} difference(s): fix them here before recording.")
             return 1
         body = {
-            "$comment": "Written by tools/sync_from_kleidos.py --record: the digests of the firmware repository's files this repository mirrors, as last compared. Do not edit.",
+            "$comment": "Written by tools/sync_from_kleidos.py --record: the digests of the "
+            "firmware repository's files this repository mirrors, as last compared. "
+            "Do not edit.",
             "files": digests,
         }
         mirror.write_text(json.dumps(body, indent=2) + "\n", encoding="utf-8")
@@ -248,7 +258,8 @@ def main(argv: list[str] | None = None) -> int:
         print(f"\n{len(found)} difference(s).")
         return 1
     print(
-        "sync check: the mirror is the firmware repository's, value for value, and nothing changed since it was recorded."
+        "sync check: the mirror is the firmware repository's, value for value, and nothing changed "
+        "since it was recorded."
     )
     return 0
 

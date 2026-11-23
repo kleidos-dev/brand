@@ -1,18 +1,31 @@
+# SPDX-FileCopyrightText: 2026 José M. Requena Plens
 # SPDX-License-Identifier: MIT
 #
 # The repository's gate on every push and pull request, cheapest first
-# (the project's CI convention): the licenses, the tree's rules and the
-# generated files take seconds and need no browser, and the two jobs that
-# do the slow work wait for them, so a red rule skips them.
+# (the project's CI convention). Every shared check is a job of the Kleidos
+# quality kit (kleidos-dev/.github, docs/quality.md), called at the kit
+# commit .github/quality/SOURCE.json records; the kit's sync.py keeps the
+# references there. What only this repository does (the tree's rules and
+# the generated files, the pictures, the KiCad kit) is a job of its own.
 #
-#   🧹 Licenses, tree rules and generated files ─┬─ 🧪 Tests and pictures ── 📊 SonarCloud
-#                                                 └─ 🧫 KiCad kit
+#   🧹 Lint ──────────┬─ 🔎 Types ───────────────────────────────
+#   ⚖️ Licensing ─────┼─ 🧪 Tests and pictures ── 📊 SonarCloud
+#   🧭 Tree rules ────┼─ 🧫 KiCad kit
+#                     ├─ 🛡️ Dependency vulnerabilities
+#                     └─ 🔐 Secrets and MAC scan
+#
+# The weekly run is for OSV: a new advisory against unchanged dependencies
+# turns it red. It skips the slow drawing jobs and SonarCloud.
 name: CI
 
 on:
+  pull_request:
+    branches: [main]
   push:
     branches: [main]
-  pull_request:
+  schedule:
+    # Monday 06:00 Europe/Madrid in winter, with the Dependabot runs.
+    - cron: "0 5 * * 1"
   workflow_dispatch:
 
 permissions:
@@ -22,17 +35,31 @@ concurrency:
   group: ci-${{ github.ref }}
   cancel-in-progress: true
 
-# The identity patterns of the metadata check's deny-list are private: they
-# come from the KLEIDOS_DENY_EXTRA secret, one pattern per line. A run
-# without it (a fork, Dependabot, or the secret not set yet) checks every
-# other class and warns that identity was not checked.
-env:
-  KLEIDOS_DENY_EXTRA: ${{ secrets.KLEIDOS_DENY_EXTRA }}
-  KLEIDOS_DENY_OPTIONAL: ${{ secrets.KLEIDOS_DENY_EXTRA == '' && '1' || '0' }}
-
 jobs:
   lint:
-    name: "🧹 Licenses, tree rules and generated files"
+    name: "🧹 Lint (quality kit)"
+    uses: kleidos-dev/.github/.github/workflows/reusable-lint.yml@fe956cffe83955b1f17a4121b906979dc9f8df6b # quality-v1.0.0
+    with:
+      # brand-check runs tools/check.py from the local virtual environment;
+      # the tree job below runs it with the pinned stack and the deny-list.
+      skip: brand-check
+    permissions:
+      contents: read
+
+  reuse:
+    name: "⚖️ Licensing (REUSE)"
+    uses: kleidos-dev/.github/.github/workflows/reusable-reuse.yml@fe956cffe83955b1f17a4121b906979dc9f8df6b # quality-v1.0.0
+    permissions:
+      contents: read
+
+  # The tree's own rules (tools/check.py) and the generated files against
+  # their sources, without a browser. The identity patterns of the metadata
+  # check's deny-list are private: they come from the KLEIDOS_DENY_EXTRA
+  # secret, one pattern per line. A run without it (a fork, Dependabot, or
+  # the secret not set yet) checks every other class and warns that identity
+  # was not checked.
+  tree:
+    name: "🧭 Tree rules and generated files"
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
@@ -45,46 +72,47 @@ jobs:
           cache: pip
       - name: Install the pinned stack
         run: pip install -r requirements.txt
-      - name: Licenses (REUSE)
-        run: reuse lint
       - name: The tree's rules
+        env:
+          KLEIDOS_DENY_EXTRA: ${{ secrets.KLEIDOS_DENY_EXTRA }}
+          KLEIDOS_DENY_OPTIONAL: ${{ secrets.KLEIDOS_DENY_EXTRA == '' && '1' || '0' }}
         run: python tools/check.py
       - name: Every generated file is what its sources give (no browser)
+        env:
+          KLEIDOS_DENY_EXTRA: ${{ secrets.KLEIDOS_DENY_EXTRA }}
+          KLEIDOS_DENY_OPTIONAL: ${{ secrets.KLEIDOS_DENY_EXTRA == '' && '1' || '0' }}
         run: python tools/build.py --check --static
 
-  check:
+  types:
+    name: "🔎 Types (mypy)"
+    needs: [lint, reuse, tree]
+    uses: kleidos-dev/.github/.github/workflows/reusable-mypy.yml@fe956cffe83955b1f17a4121b906979dc9f8df6b # quality-v1.0.0
+    with:
+      install: python -m pip install -r requirements.txt
+    permissions:
+      contents: read
+
+  # The tests, with the coverage report SonarQube Cloud reads (.coveragerc:
+  # the code roots, relative paths, branches), then the pictures drawn again
+  # within tolerance: exact pixels are the exporting machine's to compare,
+  # since this runner's Chromium draws an edge a shade apart, so gross drift
+  # (a shape out of place, a picture not redrawn) fails here. The tree job
+  # holds the metadata to the private deny-list, so here identity is only
+  # warned about (KLEIDOS_DENY_OPTIONAL).
+  tests:
     name: "🧪 Tests and pictures"
-    needs: lint
-    runs-on: ubuntu-latest
-    timeout-minutes: 45
-    steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-        with:
-          persist-credentials: false
-      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
-        with:
-          python-version-file: .python-version
-          cache: pip
-      - name: Install the pinned stack
-        run: pip install -r requirements.txt
-      - name: Install the browser the pictures are drawn with
-        run: python -m playwright install --with-deps chromium
-      # pytest-cov writes the report SonarQube Cloud reads (.coveragerc: the
-      # code roots, relative paths, branches).
-      - name: Tests
-        run: python -m pytest -rs --cov --cov-report=xml:coverage.xml tests
-      - name: Hand the coverage report to the SonarCloud job
-        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
-        with:
-          name: coverage
-          path: coverage.xml
-          if-no-files-found: error
-          retention-days: 1
-      # Exact pixels are the exporting machine's to compare: this runner's
-      # Chromium draws an edge a shade apart. Gross drift (a shape out of
-      # place, a picture not redrawn) fails here.
-      - name: The pictures, drawn again, within tolerance
-        run: python tools/build.py --check --tolerant
+    needs: [lint, reuse, tree]
+    if: github.event_name != 'schedule'
+    uses: kleidos-dev/.github/.github/workflows/reusable-python-tests.yml@fe956cffe83955b1f17a4121b906979dc9f8df6b # quality-v1.0.0
+    with:
+      run: >-
+        python -m playwright install --with-deps chromium
+        && export KLEIDOS_DENY_OPTIONAL=1
+        && python -m pytest -rs --cov --cov-report=xml:coverage.xml tests
+        && python tools/build.py --check --tolerant
+      timeout-minutes: 45
+    permissions:
+      contents: read
 
   # The KiCad kit through the KiCad that boards and the meter export with
   # (10.0.8): the fixture on each ground, ERC clean, both exports written with
@@ -92,7 +120,8 @@ jobs:
   # cannot read never merges. Standard library only: the image's own Python.
   kicad:
     name: "🧫 KiCad kit (fixture exported on each ground)"
-    needs: lint
+    needs: [lint, reuse, tree]
+    if: github.event_name != 'schedule'
     runs-on: ubuntu-latest
     timeout-minutes: 20
     container:
@@ -105,96 +134,30 @@ jobs:
       - name: The kit's fixture, exported on each ground
         run: python3 tools/check_kicad.py
 
+  osv:
+    name: "🛡️ Dependency vulnerabilities (OSV)"
+    needs: [lint, reuse]
+    uses: kleidos-dev/.github/.github/workflows/reusable-osv.yml@fe956cffe83955b1f17a4121b906979dc9f8df6b # quality-v1.0.0
+    permissions:
+      contents: read
+
+  secrets:
+    name: "🔐 Secrets and MAC scan (gitleaks)"
+    needs: [lint, reuse]
+    uses: kleidos-dev/.github/.github/workflows/reusable-secrets.yml@fe956cffe83955b1f17a4121b906979dc9f8df6b # quality-v1.0.0
+    permissions:
+      contents: read
+
   # The Python code (tools/, the KiCad helper and the tests) on SonarQube
-  # Cloud: sonar-project.properties holds the project. Secretless: the job
-  # trades its GitHub OIDC token for a short-lived token scoped to this one
-  # project (SonarSource/sonarqube-auth-action), so no SONAR_TOKEN secret
-  # exists. It analyses every push to main and every pull request against
-  # main; GitHub gives no OIDC token to a pull request from a fork, so there
-  # the job prints a notice and analyses nothing.
+  # Cloud: sonar-project.properties holds the project. Secretless (OIDC), on
+  # every push to main and every pull request against main; a pull request
+  # from a fork or Dependabot, which GitHub gives no OIDC token, ends green
+  # with a notice. Last stage: it reads the coverage the tests job wrote.
   sonarcloud:
     name: "📊 SonarCloud"
-    if: >-
-      (github.event_name == 'push' && github.ref == 'refs/heads/main')
-      || (github.event_name == 'pull_request' && github.base_ref == 'main')
-    runs-on: ubuntu-latest
-    # A bound for a hung scanner, with room for the scan to grow (15 minutes
-    # is the owner's value in gitlab-mcp-server, where 5 cut off the upload).
-    timeout-minutes: 15
-    # Last stage: it reads the coverage the tests job wrote, and a red gate
-    # earlier stops it from spending a runner.
-    needs: [check]
+    needs: [tests]
+    if: github.event_name != 'schedule'
+    uses: kleidos-dev/.github/.github/workflows/reusable-sonarcloud.yml@fe956cffe83955b1f17a4121b906979dc9f8df6b # quality-v1.0.0
     permissions:
       contents: read
       id-token: write
-    env:
-      FORK_PR: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name != github.repository }}
-    # No continue-on-error: on main and on this repository's own pull
-    # requests, a failed token exchange, a scanner error or an analysis the
-    # server refuses is a red job, never a silent green.
-    steps:
-      - name: A pull request from a fork is not analysed
-        if: env.FORK_PR == 'true'
-        run: echo "::notice title=SonarCloud skipped::GitHub gives no OIDC token to a pull request from a fork, so SonarCloud does not analyse it. The push to main after the merge is analysed."
-
-      # Full history: blame and the new-code period need it. The checkout
-      # leaves no git credential behind for the steps that hold the token.
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-        if: env.FORK_PR != 'true'
-        with:
-          fetch-depth: 0
-          persist-credentials: false
-
-      - name: Fetch the coverage report
-        if: env.FORK_PR != 'true'
-        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
-        with:
-          name: coverage
-
-      # Right before the scan: the token lasts 30 minutes. It is exported as
-      # SONAR_TOKEN for the later steps of this job only.
-      - name: SonarCloud token (OIDC, no secret)
-        if: env.FORK_PR != 'true'
-        uses: SonarSource/sonarqube-auth-action@b372e2c2930aadfcc4f4399446da1e12772709ad # v1.2
-
-      # The scanner detects the branch or pull request from the GitHub event;
-      # sonar-project.properties holds the rest.
-      - name: SonarCloud Scan
-        if: env.FORK_PR != 'true'
-        uses: SonarSource/sonarqube-scan-action@59202af334b4ba7b5db01b701b8e79f8b3bef0f4 # v8.5.0
-        env:
-          SONAR_HOST_URL: https://sonarcloud.io
-
-      - name: SonarCloud accepted the analysis
-        if: env.FORK_PR != 'true'
-        timeout-minutes: 10
-        env:
-          SONAR_HOST_URL: https://sonarcloud.io
-        run: |
-          set -euo pipefail
-          task="$(sed -n 's/^ceTaskId=//p' .scannerwork/report-task.txt)"
-          if [ -z "${task}" ]; then
-            echo "::error::The scanner wrote no ceTaskId to .scannerwork/report-task.txt"
-            exit 1
-          fi
-          while :; do
-            body="$(curl --fail --silent --show-error --proto '=https' --max-redirs 0 \
-              --retry 3 --retry-all-errors \
-              -H "Authorization: Bearer ${SONAR_TOKEN}" \
-              "${SONAR_HOST_URL}/api/ce/task?id=${task}")"
-            status="$(jq -r '.task.status' <<<"${body}")"
-            case "${status}" in
-              SUCCESS)
-                echo "SonarCloud accepted analysis $(jq -r '.task.analysisId' <<<"${body}")"
-                break
-                ;;
-              PENDING|IN_PROGRESS)
-                sleep 5
-                ;;
-              *)
-                reason="$(jq -r '.task.errorMessage // "no reason given"' <<<"${body}")"
-                echo "::error::SonarCloud did not accept the analysis (${status}): ${reason}"
-                exit 1
-                ;;
-            esac
-          done

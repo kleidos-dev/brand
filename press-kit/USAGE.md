@@ -1,3 +1,8 @@
+<!--
+SPDX-FileCopyrightText: 2026 José M. Requena Plens
+SPDX-License-Identifier: GPL-3.0-or-later
+-->
+
 # Using the press kit
 
 The images in this folder (the photograph included) and in `../logo/` are licensed under the GNU General Public License, version 3 or any later version (GPL-3.0-or-later), like the firmware. The texts in `../about/` and the fact sheets in `en/` and `es/` are under the MIT License, which already lets anyone quote them freely. For press use the GPL comes with a permission that removes its paperwork. Its words, from [`../TRADEMARKS.md`](../TRADEMARKS.md):

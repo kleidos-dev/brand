@@ -1,5 +1,7 @@
+# SPDX-FileCopyrightText: 2026 José M. Requena Plens
 # SPDX-License-Identifier: MIT
-"""WebP copies of the published pictures, built from pixels alone, and the checks on the ones in the tree.
+"""WebP copies of the published pictures, built from pixels alone, and the checks on the ones in the
+tree.
 
 Every published PNG and photograph also comes as a WebP file of the same name,
 encoded by Pillow's pinned libwebp from the decoded pixels of the file it
@@ -34,9 +36,10 @@ LOSSY = {"lossless": False, "quality": 90, "method": 6}
 
 
 def settings() -> dict[str, Any]:
-    """Return what ``exports.json`` records of the encoder: Pillow's and libwebp's versions and both settings."""
-    import PIL  # noqa: PLC0415
-    from PIL import features  # noqa: PLC0415
+    """Return what ``exports.json`` records of the encoder: Pillow's and libwebp's versions and both
+    settings."""
+    import PIL
+    from PIL import features
 
     return {
         "pillow": PIL.__version__,
@@ -47,8 +50,9 @@ def settings() -> dict[str, Any]:
 
 
 def pixels(data: bytes) -> Any:
-    """Return the decoded pixels of a PNG, JPEG or WebP file in a fresh image: RGBA where it has alpha, RGB otherwise."""
-    from PIL import Image  # noqa: PLC0415
+    """Return the decoded pixels of a PNG, JPEG or WebP file in a fresh image: RGBA where it has
+    alpha, RGB otherwise."""
+    from PIL import Image
 
     with Image.open(io.BytesIO(data)) as opened:
         mode = (
@@ -98,7 +102,8 @@ def findings(
     limit: int | None = None,
     meta: MediaMeta | None = None,
 ) -> list[str]:
-    """Return what is wrong with a published WebP file: its chunks, its metadata, its size, its weight.
+    """Return what is wrong with a published WebP file: its chunks, its metadata, its size, its
+    weight.
 
     :param meta: The file's record. Without one, any chunk but the pixels' is refused.
     """

@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
+# SPDX-FileCopyrightText: 2026 José M. Requena Plens
 # SPDX-License-Identifier: MIT
 """Run the KiCad kit through kicad-cli: the fixture on each ground, ERC and both exports.
 
-    tools/check_kicad.py     needs kicad-cli (KICAD_CLI names another); CI runs it in kicad/kicad:10.0.8
+    tools/check_kicad.py     needs kicad-cli (KICAD_CLI names another); CI runs it in
+                             kicad/kicad:10.0.8
 
 For each ground: ERC on the fixture (recolored for the ground, as every light
 export is) reports no message; the SVG export has the theme's background and
@@ -19,7 +21,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-from kleidos_brand import BRAND_ROOT, kicad, kicad_preview  # noqa: E402
+from kleidos_brand import BRAND_ROOT, kicad, kicad_preview
 
 
 def main() -> int:

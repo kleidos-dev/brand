@@ -1,3 +1,4 @@
+# SPDX-FileCopyrightText: 2026 José M. Requena Plens
 # SPDX-License-Identifier: MIT
 """Drawing an SVG to pixels with Chromium, through Playwright, headless.
 
@@ -23,7 +24,9 @@ PAGE_SUFFIX = ".xhtml"
 #: is decoded, and two frames have been painted.
 SETTLE_JS = """async () => {
   await document.fonts.ready;
-  const failed = [...document.fonts].filter((face) => face.status !== 'loaded').map((face) => face.family);
+  const failed = [...document.fonts]
+    .filter((face) => face.status !== 'loaded')
+    .map((face) => face.family);
   const pictures = [...document.images, ...document.querySelectorAll('image')];
   await Promise.all(pictures.map((p) => (p.decode ? p.decode().catch(() => null) : null)));
   await new Promise((done) => requestAnimationFrame(() => requestAnimationFrame(done)));
@@ -70,7 +73,7 @@ class Browser:
         self.version = ""
 
     def __enter__(self) -> Browser:
-        from playwright.sync_api import sync_playwright  # noqa: PLC0415
+        from playwright.sync_api import sync_playwright
 
         self._playwright = sync_playwright().start()
         self._browser = self._playwright.chromium.launch()
@@ -89,8 +92,10 @@ class Browser:
             self._scratch.cleanup()
 
     def shoot(self, document: str, size: tuple[int, int], name: str = "page") -> bytes:
-        """Return the screenshot of *document* at *size*, once everything is settled, on transparency."""
-        assert self._scratch is not None and self._page is not None
+        """Return the screenshot of *document* at *size*, once everything is settled, on
+        transparency."""
+        if self._scratch is None or self._page is None:
+            raise RuntimeError("the browser is not open: draw inside `with Browser() as browser:`")
         path = Path(self._scratch.name) / f"{name}{PAGE_SUFFIX}"
         path.write_text(document, encoding="utf-8")
         self._page.set_viewport_size({"width": size[0], "height": size[1]})
@@ -100,7 +105,8 @@ class Browser:
             raise FontNotLoaded(
                 f"{name}: these font faces did not load: {', '.join(sorted(set(failed)))}"
             )
-        return self._page.screenshot(omit_background=True)
+        shot: bytes = self._page.screenshot(omit_background=True)
+        return shot
 
     def draw(
         self, svg: str, size: tuple[int, int], name: str = "page", hide: tuple[str, ...] = ()

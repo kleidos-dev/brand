@@ -1,3 +1,4 @@
+# SPDX-FileCopyrightText: 2026 José M. Requena Plens
 # SPDX-License-Identifier: MIT
 """What an SVG source of a brand or social image may hold.
 
@@ -14,7 +15,7 @@ import re
 import xml.etree.ElementTree as ET
 from pathlib import Path
 
-from . import BRAND_ROOT, lettering, svgtext
+from . import BRAND_ROOT, lettering, svgtext, xmlsafe
 
 LAYERS = ("ground", "content", "guides")
 ROOT_EXTRAS = frozenset({"title", "desc"})
@@ -79,7 +80,7 @@ def findings(
     if re.search(r"<!DOCTYPE|<!ENTITY|<\?xml-stylesheet", raw):
         found.append(f"{name}: declares a DOCTYPE, an entity or a style sheet")
     try:
-        tree = ET.fromstring(raw)
+        tree = xmlsafe.fromstring(raw)
     except ET.ParseError as error:
         return [*found, f"{name}: not well-formed XML ({error})"]
     if _local(tree) != "svg" or canvas(tree) is None:
@@ -90,9 +91,11 @@ def findings(
         found.append(
             f"{name}: its layers are {layers}; a source has {', '.join(LAYERS)}, in that order"
         )
-    for extra in extras:
-        if extra not in ROOT_EXTRAS:
-            found.append(f"{name}: a <{extra}> stands outside the layers")
+    found.extend(
+        f"{name}: a <{extra}> stands outside the layers"
+        for extra in extras
+        if extra not in ROOT_EXTRAS
+    )
     cmaps = {family: lettering.characters(family, root) for family in lettering.FAMILIES}
     for element in tree.iter():
         if not isinstance(element.tag, str):
@@ -105,12 +108,14 @@ def findings(
             plain = key.rsplit("}", 1)[-1]
             if plain in BANNED_ATTRIBUTES or plain.startswith("on"):
                 found.append(
-                    f"{name}: <{tag}> carries {plain}; a source has no opacity, filter, mask, link or script"
+                    f"{name}: <{tag}> carries {plain}; a source has no opacity, filter, mask, link "
+                    "or script"
                 )
         style = element.get("style")
         if style is not None and not (tag == "text" and svgtext.OPSZ.fullmatch(style)):
             found.append(
-                f"{name}: <{tag}> carries style={style!r}; only a text's optical size goes in a style"
+                f"{name}: <{tag}> carries style={style!r}; only a text's optical size goes in a "
+                "style"
             )
         for key in COLOR_ATTRIBUTES:
             value = element.get(key)
@@ -118,13 +123,15 @@ def findings(
                 continue
             if not HEX.fullmatch(value) or value.lower() not in palette:
                 found.append(
-                    f"{name}: <{tag} id={element.get('id')!r}> has {key}={value!r}, which is not a token color"
+                    f"{name}: <{tag} id={element.get('id')!r}> has {key}={value!r}, which is not a "
+                    "token color"
                 )
         if tag == "text":
             family = element.get("font-family", "")
             if family not in cmaps:
                 found.append(
-                    f"{name}: text {element.get('id')!r} is set in {family!r}; words are set in {' or '.join(cmaps)}"
+                    f"{name}: text {element.get('id')!r} is set in {family!r}; words are set in "
+                    f"{' or '.join(cmaps)}"
                 )
                 continue
             try:
@@ -135,13 +142,15 @@ def findings(
             missing = sorted({char for char in text if ord(char) not in cmaps[family]})
             if missing:
                 found.append(
-                    f"{name}: text {element.get('id')!r} has {''.join(missing)!r}, which {family} has no glyph for"
+                    f"{name}: text {element.get('id')!r} has {''.join(missing)!r}, which {family} "
+                    "has no glyph for"
                 )
     return found
 
 
 def outlined_findings(svg: Path, palette: frozenset[str], name: str | None = None) -> list[str]:
-    """Return what is wrong with a generated SVG: live text, a color off the palette, anything embedded."""
+    """Return what is wrong with a generated SVG: live text, a color off the palette, anything
+    embedded."""
     name = name or str(svg)
     raw = svg.read_text(encoding="utf-8")
     found: list[str] = []
@@ -151,9 +160,12 @@ def outlined_findings(svg: Path, palette: frozenset[str], name: str | None = Non
         r"@font-face|data:font|data:image|<image\b|<script\b|<style\b|<use\b|<text\b", raw
     ):
         found.append(
-            f"{name}: holds live text, a font, a picture, a script, a style sheet or a <use>; a generated SVG holds shapes only"
+            f"{name}: holds live text, a font, a picture, a script, a style sheet or a <use>; a "
+            "generated SVG holds shapes only"
         )
-    for value in re.findall(r'(?:fill|stroke)="([^"]+)"', raw):
-        if value != "none" and value.lower() not in palette:
-            found.append(f"{name}: is painted with {value}, which is not a token color")
+    found.extend(
+        f"{name}: is painted with {value}, which is not a token color"
+        for value in re.findall(r'(?:fill|stroke)="([^"]+)"', raw)
+        if value != "none" and value.lower() not in palette
+    )
     return sorted(set(found))

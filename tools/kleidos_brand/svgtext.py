@@ -1,3 +1,4 @@
+# SPDX-FileCopyrightText: 2026 José M. Requena Plens
 # SPDX-License-Identifier: MIT
 """The ``<text>`` elements of an SVG source, turned into outlines.
 
@@ -54,7 +55,8 @@ class Run:
 
 @dataclass(frozen=True)
 class Set:
-    """A ``<text>`` element as it is set: the shaped line, where it starts, its scale and its runs."""
+    """A ``<text>`` element as it is set: the shaped line, where it starts, its scale and its
+    runs."""
 
     line: lettering.Line
     x: float
@@ -119,7 +121,8 @@ def set_text(element: ET.Element, root: Path = BRAND_ROOT) -> Set:
             match = OPSZ.fullmatch(style)
             if not match:
                 raise ValueError(
-                    f"text {element.get('id')!r}: a style may hold font-variation-settings:'opsz' N and nothing else"
+                    f"text {element.get('id')!r}: a style may hold font-variation-settings:'opsz' "
+                    "N and nothing else"
                 )
             axes.append(("opsz", float(match.group(1))))
     axes.append(("wght", float(element.get("font-weight", "400"))))
@@ -144,7 +147,8 @@ def set_text(element: ET.Element, root: Path = BRAND_ROOT) -> Set:
 
 
 def outline(tree: ET.Element, root: Path = BRAND_ROOT) -> dict[str, Set]:
-    """Replace every ``<text>`` under *tree* with a group of paths, and return each one as it was set.
+    """Replace every ``<text>`` under *tree* with a group of paths, and return each one as it was
+    set.
 
     The group keeps the element's ``id`` and carries its words in
     ``aria-label``, so the outlined file still says what it reads.
@@ -160,7 +164,10 @@ def outline(tree: ET.Element, root: Path = BRAND_ROOT) -> dict[str, Set]:
             group.set("id", element.get("id", ""))
             done[element.get("id", "")] = placed
         group.set("aria-label", placed.line.text)
-        transform = f"translate({_number(placed.x)} {_number(placed.y)}) scale({_number(placed.scale)} {_number(-placed.scale)})"
+        transform = (
+            f"translate({_number(placed.x)} {_number(placed.y)}) "
+            f"scale({_number(placed.scale)} {_number(-placed.scale)})"
+        )
         for run in placed.runs:
             data = placed.line.path(run.first, run.last)
             if data:

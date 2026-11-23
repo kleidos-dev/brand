@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# SPDX-FileCopyrightText: 2026 José M. Requena Plens
 # SPDX-License-Identifier: MIT
 """Hold the tree to its rules. Needs no browser; the pre-commit hook and CI run it.
 
@@ -50,10 +51,12 @@ import re
 import sys
 import xml.etree.ElementTree as ET
 from pathlib import Path
+from typing import Any
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-import build  # noqa: E402
+import build
+
 from kleidos_brand import (
     BRAND_ROOT,
     SVG_HEADER,
@@ -64,12 +67,12 @@ from kleidos_brand import (
     meta,
     palette,
     photos,
-    png,
     press,
     public_tree,
     svg_rules,
     tokens,
-)  # noqa: E402
+    xmlsafe,
+)
 
 ALLOWED_LICENSES = frozenset({"GPL-3.0-or-later", "MIT", "OFL-1.1"})
 PICTURE_DIRS = (
@@ -88,7 +91,8 @@ VENDOR_FORMS = re.compile(r"(?<![\w/-])(?:lilygo|m5stack)(?![\w-])", re.I)  # pr
 TEXT_DIRS = ("about", "press-kit")
 ABOUT_TEXTS = ("one-line", "one-paragraph", "one-page", "name-and-history")
 
-#: Every kind of file the metadata rule looks at: pictures, drawings, documents, video, models, fonts, sound, captions.
+#: Every kind of file the metadata rule looks at: pictures, drawings, documents, video, models,
+#: fonts, sound, captions.
 MEDIA_SUFFIXES = frozenset(
     {
         ".png",
@@ -123,18 +127,22 @@ MEDIA_SUFFIXES = frozenset(
 METADATA_EXEMPT = (
     (
         "fonts/**",
-        "third-party font files, unmodified, pinned by SHA-256 in fonts/VERSIONS.md; their name tables say what they are",
+        "third-party font files, unmodified, pinned by SHA-256 in fonts/VERSIONS.md; their name "
+        "tables say what they are",
     ),
     (
         "boards/*.svg",
-        "byte copies of the boards repository's fronts: their metadata is written there and comes with each copy",
+        "byte copies of the boards repository's fronts: their metadata is written there and comes "
+        "with each copy",
     ),
 )
-#: The hand-made SVG sources the builder reads: held to the license header, a title and a description, and no RDF.
+#: The hand-made SVG sources the builder reads: held to the license header, a title and a
+#: description, and no RDF.
 METADATA_SOURCES = ("logo/src/mark.svg", "press-kit/src/*.svg")
 #: How a vendor or a term may never be written in a metadata value.
 METADATA_MISWRITTEN = re.compile(r"LilyGO|Lilygo|lilygo|M5stack|m5stack")
-#: A URL in a metadata value: its path spells a file's name, which is lowercase, not a vendor's name.
+#: A URL in a metadata value: its path spells a file's name, which is lowercase, not a vendor's
+#: name.
 METADATA_URL = re.compile(r"https?://\S+")
 
 
@@ -150,8 +158,10 @@ def mark_findings(root: Path, files: list[Path]) -> list[str]:
     ]["$value"]
     if below != full or any(px >= below or px % 2 == 0 for px in mark.small_numbers(root)["sizes"]):
         found.append(
-            f"{mark.SMALL_JSON}: the small mark is for sizes under {below} px, and the full mark holds from"
-            f" {full} px (tokens.json brand.logo.min-px-on-dark); the two agree, and every small size is odd and under it"
+            f"{mark.SMALL_JSON}: the small mark is for sizes under {below} px, and the full mark "
+            "holds from"
+            f" {full} px (tokens.json brand.logo.min-px-on-dark); the two agree, and every small "
+            "size is odd and under it"
         )
     for path in files:
         if path.suffix == ".svg":
@@ -170,20 +180,23 @@ def source_findings(root: Path) -> list[str]:
             found.append(f"{name}: does not open with the license header")
         if not press.template_lockup_matches(root, source.stem):
             found.append(
-                f"{name}: its lockup is not the one logo/svg/ draws; paste the group again from the for-dark file"
+                f"{name}: its lockup is not the one logo/svg/ draws; paste the group again from "
+                "the for-dark file"
             )
     for layout, keys in data["lines"].items():
         for key, by_lang in keys.items():
             for lang, lines in by_lang.items():
                 if " ".join(lines) != data["words"][lang][key]:
                     found.append(
-                        f"press.json: the lines of {layout} for {key!r} in {lang} do not join into its words"
+                        f"press.json: the lines of {layout} for {key!r} in {lang} do not join into "
+                        "its words"
                     )
     for lang, words in data["words"].items():
         for key in [key for key in words if key.endswith("_accent")]:
             if words[key] not in words[key.removesuffix("_accent")]:
                 found.append(
-                    f"press.json: the accent of {key.removesuffix('_accent')!r} in {lang} is not part of its words"
+                    f"press.json: the accent of {key.removesuffix('_accent')!r} in {lang} is not "
+                    "part of its words"
                 )
     try:
         for image in press.images(root):
@@ -210,13 +223,15 @@ def source_findings(root: Path) -> list[str]:
                 found.append(f"press.json: the photograph {photo['file']!r} has no {key!r}")
         if any(not (photo.get("alt") or {}).get(lang) for lang in data["langs"]):
             found.append(
-                f"press.json: the photograph {photo['file']!r} needs an alt text in each of {', '.join(data['langs'])}"
+                f"press.json: the photograph {photo['file']!r} needs an alt text in each of "
+                f"{', '.join(data['langs'])}"
             )
         readme = (root / "press-kit/README.md").read_text(encoding="utf-8")
         for needed in (photo.get("credit"), *(photo.get("alt") or {}).values()):
             if needed and needed not in readme:
                 found.append(
-                    f"press-kit/README.md: does not give {needed[:50]!r}, the photograph {photo['file']!r}'s credit or alt text"
+                    f"press-kit/README.md: does not give {needed[:50]!r}, the photograph "
+                    f"{photo['file']!r}'s credit or alt text"
                 )
         if not (root / whole).is_file():
             found.append(f"{whole}: missing")
@@ -224,7 +239,8 @@ def source_findings(root: Path) -> list[str]:
         for path in sorted((root / photos.PHOTOS_DIR).iterdir()):
             if path.is_file() and path.relative_to(root) not in expected:
                 found.append(
-                    f"{path.relative_to(root).as_posix()}: press.json lists no photograph or copy by this name"
+                    f"{path.relative_to(root).as_posix()}: press.json lists no photograph or copy "
+                    "by this name"
                 )
     return found
 
@@ -243,7 +259,8 @@ def generated_findings(root: Path) -> list[str]:
         name = path.relative_to(root).as_posix()
         if not path.read_text(encoding="utf-8").startswith(SVG_HEADER):
             found.append(
-                f"{name}: does not open with the license header (the tag alone on its line, then where the additional terms are)"
+                f"{name}: does not open with the license header (the tag alone on its line, then "
+                "where the additional terms are)"
             )
         if path != root / mark.MARK_SVG:
             found += svg_rules.outlined_findings(path, colors, name)
@@ -259,7 +276,7 @@ def license_findings(root: Path, files: list[Path]) -> list[str]:
 
 
 def name_and_history_findings(
-    root: Path, facts: dict, langs: list[str], texts: list[Path]
+    root: Path, facts: dict[str, Any], langs: list[str], texts: list[Path]
 ) -> list[str]:
     """Hold the name's origin, its former name, its pronunciation and the history to facts.json.
 
@@ -275,16 +292,20 @@ def name_and_history_findings(
     )
     events = history.get("events") or []
     confirmed = said.get("confirmed") is True
-    guides = said.get("guide") if isinstance(said.get("guide"), dict) else {}
+    guide = said.get("guide")
+    guides: dict[str, str] = guide if isinstance(guide, dict) else {}
     if confirmed and (
         not said.get("source") or not said.get("ipa") or any(not guides.get(lang) for lang in langs)
     ):
         found.append(
-            f"about/facts.json: a confirmed pronunciation needs its source, its ipa and a guide in each of {', '.join(langs)}"
+            "about/facts.json: a confirmed pronunciation needs its source, its ipa and a guide in "
+            f"each of {', '.join(langs)}"
         )
-    for lang in langs:
-        if not isinstance(origin.get(lang), str) or not isinstance(former.get(lang), str):
-            found.append(f"about/facts.json: name.origin and name.former need a text in {lang!r}")
+    found.extend(
+        f"about/facts.json: name.origin and name.former need a text in {lang!r}"
+        for lang in langs
+        if not isinstance(origin.get(lang), str) or not isinstance(former.get(lang), str)
+    )
     if (
         not origin.get("greek")
         or not former.get("written")
@@ -292,7 +313,8 @@ def name_and_history_findings(
         or not history.get("as_of")
     ):
         found.append(
-            "about/facts.json: the name needs origin.greek and former.written, the history its source and as_of"
+            "about/facts.json: the name needs origin.greek and former.written, the history its "
+            "source and as_of"
         )
     for index, event in enumerate(events):
         missing = [key for key in ("when", *langs) if not event.get(key)] + [
@@ -308,30 +330,34 @@ def name_and_history_findings(
             if not path.is_file():
                 continue  # a missing page is reported where the texts are listed
             body = path.read_text(encoding="utf-8")
-            for needed in (
+            stated = (
                 origin.get("greek"),
                 former.get("written"),
                 *((event.get("said") or {}).get(lang) for event in events),
-            ):
-                if needed and needed not in body:
-                    found.append(
-                        f"{page}: does not hold {needed!r}, which about/facts.json states for the name or the history"
-                    )
+            )
+            found.extend(
+                f"{page}: does not hold {needed!r}, which about/facts.json states for the "
+                "name or the history"
+                for needed in stated
+                if needed and needed not in body
+            )
             if confirmed:
-                for needed in (guides.get(lang), said.get("ipa")):
-                    if needed and needed not in body:
-                        found.append(
-                            f"{page}: does not print the pronunciation {needed!r}, which the owner has confirmed (about/facts.json)"
-                        )
+                found.extend(
+                    f"{page}: does not print the pronunciation {needed!r}, which the owner "
+                    "has confirmed (about/facts.json)"
+                    for needed in (guides.get(lang), said.get("ipa"))
+                    if needed and needed not in body
+                )
     if said and not confirmed:
         unconfirmed = [*(guides.values() if guides else [said.get("guide")]), said.get("ipa")]
         for path in texts:
             body = path.read_text(encoding="utf-8")
-            for form in unconfirmed:
-                if form and form in body:
-                    found.append(
-                        f"{path.relative_to(root).as_posix()}: prints the pronunciation {form!r}, which the owner has not confirmed"
-                    )
+            found.extend(
+                f"{path.relative_to(root).as_posix()}: prints the pronunciation {form!r}, "
+                "which the owner has not confirmed"
+                for form in unconfirmed
+                if form and form in body
+            )
     return found
 
 
@@ -351,23 +377,28 @@ def text_findings(root: Path) -> list[str]:
         text = path.read_text(encoding="utf-8")
         if "/es/" in f"/{name}" and SPANISH_BANNED.search(text):
             found.append(
-                f"{name}: a Spanish text says 'vault' or 'bóveda'; the container is 'llavero', its content 'tus contraseñas'"
+                f"{name}: a Spanish text says 'vault' or 'bóveda'; the container is 'llavero', its "
+                "content 'tus contraseñas'"
             )
-        for url in URL.findall(text):
-            if url.rstrip(".,;:") not in links:
-                found.append(f"{name}: links to {url}, which about/facts.json does not list")
-        for form in VENDOR_FORMS.findall(text):
-            if form not in vendors:
-                found.append(
-                    f"{name}: writes a vendor as {form!r}; about/facts.json writes {', '.join(sorted(vendors))}"
-                )
+        found.extend(
+            f"{name}: links to {url}, which about/facts.json does not list"
+            for url in URL.findall(text)
+            if url.rstrip(".,;:") not in links
+        )
+        found.extend(
+            f"{name}: writes a vendor as {form!r}; about/facts.json writes "
+            f"{', '.join(sorted(vendors))}"
+            for form in VENDOR_FORMS.findall(text)
+            if form not in vendors
+        )
     for name in (f"about/{lang}/{size}.md" for lang in data["langs"] for size in ABOUT_TEXTS):
-        text = (root / name).read_text(encoding="utf-8") if (root / name).is_file() else None
-        if text is None:
+        about = (root / name).read_text(encoding="utf-8") if (root / name).is_file() else None
+        if about is None:
             found.append(f"{name}: missing")
-        elif MISWRITTEN.search(text):
+        elif MISWRITTEN.search(about):
             found.append(
-                f"{name}: miswrites the name; it is 'Kleidos', a capital K and nothing else in capitals"
+                f"{name}: miswrites the name; it is 'Kleidos', a capital K and nothing else in "
+                "capitals"
             )
     for lang in data["langs"]:
         for key, value in data["words"][lang].items():
@@ -375,7 +406,7 @@ def text_findings(root: Path) -> list[str]:
                 found.append(f"press.json: words.es.{key} says 'vault' or 'bóveda'")
             if MISWRITTEN.search(value):
                 found.append(f"press.json: words.{lang}.{key} miswrites the name")
-        paragraph = (root / f"about/{lang}/one-paragraph.md").read_text(encoding="utf-8").strip()
+        paragraph = public_tree.prose(root / f"about/{lang}/one-paragraph.md")
         if paragraph not in (root / "press-kit/README.md").read_text(encoding="utf-8"):
             found.append(
                 f"press-kit/README.md: does not quote about/{lang}/one-paragraph.md as it is"
@@ -385,17 +416,19 @@ def text_findings(root: Path) -> list[str]:
             found.append(f"press-kit/{lang}/fact-sheet.md: missing")
         else:
             body = sheet.read_text(encoding="utf-8")
-            for needed in (
+            stated = (
                 paragraph,
                 facts["license"]["spdx"],
                 facts["contact"]["email"],
                 facts["creator"]["name"],
                 facts["creator"]["name_ascii"],
-            ):
-                if needed not in body:
-                    found.append(
-                        f"press-kit/{lang}/fact-sheet.md: does not hold {needed[:50]!r}, which about/facts.json states"
-                    )
+            )
+            found.extend(
+                f"press-kit/{lang}/fact-sheet.md: does not hold {needed[:50]!r}, which "
+                "about/facts.json states"
+                for needed in stated
+                if needed not in body
+            )
     found += name_and_history_findings(root, facts, data["langs"], texts)
     trademarks = (
         (root / "TRADEMARKS.md").read_text(encoding="utf-8")
@@ -426,14 +459,15 @@ def text_findings(root: Path) -> list[str]:
     for page in ("logo/README.md", "press-kit/USAGE.md"):
         if "adds no condition to the license" not in (root / page).read_text(encoding="utf-8"):
             found.append(
-                f"{page}: lists what not to do without saying it is a request that adds no condition to the license"
+                f"{page}: lists what not to do without saying it is a request that adds no "
+                "condition to the license"
             )
     return found
 
 
 def _source_svg_findings(root: Path, name: str) -> list[str]:
     try:
-        tree = ET.parse(root / name).getroot()
+        tree = xmlsafe.parse(root / name)
     except ET.ParseError as error:
         return [f"{name}: M006: not well-formed XML ({error})"]
     children = {
@@ -448,7 +482,8 @@ def _source_svg_findings(root: Path, name: str) -> list[str]:
     ]
     if "metadata" in children:
         found.append(
-            f"{name}: M005: a source holds no <metadata>; the builder writes it into what it publishes"
+            f"{name}: M005: a source holds no <metadata>; the builder writes it into what it "
+            "publishes"
         )
     return found
 
@@ -456,7 +491,8 @@ def _source_svg_findings(root: Path, name: str) -> list[str]:
 def metadata_findings(
     root: Path = BRAND_ROOT, files: list[Path] | None = None, only: set[str] | None = None
 ) -> list[str]:
-    """Return every media file whose metadata is not what its record gives, or that has no record and no reason.
+    """Return every media file whose metadata is not what its record gives, or that has no record
+    and no reason.
 
     :param only: Check these paths alone (as the repository names them).
     """
@@ -476,11 +512,13 @@ def metadata_findings(
             and os.environ.get(meta.DENY_OPTIONAL_ENV) != "1"
         ):
             found.append(
-                f"tools/check.py: M004: the private deny-list is not loaded; set the {meta.DENY_ENV} secret"
+                "tools/check.py: M004: the private deny-list is not loaded; set the "
+                f"{meta.DENY_ENV} secret"
             )
         else:
             print(
-                f"warning: no private deny-list ({meta.DENY_LOCAL.relative_to(BRAND_ROOT)} or {meta.DENY_ENV}); identity patterns not checked",
+                f"warning: no private deny-list ({meta.DENY_LOCAL.relative_to(BRAND_ROOT)} or "
+                f"{meta.DENY_ENV}); identity patterns not checked",
                 file=sys.stderr,
             )
     exempt = tuple(pattern for pattern, _ in METADATA_EXEMPT)
@@ -498,13 +536,15 @@ def metadata_findings(
         about = records_by_path.get(name)
         if about is None:
             found.append(
-                f"{name}: M008: a media file with no metadata record and no reason in METADATA_EXEMPT"
+                f"{name}: M008: a media file with no metadata record and no reason in "
+                "METADATA_EXEMPT"
             )
             continue
         spdx, holders = meta.reuse_truth(root, name)
         if (about.spdx, about.holders) != (spdx, holders):
             found.append(
-                f"{name}: M003: its record says {about.spdx} by {'; '.join(about.holders)}, REUSE says {spdx} by {'; '.join(holders)}"
+                f"{name}: M003: its record says {about.spdx} by {'; '.join(about.holders)}, REUSE "
+                f"says {spdx} by {'; '.join(holders)}"
             )
         data = (root / path).read_bytes()
         suffix = path.suffix.lower()
@@ -531,7 +571,8 @@ def metadata_findings(
             ]
             if any(SPANISH_BANNED.search(value) for value in spanish):
                 found.append(
-                    f"{name}: M010: a Spanish metadata value says 'vault' or 'bóveda'; the container is 'llavero'"
+                    f"{name}: M010: a Spanish metadata value says 'vault' or 'bóveda'; the "
+                    "container is 'llavero'"
                 )
     return found
 

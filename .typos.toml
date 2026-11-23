@@ -1,0 +1,41 @@
+# SPDX-FileCopyrightText: 2026 José M. Requena Plens
+# SPDX-License-Identifier: MIT
+#
+# typos, the spelling check: the quality kit's block first (US English),
+# then this repository's own exceptions, each a word or a run that is right
+# where it stands (kleidos-dev/.github docs/quality.md, "Overrides": facts).
+
+[default]
+# >>> kleidos-quality typos (synced from kleidos-dev/.github quality/typos/block.toml; do not edit)
+locale = "en-us"
+# <<< kleidos-quality typos
+# Runs that are no words: the base64 of the PNG the KiCad drawing sheets
+# embed (kicad/*.kicad_wks), and the SHA-256 digests of the records.
+extend-ignore-re = [
+  "\"[A-Za-z0-9+/]{60,}={0,2}\"",
+  "\\b[0-9a-f]{64}\\b",
+]
+
+[default.extend-identifiers]
+# A JPEG's application segments, APP0 to APP15, as the format names them.
+APPn = "APPn"
+
+[default.extend-words]
+# Tags as the formats spell them: the OpenType width axis, the WebP alpha
+# chunk.
+wdth = "wdth"
+ALPH = "ALPH"
+# Spanish words of the Spanish texts and of the words of the press images
+# (about/es/, press-kit/es/, press-kit/src/press.json and what is drawn
+# from it), which an English dictionary reads as misspellings.
+autor = "autor"
+compres = "compres"
+confirmas = "confirmas"
+credencial = "credencial"
+exportes = "exportes"
+foto = "foto"
+frase = "frase"
+hace = "hace"
+producto = "producto"
+ser = "ser"
+versiones = "versiones"

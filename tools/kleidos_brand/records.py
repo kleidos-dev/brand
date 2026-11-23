@@ -1,3 +1,4 @@
+# SPDX-FileCopyrightText: 2026 José M. Requena Plens
 # SPDX-License-Identifier: MIT
 """The metadata record of every picture and SVG this repository publishes (:mod:`.meta`).
 
@@ -24,10 +25,17 @@ HOLDERS = ("2026 José M. Requena Plens",)
 RIGHTS_URL = meta.RIGHTS_URLS[REPO]
 EXTRA = (meta.extra_terms(REPO),)
 
-CREDIT_MONA_SANS = "Lettering outlined from Mona Sans, © 2022 The Mona Sans Project Authors, SIL Open Font License 1.1."
-CREDIT_MONA_BOTH = "Words outlined from Mona Sans and Mona Sans Mono, © 2022 The Mona Sans Project Authors, SIL Open Font License 1.1."
+CREDIT_MONA_SANS = (
+    "Lettering outlined from Mona Sans, © 2022 The Mona Sans Project Authors, SIL "
+    "Open Font License 1.1."
+)
+CREDIT_MONA_BOTH = (
+    "Words outlined from Mona Sans and Mona Sans Mono, © 2022 The Mona Sans "
+    "Project Authors, SIL Open Font License 1.1."
+)
 CREDIT_SCREEN_FONTS = (
-    "Screen text drawn by the firmware in Inter, © 2016 The Inter Project Authors, and JetBrains Mono,"
+    "Screen text drawn by the firmware in Inter, © 2016 The Inter Project Authors, and JetBrains "
+    "Mono,"
     " © 2020 The JetBrains Mono Project Authors, SIL Open Font License 1.1."
 )
 CREDIT_BOARDS = (
@@ -37,13 +45,16 @@ CREDIT_BOARDS = (
 
 #: The Spanish of the credits, for the press images in Spanish.
 SPANISH = {
-    CREDIT_MONA_BOTH: "Textos trazados a partir de Mona Sans y Mona Sans Mono, © 2022 The Mona Sans Project Authors, SIL Open Font License 1.1.",
+    CREDIT_MONA_BOTH: "Textos trazados a partir de Mona Sans y Mona Sans Mono, © 2022 The Mona "
+    "Sans Project Authors, SIL Open Font License 1.1.",
     CREDIT_SCREEN_FONTS: (
-        "Texto de pantalla dibujado por el firmware en Inter, © 2016 The Inter Project Authors, y JetBrains Mono,"
+        "Texto de pantalla dibujado por el firmware en Inter, © 2016 The Inter Project Authors, y "
+        "JetBrains Mono,"
         " © 2020 The JetBrains Mono Project Authors, SIL Open Font License 1.1."
     ),
     CREDIT_BOARDS: (
-        "Dibujos de las placas de kleidos-dev/boards, MIT, con sus serigrafías trazadas a partir de Inter,"
+        "Dibujos de las placas de kleidos-dev/boards, MIT, con sus serigrafías trazadas a partir "
+        "de Inter,"
         " © 2016 The Inter Project Authors, SIL Open Font License 1.1."
     ),
 }
@@ -163,7 +174,8 @@ def palette(
     return _record(
         path,
         "Kleidos color palette",
-        "The Kleidos palette: every brand, web and device color with its token name and its hex value.",
+        "The Kleidos palette: every brand, web and device color with its token name and its hex "
+        "value.",
         "The Kleidos palette",
         ("color palette", "design tokens", "brand"),
         "digitalCreation",
@@ -180,7 +192,8 @@ def press(
     size: tuple[int, int] | None = None,
     source: str | None = None,
 ) -> meta.MediaMeta:
-    """Return the record of a press image, its SVG or one of its PNG files, in the image's language."""
+    """Return the record of a press image, its SVG or one of its PNG files, in the image's
+    language."""
     about = entry["meta"]
     shows_screens = bool(image.plates or image.fronts)
     credits = [CREDIT_MONA_BOTH]
@@ -226,15 +239,18 @@ OPAQUE_TITLES = {
 
 
 def opaque(copy: Any, size: tuple[int, int]) -> meta.MediaMeta:
-    """Return the record of an opaque logo copy (:class:`.logo.Opaque`): the PNG on transparency, flattened on its ground."""
+    """Return the record of an opaque logo copy (:class:`.logo.Opaque`): the PNG on transparency,
+    flattened on its ground."""
     item = copy.item
     base = logo(item, copy.path, size, url(copy.source))
     what = item.what.replace(", on transparency", "")
     return replace(
         base,
-        title=f"{KIND_TITLES[item.kind]}, {OPAQUE_TITLES[logo_variant(item.family)]}, {item.px or size[1]} px",
+        title=f"{KIND_TITLES[item.kind]}, {OPAQUE_TITLES[logo_variant(item.family)]}, "
+        f"{item.px or size[1]} px",
         description=(
-            f"The Kleidos logo: {what}, flattened on {copy.ground} ({copy.color}): the opaque copy of"
+            f"The Kleidos logo: {what}, flattened on {copy.ground} ({copy.color}): the opaque copy "
+            "of"
             f" {copy.source.name}, with no clear space added."
         ),
         keywords=_words(base.keywords, "opaque"),
@@ -244,8 +260,10 @@ def opaque(copy: Any, size: tuple[int, int]) -> meta.MediaMeta:
 def webp(
     about: meta.MediaMeta, path: str | Path, copied: str | Path, lossless: bool
 ) -> meta.MediaMeta:
-    """Return the record of the WebP copy of a published picture, from the record of the file it copies."""
-    # The note names the copied file's format, not its name: a file name spells a vendor in lowercase.
+    """Return the record of the WebP copy of a published picture, from the record of the file it
+    copies."""
+    # The note names the copied file's format, not its name: a file name spells a vendor in
+    # lowercase.
     kind = Path(copied).suffix.lstrip(".").upper().replace("JPG", "JPEG")
     if lossless:
         notes = (
@@ -265,12 +283,7 @@ def webp(
             f"Copia en WebP del archivo {kind} del mismo nombre, con pérdida, a calidad 90.",
             "Copia en WebP, con pérdida, a calidad 90.",
         )
-    spanish = {}
-    if about.language == "es":
-        spanish = {
-            "title_es": f"{about.title_es}, WebP",
-            "description_es": _noted(str(about.description_es), notes_es),
-        }
+    es = about.language == "es"
     return replace(
         about,
         title=f"{about.title}, WebP",
@@ -278,7 +291,10 @@ def webp(
         identifier_url=url(path),
         source_url=url(copied),
         keywords=_words(about.keywords, "WebP"),
-        **spanish,
+        title_es=f"{about.title_es}, WebP" if es else about.title_es,
+        description_es=(
+            _noted(str(about.description_es), notes_es) if es else about.description_es
+        ),
     )
 
 
@@ -287,7 +303,8 @@ DESCRIPTION_LIMIT = 300
 
 
 def _noted(description: str, notes: tuple[str, ...]) -> str:
-    """Return *description* with the first of *notes* that keeps it within the profile's limit, the last one otherwise."""
+    """Return *description* with the first of *notes* that keeps it within the profile's limit, the
+    last one otherwise."""
     return next(
         (
             f"{description} {note}"
@@ -326,12 +343,16 @@ def screen(
     if scale:
         title = f"Kleidos unlock screen on the {name}, {scale}x"
         description = (
-            f"The Kleidos firmware's unlock screen on the {name}, a real capture of {width} x {height} pixels"
+            f"The Kleidos firmware's unlock screen on the {name}, a real capture of {width} x "
+            f"{height} pixels"
             f" enlarged {scale} times, each pixel a square."
         )
     else:
         title = f"Kleidos unlock screen on the {name}"
-        description = f"The Kleidos firmware's unlock screen on the {name}, a real capture at its own {width} x {height} pixels."
+        description = (
+            f"The Kleidos firmware's unlock screen on the {name}, a real capture at its "
+            f"own {width} x {height} pixels."
+        )
     return _record(
         path,
         title,
@@ -371,14 +392,17 @@ def photo(
 def kicad_preview(
     ground: str, path: str | Path, size: tuple[int, int] | None = None
 ) -> meta.MediaMeta:
-    """Return the record of a preview of the KiCad kit: its fixture drawn on *ground* with that ground's sheet and theme."""
+    """Return the record of a preview of the KiCad kit: its fixture drawn on *ground* with that
+    ground's sheet and theme."""
     page = "dark" if ground == "dark" else "white"
     return _record(
         path,
         f"Kleidos KiCad style, {ground} ground",
-        f"The Kleidos KiCad kit's fixture drawn with its {ground} drawing sheet and color theme: one page that exercises"
+        f"The Kleidos KiCad kit's fixture drawn with its {ground} drawing sheet and color theme: "
+        "one page that exercises"
         " every rule of the style, with the Kleidos mark in the title block.",
-        f"A one-page KiCad schematic in the Kleidos style on a {page} page: cyan connections, labelled nets, a"
+        f"A one-page KiCad schematic in the Kleidos style on a {page} page: cyan connections, "
+        "labeled nets, a"
         " legend table, and the title block with the Kleidos mark",
         ("KiCad", "schematic", "drawing sheet", "color theme", "brand"),
         "digitalCreation",

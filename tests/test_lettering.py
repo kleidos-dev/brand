@@ -1,3 +1,4 @@
+# SPDX-FileCopyrightText: 2026 José M. Requena Plens
 # SPDX-License-Identifier: MIT
 """The name's lettering and the lockups: one stable path, placed by the numbers of lockups.json."""
 
@@ -6,10 +7,9 @@ from __future__ import annotations
 import hashlib
 import json
 import re
-import xml.etree.ElementTree as ET
 from pathlib import Path
 
-from kleidos_brand import lettering, logo, mark, svgtext
+from kleidos_brand import lettering, logo, mark, svgtext, xmlsafe
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -45,7 +45,7 @@ def test_lockup_geometry_is_the_numbers_of_lockups_json() -> None:
     line = lettering.name_line(ROOT)
 
     def placed(stem: str) -> tuple[list[float], list[float]]:
-        tree = ET.fromstring(logos[stem].svg)
+        tree = xmlsafe.fromstring(logos[stem].svg)
         group = next(element for element in tree.iter() if element.get("class") == "mark")
         path = next(element for element in tree.iter() if element.get("class") == "lettering")
         return (
@@ -75,7 +75,7 @@ def test_every_logo_file_shows_the_whole_mark_or_none() -> None:
     shapes = mark.shapes(ROOT)
     assert len(shapes) == 5
     for item in logo.build(ROOT):
-        tree = ET.fromstring(item.svg)
+        tree = xmlsafe.fromstring(item.svg)
         groups = [element for element in tree.iter() if "mark" in element.get("class", "").split()]
         assert len(groups) == (0 if item.kind == "lettering" else 1), item.stem
         assert "<text" not in item.svg
@@ -84,10 +84,12 @@ def test_every_logo_file_shows_the_whole_mark_or_none() -> None:
 def test_text_becomes_outlines_with_its_words_kept() -> None:
     source = (
         '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 200"><g id="content">'
-        '<text id="line" x="400" y="120" text-anchor="middle" font-family="Mona Sans" font-size="100" font-weight="650"'
-        ' font-stretch="112.5%" letter-spacing="-0.03em" fill="#eceef1">on a <tspan fill="#00d2ff">board</tspan>.</text></g></svg>'
+        '<text id="line" x="400" y="120" text-anchor="middle" font-family="Mona Sans" '
+        'font-size="100" font-weight="650"'
+        ' font-stretch="112.5%" letter-spacing="-0.03em" fill="#eceef1">on a <tspan '
+        'fill="#00d2ff">board</tspan>.</text></g></svg>'
     )
-    tree = ET.fromstring(source)
+    tree = xmlsafe.fromstring(source)
     sets = svgtext.outline(tree, ROOT)
     group = next(element for element in tree.iter() if element.get("id") == "line")
     assert group.get("aria-label") == "on a board."

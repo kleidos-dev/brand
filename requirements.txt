@@ -1,3 +1,4 @@
+# SPDX-FileCopyrightText: 2026 José M. Requena Plens
 # SPDX-License-Identifier: MIT
 #
 # What the builders and the checks run, pinned. Nothing here is copied into
@@ -26,3 +27,8 @@ pytest-cov==7.1.0
 reuse==6.3.0
 # reuse needs one module that detects a file's encoding
 charset-normalizer==3.5.2
+
+# The KiCad kit's helper (kicad/kleidos_kicad.py) reads and rewrites the PDF
+# exports of boards and the meter with pypdf, the version they pin; it is
+# installed here so mypy checks the helper against pypdf's own types.
+pypdf==7.1.1

@@ -1,3 +1,4 @@
+# SPDX-FileCopyrightText: 2026 José M. Requena Plens
 # SPDX-License-Identifier: MIT
 """The KiCad kit: what the builder writes, what the check refuses, what the sync tool hands over."""
 
@@ -7,17 +8,19 @@ import importlib.util
 import json
 import shutil
 from pathlib import Path
+from types import ModuleType
 
 import pytest
-
 import sync_kicad
+
 from kleidos_brand import kicad, tokens
 
 ROOT = Path(__file__).resolve().parents[1]
 
 
-def helper():
+def helper() -> ModuleType:
     spec = importlib.util.spec_from_file_location("kleidos_kicad_under_test", ROOT / kicad.HELPER)
+    assert spec is not None and spec.loader is not None
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
     return module
@@ -185,7 +188,7 @@ def test_the_longest_board_title_fits_its_cell_and_a_longer_one_does_not() -> No
 
 def test_the_helper_reads_its_own_folder() -> None:
     kit = helper()
-    assert kit.KIT == (ROOT / "kicad").resolve()
+    assert (ROOT / "kicad").resolve() == kit.KIT
     assert kit.connection_mm() == pytest.approx(0.1524)
     assert kit.theme_colors("dark")["background"] == "#1C1C1C"
     assert kit.export_args("light")[:4] == [

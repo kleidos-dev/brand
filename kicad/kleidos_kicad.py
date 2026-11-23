@@ -1,3 +1,4 @@
+# SPDX-FileCopyrightText: 2026 José M. Requena Plens
 # SPDX-License-Identifier: MIT
 """Run kicad-cli with the Kleidos KiCad kit, the same way in every repository.
 
@@ -49,8 +50,10 @@ MIL = 0.0254
 
 
 def style() -> dict[str, Any]:
-    """Return the kit's ``style.json``: the sheet's geometry, the sizes, the widths, each ground's colors."""
-    return json.loads(STYLE.read_text(encoding="utf-8"))
+    """Return the kit's ``style.json``: the sheet's geometry, the sizes, the widths, each ground's
+    colors."""
+    data: dict[str, Any] = json.loads(STYLE.read_text(encoding="utf-8"))
+    return data
 
 
 def sheet(ground: str = "dark") -> Path:
@@ -64,13 +67,14 @@ def theme_file(ground: str = "dark") -> Path:
 
 
 def theme_name(ground: str = "dark") -> str:
-    """Return the name kicad-cli is given for the theme of *ground*: its file's name under ``colors/``."""
+    """Return the name kicad-cli is given for the theme of *ground*: its file's name under
+    ``colors/``."""
     return f"kleidos-{ground}"
 
 
 def connection_mm() -> float:
     """Return the one width of every connection (wires, pin lines), in mm."""
-    return style()["lines"]["connection_mil"] * MIL
+    return float(style()["lines"]["connection_mil"]) * MIL
 
 
 def rgb(color: str) -> tuple[int, int, int]:
@@ -94,13 +98,15 @@ EXPLICIT_ROLES = ("addition", "rule")
 
 
 def explicit(ground: str = "dark") -> dict[str, tuple[int, int, int]]:
-    """Return the explicit colors a generator writes on *ground* (the addition marker, a table's rules), by role."""
+    """Return the explicit colors a generator writes on *ground* (the addition marker, a table's
+    rules), by role."""
     colors = style()["colors"][ground]
     return {role: rgb(colors[role]) for role in EXPLICIT_ROLES}
 
 
 def recolor(text: str, ground: str) -> str:
-    """Return a ``.kicad_sch`` written for the dark ground with its explicit colors turned to *ground*'s.
+    """Return a ``.kicad_sch`` written for the dark ground with its explicit colors turned to
+    *ground*'s.
 
     The committed sources are the dark ground; a light export runs on a
     recolored copy and never rewrites them.
@@ -120,7 +126,7 @@ def text_width(text: str, size: float) -> float:
     KiCad's stroke font: the sum of the measured advances in ``style.json``
     (bold takes the same ones); a character not measured counts as the widest.
     """
-    advances = style()["font"]["stroke_advance"]
+    advances: dict[str, float] = style()["font"]["stroke_advance"]
     widest = max(advances.values())
     return sum(advances.get(char, widest) for char in text) * size
 
@@ -148,7 +154,8 @@ def kicad_cli() -> str:
 
 
 def environment(base: dict[str, str] | None = None) -> dict[str, str]:
-    """Return the environment kicad-cli runs in: a settings folder of its own, in English, with both themes.
+    """Return the environment kicad-cli runs in: a settings folder of its own, in English, with both
+    themes.
 
     The folder is made under the system's temporary folder and left for the
     caller's process to end with; it holds no secret.
@@ -183,7 +190,8 @@ def run(
 
 
 def erc(schematic: Path, env: dict[str, str], cli: str | None = None) -> tuple[int | None, str]:
-    """Run ERC on *schematic* with every severity; return the number of messages (None when it did not run) and the report."""
+    """Run ERC on *schematic* with every severity; return the number of messages (None when it did
+    not run) and the report."""
     with tempfile.TemporaryDirectory(prefix="kleidos-erc-") as scratch:
         report = Path(scratch) / "erc.rpt"
         run(
@@ -205,7 +213,8 @@ def export_args(ground: str = "dark") -> list[str]:
 def export_pdf(
     schematic: Path, pdf: Path, env: dict[str, str], ground: str = "dark", cli: str | None = None
 ) -> subprocess.CompletedProcess[str]:
-    """Export every sheet of *schematic* to *pdf*, in the ground's theme and sheet, without the property pop-ups."""
+    """Export every sheet of *schematic* to *pdf*, in the ground's theme and sheet, without the
+    property pop-ups."""
     return run(
         [
             "sch",
@@ -226,7 +235,8 @@ def export_pdf(
 def export_svg(
     schematic: Path, folder: Path, env: dict[str, str], ground: str = "dark", cli: str | None = None
 ) -> subprocess.CompletedProcess[str]:
-    """Export every sheet of *schematic*, one SVG each, into *folder*, in the ground's theme and sheet."""
+    """Export every sheet of *schematic*, one SVG each, into *folder*, in the ground's theme and
+    sheet."""
     return run(
         ["sch", "export", "svg", *export_args(ground), "-o", str(folder), schematic.name],
         schematic.parent,
@@ -236,7 +246,8 @@ def export_svg(
 
 
 def svg_findings(svg: Path, ground: str = "dark", wires: bool = True) -> list[str]:
-    """Return what is wrong with a page kicad-cli wrote: not the theme's background, or a wire-colored line of another width."""
+    """Return what is wrong with a page kicad-cli wrote: not the theme's background, or a
+    wire-colored line of another width."""
     text = svg.read_text(encoding="utf-8")
     palette = theme_colors(ground)
     found = []
@@ -245,7 +256,8 @@ def svg_findings(svg: Path, ground: str = "dark", wires: bool = True) -> list[st
     )
     if not background or background.group(1) != palette["background"]:
         found.append(
-            f"{svg.name}: background {background.group(1) if background else 'missing'}, the theme's is"
+            f"{svg.name}: background {background.group(1) if background else 'missing'}, the "
+            "theme's is"
             f" {palette['background']} (was the theme found?)"
         )
     wire, width = palette["wire"], round(connection_mm(), 4)
@@ -258,7 +270,8 @@ def svg_findings(svg: Path, ground: str = "dark", wires: bool = True) -> list[st
                 widths.add(round(float(stroke.group(1)), 4))
     if widths and widths != {width}:
         found.append(
-            f"{svg.name}: lines in the wire color take widths {sorted(widths)} mm, not only {width:.4f}"
+            f"{svg.name}: lines in the wire color take widths {sorted(widths)} mm, not only "
+            f"{width:.4f}"
         )
     if wires and not widths:
         found.append(f"{svg.name}: no line in the wire color {wire}")
@@ -266,7 +279,8 @@ def svg_findings(svg: Path, ground: str = "dark", wires: bool = True) -> list[st
 
 
 def pdf_findings(reader: Any, ground: str = "dark") -> list[str]:
-    """Return what is wrong with the mark in a PDF kicad-cli wrote (a pypdf ``PdfReader`` or ``PdfWriter``).
+    """Return what is wrong with the mark in a PDF kicad-cli wrote (a pypdf ``PdfReader`` or
+    ``PdfWriter``).
 
     Every page draws one image: the mark, at the logo file's pixel size, with
     its soft mask (the transparency kept), and the same object on every page.
@@ -293,7 +307,8 @@ def pdf_findings(reader: Any, ground: str = "dark") -> list[str]:
             int(image.get("/Height", 0)),
         ] != px or "/SMask" not in image:
             found.append(
-                f"page {number}: its image is not the mark of {px[0]} x {px[1]} px with its soft mask"
+                f"page {number}: its image is not the mark of {px[0]} x {px[1]} px with its soft "
+                "mask"
             )
         seen.add(idnum)
     if len(seen) > 1:
@@ -304,8 +319,9 @@ def pdf_findings(reader: Any, ground: str = "dark") -> list[str]:
 
 
 def sort_fonts(writer: Any) -> None:
-    """Put every page's ``/Font`` dictionary in key order (a pypdf ``PdfWriter``), so the rewrite is reproducible."""
-    from pypdf.generic import DictionaryObject, NameObject  # noqa: PLC0415 - the caller has pypdf
+    """Put every page's ``/Font`` dictionary in key order (a pypdf ``PdfWriter``), so the rewrite is
+    reproducible."""
+    from pypdf.generic import DictionaryObject, NameObject
 
     for page in writer.pages:
         resources = page.get("/Resources")

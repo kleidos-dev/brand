@@ -1,5 +1,7 @@
+# SPDX-FileCopyrightText: 2026 José M. Requena Plens
 # SPDX-License-Identifier: MIT
-"""The pictures: encoded from pixels alone, compared exactly and with tolerance, drawn the same twice."""
+"""The pictures: encoded from pixels alone, compared exactly and with tolerance, drawn the same
+twice."""
 
 from __future__ import annotations
 
@@ -7,10 +9,24 @@ import hashlib
 import io
 import json
 from pathlib import Path
+from typing import Any
 
 import build
 import pytest
-from kleidos_brand import boards, logo, meta, photos, png, press, record, records, tokens, webp
+
+from kleidos_brand import (
+    boards,
+    logo,
+    meta,
+    photos,
+    png,
+    press,
+    raster,
+    record,
+    records,
+    tokens,
+    webp,
+)
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -21,6 +37,13 @@ def picture(color: tuple[int, int, int, int], size: tuple[int, int] = (8, 8)) ->
     buffer = io.BytesIO()
     Image.new("RGBA", size, color).save(buffer, "PNG")
     return buffer.getvalue()
+
+
+def rgba(image: Any, xy: tuple[int, int]) -> tuple[int, ...]:
+    """Return the channels of one pixel of a Pillow image in a multi-band mode."""
+    value = image.getpixel(xy)
+    assert isinstance(value, tuple), f"{image.mode} is not a multi-band mode"
+    return value
 
 
 def test_a_cleaned_picture_carries_pixels_only() -> None:
@@ -130,7 +153,8 @@ def test_every_committed_picture_is_recorded_and_within_its_limits() -> None:
         if item.limit is not None:
             assert len(data) < item.limit, item.path
         elif item.path.parts[0] == "press-kit":
-            # A capture and the full-resolution photograph are kept as they are, with no limit of their own.
+            # A capture and the full-resolution photograph are kept as they are, with no limit of
+            # their own.
             assert item.path.parent in (press.SCREENS_DIR, photos.PHOTOS_DIR) and not item.row, (
                 item.path
             )
@@ -176,10 +200,10 @@ def test_the_small_marks_keyhole_is_a_hole() -> None:
     with Image.open(ROOT / logo.PNG_DIR / "kleidos-mark-small-21.png") as opened:
         pixels = opened.convert("RGBA")
     assert pixels.size == (21, 21)
-    assert pixels.getpixel((10, 9))[3] == 0, "the eye shows the ground"
-    assert pixels.getpixel((10, 11))[3] == 0, "and so does the stem"
-    assert pixels.getpixel((7, 9)) == (0, 210, 255, 255), "the body is solid in the ring's color"
-    assert pixels.getpixel((10, 0))[3] > 128 and pixels.getpixel((10, 1))[3] == 0, (
+    assert rgba(pixels, (10, 9))[3] == 0, "the eye shows the ground"
+    assert rgba(pixels, (10, 11))[3] == 0, "and so does the stem"
+    assert rgba(pixels, (7, 9)) == (0, 210, 255, 255), "the body is solid in the ring's color"
+    assert rgba(pixels, (10, 0))[3] > 128 and rgba(pixels, (10, 1))[3] == 0, (
         "the ring is one pixel, on the file's edge"
     )
     with Image.open(ROOT / logo.PNG_DIR / "kleidos-mark-small-on-dark-21.png") as opened:
@@ -239,7 +263,8 @@ def test_every_published_picture_has_its_webp_copy() -> None:
                 f"{twin.path}: not the PNG's pixels"
             )
         else:
-            assert png.drift((ROOT / item.path).read_bytes(), data) <= build.TOLERANCE, (
+            drift = png.drift((ROOT / item.path).read_bytes(), data)
+            assert drift is not None and drift <= build.TOLERANCE, (
                 f"{twin.path}: not the photograph"
             )
         assert twin.meta is not None and item.meta is not None
@@ -353,11 +378,11 @@ def test_the_archive_holds_the_renditions(tree: Path) -> None:
 
 
 @pytest.mark.browser
-def test_drawn_again_every_picture_is_the_committed_one(chromium) -> None:  # noqa: ANN001
+def test_drawn_again_every_picture_is_the_committed_one(chromium: raster.Browser) -> None:
     recorded = json.loads((ROOT / record.EXPORTS_JSON).read_text(encoding="utf-8"))
     exact = chromium.version == recorded["chromium"]
     _, pictures = build.collect(ROOT)
-    cache: dict = {}
+    cache: dict[str, Any] = {}
     for item in pictures:
         if item.path.parent not in (logo.PNG_DIR, press.IMAGES_DIR) or item.size[0] > 2600:
             continue
@@ -365,11 +390,12 @@ def test_drawn_again_every_picture_is_the_committed_one(chromium) -> None:  # no
         if exact:
             assert png.differing(again, kept) == 0, item.path
         else:
-            assert png.drift(again, kept) <= build.TOLERANCE, item.path
+            drift = png.drift(again, kept)
+            assert drift is not None and drift <= build.TOLERANCE, item.path
 
 
 @pytest.mark.browser
-def test_the_mark_alone_is_the_mark_file_drawn_by_itself(chromium) -> None:  # noqa: ANN001
+def test_the_mark_alone_is_the_mark_file_drawn_by_itself(chromium: raster.Browser) -> None:
     source = (ROOT / "logo/src/mark.svg").read_text(encoding="utf-8")
     alone = png.encode(png.clean(chromium.draw(source, (256, 256), "mark-source")))
     assert png.differing(alone, (ROOT / "logo/png/kleidos-mark-256.png").read_bytes()) == 0

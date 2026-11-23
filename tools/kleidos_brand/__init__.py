@@ -1,3 +1,4 @@
+# SPDX-FileCopyrightText: 2026 José M. Requena Plens
 # SPDX-License-Identifier: MIT
 """The Kleidos brand's builders and checks, as one importable package.
 
@@ -37,7 +38,7 @@ PROJECT_SUPPLIER = "jmrplens@kleidos.dev"
 # REUSE-IgnoreStart
 SVG_HEADER = (
     "<!--\n"
-    "  SPDX-FileCopyrightText: 2026 José M. Requena Plens <mail@kleidos.dev>\n"
+    "  SPDX-FileCopyrightText: 2026 José M. Requena Plens\n"
     "  SPDX-License-Identifier: GPL-3.0-or-later\n"
     "  Additional terms under section 7 of the GNU GPL version 3: TRADEMARKS.md\n"
     "-->\n"

@@ -1,5 +1,7 @@
+# SPDX-FileCopyrightText: 2026 José M. Requena Plens
 # SPDX-License-Identifier: MIT
-"""The KiCad kit's previews: its fixture exported by kicad-cli with each ground's sheet and theme, drawn to pixels.
+"""The KiCad kit's previews: its fixture exported by kicad-cli with each ground's sheet and theme,
+drawn to pixels.
 
 The only part of the builder that needs KiCad (``tools/build.py --kicad``).
 kicad-cli writes the fixture's page as an SVG whose words are outlines, so
@@ -45,7 +47,8 @@ def inputs(ground: str, root: Path = BRAND_ROOT) -> tuple[Path, ...]:
 
 
 def source(ground: str, root: Path = BRAND_ROOT) -> str:
-    """Return the SHA-256 of what a preview is drawn from: the fixture, then the kit's files as the builder writes them."""
+    """Return the SHA-256 of what a preview is drawn from: the fixture, then the kit's files as the
+    builder writes them."""
     digest = hashlib.sha256()
     for name in (FIXTURE, FIXTURE_PRO, kicad.HELPER):
         digest.update((root / name).read_bytes())
@@ -58,14 +61,16 @@ def source(ground: str, root: Path = BRAND_ROOT) -> str:
 def helper(root: Path = BRAND_ROOT) -> ModuleType:
     """Return the kit's ``kleidos_kicad`` module, loaded from the tree at *root*."""
     spec = importlib.util.spec_from_file_location("kleidos_kicad", root / kicad.HELPER)
-    assert spec is not None and spec.loader is not None
+    if spec is None or spec.loader is None:
+        raise ImportError(f"cannot load the KiCad kit's helper from {root / kicad.HELPER}")
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
     return module
 
 
 def export_svg(ground: str, root: Path = BRAND_ROOT) -> str:
-    """Return the fixture's page as kicad-cli draws it on *ground*; raises when ERC reports anything."""
+    """Return the fixture's page as kicad-cli draws it on *ground*; raises when ERC reports
+    anything."""
     kit = helper(root)
     env = kit.environment()
     with tempfile.TemporaryDirectory(prefix="kleidos-preview-") as scratch:
@@ -93,7 +98,7 @@ def export_svg(ground: str, root: Path = BRAND_ROOT) -> str:
 
 def draw(ground: str, browser: Any, root: Path = BRAND_ROOT) -> Any:
     """Return the preview's pixels on *ground*, flattened on the ground's color (a Pillow image)."""
-    from . import png  # noqa: PLC0415
+    from . import png
 
     color = kicad.colors(root)[ground]["ground"]
     return png.clean(browser.draw(export_svg(ground, root), SIZE, f"kicad-{ground}"), flatten=color)

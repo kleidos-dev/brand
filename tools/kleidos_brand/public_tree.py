@@ -1,3 +1,4 @@
+# SPDX-FileCopyrightText: 2026 José M. Requena Plens
 # SPDX-License-Identifier: MIT
 """What must never be in a tree that will be published, and what every file's license must be.
 
@@ -10,7 +11,7 @@ with its own lists:
 - licenses are declared, not mentioned: every SPDX tag, every identifier of
   ``REUSE.toml`` and every text under ``LICENSES/`` is one of the allowed
   ones, all approved by the OSI. Prose may name any license (a notice has to
-  say what a neighbouring repository uses); a declaration may not;
+  say what a neighboring repository uses); a declaration may not;
 - fonts: only the pinned files, byte for byte; no other font container and no
   font inside an SVG, because a subset or a converted copy is a Modified
   Version under the OFL;
@@ -103,7 +104,10 @@ PRIVATE = [
     (
         "a token or a key",
         re.compile(
-            r"\b(?:gh[pousr]_[A-Za-z0-9]{30,}|github_pat_[A-Za-z0-9_]{40,}|glpat-[A-Za-z0-9_-]{20,}|sk-(?:ant-)?[A-Za-z0-9_-]{32,}|AKIA[0-9A-Z]{16})\b|-----BEGIN (?:[A-Z]+ )*PRIVATE KEY-----"
+            r"\b(?:gh[pousr]_[A-Za-z0-9]{30,}|github_pat_[A-Za-z0-9_]{40,}"
+            r"|glpat-[A-Za-z0-9_-]{20,}|sk-(?:ant-)?[A-Za-z0-9_-]{32,}|AKIA[0-9A-Z]{16})\b"
+            r"|-----BEGIN "
+            r"(?:[A-Z]+ )*PRIVATE KEY-----"
         ),
     ),
 ]
@@ -111,6 +115,15 @@ PRIVATE = [
 SPDX_TAG = re.compile(r"SPDX-License-Identifier:[ \t]*([^\n\r]*)")
 # REUSE-IgnoreEnd
 IGNORE_BLOCK = re.compile(r"REUSE-IgnoreStart.*?REUSE-IgnoreEnd", re.S)
+#: The licensing header a Markdown file opens with: an HTML comment of SPDX lines.
+LICENSING_HEADER = re.compile(r"\A<!--\n(?:SPDX-[^\n]*\n)+-->\n")
+
+
+def prose(path: Path) -> str:
+    """Return a Markdown text as its readers quote it: without its licensing header, stripped."""
+    return LICENSING_HEADER.sub("", path.read_text(encoding="utf-8"), count=1).strip()
+
+
 BOARD_MARKERS = (re.compile(r"""(?:id|class)=["'][^"']*\b(?:screen-active|hotspots)\b"""),)
 SVG_FONT = re.compile(r"@font-face|data:font|data:application/(?:x-)?font|<font\b|<font-face\b")
 REGISTERED = chr(0xAE)
@@ -142,10 +155,11 @@ def private_findings(
     allowed_emails: frozenset[str] = frozenset({PROJECT_CONTACT, PROJECT_SUPPLIER}),
 ) -> list[str]:
     """Return the private data in one file's text."""
-    found = []
-    for what, pattern in PRIVATE:
-        for match in pattern.finditer(text):
-            found.append(f"{name}: holds {what} ({match.group(0)[:60]})")
+    found = [
+        f"{name}: holds {what} ({match.group(0)[:60]})"
+        for what, pattern in PRIVATE
+        for match in pattern.finditer(text)
+    ]
     for match in IPV4.finditer(text):
         try:
             address = ipaddress.ip_address(match.group(1))
@@ -153,13 +167,14 @@ def private_findings(
             continue
         if address.is_private and not any(address in net for net in DOC_NETS):
             found.append(f"{name}: holds a private network address ({match.group(1)})")
-    for match in MAC.finditer(text):
-        found.append(f"{name}: holds a hardware address ({match.group(1)})")
+    found.extend(
+        f"{name}: holds a hardware address ({match.group(1)})" for match in MAC.finditer(text)
+    )
     for match in EMAIL.finditer(text):
-        address, domain = match.group(1), match.group(2).lower()
-        if address.lower() not in allowed_emails and domain not in ALLOWED_EMAIL_DOMAINS:
+        mailbox, domain = match.group(1), match.group(2).lower()
+        if mailbox.lower() not in allowed_emails and domain not in ALLOWED_EMAIL_DOMAINS:
             found.append(
-                f"{name}: holds an e-mail address that is not the project's contact ({address})"
+                f"{name}: holds an e-mail address that is not the project's contact ({mailbox})"
             )
     return found
 
@@ -170,25 +185,27 @@ def license_findings(root: Path, files: list[Path], allowed: frozenset[str]) -> 
     A declaration is an SPDX tag in a file (outside a REUSE ignore block), an
     identifier in ``REUSE.toml`` or a text under ``LICENSES/``.
     """
-    found = []
+    found: list[str] = []
     texts = (
         {path.stem for path in (root / "LICENSES").glob("*.txt")}
         if (root / "LICENSES").is_dir()
         else set()
     )
-    for extra in sorted(texts - allowed):
-        found.append(f"LICENSES/{extra}.txt: only {', '.join(sorted(allowed))} belong in LICENSES/")
-    for missing in sorted(allowed - texts):
-        found.append(f"LICENSES/{missing}.txt: missing")
+    found.extend(
+        f"LICENSES/{extra}.txt: only {', '.join(sorted(allowed))} belong in LICENSES/"
+        for extra in sorted(texts - allowed)
+    )
+    found.extend(f"LICENSES/{missing}.txt: missing" for missing in sorted(allowed - texts))
     reuse = root / "REUSE.toml"
     if reuse.is_file():
         for annotation in tomllib.loads(reuse.read_text(encoding="utf-8")).get("annotations", []):
             identifier = annotation.get("SPDX-License-Identifier", "")
-            for part in re.split(r"\s+(?:AND|OR|WITH)\s+|[()]", identifier):
-                if part.strip() and part.strip() not in allowed:
-                    found.append(
-                        f"REUSE.toml: declares {part.strip()!r} for {annotation.get('path')}; only {', '.join(sorted(allowed))} are declared here"
-                    )
+            found.extend(
+                f"REUSE.toml: declares {part.strip()!r} for {annotation.get('path')}; only "
+                f"{', '.join(sorted(allowed))} are declared here"
+                for part in re.split(r"\s+(?:AND|OR|WITH)\s+|[()]", identifier)
+                if part.strip() and part.strip() not in allowed
+            )
     else:
         found.append("REUSE.toml: missing")
     for path in files:
@@ -207,13 +224,15 @@ def license_findings(root: Path, files: list[Path], allowed: frozenset[str]) -> 
             ]
             if not parts or any(part not in allowed for part in parts):
                 found.append(
-                    f"{path}: its license tag reads {expression!r}; a tag stands alone on its line and names one of {', '.join(sorted(allowed))}"
+                    f"{path}: its license tag reads {expression!r}; a tag stands alone on its line "
+                    f"and names one of {', '.join(sorted(allowed))}"
                 )
     return found
 
 
 def font_findings(root: Path, files: list[Path], pins: dict[str, str]) -> list[str]:
-    """Return every font that is not a pinned file with its pinned bytes, and every font inside an SVG.
+    """Return every font that is not a pinned file with its pinned bytes, and every font inside an
+    SVG.
 
     :param pins: Each pinned file's path, relative to *root*, and its SHA-256.
     """
@@ -224,7 +243,8 @@ def font_findings(root: Path, files: list[Path], pins: dict[str, str]) -> list[s
             pin = pins.get(path.as_posix())
             if pin is None:
                 found.append(
-                    f"{path}: a font file that is not pinned; a subset, an instance or a converted copy is a Modified Version"
+                    f"{path}: a font file that is not pinned; a subset, an instance or a converted "
+                    "copy is a Modified Version"
                 )
             elif hashlib.sha256((root / path).read_bytes()).hexdigest() != pin:
                 found.append(f"{path}: its bytes are not the pinned upstream file's")
@@ -232,7 +252,8 @@ def font_findings(root: Path, files: list[Path], pins: dict[str, str]) -> list[s
             (root / path).read_text(encoding="utf-8", errors="replace")
         ):
             found.append(
-                f"{path}: holds a font or a font-face rule; an SVG here holds outlines, never a font"
+                f"{path}: holds a font or a font-face rule; an SVG here holds outlines, never a "
+                "font"
             )
     for name, pin in pins.items():
         if not (root / name).is_file():
@@ -278,13 +299,15 @@ def findings(
             found += private_findings(name, text, allowed_emails)
             if REGISTERED in text and not in_boards:
                 found.append(
-                    f"{name}: prints the registered-trademark sign; Kleidos is not a registered trademark"
+                    f"{name}: prints the registered-trademark sign; Kleidos is not a registered "
+                    "trademark"
                 )
         if suffix == ".svg":
             if any(marker.search(text) for marker in BOARD_MARKERS) and not in_boards:
                 where = f" (copies go in {', '.join(board_dirs)})" if board_dirs else ""
                 found.append(
-                    f"{name}: carries a board drawing's markers; board drawings are the boards repository's{where}"
+                    f"{name}: carries a board drawing's markers; board drawings are the boards "
+                    f"repository's{where}"
                 )
             if re.search(r"<image\b|data:image", text):
                 found.append(f"{name}: embeds a picture")
@@ -295,7 +318,8 @@ PIN = re.compile(r"`([^`]+\.(?:ttf|otf|txt))`\s+`([0-9a-f]{64})`")
 
 
 def font_pins(root: Path, versions: str = "fonts/VERSIONS.md") -> dict[str, str]:
-    """Return the pinned files of ``fonts/VERSIONS.md``: each path, relative to *root*, and its SHA-256."""
+    """Return the pinned files of ``fonts/VERSIONS.md``: each path, relative to *root*, and its
+    SHA-256."""
     folder = Path(versions).parent
     return {
         (folder / name).as_posix(): digest

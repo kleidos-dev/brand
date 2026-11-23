@@ -1,3 +1,8 @@
+<!--
+SPDX-FileCopyrightText: 2026 José M. Requena Plens
+SPDX-License-Identifier: GPL-3.0-or-later
+-->
+
 # Press kit
 
 **Use any file here as it is. Editorial use needs no permission; the only thing asked is to leave the mark unaltered.**
@@ -114,7 +119,7 @@ Credit, welcome and not required: "Photo: José M. Requena Plens".
 
 ## The boards
 
-The boards in the line-up images are the drawings of the project's `boards` repository, copied under [`../boards/`](../boards/) with the commit they were taken at (MIT), and drawn at one scale: a millimetre of any board is the same length as a millimetre of any other, on both shelves of the 4:5 image too. They keep their cases' true colors and the legends printed on them, the makers' marks included, which are their owners'. Each panel shows that board's own unlock screen, one of the captures above, brought to the panel's size. A photograph of four of the boards is above.
+The boards in the line-up images are the drawings of the project's `boards` repository, copied under [`../boards/`](../boards/) with the commit they were taken at (MIT), and drawn at one scale: a millimeter of any board is the same length as a millimeter of any other, on both shelves of the 4:5 image too. They keep their cases' true colors and the legends printed on them, the makers' marks included, which are their owners'. Each panel shows that board's own unlock screen, one of the captures above, brought to the panel's size. A photograph of four of the boards is above.
 
 ## Contact
 

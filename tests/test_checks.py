@@ -1,3 +1,4 @@
+# SPDX-FileCopyrightText: 2026 José M. Requena Plens
 # SPDX-License-Identifier: MIT
 """The checks catch what they are for: each test plants one defect in a copy of the tree."""
 
@@ -10,6 +11,7 @@ import sys
 from pathlib import Path
 
 import check
+
 from kleidos_brand import SVG_HEADER, public_tree
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -22,7 +24,10 @@ OTHER_EMAIL = "someone" + "@" + "elsewhere.org"
 REGISTERED = chr(0xAE)
 # REUSE-IgnoreStart
 CC_TAG = "SPDX-License-Identifier: CC-BY-SA-4.0"
-ONE_LINE_HEADER = "<!-- SPDX-License-Identifier: GPL-3.0-or-later. Additional terms under section 7 of the GNU GPL version 3: TRADEMARKS.md. -->\n"
+ONE_LINE_HEADER = (
+    "<!-- SPDX-License-Identifier: GPL-3.0-or-later. Additional terms under section "
+    "7 of the GNU GPL version 3: TRADEMARKS.md. -->\n"
+)
 # REUSE-IgnoreEnd
 
 
@@ -283,7 +288,8 @@ def test_a_picture_with_a_time_or_a_changed_text_is_refused(tree: Path) -> None:
     assert found(tree, "logo/png/kleidos-mark-256.png", "M005", "tIME")
     title = b"Kleidos mark, in color, 256 px"
     assert title in data
-    # The same chunk, one word changed and its CRC made again: well-formed, but not what the record gives.
+    # The same chunk, one word changed and its CRC made again: well-formed, but not what the record
+    # gives.
     at = data.index(b"tEXtTitle\x00" + title)
     length = int.from_bytes(data[at - 4 : at], "big")
     assert length == len(b"Title\x00" + title)
@@ -480,7 +486,7 @@ def test_prose_may_name_another_license(tree: Path) -> None:
     notice = tree / "NOTICE.md"
     notice.write_text(
         notice.read_text(encoding="utf-8")
-        + "\nA neighbour once used CC BY-SA 4.0 and Apache-2.0.\n",
+        + "\nA neighbor once used CC BY-SA 4.0 and Apache-2.0.\n",
         encoding="utf-8",
     )
     assert not public_tree.license_findings(tree, [Path("NOTICE.md")], check.ALLOWED_LICENSES)
@@ -531,8 +537,8 @@ def test_a_pinned_font_with_other_bytes_is_refused(tree: Path) -> None:
 
 def test_a_font_inside_an_svg_is_refused(tree: Path) -> None:
     (tree / "logo/svg/extra.svg").write_text(
-        SVG_HEADER
-        + '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1 1"><style>@font-face{font-family:x;'
+        SVG_HEADER + '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1 '
+        '1"><style>@font-face{font-family:x;'
         "src:url(data:font/woff2;base64,AAAA)}</style></svg>\n",
         encoding="utf-8",
     )
@@ -544,7 +550,8 @@ def test_a_font_inside_an_svg_is_refused(tree: Path) -> None:
 
 def test_private_data_is_refused(tree: Path) -> None:
     planted(tree, "notes/notes.md").write_text(
-        f"Saved in {HOME_PATH}, served from {PRIVATE_ADDRESS}, board {HARDWARE_ADDRESS}, ask {OTHER_EMAIL}.\n",
+        f"Saved in {HOME_PATH}, served from {PRIVATE_ADDRESS}, board {HARDWARE_ADDRESS}, ask "
+        f"{OTHER_EMAIL}.\n",
         encoding="utf-8",
     )
     for what in (
@@ -564,7 +571,8 @@ def test_the_registered_sign_is_refused(tree: Path) -> None:
 def test_a_board_drawing_is_refused(tree: Path) -> None:
     (tree / "press-kit/src/front.svg").write_text(
         SVG_HEADER
-        + '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10"><g id="ground"/><g id="content">'
+        + '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10"><g id="ground"/><g '
+        'id="content">'
         '<g id="hotspots"/></g><g id="guides"/></svg>\n',
         encoding="utf-8",
     )
@@ -582,7 +590,7 @@ def test_a_webp_copy_with_camera_data_or_no_record_is_refused(tree: Path) -> Non
     path = tree / "logo/webp/kleidos-mark-256.webp"
     chunks = meta.webp_chunks_of(path.read_bytes())
     exif = [chunks[0], *chunks[1:-1], ("EXIF", b"Exif\x00\x00MM"), chunks[-1]]
-    path.write_bytes(meta._webp_file(exif))  # noqa: SLF001 - a well-formed file with one chunk too many
+    path.write_bytes(meta._webp_file(exif))
     assert found(tree, "logo/webp/kleidos-mark-256.webp", "M005", "EXIF")
     bare = tree / "logo/webp/kleidos-mark-64.webp"
     bare.write_bytes(meta.webp_bare(bare.read_bytes()))

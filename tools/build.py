@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
+# SPDX-FileCopyrightText: 2026 José M. Requena Plens
 # SPDX-License-Identifier: MIT
-"""Build everything this repository generates, or check that what is committed is what the sources give.
+"""Build everything this repository generates, or check that what is committed is what the sources
+give.
 
     tools/build.py                    regenerate the tokens' files, the logo files (with their
                                       opaque copies), the palette, the press images, the
@@ -13,8 +15,9 @@
                                       picture's bytes against the record of what it was drawn from
     tools/build.py --check --tolerant draw again under any browser and fail on gross drift only
     tools/build.py --zip              write dist/kleidos-press-kit.zip (not committed)
-    tools/build.py --kicad            also export the KiCad kit's fixture with kicad-cli and draw its
-                                      previews (kicad/preview/); without it they are kept as they are
+    tools/build.py --kicad            also export the KiCad kit's fixture with kicad-cli and draw
+                                      its previews (kicad/preview/); without it they are kept as
+                                      they are
 
 The KiCad kit's previews are the one kind of picture that needs KiCad: they
 are drawn again only with ``--kicad`` (writing or checking), and the static
@@ -57,7 +60,7 @@ from kleidos_brand import (
     photos,
     png,
     press,
-    raster,  # noqa: E402
+    raster,
     record,
     records,
     tokens,
@@ -93,27 +96,37 @@ class Text:
     meta: meta.MediaMeta | None = None
 
 
+#: How a picture is drawn: from the browser (None under a static check) and the run's cache.
+Draw = Callable[["raster.Browser | None", dict[str, Any]], bytes]
+
+#: Why a picture drawn by Chromium cannot be drawn: the static check opens no browser.
+NEEDS_BROWSER = "this picture is drawn by the browser, and none is open (--static draws nothing)"
+
+
 @dataclass(frozen=True)
 class Picture:
-    """A generated picture (a PNG, or a photograph's JPEG copy): its size, its limit, what it is drawn from and how."""
+    """A generated picture (a PNG, or a photograph's JPEG copy): its size, its limit, what it is
+    drawn from and how."""
 
     path: Path
     size: tuple[int, int]
     source: str  # the SHA-256 of the SVG or capture it is drawn from
     inputs: tuple[Path, ...]
-    draw: Callable[[raster.Browser | None, dict[str, Any]], bytes]
+    draw: Draw
     what: str
     limit: int | None = None
     needs_browser: bool = True
     meta: meta.MediaMeta | None = None
-    row: bool = True  # listed in its page's generated table; a capture or the full photograph has its own row
+    # Listed in its page's generated table; a capture or the full photograph has its own row.
+    row: bool = True
     copy_of: Path | None = None  # an opaque or WebP copy: the published file it is made from
     lossless: bool = False  # a lossless WebP copy: it decodes to its copy_of's pixels exactly
     needs_kicad: bool = False  # drawn from a kicad-cli export: drawn again only with --kicad
 
 
 def webp_path(path: Path) -> Path:
-    """Return where the WebP copy of a published PNG or JPEG file goes: ``logo/webp/`` for a logo file, beside it otherwise."""
+    """Return where the WebP copy of a published PNG or JPEG file goes: ``logo/webp/`` for a logo
+    file, beside it otherwise."""
     folder = logo.WEBP_DIR if path.parent == logo.PNG_DIR else path.parent
     return folder / f"{path.stem}.webp"
 
@@ -124,7 +137,8 @@ def stamped_svg(path: Path, svg: str, record_: meta.MediaMeta) -> Text:
 
 
 def collect(root: Path = BRAND_ROOT) -> tuple[list[Text], list[Picture]]:
-    """Return every file the builder owns: the text ones with their content, the pictures with their recipe."""
+    """Return every file the builder owns: the text ones with their content, the pictures with their
+    recipe."""
     loaded = tokens.load(root)
     texts = [
         Text(tokens.FLAT_JSON, tokens.flat_json(loaded)),
@@ -144,14 +158,16 @@ def collect(root: Path = BRAND_ROOT) -> tuple[list[Text], list[Picture]]:
         svg = published[item.stem].content
         about = records.logo(item, path, (width, height), records.url(published[item.stem].path))
         if item.px and item.paint:
-            # A small mark's pixels are counted, not drawn by the browser: the same bytes on every machine.
+            # A small mark's pixels are counted, not drawn by the browser: the same bytes on every
+            # machine.
             def draw_small(
                 _: raster.Browser | None,
                 __: dict[str, Any],
                 item: logo.Logo = item,
                 about: meta.MediaMeta = about,
             ) -> bytes:
-                assert item.px and item.paint
+                if not (item.px and item.paint):
+                    raise ValueError(f"{item.stem}: a small mark needs its size and its paint")
                 image = mark.small_pixels(mark.small_fit(shapes, item.px, small), item.paint)
                 return png.encode(png.clean(png.encode(image), flatten=item.ground), about)
 
@@ -177,7 +193,8 @@ def collect(root: Path = BRAND_ROOT) -> tuple[list[Text], list[Picture]]:
             svg: str = svg,
             about: meta.MediaMeta = about,
         ) -> bytes:
-            assert browser is not None
+            if browser is None:
+                raise RuntimeError(NEEDS_BROWSER)
             return png.encode(
                 png.clean(browser.draw(svg, size, item.stem), flatten=item.ground), about
             )
@@ -205,7 +222,8 @@ def collect(root: Path = BRAND_ROOT) -> tuple[list[Text], list[Picture]]:
     sheet_meta = records.palette(palette.PALETTE_PNG, sheet_size, records.url(palette.PALETTE_SVG))
 
     def draw_palette(browser: raster.Browser | None, _: dict[str, Any]) -> bytes:
-        assert browser is not None
+        if browser is None:
+            raise RuntimeError(NEEDS_BROWSER)
         return png.encode(
             png.clean(browser.draw(sheet, sheet_size, "palette"), flatten=ground), sheet_meta
         )
@@ -279,19 +297,20 @@ def collect(root: Path = BRAND_ROOT) -> tuple[list[Text], list[Picture]]:
         )
 
     entries = {entry["file"]: entry for entry in data["images"]}
-    for image in press.images(root):
+    for listed in press.images(root):
         entry = entries[
-            image.stem.removesuffix(f"-{image.lang}")
-            if image.lang != data["default_lang"]
-            else image.stem
+            listed.stem.removesuffix(f"-{listed.lang}")
+            if listed.lang != data["default_lang"]
+            else listed.stem
         ]
-        svg_path = press.SVG_DIR / f"{image.stem}.svg"
-        if image.publish_svg:
+        svg_path = press.SVG_DIR / f"{listed.stem}.svg"
+        image = listed
+        if listed.publish_svg:
             published_press = stamped_svg(
-                svg_path, image.svg, records.press(image, entry, svg_path)
+                svg_path, listed.svg, records.press(listed, entry, svg_path)
             )
             texts.append(published_press)
-            image = dataclasses.replace(image, svg=published_press.content)
+            image = dataclasses.replace(listed, svg=published_press.content)
         screens = tuple(
             press.SCREENS_DIR / f"kleidos-screen-{plate.board}.png" for plate in image.plates
         )
@@ -324,7 +343,8 @@ def collect(root: Path = BRAND_ROOT) -> tuple[list[Text], list[Picture]]:
             browser: raster.Browser | None, cache: dict[str, Any], image: press.Image = image
         ) -> Any:
             if image.stem not in cache:
-                assert browser is not None
+                if browser is None:
+                    raise RuntimeError(NEEDS_BROWSER)
                 drawn = png.clean(
                     browser.draw(image.svg, image.size, image.stem), flatten=image.ground
                 )
@@ -352,7 +372,8 @@ def collect(root: Path = BRAND_ROOT) -> tuple[list[Text], list[Picture]]:
                     return png.encode(full(browser, cache, image), about)
                 if image.plates or image.fronts:
                     return png.encode(press.narrowed(full(browser, cache, image), size), about)
-                assert browser is not None
+                if browser is None:
+                    raise RuntimeError(NEEDS_BROWSER)
                 return png.encode(
                     png.clean(
                         browser.draw(image.svg, size, f"{image.stem}-{size[0]}"),
@@ -450,7 +471,8 @@ def collect(root: Path = BRAND_ROOT) -> tuple[list[Text], list[Picture]]:
             side: str = kicad_ground,
             about: meta.MediaMeta = about,
         ) -> bytes:
-            assert browser is not None
+            if browser is None:
+                raise RuntimeError(NEEDS_BROWSER)
             return png.encode(kicad_preview.draw(side, browser, root), about)
 
         pictures.append(
@@ -472,7 +494,8 @@ def collect(root: Path = BRAND_ROOT) -> tuple[list[Text], list[Picture]]:
 
 
 def opaque_copies(root: Path, pictures: list[Picture]) -> list[Picture]:
-    """Return the opaque copy of every logo PNG on transparency: its pixels flattened on white or black, no clear space added."""
+    """Return the opaque copy of every logo PNG on transparency: its pixels flattened on white or
+    black, no clear space added."""
     by_path = {picture.path: picture for picture in pictures}
     out = []
     for copy in logo.opaque_plan(root):
@@ -489,7 +512,10 @@ def opaque_copies(root: Path, pictures: list[Picture]) -> list[Picture]:
                 png.clean((root / copy.source).read_bytes(), flatten=copy.color), about
             )
 
-        what = f"{copy.item.what.replace(', on transparency', '')}, flattened on {copy.ground} ({copy.color})"
+        what = (
+            f"{copy.item.what.replace(', on transparency', '')}, flattened on {copy.ground} "
+            f"({copy.color})"
+        )
         out.append(
             Picture(
                 copy.path,
@@ -507,7 +533,8 @@ def opaque_copies(root: Path, pictures: list[Picture]) -> list[Picture]:
 
 
 def webp_copies(root: Path, pictures: list[Picture], data: dict[str, Any]) -> list[Picture]:
-    """Return the WebP copy of every published PNG and JPEG file: lossless from a PNG's pixels, lossy from a photograph's."""
+    """Return the WebP copy of every published PNG and JPEG file: lossless from a PNG's pixels,
+    lossy from a photograph's."""
     wholes = {
         photos.PHOTOS_DIR / f"{photo['file']}.jpg": photo
         for photo in data.get("photos", {}).values()
@@ -519,18 +546,22 @@ def webp_copies(root: Path, pictures: list[Picture], data: dict[str, Any]) -> li
         path = webp_path(picture.path)
         lossless = picture.path.suffix == ".png"
         about = records.webp(picture.meta, path, picture.path, lossless)
+        draw_webp: Draw
         if lossless:
             inputs: tuple[Path, ...] = (picture.path,)
 
-            def draw_webp(
+            def draw_lossless(
                 _: raster.Browser | None,
                 __: dict[str, Any],
                 picture: Picture = picture,
                 about: meta.MediaMeta = about,
             ) -> bytes:
                 return webp.copy_of((root / picture.path).read_bytes(), about)
+
+            draw_webp = draw_lossless
         else:
-            # A narrower photograph's WebP is drawn from the full-resolution file, as its JPEG is: one lossy step, not two.
+            # A narrower photograph's WebP is drawn from the full-resolution file, as its JPEG is:
+            # one lossy step, not two.
             whole = (
                 picture.path
                 if picture.path in wholes
@@ -538,7 +569,7 @@ def webp_copies(root: Path, pictures: list[Picture], data: dict[str, Any]) -> li
             )
             inputs = (whole, press.PRESS_JSON)
 
-            def draw_webp(
+            def draw_lossy(
                 _: raster.Browser | None,
                 __: dict[str, Any],
                 whole: Path = whole,
@@ -548,6 +579,8 @@ def webp_copies(root: Path, pictures: list[Picture], data: dict[str, Any]) -> li
                 return webp.encode(
                     photos.resized((root / whole).read_bytes(), size), about, lossless=False
                 )
+
+            draw_webp = draw_lossy
 
         out.append(
             Picture(
@@ -575,7 +608,8 @@ def picture_findings(
     limit: int | None = None,
     about: meta.MediaMeta | None = None,
 ) -> list[str]:
-    """Return what is wrong with a published picture, a PNG, a WebP copy or a photograph's JPEG, its metadata included."""
+    """Return what is wrong with a published picture, a PNG, a WebP copy or a photograph's JPEG, its
+    metadata included."""
     check = (
         photos.findings
         if name.endswith(".jpg")
@@ -644,9 +678,13 @@ def blocks(
         )
         if item.family in opaque:
             copy = opaque[item.family]
-            flat = f"{item.what.replace(', on transparency', '')}, flattened on {copy.ground} ({copy.color}): no transparency, no clear space added"
+            flat = (
+                f"{item.what.replace(', on transparency', '')}, flattened on {copy.ground} "
+                f"({copy.color}): no transparency, no clear space added"
+            )
             logo_rows.append(
-                f"| `{copy.family}{'-<px>' if item.px else ''}` | {flat} | | {' | '.join(copies(copy.family))} |"
+                f"| `{copy.family}{'-<px>' if item.px else ''}` | {flat} | | "
+                f"{' | '.join(copies(copy.family))} |"
             )
 
     def webp_cell(path: Path, folder: str) -> str:
@@ -664,14 +702,17 @@ def blocks(
             else "missing"
         )
         photo_rows.append(
-            f"| [`{whole.name}`](photos/{whole.name}) | {photo['size'][0]} x {photo['size'][1]} | {weight_now} |"
+            f"| [`{whole.name}`](photos/{whole.name}) | {photo['size'][0]} x {photo['size'][1]} | "
+            f"{weight_now} |"
             f" {webp_cell(whole, 'photos')} | {photo['what']}, at full resolution |"
         )
     for board, screen in data["screens"].items():
         native = press.SCREENS_DIR / f"kleidos-screen-{board}.png"
         screen_rows.append(
-            f"| [`{native.name}`](screens/{native.name}) | {screen['size'][0]} x {screen['size'][1]} |"
-            f" {record.human_bytes((root / native).stat().st_size)} | {webp_cell(native, 'screens')} |"
+            f"| [`{native.name}`](screens/{native.name}) | {screen['size'][0]} x "
+            f"{screen['size'][1]} |"
+            f" {record.human_bytes((root / native).stat().st_size)} | "
+            f"{webp_cell(native, 'screens')} |"
             f" the {screen['name']}'s unlock screen, as captured |"
         )
     for picture in pictures:
@@ -679,7 +720,8 @@ def blocks(
             continue
         folder = picture.path.parent.relative_to("press-kit").as_posix()
         row = (
-            f"| [`{picture.path.name}`]({picture.path.relative_to('press-kit').as_posix()}) | {picture.size[0]} x {picture.size[1]} |"
+            f"| [`{picture.path.name}`]({picture.path.relative_to('press-kit').as_posix()}) | "
+            f"{picture.size[0]} x {picture.size[1]} |"
             f" {weight(picture.path)} | {webp_cell(picture.path, folder)} | {picture.what} |"
         )
         if picture.path.parent == press.IMAGES_DIR:
@@ -732,7 +774,8 @@ def stale(root: Path, texts: list[Text], pictures: list[Picture]) -> list[Path]:
 
 
 def write(root: Path = BRAND_ROOT, with_kicad: bool = False) -> int:
-    """Regenerate every file and the record; the KiCad previews only *with_kicad*, kept as recorded otherwise."""
+    """Regenerate every file and the record; the KiCad previews only *with_kicad*, kept as recorded
+    otherwise."""
     texts, pictures = collect(root)
     kept = record.load(root).get("files", {})
     for text in texts:
@@ -784,19 +827,22 @@ def write(root: Path = BRAND_ROOT, with_kicad: bool = False) -> int:
 
 
 def static_findings(root: Path = BRAND_ROOT) -> list[str]:
-    """Return every difference between the tree and what its sources give, found without a browser."""
+    """Return every difference between the tree and what its sources give, found without a
+    browser."""
     texts, pictures = collect(root)
     recorded = record.load(root)
     files = recorded.get("files", {})
     found = []
     if files and recorded.get("meta_profile") != meta.META_PROFILE:
         found.append(
-            f"exports.json: the pictures carry metadata profile {recorded.get('meta_profile')!r}, not {meta.META_PROFILE!r}; run tools/build.py"
+            f"exports.json: the pictures carry metadata profile {recorded.get('meta_profile')!r}, "
+            f"not {meta.META_PROFILE!r}; run tools/build.py"
         )
     encoder = recorded.get("webp") or {}
     if files and (encoder.get("lossless"), encoder.get("lossy")) != (webp.LOSSLESS, webp.LOSSY):
         found.append(
-            "exports.json: the WebP copies were encoded with other settings than kleidos_brand.webp's; run tools/build.py"
+            "exports.json: the WebP copies were encoded with other settings than "
+            "kleidos_brand.webp's; run tools/build.py"
         )
     for text in [*texts, *pages(root, pictures, files)]:
         path = root / text.path
@@ -804,8 +850,10 @@ def static_findings(root: Path = BRAND_ROOT) -> list[str]:
             found.append(f"{text.path}: missing; run tools/build.py")
         elif path.read_text(encoding="utf-8") != text.content:
             found.append(f"{text.path}: is not what its sources give; run tools/build.py")
-    for path in stale(root, texts, pictures):
-        found.append(f"{path}: nothing generates it; run tools/build.py or remove it")
+    found.extend(
+        f"{path}: nothing generates it; run tools/build.py or remove it"
+        for path in stale(root, texts, pictures)
+    )
     for picture in pictures:
         name = picture.path.as_posix()
         entry = files.get(name)
@@ -824,7 +872,8 @@ def static_findings(root: Path = BRAND_ROOT) -> list[str]:
             )
         if entry["drawn_from"] != picture.source:
             found.append(
-                f"{name}: stale: what it is drawn from changed since it was drawn; run tools/build.py"
+                f"{name}: stale: what it is drawn from changed since it was drawn; run "
+                "tools/build.py"
             )
         for source, digest in entry["inputs"].items():
             if not (root / source).is_file() or record.file_sha256(root / source) != digest:
@@ -839,7 +888,8 @@ def static_findings(root: Path = BRAND_ROOT) -> list[str]:
 def drawn_findings(
     root: Path = BRAND_ROOT, tolerant: bool = False, with_kicad: bool = False
 ) -> list[str]:
-    """Return every picture that, drawn again, is not the committed one; the KiCad previews only *with_kicad*."""
+    """Return every picture that, drawn again, is not the committed one; the KiCad previews only
+    *with_kicad*."""
     _, pictures = collect(root)
     recorded = record.load(root)
     found = []
@@ -848,21 +898,27 @@ def drawn_findings(
     with raster.Browser() as browser:
         if not tolerant and browser.version != recorded.get("chromium"):
             return [
-                f"this machine draws with Chromium {browser.version} and the pictures were drawn with {recorded.get('chromium')}:"
-                " an exact comparison would report the browser, not the pictures. Install the pinned Playwright"
-                " (requirements.txt, then 'python -m playwright install chromium'), or run --check --tolerant."
+                f"this machine draws with Chromium {browser.version} and the pictures were drawn "
+                f"with {recorded.get('chromium')}:"
+                " an exact comparison would report the browser, not the pictures. Install the "
+                "pinned Playwright"
+                " (requirements.txt, then 'python -m playwright install chromium'), or run --check "
+                "--tolerant."
             ]
         if not tolerant and encoder["libwebp"] != (recorded.get("webp") or {}).get("libwebp"):
             return [
-                f"this machine encodes WebP with libwebp {encoder['libwebp']} and the copies were encoded with"
-                f" {(recorded.get('webp') or {}).get('libwebp')}: install the pinned Pillow (requirements.txt), or run --check --tolerant."
+                f"this machine encodes WebP with libwebp {encoder['libwebp']} and the copies were "
+                "encoded with"
+                f" {(recorded.get('webp') or {}).get('libwebp')}: install the pinned Pillow "
+                "(requirements.txt), or run --check --tolerant."
             ]
         for picture in pictures:
             path = root / picture.path
             if not path.is_file():
                 continue
             if picture.lossless and picture.copy_of is not None:
-                # A lossless copy is held to its file's pixels exactly, under any browser and any libwebp.
+                # A lossless copy is held to its file's pixels exactly, under any browser and any
+                # libwebp.
                 count = png.differing((root / picture.copy_of).read_bytes(), path.read_bytes())
                 if count != 0:
                     how = (
@@ -884,7 +940,8 @@ def drawn_findings(
                         else f"differs in {share:.2%} of its pixels"
                     )
                     found.append(
-                        f"{picture.path}: drawn again under Chromium {browser.version}, it {how}; the limit is {TOLERANCE:.1%}"
+                        f"{picture.path}: drawn again under Chromium {browser.version}, it {how}; "
+                        f"the limit is {TOLERANCE:.1%}"
                     )
             else:
                 count = png.differing(again, kept)

@@ -1,3 +1,4 @@
+# SPDX-FileCopyrightText: 2026 José M. Requena Plens
 # SPDX-License-Identifier: MIT
 """The tokens: what is generated from them round-trips, and the contrast figures are right."""
 
@@ -7,6 +8,7 @@ import json
 from pathlib import Path
 
 import pytest
+
 from kleidos_brand import palette, tokens
 
 ROOT = Path(__file__).resolve().parents[1]

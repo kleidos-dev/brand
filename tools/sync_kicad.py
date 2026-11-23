@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# SPDX-FileCopyrightText: 2026 José M. Requena Plens
 # SPDX-License-Identifier: MIT
 """Hand the KiCad kit to a repository that draws with it, as byte copies held to a manifest.
 
@@ -22,10 +23,11 @@ import json
 import subprocess
 import sys
 from pathlib import Path
+from typing import Any
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-from kleidos_brand import BRAND_ROOT, kicad  # noqa: E402
+from kleidos_brand import BRAND_ROOT, kicad
 
 MANIFEST = "KIT.json"
 SOURCE = "https://github.com/kleidos-dev/brand"
@@ -54,11 +56,12 @@ def commit(root: Path = BRAND_ROOT) -> str:
     ).stdout.strip()
 
 
-def manifest(root: Path = BRAND_ROOT, at: str | None = None) -> dict:
+def manifest(root: Path = BRAND_ROOT, at: str | None = None) -> dict[str, Any]:
     """Return the manifest of this checkout's kit."""
     style = kicad.load(root)
     return {
-        "$comment": "Written by brand's tools/sync_kicad.py --copy. The Kleidos KiCad kit, byte copies of brand's kicad/ at the commit below;"
+        "$comment": "Written by brand's tools/sync_kicad.py --copy. The Kleidos KiCad kit, byte "
+        "copies of brand's kicad/ at the commit below;"
         " never edit a file here: change brand and sync.",
         "kit": style["kit"],
         "source": SOURCE,
@@ -68,9 +71,11 @@ def manifest(root: Path = BRAND_ROOT, at: str | None = None) -> dict:
 
 
 def copy(target: Path, root: Path = BRAND_ROOT, at: str | None = None) -> list[str]:
-    """Write the kit and its manifest into *target*; remove what the kit no longer holds; return what was written.
+    """Write the kit and its manifest into *target*; remove what the kit no longer holds; return
+    what was written.
 
-    :param at: The commit to record; by default this checkout's HEAD, refused when a kit file differs from it.
+    :param at: The commit to record; by default this checkout's HEAD, refused when a kit file
+        differs from it.
     """
     data = manifest(root, at)
     target.mkdir(parents=True, exist_ok=True)
@@ -84,7 +89,8 @@ def copy(target: Path, root: Path = BRAND_ROOT, at: str | None = None) -> list[s
 
 
 def findings(target: Path, root: Path | None = BRAND_ROOT) -> list[str]:
-    """Return what is wrong with a consumer's kit folder: a file not its manifest's, or (with *root*) not this checkout's kit."""
+    """Return what is wrong with a consumer's kit folder: a file not its manifest's, or (with
+    *root*) not this checkout's kit."""
     found = []
     path = target / MANIFEST
     if not path.is_file():
@@ -98,9 +104,11 @@ def findings(target: Path, root: Path | None = BRAND_ROOT) -> list[str]:
             found.append(
                 f"{held}: not the bytes {MANIFEST} records; never edit a copy, sync it again"
             )
-    for extra in sorted(target.iterdir()):
-        if extra.name not in data["files"] and extra.name != MANIFEST and extra.name not in IGNORED:
-            found.append(f"{extra}: not part of the kit")
+    found.extend(
+        f"{extra}: not part of the kit"
+        for extra in sorted(target.iterdir())
+        if extra.name not in data["files"] and extra.name != MANIFEST and extra.name not in IGNORED
+    )
     if root is not None:
         ours = {item.name: sha256((root / item).read_bytes()) for item in kicad.kit_files(root)}
         if data["files"] != ours or data.get("kit") != kicad.load(root)["kit"]:

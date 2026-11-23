@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
+# SPDX-FileCopyrightText: 2026 José M. Requena Plens
 # SPDX-License-Identifier: MIT
-"""Copy the nine board fronts from a checkout of the boards repository, or compare the copies with one.
+"""Copy the nine board fronts from a checkout of the boards repository, or compare the copies with
+one.
 
     tools/sync_from_boards.py --check <boards checkout>
     tools/sync_from_boards.py --copy <boards checkout>
@@ -26,7 +28,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-from kleidos_brand import BRAND_ROOT, boards  # noqa: E402
+from kleidos_brand import BRAND_ROOT, boards
 
 REPOSITORY = "https://github.com/kleidos-dev/boards"
 #: The order a line-up shows the boards in (the site's), and how this repository names each one.
@@ -42,7 +44,8 @@ BOARDS = {
     "tdeck-plus": "LILYGO T-Deck Plus",
 }
 COMMENT = (
-    "The board fronts under boards/: byte copies of the boards repository's <board>/svg/front.svg, under its"
+    "The board fronts under boards/: byte copies of the boards repository's <board>/svg/front.svg, "
+    "under its"
     " MIT License, at the commit below. Written by tools/sync_from_boards.py --copy; do not edit."
 )
 
@@ -103,7 +106,8 @@ def copy(checkout: Path, root: Path = BRAND_ROOT) -> int:
         json.dumps(manifest, indent=2, ensure_ascii=False) + "\n", encoding="utf-8"
     )
     print(
-        f"copied {len(entries)} fronts at {commit[:12]}; now run tools/build.py and look at the images"
+        f"copied {len(entries)} fronts at {commit[:12]}; now run tools/build.py and look at the "
+        "images"
     )
     return 0
 

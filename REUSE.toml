@@ -24,16 +24,32 @@ SPDX-PackageDownloadLocation = "https://github.com/kleidos-dev/brand"
 [[annotations]]
 path = ["**"]
 precedence = "aggregate"
-SPDX-FileCopyrightText = "2026 José M. Requena Plens <mail@kleidos.dev>"
+SPDX-FileCopyrightText = "2026 José M. Requena Plens"
+SPDX-License-Identifier = "GPL-3.0-or-later"
+
+# The formats that cannot carry a comment the header check reads (the kit's
+# spdx_headers.py, kleidos-dev/.github docs/quality.md "Licensing headers"):
+# the SVG files, whose header the builder writes in the metadata's place, the
+# JSON sources and records, and the KiCad drawing sheets. Each file states
+# both lines here, under the artwork's line above; the annotations below take
+# over for their paths.
+[[annotations]]
+path = ["**/*.svg", "**/*.json", "**/*.kicad_wks"]
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2026 José M. Requena Plens"
 SPDX-License-Identifier = "GPL-3.0-or-later"
 
 # What is more useful to everyone under the MIT License: the tokens and what
 # is generated from them, the tooling (the builders, the checks, their tests,
 # the CI, the commit-message gate copied from the agents repository, the
-# review bots' and the analysis's settings, the pins), the texts that describe the project (about/ and the fact
-# sheets), so anyone can reuse and quote them freely, and the KiCad kit's
-# numbers, themes, helper and fixture. The kit's two drawing sheets and its
-# previews hold the mark: they stay under the artwork's line above.
+# quality kit's copies, the review bots' and the analysis's settings, the
+# pins), the texts that describe the project (about/ and the fact sheets), so
+# anyone can reuse and quote them freely, and the KiCad kit's numbers, themes,
+# helper and fixture. The kit's two drawing sheets and its previews hold the
+# mark: they stay under the artwork's line above. "closest": a file that
+# carries both lines itself (every file in a format with comments does) is
+# read from them, and the rest (JSON, the fixtures, the pins' plain files)
+# from here.
 [[annotations]]
 path = [
   "tokens/**",
@@ -60,9 +76,14 @@ path = [
   "kicad/kleidos-light.json",
   "kicad/kleidos_kicad.py",
   "kicad/fixture/**",
+  "pyproject.toml",
+  ".typos.toml",
+  ".gitleaks.toml",
+  ".gitleaks-mac.toml",
+  ".markdownlint-cli2.jsonc",
 ]
-precedence = "override"
-SPDX-FileCopyrightText = "2026 José M. Requena Plens <mail@kleidos.dev>"
+precedence = "closest"
+SPDX-FileCopyrightText = "2026 José M. Requena Plens"
 SPDX-License-Identifier = "MIT"
 
 # The nine board fronts, byte copies of the boards repository's
@@ -72,7 +93,7 @@ SPDX-License-Identifier = "MIT"
 [[annotations]]
 path = ["boards/**"]
 precedence = "override"
-SPDX-FileCopyrightText = "2026 José M. Requena Plens <mail@kleidos.dev>"
+SPDX-FileCopyrightText = "2026 José M. Requena Plens"
 SPDX-License-Identifier = "MIT"
 
 # Mona Sans and Mona Sans Mono 2.0.27, unmodified (fonts/VERSIONS.md). The
