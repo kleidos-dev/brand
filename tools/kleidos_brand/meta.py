@@ -52,6 +52,7 @@ import os
 import re
 import tomllib
 import zlib
+from collections.abc import Iterator
 from dataclasses import dataclass, field
 from pathlib import Path
 
@@ -878,7 +879,7 @@ def svg_block(meta: MediaMeta, slug: str) -> str:
     return "\n".join(rows)
 
 
-ROOT_TAG = re.compile(r"<svg\b[^>]*>")
+ROOT_TAG = re.compile(r"<svg\b[^<>]*>")
 ROOT_ACCESS = re.compile(r'\s(?:role|aria-labelledby|lang)="[^"]*"')
 LEADING_TITLE = re.compile(r"\A\s*<title\b[^>]*>.*?</title>", re.S)
 LEADING_DESC = re.compile(r"\A\s*<desc\b[^>]*>.*?</desc>", re.S)
@@ -933,7 +934,7 @@ def svg_findings(name: str, svg: str, meta: MediaMeta, slug: str) -> list[str]:
 IN_FILE_LICENSE = re.compile(r"SPDX-License-Identifier:(.*)")
 IN_FILE_COPYRIGHT = re.compile(r"SPDX-FileCopyrightText:(.*)")
 # REUSE-IgnoreEnd
-IGNORE_BLOCK = re.compile(r"REUSE-IgnoreStart.*?REUSE-IgnoreEnd", re.S)
+IGNORE_MARKERS = ("REUSE-IgnoreStart", "REUSE-IgnoreEnd")
 TEXT_SUFFIXES = frozenset(
     {
         ".svg",
@@ -971,6 +972,32 @@ def _glob(pattern: str) -> re.Pattern[str]:
     return re.compile(out)
 
 
+def block_spans(text: str, opener: str, closer: str) -> Iterator[tuple[int, int]]:
+    """Yield where each block of *text* starts and stops: from an *opener* to the *closer* that
+    follows it. An opener with no closer opens nothing."""
+    stop = 0
+    while (start := text.find(opener, stop)) >= 0:
+        closed = text.find(closer, start + len(opener))
+        if closed < 0:
+            return
+        stop = closed + len(closer)
+        yield start, stop
+
+
+def replace_blocks(text: str, opener: str, closer: str, replacement: str = "") -> str:
+    """Return *text* with *replacement* in place of each of its blocks (:func:`block_spans`)."""
+    kept, at = [], 0
+    for start, stop in block_spans(text, opener, closer):
+        kept += [text[at:start], replacement]
+        at = stop
+    return "".join([*kept, text[at:]])
+
+
+def without_ignore_blocks(text: str) -> str:
+    """Return *text* without what REUSE is told to ignore in it."""
+    return replace_blocks(text, *IGNORE_MARKERS)
+
+
 def _tag_values(tag: re.Pattern[str], text: str) -> list[str]:
     """Return what the lines of *text* state under *tag*, without the comment's closing mark."""
     values = []
@@ -1003,7 +1030,7 @@ def reuse_truth(root: Path, path: str | Path, strip: bool = True) -> tuple[str, 
     holders: list[str] = []
     file = root / name
     if file.suffix.lower() in TEXT_SUFFIXES and file.is_file():
-        text = IGNORE_BLOCK.sub("", file.read_text(encoding="utf-8", errors="replace"))
+        text = without_ignore_blocks(file.read_text(encoding="utf-8", errors="replace"))
         licenses = _tag_values(IN_FILE_LICENSE, text)
         holders = _tag_values(IN_FILE_COPYRIGHT, text)
     chosen = None
@@ -1034,7 +1061,10 @@ def reuse_truth(root: Path, path: str | Path, strip: bool = True) -> tuple[str, 
 # --- The deny-list -------------------------------------------------------------------------
 
 DENY = (
-    ("an e-mail address", re.compile(r"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}")),
+    (
+        "an e-mail address",
+        re.compile(r"(?<![A-Za-z0-9._%+-])[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}"),
+    ),
     (
         "a local path",
         re.compile(

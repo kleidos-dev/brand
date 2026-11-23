@@ -351,8 +351,43 @@ def test_a_file_s_own_tags_are_read_without_the_comment_s_closing_mark(tmp_path:
 # REUSE-IgnoreEnd
 
 
+@pytest.mark.parametrize(
+    ("text", "read"),
+    [
+        ("a[b]c", "a-c"),
+        ("[a][b] c", "-- c"),
+        ("a[b[c]d]e", "a-d]e"),
+        ("a]b[c", "a]b[c"),
+        ("a[b]c[d", "a-c[d"),
+        ("", ""),
+    ],
+)
+def test_a_block_is_what_stands_from_an_opener_to_the_next_closer(text: str, read: str) -> None:
+    assert meta.replace_blocks(text, "[", "]", "-") == read
+
+
+def test_a_block_s_closer_stands_after_its_whole_opener() -> None:
+    assert meta.replace_blocks("a /*/ b */ c", "/*", "*/") == "a  c"
+
+
+def test_a_tag_inside_an_ignore_block_is_not_the_file_s(tmp_path: Path) -> None:
+    tag, start, end = (
+        "SPDX-License-" + "Identifier",
+        "REUSE-Ignore" + "Start",
+        "REUSE-Ignore" + "End",
+    )
+    page = f"{tag}: MIT\n<!-- {start} -->\n{tag}: X\n<!-- {end} -->\n{tag}: Y\n{start}\n{tag}: Z\n"
+    (tmp_path / "page.md").write_text(page, encoding="utf-8")
+    assert meta.reuse_truth(tmp_path, "page.md") == ("MIT AND Y AND Z", ())
+
+
 def own_tags(root: Path, tag: str) -> tuple[str, tuple[str, ...]]:
     (root / "page.md").write_text(f"{tag}: x" + " " * 2_000 + "y\n", encoding="utf-8")
+    return meta.reuse_truth(root, "page.md")
+
+
+def unclosed_blocks(root: Path) -> tuple[str, tuple[str, ...]]:
+    (root / "page.md").write_text(("REUSE-Ignore" + "Start") * 10_000, encoding="utf-8")
     return meta.reuse_truth(root, "page.md")
 
 
@@ -365,6 +400,8 @@ def own_tags(root: Path, tag: str) -> tuple[str, tuple[str, ...]]:
         lambda root: meta.strip_email("<>" * 40_000 + "a"),
         lambda root: own_tags(root, "SPDX-License-" + "Identifier"),
         lambda root: own_tags(root, "SPDX-FileCopyright" + "Text"),
+        unclosed_blocks,
+        lambda _: not meta.deny_findings("x", ["a." * 40_000]),
     ],
 )
 def test_a_hostile_text_is_read_in_linear_time(
@@ -372,6 +409,13 @@ def test_a_hostile_text_is_read_in_linear_time(
 ) -> None:
     start = time.process_time()
     assert read(tmp_path)
+    assert time.process_time() - start < 1
+
+
+def test_a_drawing_whose_root_never_closes_is_refused_in_linear_time() -> None:
+    start = time.process_time()
+    with pytest.raises(ValueError, match="no <svg> root"):
+        meta.svg_stamp("<svg " * 40_000, FULL, "x")
     assert time.process_time() - start < 1
 
 

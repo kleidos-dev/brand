@@ -192,9 +192,20 @@ def test_the_sheet_s_custom_properties_are_read_whole() -> None:
     assert sync.custom_properties(body) == {"ink": "#0c0f13", "font-a": "'One', 'Two'"}
 
 
+SHEET = (
+    '@layer tokens {\n:root {%s}\n:root:not([data-theme="dark"]) {}\n:root[data-theme="light"] {}\n'
+)
+
+
+def test_a_comment_declares_nothing() -> None:
+    blocks = sync.css_blocks("/* :root {} */" + SHEET % "--a: 1;/* --b: 2; */ --c: 3;")
+    assert blocks == {"dark": {"a": "1", "c": "3"}, "light-system": {}, "light-chosen": {}}
+
+
 @pytest.mark.parametrize(
     "read",
     [
+        lambda: sync.css_blocks("/* " * 40_000 + SHEET % "")["dark"],
         lambda: sync.custom_properties("--a:" + " " * 40_000),
         lambda: sync.custom_properties("--a:" * 40_000),
         lambda: sync.font_pins("`" + "\n" * 40_000 + "x"),

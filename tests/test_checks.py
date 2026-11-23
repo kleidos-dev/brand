@@ -12,6 +12,7 @@ import time
 from pathlib import Path
 
 import check
+import pytest
 
 from kleidos_brand import SVG_HEADER, public_tree
 
@@ -488,11 +489,31 @@ def test_a_tag_whose_operator_lacks_its_spaces_names_no_license(tree: Path) -> N
     (tree / "about/extra.md").write_text(f"<!-- {tag} -->\n\nText.\n", encoding="utf-8")
     (line,) = public_tree.license_findings(tree, [Path("about/extra.md")], check.ALLOWED_LICENSES)
     assert "its license tag reads 'MIT ANDMIT'" in line
-    start = time.process_time()
+
+
+def test_a_tag_inside_an_ignore_block_declares_nothing(tree: Path) -> None:
+    start, end = "REUSE-Ignore" + "Start", "REUSE-Ignore" + "End"
+    ignored = f"<!-- {start} -->\n{CC_TAG}\n<!-- {end} -->\n"
+    (tree / "about/extra.md").write_text(ignored, encoding="utf-8")
+    files, allowed = [Path("about/extra.md")], check.ALLOWED_LICENSES
+    assert public_tree.license_findings(tree, files, allowed) == []
+    (tree / "about/extra.md").write_text(f"{ignored}{start}\n{CC_TAG}\n", encoding="utf-8")
+    assert len(public_tree.license_findings(tree, files, allowed)) == 1
+
+
+@pytest.mark.parametrize(
+    "before_the_tag",
+    ["", ("REUSE-Ignore" + "Start") * 10_000 + "\n"],
+    ids=["a long tag", "blocks never closed"],
+)
+def test_a_hostile_file_s_tags_are_read_in_linear_time(tree: Path, before_the_tag: str) -> None:
     tag = CC_TAG.replace("CC-BY-SA-4.0", "MIT" + " " * 40_000 + "MIT")
-    (tree / "about/extra.md").write_text(f"{tag}\n\nText.\n", encoding="utf-8")
-    assert public_tree.license_findings(tree, [Path("about/extra.md")], check.ALLOWED_LICENSES)
+    text = f"{before_the_tag}{tag}\n\nText.\n"
+    (tree / "about/extra.md").write_text(text, encoding="utf-8")
+    start = time.process_time()
+    (line,) = public_tree.license_findings(tree, [Path("about/extra.md")], check.ALLOWED_LICENSES)
     assert time.process_time() - start < 1
+    assert "about/extra.md: its license tag reads" in line
 
 
 def test_prose_may_name_another_license(tree: Path) -> None:
@@ -574,6 +595,42 @@ def test_private_data_is_refused(tree: Path) -> None:
         "not the project's contact",
     ):
         assert found(tree, "notes/notes.md", what), what
+
+
+@pytest.mark.parametrize(
+    ("before", "label", "domain", "after", "named"),
+    [
+        ("at ", "printer", "local", " now", True),
+        ("-", "my-printer", "LAN", "", True),
+        ("_x--", "a", "home.arpa", "\n", True),
+        ("", "printer", "local", ".example", False),
+        ("at _", "printer", "local", "", False),
+        ("", "printer", "local", "e", False),
+    ],
+)
+def test_a_local_host_is_named_without_what_stands_before_it(
+    before: str, label: str, domain: str, after: str, named: bool
+) -> None:
+    host = f"{label}.{domain}"
+    expected = [f"x: holds a local host name ({host})"] if named else []
+    assert public_tree.private_findings("x", before + host + after) == expected
+
+
+def test_the_name_of_a_private_setting_is_refused_whole() -> None:
+    prefix = "KLEIDOS" + "_"
+    (line,) = public_tree.private_findings("x", f"{prefix}LAB_KEY_2 {prefix}LAB {prefix}KEYs")
+    assert line == f"x: holds the name of a private setting ({prefix}LAB_KEY_2)"
+
+
+@pytest.mark.parametrize(
+    "text",
+    ["a-" * 40_000, "-_" * 40_000, "KLEIDOS" + "_" + "KEY" * 40_000 + "s"],
+    ids=["hyphens", "hyphens and underscores", "a setting"],
+)
+def test_a_hostile_text_holds_nothing_private_in_linear_time(text: str) -> None:
+    start = time.process_time()
+    assert public_tree.private_findings("x", text) == []
+    assert time.process_time() - start < 1
 
 
 def test_the_registered_sign_is_refused(tree: Path) -> None:

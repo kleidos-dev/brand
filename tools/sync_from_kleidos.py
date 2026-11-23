@@ -29,7 +29,7 @@ from typing import Any
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-from kleidos_brand import BRAND_ROOT, mark, png, press, public_tree, tokens, xmlsafe
+from kleidos_brand import BRAND_ROOT, mark, meta, png, press, public_tree, tokens, xmlsafe
 
 MIRROR_JSON = Path("tokens/mirror.json")
 SKILL_TOKENS = ".claude/skills/kleidos-design-system/assets/tokens.json"
@@ -70,7 +70,7 @@ def custom_properties(body: str) -> dict[str, str]:
 def css_blocks(sheet: str) -> dict[str, dict[str, str]]:
     """Return the declarations of the sheet's three token blocks: dark, and the light theme written
     twice."""
-    sheet = re.sub(r"/\*.*?\*/", "", sheet, flags=re.S)
+    sheet = meta.replace_blocks(sheet, "/*", "*/")
     start = sheet.index("@layer tokens {")
     heads = {
         "dark": sheet.index(":root {", start),

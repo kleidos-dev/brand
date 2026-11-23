@@ -282,18 +282,20 @@ def texts(root: Path = BRAND_ROOT) -> dict[Path, str]:
 
 # --- What tools/check.py holds -----------------------------------------------------------
 
+BITMAP = re.compile(r"\(bitmap\b")
 #: A bitmap's data in a sheet: the quoted base64 lines.
-BITMAP = re.compile(r'\(bitmap\b.*?\(data\s*((?:"[A-Za-z0-9+/=]*"\s*)+)\)', re.S)
+BITMAP_DATA = re.compile(r'\(data\s*((?:"[A-Za-z0-9+/=]*"\s*)+)\)')
 FONT_FACE = re.compile(r"\(face\b")
 COLOR = re.compile(r"\(color\b")
 
 
 def embedded_marks(text: str) -> list[bytes]:
-    """Return the bytes of every bitmap a sheet embeds."""
-    return [
-        base64.b64decode("".join(re.findall(r'"([^"]*)"', match.group(1))))
-        for match in BITMAP.finditer(text)
-    ]
+    """Return the bytes of every bitmap a sheet embeds: the first data after its opening."""
+    marks, at = [], 0
+    while (bitmap := BITMAP.search(text, at)) and (data := BITMAP_DATA.search(text, bitmap.end())):
+        marks.append(base64.b64decode("".join(re.findall(r'"([^"]*)"', data.group(1)))))
+        at = data.end()
+    return marks
 
 
 def findings(root: Path = BRAND_ROOT) -> list[str]:

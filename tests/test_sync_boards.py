@@ -5,6 +5,7 @@
 from __future__ import annotations
 
 import json
+import shutil
 import subprocess
 from pathlib import Path
 from typing import Any
@@ -61,10 +62,30 @@ def test_a_copy_is_the_checkout_s_bytes_at_its_commit(checkout: Path, root: Path
 def test_a_front_missing_from_the_checkout_is_reported(
     checkout: Path, root: Path, capsys: pytest.CaptureFixture[str]
 ) -> None:
-    (checkout / sync.source("tdeck-plus")).unlink()
+    git(checkout, "rm", "--quiet", sync.source("tdeck-plus"))
+    git(checkout, "commit", "--quiet", "-m", "One front fewer")
     assert sync.main(["--check", str(checkout)]) == 1
-    assert "tdeck-plus/svg/front.svg: not in the checkout" in capsys.readouterr().out
-    assert root.is_dir()
+    missing = "tdeck-plus/svg/front.svg: not in the checkout's commit"
+    assert missing in capsys.readouterr().out
+    with pytest.raises(SystemExit, match=missing):
+        sync.main(["--copy", str(checkout)])
+    assert list(root.iterdir()) == []
+
+
+def test_a_copy_is_what_the_commit_holds_not_what_the_checkout_writes(
+    checkout: Path, root: Path
+) -> None:
+    """A checkout may write other bytes than the commit's with nothing to commit."""
+    (checkout / ".gitattributes").write_text("*.svg text eol=crlf\n", encoding="utf-8")
+    git(checkout, "add", ".")
+    git(checkout, "commit", "--quiet", "-m", "Line ends")
+    for slug in sync.BOARDS:
+        (checkout / sync.source(slug)).unlink()
+    git(checkout, "checkout", "--", ".")
+    assert (checkout / sync.source("cardputer")).read_bytes() == b"<svg>cardputer</svg>\r\n"
+    assert sync.main(["--copy", str(checkout)]) == 0
+    assert (root / boards.front_path("cardputer")).read_bytes() == b"<svg>cardputer</svg>\n"
+    assert sync.main(["--check", str(checkout)]) == 0
 
 
 def test_uncommitted_fronts_are_not_copied(checkout: Path, root: Path) -> None:
@@ -74,7 +95,7 @@ def test_uncommitted_fronts_are_not_copied(checkout: Path, root: Path) -> None:
 
 
 @pytest.mark.usefixtures("root")
-def test_git_is_given_no_argument_taken_from_the_command_line(
+def test_git_is_given_nothing_but_fixed_words_the_fronts_and_the_commit_s_own_ids(
     checkout: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
     calls: list[tuple[list[str], Path]] = []
@@ -87,10 +108,19 @@ def test_git_is_given_no_argument_taken_from_the_command_line(
     monkeypatch.setattr(subprocess, "run", run)
     assert sync.main(["--copy", str(checkout)]) == 0
     fronts = [sync.source(slug) for slug in sync.BOARDS]
-    assert calls == [
-        (["git", "status", "--porcelain", "--", *fronts], checkout.resolve()),
-        (["git", "rev-parse", "HEAD"], checkout.resolve()),
+    commit = git(checkout, "rev-parse", "HEAD")
+    expected = [
+        ["git", "rev-parse", "--is-inside-work-tree", "--show-prefix", "HEAD"],
+        ["git", "rev-parse", "HEAD"],
     ]
+    for front in fronts:
+        blob = git(checkout, "rev-parse", f"HEAD:{front}")
+        expected.append(["git", "ls-tree", commit, "--", front])
+        expected.append(["git", "cat-file", "blob", blob])
+    expected.append(["git", "status", "--porcelain", "--", *fronts])
+    made = [command for command, _ in calls][: len(expected)]
+    assert made == expected
+    assert {folder for _, folder in calls} == {checkout.resolve()}
 
 
 @pytest.mark.usefixtures("root")
@@ -100,7 +130,8 @@ def test_git_is_given_no_argument_taken_from_the_command_line(
     [
         ("missing", "is not there"),
         ("sticks3", "is not the top of a git checkout"),
-        ("sticks3/svg/front.svg", "is not"),
+        ("sticks3/svg/front.svg", "is not the top of a git checkout"),
+        (".git", "is not the top of a git checkout"),
     ],
 )
 def test_a_path_that_is_not_the_top_of_a_checkout_is_refused(
@@ -112,17 +143,69 @@ def test_a_path_that_is_not_the_top_of_a_checkout_is_refused(
     assert why in capsys.readouterr().err
 
 
-def test_a_front_that_leads_out_of_the_checkout_is_refused(
-    checkout: Path, root: Path, tmp_path: Path
+@pytest.mark.usefixtures("root")
+@pytest.mark.parametrize("mode", ["--check", "--copy"])
+def test_a_git_folder_of_its_own_does_not_make_a_checkout(
+    checkout: Path, mode: str, capsys: pytest.CaptureFixture[str]
 ) -> None:
-    outside = tmp_path / "outside.svg"
-    outside.write_text("<svg>not a board</svg>\n", encoding="utf-8")
+    """git walks up past a `.git` that holds no repository, to the one around it."""
+    inner = checkout / "inner"
+    for slug in sync.BOARDS:
+        path = inner / sync.source(slug)
+        path.parent.mkdir(parents=True)
+        path.write_text("<svg/>\n", encoding="utf-8")
+    (inner / ".git").mkdir()
+    with pytest.raises(SystemExit) as stopped:
+        sync.main([mode, str(inner)])
+    assert stopped.value.code == 2
+    assert "is not the top of a git checkout" in capsys.readouterr().err
+
+
+@pytest.mark.usefixtures("root")
+@pytest.mark.parametrize("mode", ["--check", "--copy"])
+def test_a_repository_with_no_commit_or_no_files_is_refused(
+    tmp_path: Path, mode: str, capsys: pytest.CaptureFixture[str]
+) -> None:
+    git(tmp_path, "init", "--quiet", "empty")
+    git(tmp_path, "init", "--quiet", "--bare", "bare")
+    for name in ("empty", "bare"):
+        with pytest.raises(SystemExit) as stopped:
+            sync.main([mode, str(tmp_path / name)])
+        assert stopped.value.code == 2
+        assert "is not the top of a git checkout" in capsys.readouterr().err
+
+
+@pytest.mark.parametrize("mode", ["--check", "--copy"])
+@pytest.mark.parametrize("target", ["outside.svg", "../../.git/config", "../../sticks3/svg"])
+def test_a_front_that_is_a_link_is_refused(
+    checkout: Path, root: Path, tmp_path: Path, mode: str, target: str
+) -> None:
+    (tmp_path / "outside.svg").write_text("<svg>not a board</svg>\n", encoding="utf-8")
     front = checkout / sync.source("cardputer")
     front.unlink()
-    front.symlink_to(outside)
+    front.symlink_to(tmp_path / target if target == "outside.svg" else target)
     git(checkout, "add", ".")
     git(checkout, "commit", "--quiet", "-m", "A link")
-    for mode in ("--check", "--copy"):
-        with pytest.raises(SystemExit, match="cardputer/svg/front.svg: leads out of the checkout"):
-            sync.main([mode, str(checkout)])
+    with pytest.raises(SystemExit, match="cardputer/svg/front.svg: is not a file in the checkout"):
+        sync.main([mode, str(checkout)])
+    assert list(root.iterdir()) == []
+
+
+@pytest.mark.parametrize("where", ["outside", "sticks3"])
+def test_a_front_behind_a_linked_folder_is_not_in_the_commit(
+    checkout: Path, root: Path, tmp_path: Path, where: str, capsys: pytest.CaptureFixture[str]
+) -> None:
+    outside = tmp_path / "outside/svg"
+    outside.mkdir(parents=True)
+    (outside / "front.svg").write_text("<svg>not a board</svg>\n", encoding="utf-8")
+    shutil.rmtree(checkout / "cardputer")
+    target = tmp_path / where if where == "outside" else Path(where)
+    (checkout / "cardputer").symlink_to(target)
+    git(checkout, "add", ".")
+    git(checkout, "commit", "--quiet", "-m", "A linked folder")
+    assert sync.main(["--check", str(checkout)]) == 1
+    missing = "cardputer/svg/front.svg: not in the checkout's commit"
+    assert missing in capsys.readouterr().out
+    with pytest.raises(SystemExit, match=missing):
+        sync.main(["--copy", str(checkout)])
     assert list(root.iterdir()) == []

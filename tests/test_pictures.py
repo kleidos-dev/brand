@@ -8,6 +8,7 @@ from __future__ import annotations
 import hashlib
 import io
 import json
+import time
 from pathlib import Path
 from typing import Any
 
@@ -375,6 +376,26 @@ def test_the_archive_holds_the_renditions(tree: Path) -> None:
         "kleidos-press-kit/press-kit/photos/kleidos-photo-four-boards.webp",
     ):
         assert needed in names, needed
+
+
+def test_a_page_s_generated_block_is_replaced_whole_wherever_it_stands() -> None:
+    begin, end = record.block_markers("sizes")
+    page = f"One\n{begin}\nold\n{end}\nTwo\n{begin}{end}\n{end} {begin}"
+    block = f"{begin}\n\nnew\\1\n\n{end}"
+    assert (
+        record.with_block(page, "sizes", "new\\1") == f"One\n{block}\nTwo\n{block}\n{end} {begin}"
+    )
+    for text in ("", begin, end, f"{end}{begin}", page.replace("sizes", "other")):
+        with pytest.raises(ValueError, match="no generated block 'sizes'"):
+            record.with_block(text, "sizes", "new")
+
+
+def test_a_page_of_blocks_never_ended_is_refused_in_linear_time() -> None:
+    begin, _ = record.block_markers("sizes")
+    start = time.process_time()
+    with pytest.raises(ValueError, match="no generated block"):
+        record.with_block(begin * 10_000, "sizes", "new")
+    assert time.process_time() - start < 1
 
 
 @pytest.mark.browser

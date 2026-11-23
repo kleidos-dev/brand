@@ -10,6 +10,7 @@ import os
 import shutil
 import subprocess
 import sys
+import time
 from pathlib import Path
 from types import ModuleType
 
@@ -61,6 +62,18 @@ def test_each_sheet_embeds_its_logo_file_unchanged_once(ground: str) -> None:
     style = kicad.load(ROOT)
     text = (ROOT / kicad.sheet_path(ground)).read_text(encoding="utf-8")
     assert kicad.embedded_marks(text) == [(ROOT / style["grounds"][ground]["mark"]).read_bytes()]
+
+
+def test_a_bitmap_s_data_is_the_first_that_follows_it() -> None:
+    assert kicad.embedded_marks('(data "Tg==") (bitmap (data) (data "QU"\n"I="))') == [b"AB"]
+    sheet = '(bitmap (data "QQ==")) (data "Tg==") (bitmaps (data "Tg==")) (bitmap (data "Qg=="))'
+    assert kicad.embedded_marks(sheet) == [b"A", b"B"]
+
+
+def test_a_hostile_sheet_is_read_in_linear_time() -> None:
+    start = time.process_time()
+    assert kicad.embedded_marks("(bitmap " * 40_000) == []
+    assert time.process_time() - start < 1
 
 
 def test_the_mark_is_nine_millimeters_in_its_cell() -> None:
