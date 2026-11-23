@@ -4,13 +4,14 @@
 """Run the KiCad kit through kicad-cli: the fixture on each ground, ERC and both exports.
 
     tools/check_kicad.py     needs kicad-cli (KICAD_CLI names another); CI runs it in
-                             kicad/kicad:10.0.8
+                             kicad/kicad:10.0.8 (pinned by digest)
 
 For each ground: ERC on the fixture (recolored for the ground, as every light
 export is) reports no message; the SVG export has the theme's background and
 one width for every wire-colored line; the PDF export is written. A sheet or a
-theme KiCad cannot read fails here. Standard library only, so it runs in
-KiCad's container with that image's own Python.
+theme KiCad cannot read fails here. Standard library only: CI runs it in
+KiCad's container on the Python .python-version names, which uv installs
+beside the image's own.
 """
 
 from __future__ import annotations
