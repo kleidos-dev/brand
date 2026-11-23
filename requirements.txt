@@ -31,6 +31,10 @@ charset-normalizer==3.5.3
 # runs, reads workflows and dependabot.yml with PyYAML: the kit's pin.
 pyyaml==6.0.4
 
+# The KiCad kit's CI job installs the Python .python-version names inside
+# KiCad's container with uv, at this version (.github/workflows/check.yml).
+uv==0.13.9
+
 # The KiCad kit's helper (kicad/kleidos_kicad.py) reads and rewrites the PDF
 # exports of boards and the meter with pypdf, the version they pin; it is
 # installed here so mypy checks the helper against pypdf's own types.
