@@ -11,6 +11,7 @@ so the path's numbers are the font's own.
 The instance is never written to disk: a saved subset or instance of a font
 is a Modified Version under the OFL, and Mona Sans reserves its name.
 """
+
 from __future__ import annotations
 
 import hashlib
@@ -100,14 +101,18 @@ def _digest(path: str, modified: int, size: int) -> str:
 _INSTANCES: dict[tuple[str, tuple[tuple[str, float], ...]], tuple[TTFont, hb.Font]] = {}
 
 
-def _instance(root: Path, family: str, axes: tuple[tuple[str, float], ...]) -> tuple[TTFont, hb.Font]:
+def _instance(
+    root: Path, family: str, axes: tuple[tuple[str, float], ...]
+) -> tuple[TTFont, hb.Font]:
     """Return *family* at *axes*, as a fontTools font and a HarfBuzz one, both in memory.
 
     Instances are kept by the font file's bytes, not its place, so a copy of
     the tree (the tests make many) shares them.
     """
     if family not in FAMILIES:
-        raise ValueError(f"{family!r} is not one of the families a word may be set in: {', '.join(FAMILIES)}")
+        raise ValueError(
+            f"{family!r} is not one of the families a word may be set in: {', '.join(FAMILIES)}"
+        )
     path = root / FAMILIES[family]
     state = path.stat()
     key = (_digest(str(path), state.st_mtime_ns, state.st_size), axes)
@@ -155,7 +160,14 @@ def shape(
     order = font.getGlyphOrder()
     glyphs, pen_x, extra = [], 0.0, tracking * upem
     for info, position in zip(buffer.glyph_infos, buffer.glyph_positions, strict=True):
-        glyphs.append(Glyph(order[info.codepoint], pen_x + position.x_offset, float(position.y_offset), info.cluster))
+        glyphs.append(
+            Glyph(
+                order[info.codepoint],
+                pen_x + position.x_offset,
+                float(position.y_offset),
+                info.cluster,
+            )
+        )
         pen_x += position.x_advance + extra
     advance = pen_x - extra if glyphs else 0.0
     return Line(family, axes, text, tuple(glyphs), advance, upem, root)

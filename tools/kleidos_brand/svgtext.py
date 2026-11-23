@@ -19,6 +19,7 @@ draws is what a browser with the fonts would draw:
 - ``data-case="upper"``: the words are set in capitals;
 - children: text, and ``<tspan fill="…">`` runs that change the color only.
 """
+
 from __future__ import annotations
 
 import re
@@ -64,7 +65,12 @@ class Set:
     def box(self) -> tuple[float, float, float, float]:
         """Return the ink box in user units: ``(left, top, right, bottom)``."""
         x0, y0, x1, y1 = self.line.bounds()
-        return self.x + x0 * self.scale, self.y - y1 * self.scale, self.x + x1 * self.scale, self.y - y0 * self.scale
+        return (
+            self.x + x0 * self.scale,
+            self.y - y1 * self.scale,
+            self.x + x1 * self.scale,
+            self.y - y0 * self.scale,
+        )
 
 
 def words(element: ET.Element) -> tuple[str, tuple[Run, ...]]:
@@ -85,12 +91,16 @@ def words(element: ET.Element) -> tuple[str, tuple[Run, ...]]:
     add(element.text, base)
     for child in element:
         if _local(child) != "tspan":
-            raise ValueError(f"a <text> holds a <{_local(child)}>; only text and <tspan> runs are set")
+            raise ValueError(
+                f"a <text> holds a <{_local(child)}>; only text and <tspan> runs are set"
+            )
         add(child.text, child.get("fill", base))
         add(child.tail, base)
     stripped = text.strip()
     lead = len(text) - len(text.lstrip())
-    fitted = tuple(Run(max(run.first - lead, 0), min(run.last - lead, len(stripped)), run.fill) for run in runs)
+    fitted = tuple(
+        Run(max(run.first - lead, 0), min(run.last - lead, len(stripped)), run.fill) for run in runs
+    )
     return stripped, tuple(run for run in fitted if run.last > run.first)
 
 
@@ -108,13 +118,17 @@ def set_text(element: ET.Element, root: Path = BRAND_ROOT) -> Set:
         if style is not None:
             match = OPSZ.fullmatch(style)
             if not match:
-                raise ValueError(f"text {element.get('id')!r}: a style may hold font-variation-settings:'opsz' N and nothing else")
+                raise ValueError(
+                    f"text {element.get('id')!r}: a style may hold font-variation-settings:'opsz' N and nothing else"
+                )
             axes.append(("opsz", float(match.group(1))))
     axes.append(("wght", float(element.get("font-weight", "400"))))
     spacing = element.get("letter-spacing", "0em")
     match = EM.fullmatch(spacing)
     if not match:
-        raise ValueError(f"text {element.get('id')!r}: letter-spacing is written in ems, not {spacing!r}")
+        raise ValueError(
+            f"text {element.get('id')!r}: letter-spacing is written in ems, not {spacing!r}"
+        )
     text, runs = words(element)
     line = lettering.shape(text, family, tuple(axes), float(match.group(1)), root)
     scale = size / line.upem
@@ -137,7 +151,9 @@ def outline(tree: ET.Element, root: Path = BRAND_ROOT) -> dict[str, Set]:
     """
     done: dict[str, Set] = {}
     parents = {child: parent for parent in tree.iter() for child in parent}
-    for element in [node for node in tree.iter() if isinstance(node.tag, str) and _local(node) == "text"]:
+    for element in [
+        node for node in tree.iter() if isinstance(node.tag, str) and _local(node) == "text"
+    ]:
         placed = set_text(element, root)
         group = ET.Element(f"{{{SVG_NS}}}g")
         if element.get("id"):
@@ -148,7 +164,11 @@ def outline(tree: ET.Element, root: Path = BRAND_ROOT) -> dict[str, Set]:
         for run in placed.runs:
             data = placed.line.path(run.first, run.last)
             if data:
-                ET.SubElement(group, f"{{{SVG_NS}}}path", {"fill": run.fill, "transform": transform, "d": data})
+                ET.SubElement(
+                    group,
+                    f"{{{SVG_NS}}}path",
+                    {"fill": run.fill, "transform": transform, "d": data},
+                )
         group.tail = element.tail
         parent = parents[element]
         parent.insert(list(parent).index(element), group)

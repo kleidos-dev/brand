@@ -13,6 +13,7 @@ mark's body, or a small mark's body, is refused anywhere but inside such a
 group, so neither a ringless keyhole nor a loose, recolored copy of the mark
 can be made of the mark's own shapes.
 """
+
 from __future__ import annotations
 
 import json
@@ -49,7 +50,9 @@ UNDRAWN = frozenset({"title", "desc", "metadata"})
 
 
 def _drawn(element: ET.Element) -> list[ET.Element]:
-    return [child for child in element if isinstance(child.tag, str) and tag_name(child) not in UNDRAWN]
+    return [
+        child for child in element if isinstance(child.tag, str) and tag_name(child) not in UNDRAWN
+    ]
 
 
 def shapes(root: Path = BRAND_ROOT) -> list[Shape]:
@@ -74,15 +77,35 @@ def ink_shapes(mark: list[Shape], ink: str) -> list[Shape]:
 
 def markup(mark: list[Shape], indent: str = "  ") -> str:
     """Return the shapes as SVG elements, one per line."""
-    order = ("cx", "cy", "r", "x", "y", "width", "height", "rx", "fill", "fill-rule", "stroke", "stroke-width", "d")
+    order = (
+        "cx",
+        "cy",
+        "r",
+        "x",
+        "y",
+        "width",
+        "height",
+        "rx",
+        "fill",
+        "fill-rule",
+        "stroke",
+        "stroke-width",
+        "d",
+    )
     lines = []
     for name, attributes in mark:
-        pairs = sorted(attributes, key=lambda pair: order.index(pair[0]) if pair[0] in order else len(order))
-        lines.append(f"{indent}<{name} " + " ".join(f'{key}="{value}"' for key, value in pairs) + "/>")
+        pairs = sorted(
+            attributes, key=lambda pair: order.index(pair[0]) if pair[0] in order else len(order)
+        )
+        lines.append(
+            f"{indent}<{name} " + " ".join(f'{key}="{value}"' for key, value in pairs) + "/>"
+        )
     return "\n".join(lines)
 
 
-def group(mark: list[Shape], transform: str | None = None, ink: str | None = None, indent: str = "  ") -> str:
+def group(
+    mark: list[Shape], transform: str | None = None, ink: str | None = None, indent: str = "  "
+) -> str:
     """Return the mark as a group: ``class="mark"``, or ``"mark mark-ink"`` when drawn in one *ink*."""
     drawn = mark if ink is None else ink_shapes(mark, ink)
     attributes = 'class="mark"' if ink is None else 'class="mark mark-ink"'
@@ -188,16 +211,26 @@ def small_shapes(fit: SmallFit, color: str) -> list[Shape]:
     radius = fit.body_width / 2
     x0, x1 = c - radius, c + radius
     y0, y1 = c - fit.body_height / 2, c + fit.body_height / 2
-    body = (f"M{_n(x0)} {_n(y0 + radius)}A{_n(radius)} {_n(radius)} 0 0 1 {_n(x1)} {_n(y0 + radius)}"
-            f"V{_n(y1 - radius)}A{_n(radius)} {_n(radius)} 0 0 1 {_n(x0)} {_n(y1 - radius)}Z")
+    body = (
+        f"M{_n(x0)} {_n(y0 + radius)}A{_n(radius)} {_n(radius)} 0 0 1 {_n(x1)} {_n(y0 + radius)}"
+        f"V{_n(y1 - radius)}A{_n(radius)} {_n(radius)} 0 0 1 {_n(x0)} {_n(y1 - radius)}Z"
+    )
     eye_y = c - fit.eye_up
     half = fit.stem_width / 2
     drop = math.sqrt(fit.eye_radius**2 - half**2)  # where the stem's sides meet the eye
     foot = eye_y + fit.stem_length + 0.5
-    keyhole = (f"M{_n(c + half)} {_n(eye_y + drop)}A{_n(fit.eye_radius)} {_n(fit.eye_radius)} 0 1 0 {_n(c - half)} {_n(eye_y + drop)}"
-               f"V{_n(foot)}H{_n(c + half)}Z")
-    ring = (("cx", _n(c)), ("cy", _n(c)), ("fill", "none"), ("r", _n(c - fit.ring_width / 2)),
-            ("stroke", color), ("stroke-width", _n(fit.ring_width)))
+    keyhole = (
+        f"M{_n(c + half)} {_n(eye_y + drop)}A{_n(fit.eye_radius)} {_n(fit.eye_radius)} 0 1 0 {_n(c - half)} {_n(eye_y + drop)}"
+        f"V{_n(foot)}H{_n(c + half)}Z"
+    )
+    ring = (
+        ("cx", _n(c)),
+        ("cy", _n(c)),
+        ("fill", "none"),
+        ("r", _n(c - fit.ring_width / 2)),
+        ("stroke", color),
+        ("stroke-width", _n(fit.ring_width)),
+    )
     solid = (("d", body + keyhole), ("fill", color), ("fill-rule", "evenodd"))
     return [("circle", ring), ("path", solid)]
 
@@ -233,7 +266,9 @@ def small_pixels(fit: SmallFit, color: str) -> Any:
         nearest = min(max(y, top), bottom)
         if (x - c) ** 2 + (y - nearest) ** 2 > radius**2:
             return False
-        keyhole = (x - c) ** 2 + (y - eye_y) ** 2 <= fit.eye_radius**2 or (abs(x - c) <= half and eye_y <= y <= foot)
+        keyhole = (x - c) ** 2 + (y - eye_y) ** 2 <= fit.eye_radius**2 or (
+            abs(x - c) <= half and eye_y <= y <= foot
+        )
         return not keyhole
 
     offsets = [(index + 0.5) / SAMPLES for index in range(SAMPLES)]
@@ -253,10 +288,16 @@ def small_group(shapes_: list[Shape], indent: str = "  ") -> str:
     return f'{indent}<g class="mark mark-small">\n{markup(shapes_, indent + "  ")}\n{indent}</g>'
 
 
-def small_marks(mark: list[Shape], colors: frozenset[str] | set[str], root: Path = BRAND_ROOT) -> list[list[Shape]]:
+def small_marks(
+    mark: list[Shape], colors: frozenset[str] | set[str], root: Path = BRAND_ROOT
+) -> list[list[Shape]]:
     """Return every small mark the builder may draw: each size of ``small-mark.json`` in each of *colors*."""
     numbers = small_numbers(root)
-    return [small_shapes(small_fit(mark, px, numbers), color) for px in numbers["sizes"] for color in sorted(colors)]
+    return [
+        small_shapes(small_fit(mark, px, numbers), color)
+        for px in numbers["sizes"]
+        for color in sorted(colors)
+    ]
 
 
 def _is_glyph(element: ET.Element) -> bool:
@@ -264,7 +305,11 @@ def _is_glyph(element: ET.Element) -> bool:
     if tag_name(element) != "rect":
         return False
     try:
-        size = float(element.get("width", "0")), float(element.get("height", "0")), float(element.get("rx", "0"))
+        size = (
+            float(element.get("width", "0")),
+            float(element.get("height", "0")),
+            float(element.get("rx", "0")),
+        )
     except ValueError:
         return False
     return size == (40.0, 76.0, 20.0)
@@ -275,7 +320,11 @@ def _size(element: ET.Element) -> tuple[float, float, float] | None:
     if tag_name(element) != "rect" or element.get("rx") is None:
         return None
     try:
-        return float(element.get("width", "0")), float(element.get("height", "0")), float(element.get("rx", "0"))
+        return (
+            float(element.get("width", "0")),
+            float(element.get("height", "0")),
+            float(element.get("rx", "0")),
+        )
     except ValueError:
         return None
 
@@ -289,8 +338,13 @@ def body_size(mark: list[Shape]) -> tuple[float, float, float]:
     raise ValueError(f"{MARK_SVG} draws no body")
 
 
-def findings(svg: Path, mark: list[Shape], inks: frozenset[str], name: str | None = None,
-             small: list[list[Shape]] | None = None) -> list[str]:
+def findings(
+    svg: Path,
+    mark: list[Shape],
+    inks: frozenset[str],
+    name: str | None = None,
+    small: list[list[Shape]] | None = None,
+) -> list[str]:
     """Return what is wrong with the mark in *svg*: a changed copy, a ringless keyhole.
 
     :param mark: The shapes of ``logo/src/mark.svg``.
@@ -306,11 +360,18 @@ def findings(svg: Path, mark: list[Shape], inks: frozenset[str], name: str | Non
     except ET.ParseError as error:
         return [f"{name}: not well-formed XML ({error})"]
     found: list[str] = []
-    geometry = [(tag, tuple(pair for pair in attributes if pair[0] not in ("fill", "stroke"))) for tag, attributes in mark]
+    geometry = [
+        (tag, tuple(pair for pair in attributes if pair[0] not in ("fill", "stroke")))
+        for tag, attributes in mark
+    ]
     # Where the body may stand: inside a mark group, or in the file that is the mark's own drawing.
     is_source = [_shape(child) for child in _drawn(root)] == mark
-    in_group = {id(child) for group in root.iter() if tag_name(group) == "g" and "mark" in group.get("class", "").split()
-                for child in group}
+    in_group = {
+        id(child)
+        for group in root.iter()
+        if tag_name(group) == "g" and "mark" in group.get("class", "").split()
+        for child in group
+    }
     body = body_size(mark)
     loose = 0
     for element in root.iter():
@@ -318,32 +379,51 @@ def findings(svg: Path, mark: list[Shape], inks: frozenset[str], name: str | Non
             continue
         if _size(element) == body and not is_source and id(element) not in in_group:
             loose += 1
-        if tag_name(element) == "path" and element.get("d") in small_bodies and id(element) not in in_group:
+        if (
+            tag_name(element) == "path"
+            and element.get("d") in small_bodies
+            and id(element) not in in_group
+        ):
             loose += 1
         labels = f"{element.get('id', '')} {element.get('class', '')}".lower()
         if "glyph" in labels:
-            found.append(f"{name}: an element named for the ringless glyph ({labels.strip()}); the keyhole is never drawn without its ring")
+            found.append(
+                f"{name}: an element named for the ringless glyph ({labels.strip()}); the keyhole is never drawn without its ring"
+            )
         if _is_glyph(element):
-            found.append(f"{name}: draws the ringless glyph's 40 x 76 body; the keyhole is never drawn without its ring")
+            found.append(
+                f"{name}: draws the ringless glyph's 40 x 76 body; the keyhole is never drawn without its ring"
+            )
         classes = element.get("class", "").split()
         if tag_name(element) != "g" or "mark" not in classes:
             continue
         drawn = [_shape(child) for child in element if isinstance(child.tag, str)]
         if "mark-small" in classes:
             if drawn not in small:
-                found.append(f"{name}: its small mark is not one the builder fits from {MARK_SVG} and {SMALL_JSON},"
-                             " at one of its sizes, in the ring's color or one of the inks")
+                found.append(
+                    f"{name}: its small mark is not one the builder fits from {MARK_SVG} and {SMALL_JSON},"
+                    " at one of its sizes, in the ring's color or one of the inks"
+                )
         elif "mark-ink" in classes:
             ink = dict(drawn[0][1]).get("stroke") if drawn else None
             if ink not in inks:
-                found.append(f"{name}: a one-ink mark drawn in {ink}, which is not one of the inks ({', '.join(sorted(inks))})")
+                found.append(
+                    f"{name}: a one-ink mark drawn in {ink}, which is not one of the inks ({', '.join(sorted(inks))})"
+                )
             elif drawn != ink_shapes(mark, ink):
                 found.append(f"{name}: its one-ink mark is not {MARK_SVG}'s shapes in one ink")
         elif drawn != mark:
-            same_geometry = [(tag, tuple(pair for pair in attributes if pair[0] not in ("fill", "stroke"))) for tag, attributes in drawn] == geometry
+            same_geometry = [
+                (tag, tuple(pair for pair in attributes if pair[0] not in ("fill", "stroke")))
+                for tag, attributes in drawn
+            ] == geometry
             what = "recolored" if same_geometry else "redrawn"
-            found.append(f"{name}: its mark is {what}: the group's shapes are not {MARK_SVG}'s, attribute for attribute")
+            found.append(
+                f"{name}: its mark is {what}: the group's shapes are not {MARK_SVG}'s, attribute for attribute"
+            )
     if loose:
-        found.append(f"{name}: draws the mark's keyhole outside a <g class=\"mark\"> ({loose} shape(s) with its body's size);"
-                     " the keyhole is never drawn without its ring, and a copy of the mark is that group, whole")
+        found.append(
+            f"{name}: draws the mark's keyhole outside a <g class=\"mark\"> ({loose} shape(s) with its body's size);"
+            " the keyhole is never drawn without its ring, and a copy of the mark is that group, whole"
+        )
     return found

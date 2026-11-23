@@ -20,6 +20,7 @@ and refuses any that is not pixels, tables, the bare JFIF header or the
 profile's two metadata segments, and any byte after the end-of-image marker.
 Camera data never comes back: no EXIF segment is ever accepted.
 """
+
 from __future__ import annotations
 
 import io
@@ -45,7 +46,12 @@ SUBSAMPLING = 0
 ALLOWED_MARKERS = frozenset({0xD8, 0xD9, 0xE0, 0xDB, 0xC4, 0xC0, 0xC1, 0xC2, 0xDD, 0xDA})
 #: And, with a record, the profile's XMP (APP1) and IIM (APP13), holding exactly what the record gives.
 METADATA_MARKERS = frozenset({0xE1, 0xED})
-MARKER_NAMES = {0xE1: "APP1 (EXIF or XMP)", 0xE2: "APP2 (ICC profile)", 0xED: "APP13 (IPTC)", 0xFE: "COM (a comment)"}
+MARKER_NAMES = {
+    0xE1: "APP1 (EXIF or XMP)",
+    0xE2: "APP2 (ICC profile)",
+    0xED: "APP13 (IPTC)",
+    0xFE: "COM (a comment)",
+}
 
 
 def encode(image: Any, meta: MediaMeta | None = None) -> bytes:
@@ -57,7 +63,9 @@ def encode(image: Any, meta: MediaMeta | None = None) -> bytes:
     bare_image = image.copy()
     bare_image.info = {}
     buffer = io.BytesIO()
-    bare_image.save(buffer, "JPEG", quality=QUALITY, subsampling=SUBSAMPLING, optimize=True, progressive=False)
+    bare_image.save(
+        buffer, "JPEG", quality=QUALITY, subsampling=SUBSAMPLING, optimize=True, progressive=False
+    )
     data = buffer.getvalue()
     return data if meta is None else media.jpeg_stamp(data, meta)
 
@@ -82,8 +90,13 @@ def clean(data: bytes, meta: MediaMeta | None = None) -> bytes:
         pixels = upright.convert("RGB")
     if profile:
         source = ImageCms.ImageCmsProfile(io.BytesIO(profile))
-        pixels = ImageCms.profileToProfile(pixels, source, ImageCms.createProfile("sRGB"),
-                                           renderingIntent=ImageCms.Intent.RELATIVE_COLORIMETRIC, outputMode="RGB")
+        pixels = ImageCms.profileToProfile(
+            pixels,
+            source,
+            ImageCms.createProfile("sRGB"),
+            renderingIntent=ImageCms.Intent.RELATIVE_COLORIMETRIC,
+            outputMode="RGB",
+        )
     fresh = Image.new("RGB", pixels.size)
     fresh.paste(pixels)
     return encode(fresh, meta)
@@ -136,7 +149,9 @@ def walk(data: bytes) -> tuple[list[int], int]:
             break
         position += int.from_bytes(data[position : position + 2], "big")
         if marker == 0xDA:
-            while position + 1 < len(data) and not (data[position] == 0xFF and data[position + 1] not in CODED_DATA_FOLLOWERS):
+            while position + 1 < len(data) and not (
+                data[position] == 0xFF and data[position + 1] not in CODED_DATA_FOLLOWERS
+            ):
                 position += 1
     raise ValueError("the file ends before its end-of-image marker")
 
@@ -156,15 +171,20 @@ def size(data: bytes) -> tuple[int, int]:
         return opened.size
 
 
-def findings(name: str, data: bytes, expected: tuple[int, int] | None = None, limit: int | None = None,
-             meta: MediaMeta | None = None) -> list[str]:
+def findings(
+    name: str,
+    data: bytes,
+    expected: tuple[int, int] | None = None,
+    limit: int | None = None,
+    meta: MediaMeta | None = None,
+) -> list[str]:
     """Return what is wrong with a published photograph: its segments, its metadata, its size, its weight.
 
     :param meta: The file's record. Without one, any metadata segment is refused.
     """
     try:
         (found_markers, end), actual = walk(data), size(data)
-    except (ValueError, OSError):
+    except ValueError, OSError:
         return [f"{name}: not a JPEG"]
     found = []
     if end != len(data):
@@ -173,7 +193,11 @@ def findings(name: str, data: bytes, expected: tuple[int, int] | None = None, li
     extra = sorted({marker for marker in found_markers if marker not in allowed})
     if extra:
         what = ", ".join(MARKER_NAMES.get(marker, f"marker 0x{marker:02X}") for marker in extra)
-        holds = "pixels, tables and the profile's metadata" if meta is not None else "pixels and tables only"
+        holds = (
+            "pixels, tables and the profile's metadata"
+            if meta is not None
+            else "pixels and tables only"
+        )
         found.append(f"{name}: holds {what}; a published photograph holds {holds}")
     if meta is not None:
         found += media.jpeg_findings(name, data, meta)
@@ -181,7 +205,9 @@ def findings(name: str, data: bytes, expected: tuple[int, int] | None = None, li
         app0 = data.index(b"\xff\xe0")
         length = int.from_bytes(data[app0 + 2 : app0 + 4], "big")
         if data[app0 + 4 : app0 + 9] != b"JFIF\x00" or length != 16:
-            found.append(f"{name}: its APP0 segment is not the bare JFIF header (a thumbnail or an extension)")
+            found.append(
+                f"{name}: its APP0 segment is not the bare JFIF header (a thumbnail or an extension)"
+            )
     if expected is not None and actual != expected:
         found.append(f"{name}: is {actual[0]} x {actual[1]}, not {expected[0]} x {expected[1]}")
     if limit is not None and len(data) >= limit:

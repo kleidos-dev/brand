@@ -1,5 +1,6 @@
 # SPDX-License-Identifier: MIT
 """The name's lettering and the lockups: one stable path, placed by the numbers of lockups.json."""
+
 from __future__ import annotations
 
 import hashlib
@@ -47,8 +48,10 @@ def test_lockup_geometry_is_the_numbers_of_lockups_json() -> None:
         tree = ET.fromstring(logos[stem].svg)
         group = next(element for element in tree.iter() if element.get("class") == "mark")
         path = next(element for element in tree.iter() if element.get("class") == "lettering")
-        return ([float(n) for n in re.findall(r"-?[\d.]+", group.get("transform", ""))],
-                [float(n) for n in re.findall(r"-?[\d.]+", path.get("transform", ""))])
+        return (
+            [float(n) for n in re.findall(r"-?[\d.]+", group.get("transform", ""))],
+            [float(n) for n in re.findall(r"-?[\d.]+", path.get("transform", ""))],
+        )
 
     h = numbers["horizontal"]
     (cx, cy, scale), (x, baseline, *_) = placed("kleidos-lockup-horizontal-for-dark")
@@ -63,7 +66,9 @@ def test_lockup_geometry_is_the_numbers_of_lockups_json() -> None:
     x0, _, x1, _ = line.bounds()
     assert scale * mark.BOX == side and cy == side / 2
     assert baseline == side + s["cap_top_below_mark_em"] * 1000 + 729
-    assert abs((x + (x0 + x1) / 2) - cx) < 0.01, "the lettering's ink is centered on the mark's axis"
+    assert abs((x + (x0 + x1) / 2) - cx) < 0.01, (
+        "the lettering's ink is centered on the mark's axis"
+    )
 
 
 def test_every_logo_file_shows_the_whole_mark_or_none() -> None:

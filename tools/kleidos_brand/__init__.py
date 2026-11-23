@@ -19,6 +19,7 @@ draw with one set of rules, one browser and one encoder:
 ``sys.path`` needs the ``tools`` folder: ``tools/build.py`` adds it for
 itself, and ``social`` adds ``brand/tools``.
 """
+
 from __future__ import annotations
 
 from pathlib import Path

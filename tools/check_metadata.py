@@ -26,6 +26,7 @@ Exit status: 0 clean, 1 findings, 2 a usage or internal error. The private deny-
 from tools/deny-local.txt (one pattern per line, never committed) or KLEIDOS_DENY_EXTRA; in
 CI a missing list is a finding, unless KLEIDOS_DENY_OPTIONAL=1 says the secret cannot be read.
 """
+
 from __future__ import annotations
 
 import argparse
@@ -44,9 +45,13 @@ FINDING = re.compile(r"^(?P<path>[^:]+): (?P<rule>M\d{3}): (?P<message>.*)$")
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=(__doc__ or "").split("\n\n")[0])
-    parser.add_argument("paths", nargs="*", help="files to check, relative to the repository (default: all)")
+    parser.add_argument(
+        "paths", nargs="*", help="files to check, relative to the repository (default: all)"
+    )
     parser.add_argument("--json", action="store_true", help="print the findings as JSON")
-    parser.add_argument("--root", type=Path, default=BRAND_ROOT, help="the tree to check (default: this repository)")
+    parser.add_argument(
+        "--root", type=Path, default=BRAND_ROOT, help="the tree to check (default: this repository)"
+    )
     args = parser.parse_args(argv)
     try:
         root = args.root.resolve()
@@ -64,7 +69,11 @@ def main(argv: list[str] | None = None) -> int:
     else:
         for line in found:
             print(line)
-        print(f"\n{len(found)} finding(s)." if found else "metadata: every published picture and SVG carries its record.")
+        print(
+            f"\n{len(found)} finding(s)."
+            if found
+            else "metadata: every published picture and SVG carries its record."
+        )
     return 1 if found else 0
 
 

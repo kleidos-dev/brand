@@ -36,14 +36,15 @@ Its generator reads `style.json` for every number it would otherwise hold as a l
 
 ```python
 import kleidos_kicad as kit
-env = kit.environment()                      # English, both themes, a settings folder of its own
-count, report = kit.erc(schematic, env)      # the style allows no message
+
+env = kit.environment()  # English, both themes, a settings folder of its own
+count, report = kit.erc(schematic, env)  # the style allows no message
 kit.export_pdf(schematic, pdf, env, "dark")  # theme, sheet and face of the ground
 kit.export_svg(schematic, folder, env, "dark")
-kit.svg_findings(svg, "dark")                # the theme's background, one wire width
-kit.pdf_findings(reader, "dark")             # the mark once per page, one image object
-kit.sort_fonts(writer)                       # before a pypdf rewrite, for the same bytes every run
-kit.cell_findings([("title", title), ("comments", line)])   # a title-block line wider than its cell
+kit.svg_findings(svg, "dark")  # the theme's background, one wire width
+kit.pdf_findings(reader, "dark")  # the mark once per page, one image object
+kit.sort_fonts(writer)  # before a pypdf rewrite, for the same bytes every run
+kit.cell_findings([("title", title), ("comments", line)])  # a title-block line wider than its cell
 ```
 
 A light export runs on a copy of the sources made with `kit.recolor(text, "light")`, which turns the two explicit colors (the addition marker, a table's rules) to the light ground's; the committed sources are always the dark ground.

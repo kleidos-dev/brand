@@ -6,6 +6,7 @@ picture, its bytes and the bytes of what it was drawn from. It holds file
 digests only: a commit's name would not survive a squashed history, and a
 commit that changes nothing a picture reads should not make it stale.
 """
+
 from __future__ import annotations
 
 import hashlib
@@ -38,13 +39,19 @@ def load(root: Path) -> dict[str, Any]:
 
 def dump(record: dict[str, Any]) -> str:
     """Return the record as the text of ``exports.json``."""
-    ordered = {"$comment": COMMENT, **{key: value for key, value in record.items() if key != "$comment"}}
+    ordered = {
+        "$comment": COMMENT,
+        **{key: value for key, value in record.items() if key != "$comment"},
+    }
     return json.dumps(ordered, indent=2, ensure_ascii=False) + "\n"
 
 
 def block_markers(name: str) -> tuple[str, str]:
     """Return the two comment lines a generated block of a README page stands between."""
-    return (f"<!-- BEGIN GENERATED: {name} (tools/build.py); do not edit by hand -->", f"<!-- END GENERATED: {name} -->")
+    return (
+        f"<!-- BEGIN GENERATED: {name} (tools/build.py); do not edit by hand -->",
+        f"<!-- END GENERATED: {name} -->",
+    )
 
 
 def with_block(text: str, name: str, body: str) -> str:

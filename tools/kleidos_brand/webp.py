@@ -16,6 +16,7 @@ color profile. The same pixels give the same bytes for one libwebp version;
 ``exports.json`` records the version and the settings each file was encoded
 with.
 """
+
 from __future__ import annotations
 
 import io
@@ -37,7 +38,12 @@ def settings() -> dict[str, Any]:
     import PIL  # noqa: PLC0415
     from PIL import features  # noqa: PLC0415
 
-    return {"pillow": PIL.__version__, "libwebp": features.version("webp"), "lossless": LOSSLESS, "lossy": LOSSY}
+    return {
+        "pillow": PIL.__version__,
+        "libwebp": features.version("webp"),
+        "lossless": LOSSLESS,
+        "lossy": LOSSY,
+    }
 
 
 def pixels(data: bytes) -> Any:
@@ -45,7 +51,11 @@ def pixels(data: bytes) -> Any:
     from PIL import Image  # noqa: PLC0415
 
     with Image.open(io.BytesIO(data)) as opened:
-        mode = "RGBA" if opened.mode in ("RGBA", "LA", "PA") or "transparency" in opened.info else "RGB"
+        mode = (
+            "RGBA"
+            if opened.mode in ("RGBA", "LA", "PA") or "transparency" in opened.info
+            else "RGB"
+        )
         decoded = opened.convert(mode)
     fresh = Image.new(mode, decoded.size)
     fresh.paste(decoded)
@@ -81,8 +91,13 @@ def size(data: bytes) -> tuple[int, int]:
     return media.webp_size(data)
 
 
-def findings(name: str, data: bytes, expected: tuple[int, int] | None = None, limit: int | None = None,
-             meta: MediaMeta | None = None) -> list[str]:
+def findings(
+    name: str,
+    data: bytes,
+    expected: tuple[int, int] | None = None,
+    limit: int | None = None,
+    meta: MediaMeta | None = None,
+) -> list[str]:
     """Return what is wrong with a published WebP file: its chunks, its metadata, its size, its weight.
 
     :param meta: The file's record. Without one, any chunk but the pixels' is refused.

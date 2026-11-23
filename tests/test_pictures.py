@@ -1,5 +1,6 @@
 # SPDX-License-Identifier: MIT
 """The pictures: encoded from pixels alone, compared exactly and with tolerance, drawn the same twice."""
+
 from __future__ import annotations
 
 import hashlib
@@ -34,7 +35,9 @@ def test_a_cleaned_picture_carries_pixels_only() -> None:
     cleaned = png.encode(png.clean(buffer.getvalue()))
     assert set(png.chunk_names(cleaned)) <= png.ALLOWED_CHUNKS
     assert png.differing(cleaned, buffer.getvalue()) == 0
-    assert png.findings("x.png", buffer.getvalue(), (4, 4)) and not png.findings("x.png", cleaned, (4, 4))
+    assert png.findings("x.png", buffer.getvalue(), (4, 4)) and not png.findings(
+        "x.png", cleaned, (4, 4)
+    )
 
 
 def test_a_cleaned_photograph_carries_pixels_only() -> None:
@@ -45,14 +48,22 @@ def test_a_cleaned_photograph_carries_pixels_only() -> None:
     exif[0x010F] = "A camera maker"
     profile = ImageCms.ImageCmsProfile(ImageCms.createProfile("sRGB")).tobytes()
     buffer = io.BytesIO()
-    Image.new("RGB", (40, 20), (200, 120, 40)).save(buffer, "JPEG", exif=exif.tobytes(), icc_profile=profile, comment=b"a note")
+    Image.new("RGB", (40, 20), (200, 120, 40)).save(
+        buffer, "JPEG", exif=exif.tobytes(), icc_profile=profile, comment=b"a note"
+    )
     camera = buffer.getvalue()
     assert {0xE1, 0xE2, 0xFE} <= set(photos.markers(camera))
     assert any("APP1" in line for line in photos.findings("x.jpg", camera))
     cleaned = photos.clean(camera)
-    assert photos.findings("x.jpg", cleaned, (20, 40)) == [], "upright, and nothing but pixels and tables"
+    assert photos.findings("x.jpg", cleaned, (20, 40)) == [], (
+        "upright, and nothing but pixels and tables"
+    )
     with Image.open(io.BytesIO(cleaned)) as opened:
-        assert not opened.getexif() and "icc_profile" not in opened.info and "comment" not in opened.info
+        assert (
+            not opened.getexif()
+            and "icc_profile" not in opened.info
+            and "comment" not in opened.info
+        )
     assert photos.clean(camera) == cleaned, "the same file gives the same bytes"
     assert photos.size(photos.narrowed(cleaned, 10)) == (10, 20)
 
@@ -66,7 +77,9 @@ def test_metadata_after_the_scan_or_after_the_end_is_seen() -> None:
     assert photos.findings("x.jpg", clean, (16, 16)) == [] and photos.markers(clean)[-1] == 0xD9
     note = b"\xff\xfe" + (2 + len(b"a note")).to_bytes(2, "big") + b"a note"
     between = clean[:-2] + note + clean[-2:]
-    assert 0xFE in photos.markers(between) and any("COM" in line for line in photos.findings("x.jpg", between))
+    assert 0xFE in photos.markers(between) and any(
+        "COM" in line for line in photos.findings("x.jpg", between)
+    )
     after = clean + b"Exif\x00\x00 a camera maker"
     assert any("after its end-of-image marker" in line for line in photos.findings("x.jpg", after))
     assert photos.findings("x.jpg", clean[:-2]) == ["x.jpg: not a JPEG"]
@@ -81,7 +94,9 @@ def test_every_photograph_is_clean_and_listed() -> None:
         about = records.photo(photo, path, tuple(photo["size"]))
         assert photos.findings(photo["file"], whole, tuple(photo["size"]), meta=about) == []
         assert set(photos.markers(whole)) <= photos.ALLOWED_MARKERS | photos.METADATA_MARKERS
-        assert photos.findings(photo["file"], photos.bare(whole), tuple(photo["size"])) == [], "without its record, only pixels and tables"
+        assert photos.findings(photo["file"], photos.bare(whole), tuple(photo["size"])) == [], (
+            "without its record, only pixels and tables"
+        )
         assert set(photo["alt"]) == set(data["langs"]) and photo["credit"]
 
 
@@ -98,7 +113,9 @@ def test_one_pixel_off_is_seen_and_a_shade_apart_is_tolerated() -> None:
     assert png.drift(base, buffer.getvalue()) == 1 / 64
     assert png.drift(base, picture((14, 16, 19, 255))) == 0, "a few levels apart is not drift"
     assert png.differing(base, picture((10, 12, 15, 255), (8, 9))) is None
-    assert png.findings("x.png", base, (8, 8), limit=10) == [f"x.png: is {len(base):,} bytes; the limit is under 10"]
+    assert png.findings("x.png", base, (8, 8), limit=10) == [
+        f"x.png: is {len(base):,} bytes; the limit is under 10"
+    ]
 
 
 def test_every_committed_picture_is_recorded_and_within_its_limits() -> None:
@@ -114,24 +131,43 @@ def test_every_committed_picture_is_recorded_and_within_its_limits() -> None:
             assert len(data) < item.limit, item.path
         elif item.path.parts[0] == "press-kit":
             # A capture and the full-resolution photograph are kept as they are, with no limit of their own.
-            assert item.path.parent in (press.SCREENS_DIR, photos.PHOTOS_DIR) and not item.row, item.path
+            assert item.path.parent in (press.SCREENS_DIR, photos.PHOTOS_DIR) and not item.row, (
+                item.path
+            )
 
 
 def test_every_logo_has_its_png_copies_and_every_press_image_both_languages() -> None:
     names = {path.name for path in (ROOT / logo.PNG_DIR).iterdir()}
     for item in logo.build(ROOT):
-        assert any(name.startswith(f"{item.stem}-") or name == f"{item.stem}.png" for name in names), item.stem
+        assert any(
+            name.startswith(f"{item.stem}-") or name == f"{item.stem}.png" for name in names
+        ), item.stem
     images = {image.stem: image for image in press.images(ROOT)}
-    for stem in ("kleidos-16x9", "kleidos-16x9-light", "kleidos-1x1", "kleidos-1x1-light", "kleidos-screens-16x9",
-                 "kleidos-boards-16x9", "kleidos-boards-16x9-light", "kleidos-boards-4x5", "kleidos-boards-4x5-light"):
+    for stem in (
+        "kleidos-16x9",
+        "kleidos-16x9-light",
+        "kleidos-1x1",
+        "kleidos-1x1-light",
+        "kleidos-screens-16x9",
+        "kleidos-boards-16x9",
+        "kleidos-boards-16x9-light",
+        "kleidos-boards-4x5",
+        "kleidos-boards-4x5-light",
+    ):
         assert stem in images and f"{stem}-es" in images
     assert images["kleidos-16x9-es"].sets["title.0"].line.text == "Tus contraseñas, en una placa"
     assert not any(press.findings(image) for image in images.values())
-    assert {plate.board for plate in images["kleidos-screens-16x9"].plates} <= set(press.load(ROOT)["screens"])
+    assert {plate.board for plate in images["kleidos-screens-16x9"].plates} <= set(
+        press.load(ROOT)["screens"]
+    )
     for stem in ("kleidos-boards-16x9", "kleidos-boards-4x5-light-es"):
-        assert [placed.slug for placed in images[stem].fronts] == boards.order(ROOT), "every board, in the site's order"
+        assert [placed.slug for placed in images[stem].fronts] == boards.order(ROOT), (
+            "every board, in the site's order"
+        )
         assert not images[stem].publish_svg
-    assert len({plate.board for plate in images["kleidos-screens-16x9"].plates}) >= 5, "not only one board's screen"
+    assert len({plate.board for plate in images["kleidos-screens-16x9"].plates}) >= 5, (
+        "not only one board's screen"
+    )
 
 
 def test_the_small_marks_keyhole_is_a_hole() -> None:
@@ -143,9 +179,13 @@ def test_the_small_marks_keyhole_is_a_hole() -> None:
     assert pixels.getpixel((10, 9))[3] == 0, "the eye shows the ground"
     assert pixels.getpixel((10, 11))[3] == 0, "and so does the stem"
     assert pixels.getpixel((7, 9)) == (0, 210, 255, 255), "the body is solid in the ring's color"
-    assert pixels.getpixel((10, 0))[3] > 128 and pixels.getpixel((10, 1))[3] == 0, "the ring is one pixel, on the file's edge"
+    assert pixels.getpixel((10, 0))[3] > 128 and pixels.getpixel((10, 1))[3] == 0, (
+        "the ring is one pixel, on the file's edge"
+    )
     with Image.open(ROOT / logo.PNG_DIR / "kleidos-mark-small-on-dark-21.png") as opened:
-        assert opened.convert("RGB").getpixel((10, 9)) == (10, 12, 15), "on its tile, the keyhole is the tile"
+        assert opened.convert("RGB").getpixel((10, 9)) == (10, 12, 15), (
+            "on its tile, the keyhole is the tile"
+        )
 
 
 def test_the_archive_is_the_same_bytes_twice(tree: Path) -> None:
@@ -154,34 +194,64 @@ def test_the_archive_is_the_same_bytes_twice(tree: Path) -> None:
     import zipfile
 
     names = zipfile.ZipFile(io.BytesIO(first)).namelist()
-    for needed in ("kleidos-press-kit/TRADEMARKS.md", "kleidos-press-kit/LICENSE", "kleidos-press-kit/LICENSES/MIT.txt", "kleidos-press-kit/press-kit/USAGE.md",
-                   "kleidos-press-kit/press-kit/svg/kleidos-16x9.svg", "kleidos-press-kit/logo/svg/kleidos-mark.svg",
-                   "kleidos-press-kit/press-kit/photos/kleidos-photo-four-boards.jpg", "kleidos-press-kit/press-kit/photos/kleidos-photo-four-boards-1920.jpg"):
+    for needed in (
+        "kleidos-press-kit/TRADEMARKS.md",
+        "kleidos-press-kit/LICENSE",
+        "kleidos-press-kit/LICENSES/MIT.txt",
+        "kleidos-press-kit/press-kit/USAGE.md",
+        "kleidos-press-kit/press-kit/svg/kleidos-16x9.svg",
+        "kleidos-press-kit/logo/svg/kleidos-mark.svg",
+        "kleidos-press-kit/press-kit/photos/kleidos-photo-four-boards.jpg",
+        "kleidos-press-kit/press-kit/photos/kleidos-photo-four-boards-1920.jpg",
+    ):
         assert needed in names
 
 
 def test_every_published_picture_has_its_webp_copy() -> None:
     recorded = json.loads((ROOT / record.EXPORTS_JSON).read_text(encoding="utf-8"))
-    assert recorded["webp"]["lossless"] == webp.LOSSLESS and recorded["webp"]["lossy"] == webp.LOSSY and recorded["webp"]["libwebp"]
+    assert (
+        recorded["webp"]["lossless"] == webp.LOSSLESS
+        and recorded["webp"]["lossy"] == webp.LOSSY
+        and recorded["webp"]["libwebp"]
+    )
     _, pictures = build.collect(ROOT)
     copies = {item.copy_of: item for item in pictures if item.path.suffix == ".webp"}
     originals = [item for item in pictures if item.path.suffix in (".png", ".jpg")]
-    assert originals and {item.path for item in originals} == set(copies), "one WebP copy for every PNG and JPEG file, no more"
+    assert originals and {item.path for item in originals} == set(copies), (
+        "one WebP copy for every PNG and JPEG file, no more"
+    )
     for item in originals:
         twin = copies[item.path]
-        assert twin.path == build.webp_path(item.path) and twin.path.as_posix() in recorded["files"], twin.path
-        assert twin.path.parent == (logo.WEBP_DIR if item.path.parent == logo.PNG_DIR else item.path.parent)
+        assert (
+            twin.path == build.webp_path(item.path) and twin.path.as_posix() in recorded["files"]
+        ), twin.path
+        assert twin.path.parent == (
+            logo.WEBP_DIR if item.path.parent == logo.PNG_DIR else item.path.parent
+        )
         data = (ROOT / twin.path).read_bytes()
         assert webp.is_lossless(data) is (item.path.suffix == ".png") is twin.lossless, twin.path
         assert webp.size(data) == item.size, twin.path
-        assert webp.findings(twin.path.as_posix(), data, item.size, item.limit, twin.meta) == [], twin.path
+        assert webp.findings(twin.path.as_posix(), data, item.size, item.limit, twin.meta) == [], (
+            twin.path
+        )
         if twin.lossless:
-            assert png.differing((ROOT / item.path).read_bytes(), data) == 0, f"{twin.path}: not the PNG's pixels"
+            assert png.differing((ROOT / item.path).read_bytes(), data) == 0, (
+                f"{twin.path}: not the PNG's pixels"
+            )
         else:
-            assert png.drift((ROOT / item.path).read_bytes(), data) <= build.TOLERANCE, f"{twin.path}: not the photograph"
+            assert png.drift((ROOT / item.path).read_bytes(), data) <= build.TOLERANCE, (
+                f"{twin.path}: not the photograph"
+            )
         assert twin.meta is not None and item.meta is not None
-        assert twin.meta.title == f"{item.meta.title}, WebP" and "WebP" in twin.meta.description and "WebP" in twin.meta.keywords
-        assert twin.meta.source_url == records.url(item.path) and twin.meta.profile == item.meta.profile
+        assert (
+            twin.meta.title == f"{item.meta.title}, WebP"
+            and "WebP" in twin.meta.description
+            and "WebP" in twin.meta.keywords
+        )
+        assert (
+            twin.meta.source_url == records.url(item.path)
+            and twin.meta.profile == item.meta.profile
+        )
 
 
 def test_a_webp_copy_is_the_same_bytes_twice() -> None:
@@ -193,15 +263,25 @@ def test_a_webp_copy_is_the_same_bytes_twice() -> None:
     for image, lossless in ((flat, True), (photo, False)):
         first = webp.encode(image, lossless=lossless)
         assert webp.encode(image, lossless=lossless) == first
-        assert webp.is_lossless(first) is lossless and webp.findings("x.webp", first, (40, 24)) == []
+        assert (
+            webp.is_lossless(first) is lossless and webp.findings("x.webp", first, (40, 24)) == []
+        )
     buffer = io.BytesIO()
     flat.save(buffer, "PNG")
     copied = webp.copy_of(buffer.getvalue())
-    assert copied == webp.copy_of(buffer.getvalue()) and png.differing(buffer.getvalue(), copied) == 0
+    assert (
+        copied == webp.copy_of(buffer.getvalue()) and png.differing(buffer.getvalue(), copied) == 0
+    )
 
 
 #: The ground of an opaque copy, by the variant its file's name ends with (logo/src/opaque.json).
-OPAQUE_GROUNDS = {"for-light": "white", "ink-dark": "white", "for-dark": "black", "ink-light": "black", "color": "black"}
+OPAQUE_GROUNDS = {
+    "for-light": "white",
+    "ink-dark": "white",
+    "for-dark": "black",
+    "ink-light": "black",
+    "color": "black",
+}
 
 
 def test_every_logo_on_transparency_has_its_opaque_copy() -> None:
@@ -219,24 +299,42 @@ def test_every_logo_on_transparency_has_its_opaque_copy() -> None:
         family = copy.item.family
         assert copy.ground == OPAQUE_GROUNDS[logo.variant(family)], family
         assert copy.path.name == f"{family}-opaque-{copy.ground}-{copy.item.px or copy.height}.png"
-        assert not any(name in copy.path.name for name in ("-on-dark", "-on-light")), "an opaque copy is not a baked tile"
+        assert not any(name in copy.path.name for name in ("-on-dark", "-on-light")), (
+            "an opaque copy is not a baked tile"
+        )
         rgb = tuple(int(grounds[copy.ground][index : index + 2], 16) for index in (1, 3, 5))
         with Image.open(ROOT / copy.path) as opened, Image.open(ROOT / copy.source) as source:
-            assert opened.mode == "RGB" and "transparency" not in opened.info, f"{copy.path}: has alpha"
+            assert opened.mode == "RGB" and "transparency" not in opened.info, (
+                f"{copy.path}: has alpha"
+            )
             assert opened.size == source.size == (copy.width, copy.height)
             flat, alpha = opened.convert("RGB"), source.convert("RGBA").getchannel("A")
-        clear = [(x, y) for x, y in ((0, 0), (copy.width - 1, 0), (0, copy.height - 1), (copy.width - 1, copy.height - 1))
-                 if alpha.getpixel((x, y)) == 0]
+        clear = [
+            (x, y)
+            for x, y in (
+                (0, 0),
+                (copy.width - 1, 0),
+                (0, copy.height - 1),
+                (copy.width - 1, copy.height - 1),
+            )
+            if alpha.getpixel((x, y)) == 0
+        ]
         assert clear, f"{copy.source}: no clear corner to read the ground at"
         for corner in clear:
-            assert flat.getpixel(corner) == rgb, f"{copy.path}: corner {corner} is not {copy.ground}"
+            assert flat.getpixel(corner) == rgb, (
+                f"{copy.path}: corner {corner} is not {copy.ground}"
+            )
 
 
 def test_an_opaque_copy_says_what_it_is() -> None:
     _, pictures = build.collect(ROOT)
     for copy in logo.opaque_plan(ROOT):
         about = next(item.meta for item in pictures if item.path == copy.path)
-        assert about is not None and copy.source.name in about.description and copy.ground in about.description
+        assert (
+            about is not None
+            and copy.source.name in about.description
+            and copy.ground in about.description
+        )
         assert "opaque" in about.keywords and about.source_url == records.url(copy.source)
         assert about.profile == meta.profile_for((copy.width, copy.height))
 
@@ -245,9 +343,12 @@ def test_the_archive_holds_the_renditions(tree: Path) -> None:
     import zipfile
 
     names = zipfile.ZipFile(io.BytesIO(build.write_zip(tree).read_bytes())).namelist()
-    for needed in ("kleidos-press-kit/logo/webp/kleidos-mark-1024.webp", "kleidos-press-kit/logo/png/kleidos-mark-opaque-black-1024.png",
-                   "kleidos-press-kit/logo/webp/kleidos-lockup-horizontal-for-light-opaque-white-512.webp",
-                   "kleidos-press-kit/press-kit/photos/kleidos-photo-four-boards.webp"):
+    for needed in (
+        "kleidos-press-kit/logo/webp/kleidos-mark-1024.webp",
+        "kleidos-press-kit/logo/png/kleidos-mark-opaque-black-1024.png",
+        "kleidos-press-kit/logo/webp/kleidos-lockup-horizontal-for-light-opaque-white-512.webp",
+        "kleidos-press-kit/press-kit/photos/kleidos-photo-four-boards.webp",
+    ):
         assert needed in names, needed
 
 

@@ -6,6 +6,7 @@ recorded with the images (``exports.json``), because the same SVG can come out
 a few pixels different from another version: a comparison against the record
 is refused under a different browser instead of reported as a difference.
 """
+
 from __future__ import annotations
 
 import re
@@ -96,9 +97,13 @@ class Browser:
         self._page.goto(path.resolve().as_uri())
         failed = self._page.evaluate(SETTLE_JS)
         if failed:
-            raise FontNotLoaded(f"{name}: these font faces did not load: {', '.join(sorted(set(failed)))}")
+            raise FontNotLoaded(
+                f"{name}: these font faces did not load: {', '.join(sorted(set(failed)))}"
+            )
         return self._page.screenshot(omit_background=True)
 
-    def draw(self, svg: str, size: tuple[int, int], name: str = "page", hide: tuple[str, ...] = ()) -> bytes:
+    def draw(
+        self, svg: str, size: tuple[int, int], name: str = "page", hide: tuple[str, ...] = ()
+    ) -> bytes:
         """Return the screenshot of *svg* stretched to *size* pixels."""
         return self.shoot(page(svg, size, hide=hide), size, name)
