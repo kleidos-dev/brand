@@ -94,7 +94,7 @@ def test_every_picture_says_what_it_is_who_made_it_and_under_which_license() -> 
             texts["License"] == "GPL-3.0-or-later https://spdx.org/licenses/GPL-3.0-or-later.html"
         )
         assert texts["Comment"].endswith(
-            f"https://github.com/kleidos-dev/social/blob/main/{picture.path.as_posix()}"
+            f"https://github.com/kleidos-dev/brand/blob/main/social/{picture.path.as_posix()}"
         )
         assert not {"tIME", "zTXt", "eXIf", "sRGB", "iCCP"} & set(names), (
             picture.path
@@ -173,9 +173,8 @@ def test_a_mark_that_is_not_brand_s_is_caught_even_when_the_export_matches_its_s
     recorded = json.loads((ROOT / "exports.json").read_text(encoding="utf-8"))
     if chromium.version != recorded["chromium"]:
         pytest.skip("exact pixels are compared under the recorded Chromium only")
-    # Brand's mark changes; this repository's source still holds the old shapes, and so does its
-    # export.
-    mark = tree_with_brand / "brand/logo/src/mark.svg"
+    # Brand's mark changes; the pack's source still holds the old shapes, and so does its export.
+    mark = tree_with_brand.parent / "logo/src/mark.svg"
     mark.write_text(mark.read_text(encoding="utf-8").replace('r="42"', 'r="40"'), encoding="utf-8")
     found = export.drawn_findings(
         tree_with_brand, only=frozenset({"png/youtube/watermark.png"}), browser=chromium

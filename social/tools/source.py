@@ -33,7 +33,7 @@ from typing import Any
 from fontTools.pens.boundsPen import BoundsPen
 from fontTools.svgLib.path import parse_path
 
-import pack  # noqa: F401  puts brand/tools on the path
+import pack  # noqa: F401  puts brand's tools on the path
 from kleidos_brand import SVG_HEADER, boards, logo, mark, svg_rules, svgtext
 
 SVG_NS = svgtext.SVG_NS

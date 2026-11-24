@@ -7,9 +7,9 @@ is given and the platform rule each file answers to; then the repository
 cards, what is not made, and the previews. Nothing else says what the pack
 holds: the exporter, the checks and the README's tables all read it.
 
-This module also puts ``brand/tools`` on the path, so every other module of
-``tools/`` imports it first and then ``kleidos_brand``: both repositories draw
-with brand's rules, brand's browser and brand's encoder.
+This module also puts brand's ``tools`` on the path, so every other module of
+``tools/`` imports it first and then ``kleidos_brand``: the pack is drawn with
+brand's rules, brand's browser and brand's encoder.
 """
 
 from __future__ import annotations
@@ -20,20 +20,19 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
-#: This repository.
+#: The pack: the ``social/`` folder of the brand repository.
 ROOT = Path(__file__).resolve().parents[1]
-#: The brand repository, as a submodule.
-BRAND = Path("brand")
+#: The brand repository, the folder the pack is in, as a path relative to the pack.
+BRAND = Path("..")
+#: Where the pack is in the brand repository: its files' public addresses and their lines in
+#: brand's REUSE.toml name them under it.
+PREFIX = Path("social")
 
 if not (ROOT / BRAND / "tools" / "kleidos_brand").is_dir():
-    sys.exit(
-        "the brand submodule is not checked out: run 'git submodule update --init'"
-        " (for a local brand beside this clone: 'git config submodule.brand.url ../brand',"
-        " then 'git -c protocol.file.allow=always submodule update --init')"
-    )
-# Last on the path, so that brand's own scripts (brand/tools/check.py, its
-# check_metadata.py) never stand in for this repository's modules of the same
-# name: only the kleidos_brand package is read from there.
+    sys.exit("the pack runs from the social/ folder of a clone of the brand repository")
+# Last on the path, so that brand's own scripts (its tools/check.py, its check_metadata.py) never
+# stand in for the pack's modules of the same name: only the kleidos_brand package is read from
+# there.
 if str(ROOT / BRAND / "tools") not in sys.path:
     sys.path.append(str(ROOT / BRAND / "tools"))
 
@@ -44,7 +43,7 @@ SRC_DIR = Path("src")
 PNG_DIR = Path("png")
 PREVIEWS_DIR = Path("previews")
 
-#: The brand files every image here is drawn from, relative to the brand repository.
+#: The brand files every image of the pack is drawn from, relative to the brand repository.
 BRAND_INPUTS = (
     Path("logo/src/mark.svg"),
     Path("logo/src/lockups.json"),
@@ -56,8 +55,13 @@ BRAND_INPUTS = (
 
 
 def brand_root(root: Path = ROOT) -> Path:
-    """Return the brand repository of the tree at *root*."""
+    """Return the brand repository the pack at *root* is in."""
     return root / BRAND
+
+
+def in_brand(path: Path) -> Path:
+    """Return a path of the pack as the brand repository names it."""
+    return PREFIX / path
 
 
 @dataclass(frozen=True)

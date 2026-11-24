@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: MIT
 """Drawing an SVG to pixels with Chromium, through Playwright, headless.
 
-One browser draws every image of ``brand`` and ``social``. Its version is
+One browser draws every image of ``brand`` and its social pack. Its version is
 recorded with the images (``exports.json``), because the same SVG can come out
 a few pixels different from another version: a comparison against the record
 is refused under a different browser instead of reported as a difference.

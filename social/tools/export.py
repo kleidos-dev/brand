@@ -15,7 +15,7 @@
                                         to dist/ or a folder inside it; the pack is not touched
 
 Everything is drawn from the sources under src/, the rows of pack.json and the
-brand submodule: its mark, its lockup, its tokens and its fonts. Chromium
+brand repository the pack is in: its mark, its lockup, its tokens and its fonts. Chromium
 draws, through Playwright, from SVG that holds outlines only; Pillow encodes
 again from the pixels alone, and each file then carries brand's metadata
 profile, written from its record (records.py). The exact comparison belongs to the machine that
@@ -101,7 +101,7 @@ class Collected:
 
 
 def brand_inputs() -> tuple[Path, ...]:
-    """Return the brand files every picture is drawn from, as paths of this repository."""
+    """Return the brand files every picture is drawn from, as paths relative to the pack."""
     return tuple(pack.BRAND / path for path in pack.BRAND_INPUTS)
 
 
@@ -129,8 +129,8 @@ def drawn_from(svg: str, described: Any) -> str:
 
 
 def board_inputs(drawing: source.Drawing) -> tuple[Path, ...]:
-    """Return brand's board files a drawing with shelves is drawn from, as paths of this
-    repository."""
+    """Return brand's board files a drawing with shelves is drawn from, as paths relative to the
+    pack."""
     return (
         tuple(pack.BRAND / path for path in boards.inputs(pack.brand_root()))
         if drawing.fronts

@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 # SPDX-FileCopyrightText: 2026 José M. Requena Plens
 # SPDX-License-Identifier: MIT
-"""Check that a repository's README shows its banner straight from social, or print the block it
-needs.
+"""Check that a repository's README shows its banner straight from brand's social/ pack, or print
+the block it needs.
 
     tools/sync_readme_banners.py --check REPO [REPO ...]
         exit 1 when a clone's README has no banner block, a block with other addresses or another
@@ -14,20 +14,23 @@ needs.
 
 The banners are drawn here (``tools/export.py``, rows under
 ``readme_banners`` in ``pack.json``) and no repository keeps a copy: every
-README reads the two files by their absolute address on this repository's
-``main`` (``RAW``), so a change made here shows in every README at once,
-private repositories included, as soon as GitHub's caches let it (about five
-minutes; ``?v=N`` after an address forces a fresh read and is accepted
-here). Those paths are a public contract: ``readme_banners.consumers`` in
-``pack.json`` lists every README that reads them, and ``tools/check.py``
-fails when a file one of them needs is missing.
+README reads the two files by their absolute address on the brand
+repository's ``main``, under ``social/`` (``RAW``), so a change made here
+shows in every README at once, private repositories included, as soon as
+GitHub's caches let it (about five minutes; ``?v=N`` after an address forces
+a fresh read and is accepted here). Those paths are a public contract:
+``readme_banners.consumers`` in ``pack.json`` lists every README that reads
+them, and ``tools/check.py`` fails when a file one of them needs is missing.
 
 The README's block stands between two markers, right above the first
 level-1 heading, which stays the page's title. This tool never writes a
-clone: a README changes in its own repository, by its own commit. Social's
-own README is written by the exporter, with relative paths.
+clone: a README changes in its own repository, by its own commit. The
+pack's own README (``social/README.md``) is written by the exporter, with
+relative paths. A block that still reads from the kleidos-dev/social
+repository, where the pack lived until it moved into brand, is found and
+reported as stale.
 
-Standard library only: it runs with no virtual environment and no submodule.
+Standard library only: it runs with no virtual environment.
 A clone's row is found from its ``origin`` address through the consumers
 (``jmrplens/kleidos`` reads ``kleidos``).
 """
@@ -42,20 +45,28 @@ import sys
 from pathlib import Path
 from typing import Any
 
-#: This repository: the masters and pack.json are read from it.
+#: The pack (brand's social/ folder): the masters and pack.json are read from it.
 SOCIAL = Path(__file__).resolve().parents[1]
 OWNER = "kleidos-dev"
-#: Where every README reads the masters from: this repository is public, and its main branch is the
-#: contract.
-RAW = f"https://raw.githubusercontent.com/{OWNER}/social/main/"
+#: Where every README reads the masters from: brand is public, and the pack's folder on its main
+#: branch is the contract.
+RAW = f"https://raw.githubusercontent.com/{OWNER}/brand/main/social/"
 THEMES = ("dark", "light")
 BEGIN = (
+    "<!-- BEGIN GENERATED: banner (kleidos-dev/brand, social/tools/sync_readme_banners.py); do not"
+    " edit by hand -->"
+)
+#: The opening marker of a block written while the pack was the kleidos-dev/social repository: still
+#: found, so a README that reads from there is reported as stale instead of as having no block.
+OLD_BEGIN = (
     "<!-- BEGIN GENERATED: banner (kleidos-dev/social, tools/sync_readme_banners.py); do not edit"
     " by hand -->"
 )
 END = "<!-- END GENERATED: banner -->"
-#: A row's mode: ``raw`` (its README reads this repository's files by address) or ``self`` (social's
-#: own README).
+#: A banner block, under either opening marker.
+BLOCK = re.compile(f"(?:{re.escape(BEGIN)}|{re.escape(OLD_BEGIN)}).*?{re.escape(END)}", re.S)
+#: A row's mode: ``raw`` (its README reads the pack's files by address) or ``self`` (the pack's own
+#: README).
 MODES = ("raw", "self")
 #: Where a repository used to keep its copy; a clone that still has one is told to remove it.
 OLD_COPY = ".github/readme"
@@ -66,7 +77,7 @@ FENCE = re.compile(r"^(```|~~~)")
 
 
 def load_pack(root: Path = SOCIAL) -> dict[str, Any]:
-    """Return ``pack.json`` of the social tree at *root*."""
+    """Return ``pack.json`` of the pack at *root*."""
     data: dict[str, Any] = json.loads((root / "pack.json").read_text(encoding="utf-8"))
     return data
 
@@ -112,7 +123,7 @@ def consumers(data: dict[str, Any]) -> list[dict[str, str]]:
 
 
 def master(data: dict[str, Any], entry: dict[str, Any], theme: str) -> str:
-    """Return the path, in this repository, of a row's banner for *theme*."""
+    """Return the path, in the pack, of a row's banner for *theme*."""
     return f"{data['readme_banners']['out']}/{entry['name']}/banner-{theme}.svg"
 
 
@@ -153,17 +164,16 @@ def block(data: dict[str, Any], entry: dict[str, Any]) -> str:
 
 def current_block(text: str) -> str | None:
     """Return the README's banner block, markers included, or None when it has none."""
-    found = re.search(re.escape(BEGIN) + r".*?" + re.escape(END), text, re.S)
+    found = re.search(BLOCK, text)
     return found.group(0) if found else None
 
 
 def with_block(text: str, generated: str) -> str:
     """Return a README with *generated* between its markers, or, the first time, right above its
     first level-1 heading."""
-    pattern = re.compile(re.escape(BEGIN) + r".*?" + re.escape(END), re.S)
-    if pattern.search(text):
-        return pattern.sub(lambda _: generated, text, count=1)
-    if BEGIN in text or END in text:
+    if BLOCK.search(text):
+        return BLOCK.sub(lambda _: generated, text, count=1)
+    if BEGIN in text or OLD_BEGIN in text or END in text:
         raise ValueError("README.md holds one of the banner's markers without the other")
     fenced = False
     offset = 0
@@ -223,7 +233,7 @@ def resolve(data: dict[str, Any], clone: Path, repo: str | None) -> dict[str, An
 
 
 def findings(clone: Path, repo: str | None = None, social: Path = SOCIAL) -> list[str]:
-    """Return how the README of the clone at *clone* differs from the block social gives it."""
+    """Return how the README of the clone at *clone* differs from the block the pack gives it."""
     data = load_pack(social)
     try:
         entry = resolve(data, clone, repo)
@@ -233,8 +243,8 @@ def findings(clone: Path, repo: str | None = None, social: Path = SOCIAL) -> lis
     found = []
     if (clone / OLD_COPY).exists():
         found.append(
-            f"{where}: {OLD_COPY}/ still holds a copy; README banners are read from social, so"
-            " remove it"
+            f"{where}: {OLD_COPY}/ still holds a copy; README banners are read from brand's"
+            " social/ pack, so remove it"
         )
     readme = clone / "README.md"
     if not readme.is_file():
@@ -250,13 +260,19 @@ def findings(clone: Path, repo: str | None = None, social: Path = SOCIAL) -> lis
             *found,
             (
                 f"{where}: README.md has no banner block; paste the output of"
-                f" tools/sync_readme_banners.py --print {where}"
+                f" social/tools/sync_readme_banners.py --print {where}"
             ),
         ]
-    if VERSION.sub("", present) != block(data, entry):
+    if present.startswith(OLD_BEGIN):
         found.append(
-            f"{where}: README.md: its banner block is not the one social gives (addresses or alt"
-            f" text); paste the output of tools/sync_readme_banners.py --print {where}"
+            f"{where}: README.md: its banner block reads from kleidos-dev/social, where the pack"
+            " lived before it moved into brand; paste the output of"
+            f" social/tools/sync_readme_banners.py --print {where}"
+        )
+    elif VERSION.sub("", present) != block(data, entry):
+        found.append(
+            f"{where}: README.md: its banner block is not the one the pack gives (addresses or alt"
+            f" text); paste the output of social/tools/sync_readme_banners.py --print {where}"
         )
     return found
 

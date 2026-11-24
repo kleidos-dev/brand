@@ -8,14 +8,14 @@
     tools/check_metadata.py --json       the findings as [{"path", "rule", "message"}]
 
 Each finding reads ``path: Mxxx: message``, with the codes of brand's checker
-(brand/tools/check_metadata.py): M001 a field missing, M002 a field that is not the
+(tools/check_metadata.py at brand's root): M001 a field missing, M002 a field that is not the
 record's, M003 a license or holders REUSE does not give, M004 a deny-list hit, M005 a
 chunk outside the profile, M006 an order error, M008 a media file with neither a record
 nor a reason in METADATA_EXEMPT, M009 the wrong profile for the size, M012 the wrong
 digital source type.
 
 Exit status: 0 clean, 1 findings, 2 a usage or internal error. The private deny-list
-comes from KLEIDOS_DENY_EXTRA or brand/tools/deny-local.txt (one pattern per line, never
+comes from KLEIDOS_DENY_EXTRA or brand's tools/deny-local.txt (one pattern per line, never
 committed); in CI a missing list is a finding, locally a warning.
 """
 

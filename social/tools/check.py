@@ -30,25 +30,23 @@ What it holds:
             file is what its row gives, byte for byte, under the rule's weight; every file a README
             listed under readme_banners.consumers reads by its address is here, and every banner has
             a reader;
-- brand:    TRADEMARKS.md is brand's, byte for byte; the submodule's address is brand's public one,
-            https://github.com/kleidos-dev/brand.git;
-- licenses: every declaration is GPL-3.0-or-later (the artwork and the pack's data) or MIT (the
-            tooling and the commit-message gate); no font file and no picture out of place;
+- licenses: every license tag of the pack is GPL-3.0-or-later (the artwork and the pack's data) or
+            MIT (the tooling); no font file and no picture out of place (the texts under
+            LICENSES/ and REUSE.toml are brand's, held by brand's tools/check.py);
 - metadata: every picture carries brand's metadata profile (kleidos_brand.meta), exactly as its
             record in tools/records.py gives it, before its pixels; its license and holders are
-            REUSE.toml's for its path; no value holds an address, a path, a host, a machine's time
-            or a tool's name, nor an identity pattern of the private deny-list (the
-            KLEIDOS_DENY_EXTRA secret, or brand/tools/deny-local.txt; CI fails without it, a local
+            brand's REUSE.toml for its path; no value holds an address, a path, a host, a machine's
+            time or a tool's name, nor an identity pattern of the private deny-list (the
+            KLEIDOS_DENY_EXTRA secret, or brand's tools/deny-local.txt; CI fails without it, a local
             run warns); tools/check_metadata.py runs this rule alone;
-- public:   nothing private, no board drawing (the fronts are brand's copies, read through the
-            submodule; the boards banner, svg/readme/boards/, draws them with their unlock screens
+- public:   nothing private, no board drawing (the fronts are brand's copies under boards/, read
+            from there; the boards banner, svg/readme/boards/, draws them with their unlock screens
             as inner PNGs, as the boards card does in pixels), no registered-trademark sign.
 """
 
 from __future__ import annotations
 
 import argparse
-import configparser
 import os
 import sys
 import xml.etree.ElementTree as ET
@@ -66,8 +64,6 @@ import source
 from kleidos_brand import SVG_HEADER, mark, meta, public_tree, svg_rules, tokens
 
 ALLOWED_LICENSES = frozenset({"GPL-3.0-or-later", "MIT"})
-#: The submodule's one address: brand's public repository.
-BRAND_URL = "https://github.com/kleidos-dev/brand.git"
 #: The project's contact and the supplier REUSE.toml names: the two addresses a file may hold.
 ALLOWED_EMAILS = frozenset({"mail@kleidos.dev", "jmrplens@kleidos.dev"})
 PICTURE_DIRS = ("png", "previews")
@@ -78,9 +74,8 @@ MARK_ALONE_FILL = 0.69
 
 
 def tracked(root: Path) -> list[Path]:
-    """Return this repository's own files: the brand submodule is its own project, with its own
-    checks."""
-    return [path for path in public_tree.tracked(root) if path.parts[0] != pack.BRAND.as_posix()]
+    """Return the pack's own files, relative to it: the rest of brand is held by brand's checks."""
+    return public_tree.tracked(root)
 
 
 def sources(root: Path) -> list[Path]:
@@ -172,7 +167,7 @@ def source_findings(root: Path, files: list[Path]) -> list[str]:
             if not source.lockup_matches(source.parse(root / path), brand):
                 found.append(
                     f"{name}: its lockup is not the one brand's logo files draw; paste the group"
-                    " again from brand/logo/svg/kleidos-lockup-horizontal-for-dark.svg"
+                    " again from logo/svg/kleidos-lockup-horizontal-for-dark.svg"
                 )
         except ET.ParseError:
             continue
@@ -257,18 +252,18 @@ def metadata_findings(
         else:
             print(
                 f"warning: no private deny-list ({meta.DENY_ENV}, or {meta.DENY_LOCAL.name} in"
-                " brand/tools/); identity patterns not checked",
+                " brand's tools/); identity patterns not checked",
                 file=sys.stderr,
             )
     for picture in collected.pictures:
         name = picture.path.as_posix()
         if only is not None and name not in only:
             continue
-        spdx, holders = meta.reuse_truth(root, picture.path)
+        spdx, holders = meta.reuse_truth(pack.brand_root(root), pack.in_brand(picture.path))
         if (picture.meta.spdx, picture.meta.holders) != (spdx, holders):
             found.append(
                 f"{name}: M003: its record says {picture.meta.spdx} by {picture.meta.holders};"
-                f" REUSE.toml says {spdx} by {holders}"
+                f" brand's REUSE.toml says {spdx} by {holders}"
             )
         if (
             picture.meta.own_license != records.OWN_LICENSE
@@ -276,7 +271,7 @@ def metadata_findings(
         ):
             found.append(
                 f"{name}: M003: the license of the artwork, {records.OWN_LICENSE}, is not in"
-                f" REUSE.toml's expression {spdx!r}"
+                f" brand's REUSE.toml expression {spdx!r}"
             )
         if picture.meta.digital_source_type != records.SOURCE_TYPE:
             found.append(
@@ -284,29 +279,6 @@ def metadata_findings(
                 f" {picture.meta.digital_source_type}"
             )
         found += meta.deny_findings(name, meta.xmp_values(picture.meta), identity)
-    return found
-
-
-def brand_findings(root: Path) -> list[str]:
-    found = []
-    ours, theirs = root / "TRADEMARKS.md", pack.brand_root(root) / "TRADEMARKS.md"
-    if not ours.is_file() or ours.read_bytes() != theirs.read_bytes():
-        found.append("TRADEMARKS.md: is not brand/TRADEMARKS.md, byte for byte; copy it again")
-    modules = configparser.ConfigParser()
-    modules.read(root / ".gitmodules", encoding="utf-8")
-    section = 'submodule "brand"'
-    if (
-        not modules.has_section(section)
-        or modules.get(section, "url", fallback="") != BRAND_URL
-        or modules.get(section, "path", fallback="") != "brand"
-    ):
-        found.append(
-            f".gitmodules: brand is the submodule at brand/, with the address {BRAND_URL} and no"
-            " other"
-        )
-    text, copy = root / "LICENSE", root / "LICENSES" / "GPL-3.0-or-later.txt"
-    if not text.is_file() or not copy.is_file() or text.read_bytes() != copy.read_bytes():
-        found.append("LICENSE: is not the text of LICENSES/GPL-3.0-or-later.txt")
     return found
 
 
@@ -329,8 +301,13 @@ def findings(root: Path = pack.ROOT) -> list[str]:
         found += metadata_findings(root, collected)
     except (ValueError, KeyError, ET.ParseError, OSError, StopIteration) as error:
         found.append(f"the sources cannot be made ready, so nothing drawn was compared: {error}")
-    found += brand_findings(root)
-    found += public_tree.license_findings(root, files, ALLOWED_LICENSES)
+    # The license tags of the pack's own files: the texts under LICENSES/ and the lines of
+    # REUSE.toml are brand's, held by brand's tools/check.py.
+    found += [
+        line
+        for line in public_tree.license_findings(root, files, ALLOWED_LICENSES)
+        if not line.startswith(("LICENSES/", "REUSE.toml:"))
+    ]
     found += public_tree.font_findings(root, files, {})
     found += [
         line

@@ -11,9 +11,9 @@ import sys
 import time
 from pathlib import Path
 
-import check
 import pytest
 
+import check
 from kleidos_brand import SVG_HEADER, public_tree
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -652,6 +652,18 @@ def test_a_board_drawing_is_refused(tree: Path) -> None:
 def test_a_picture_out_of_place_is_refused(tree: Path) -> None:
     shutil.copyfile(tree / "logo/png/kleidos-mark-64.png", planted(tree, "notes/mark.png"))
     assert found(tree, "notes/mark.png", "outside")
+
+
+def test_the_social_pack_is_left_to_its_own_check(tree: Path) -> None:
+    # The same stray picture brand refuses at its root is the social pack's to judge under social/
+    # (social/tools/check.py refuses it there); brand's rules leave the folder alone.
+    assert check.OWN_CHECKS == ("social",)
+    for name in ("social/notes/mark.png", "notes/mark.png"):
+        shutil.copyfile(tree / "logo/png/kleidos-mark-64.png", planted(tree, name))
+    assert found(tree, "notes/mark.png", "outside")
+    assert not any(line.startswith("social/") for line in check.findings(tree))
+    assert all(path.parts[0] != "social" for path in check.brand_files(tree))
+    assert any(path.parts[0] == "social" for path in public_tree.tracked(tree))
 
 
 def test_a_webp_copy_with_camera_data_or_no_record_is_refused(tree: Path) -> None:

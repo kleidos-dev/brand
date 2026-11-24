@@ -83,6 +83,11 @@ reviews:
     - "!kicad/kleidos-*.kicad_wks"
     # Written by tools/sync_from_kleidos.py --record.
     - "!tokens/mirror.json"
+    # Written by the social pack's social/tools/export.py from its sources
+    # and pack.json: the README banners (outlined SVG) and the export record
+    # (its PNG files and previews are pictures, above).
+    - "!social/svg/readme/**"
+    - "!social/exports.json"
     # Byte copies of the boards repository's fronts and their manifest,
     # written by tools/sync_from_boards.py --copy: reviewed in boards.
     - "!boards/**"
@@ -116,9 +121,10 @@ reviews:
         "M5Stack" and "LILYGO". The mark's glyph is a "keyhole" (Spanish
         "cerradura"), never a "key" or "llave". Spanish never says "vault" or
         "bóveda": the container is "llavero". Text between "BEGIN GENERATED"
-        and "END GENERATED" markers is written by tools/build.py, or for the
-        README banner by the social repository's sync_readme_banners.py: an
-        edit by hand there is a finding. Where boards or screens appear, not
+        and "END GENERATED" markers is written by tools/build.py, by the social
+        pack's social/tools/export.py in social/README.md, or for the README
+        banner by social/tools/sync_readme_banners.py: an edit by hand there
+        is a finding. Where boards or screens appear, not
         only the StickS3.
     - path: "about/**"
       instructions: >-
@@ -160,9 +166,9 @@ reviews:
         tools/sync_from_kleidos.py --check against the firmware repository.
     - path: "tools/**"
       instructions: >-
-        Python 3.15. tools/kleidos_brand/ is imported by the social repository
-        from its submodule: flag a rename or signature change of what social
-        may use. Pictures are drawn by Playwright's Chromium from outline-only
+        Python 3.15. tools/kleidos_brand/ is imported by the social pack
+        (social/tools/): flag a rename or signature change of what the pack
+        uses unless the pack changes with it. Pictures are drawn by Playwright's Chromium from outline-only
         SVG and re-encoded from pixels; metadata comes only from the records
         of records.py in the order of meta.py's profile, with no date, tool
         name, path, host or e-mail address, and no camera data. The private
@@ -174,6 +180,23 @@ reviews:
         A test plants its defect in the throwaway `tree` copy from conftest.py,
         never in the real tree. A test that draws with Chromium carries the
         `browser` marker so it skips where the browser is not installed.
+    - path: "social/**"
+      instructions: >-
+        The social pack, moved here from the kleidos-dev/social repository
+        (social/MOVED.md); its rules are social/AGENTS.md and its check is
+        social/tools/check.py, which CI runs beside brand's. Everything is
+        drawn from brand: the mark always whole with its ring, every color a
+        token's value, every word in Mona Sans, no opacity, tint, gradient,
+        shadow or filter, no font file and no embedded picture. The PNG
+        files, social/svg/readme/, social/previews/, social/exports.json and
+        the generated blocks of social/README.md are written by
+        social/tools/export.py only. The banner paths under
+        readme_banners.consumers in social/pack.json are a public contract
+        read by every README at its raw address on main: flag a rename, move
+        or removal of a banner a consumer still reads. Every platform rule in
+        pack.json carries the address it was read at and the day. A test
+        plants its defect in the throwaway tree of social/tests/conftest.py
+        (tree_with_brand when it changes brand), never in the repository.
     - path: "kicad/**"
       instructions: >-
         The KiCad kit's rules are in kicad/README.md. kicad/src/style.json,

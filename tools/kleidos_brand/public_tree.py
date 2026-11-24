@@ -2,8 +2,8 @@
 # SPDX-License-Identifier: MIT
 """What must never be in a tree that will be published, and what every file's license must be.
 
-The same rules hold in ``brand`` and in ``social``, which calls this module
-with its own lists:
+The same rules hold in ``brand`` and in its social pack (``social/``), which
+calls this module with its own lists:
 
 - nothing private: no home-directory path, private address, hardware
   address, serial port of one machine, local host name, token or key, and no

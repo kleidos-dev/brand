@@ -40,7 +40,6 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 import check
-
 from kleidos_brand import BRAND_ROOT
 
 FINDING = re.compile(r"^(?P<path>[^:]+): (?P<rule>M\d{3}): (?P<message>.*)$")

@@ -67,3 +67,10 @@ repos:
         language: system
         pass_filenames: false
         stages: [pre-commit]
+      # The social pack's own rules, which brand's check leaves to it.
+      - id: social-check
+        name: the social pack's rules (social/tools/check.py)
+        entry: .venv/bin/python social/tools/check.py
+        language: system
+        pass_filenames: false
+        stages: [pre-commit]

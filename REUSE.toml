@@ -6,8 +6,10 @@ SPDX-PackageDownloadLocation = "https://github.com/kleidos-dev/brand"
 # The artwork: the mark, the lockups and their PNG files, the palette's sheet,
 # the press images, their templates and their words, the screen captures, the
 # photographs, the KiCad drawing sheets that embed the mark and their
-# previews, and the pages about them. GPL-3.0-or-later, the firmware's
-# license.
+# previews, the pages about them, and the social pack under social/ (its SVG
+# sources and motifs, the profile images, repository cards and README
+# banners, their previews and the pack's data). GPL-3.0-or-later, the
+# firmware's license.
 #
 # Three things this file cannot express, all stated in TRADEMARKS.md:
 #
@@ -41,6 +43,7 @@ SPDX-License-Identifier = "GPL-3.0-or-later"
 
 # What is more useful to everyone under the MIT License: the tokens and what
 # is generated from them, the tooling (the builders, the checks, their tests,
+# the social pack's exporter, checks and tests,
 # the CI, the quality kit's base configurations, the review bots' and the
 # analysis's settings, the pins), the texts that describe the project (about/
 # and the fact sheets), so anyone can reuse and quote them freely, and the
@@ -54,6 +57,8 @@ path = [
   "tokens/**",
   "tools/**",
   "tests/**",
+  "social/tools/**",
+  "social/tests/**",
   ".github/**",
   "requirements.txt",
   ".pre-commit-config.yaml",

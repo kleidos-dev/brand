@@ -41,7 +41,8 @@ import source
 import sync_readme_banners as sync
 from kleidos_brand import SVG_HEADER, boards, lettering, meta
 
-#: This repository's own row: its README shows its banner from its masters, written by the exporter.
+#: The pack's own row: its README (social/README.md) shows its banner from its masters, written by
+#: the exporter.
 REPO = "social"
 #: The canvas a banner is drawn on (the card's units) and the size it is published at.
 CANVAS = (2560, 800)
@@ -64,7 +65,7 @@ TILE_RADIUS = 56
 SKINS = ("page", "tile")
 #: A banner is shown in other repositories' READMEs, where no TRADEMARKS.md is, so its header names
 #: the public one.
-TRADEMARKS_URL = f"https://github.com/{sync.OWNER}/social/blob/main/TRADEMARKS.md"
+TRADEMARKS_URL = f"https://github.com/{sync.OWNER}/brand/blob/main/TRADEMARKS.md"
 HEADER = SVG_HEADER.replace("version 3: TRADEMARKS.md", f"version 3: {TRADEMARKS_URL}")
 
 
@@ -332,7 +333,7 @@ def consumer_findings(root: Path, data: dict[str, Any]) -> list[str]:
             continue
         if entry["mode"] == "self":
             found.append(
-                f"pack.json: the banner {banner!r} is social's own; its README is written by the"
+                f"pack.json: the banner {banner!r} is the pack's own; its README is written by the"
                 " exporter, not a consumer"
             )
         for theme in sync.THEMES:

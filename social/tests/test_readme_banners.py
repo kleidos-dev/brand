@@ -205,7 +205,7 @@ def _with_block(clone: Path, data: dict[str, Any], repo: str = "boards") -> None
 
 def test_the_block_reads_the_masters_by_their_raw_address(data: dict[str, Any]) -> None:
     text = sync.block(data, sync.row(data, "boards"))
-    raw = "https://raw.githubusercontent.com/kleidos-dev/social/main/svg/readme/boards/"
+    raw = "https://raw.githubusercontent.com/kleidos-dev/brand/main/social/svg/readme/boards/"
     assert f'srcset="{raw}banner-dark.svg"' in text and f'src="{raw}banner-light.svg"' in text
     assert (
         'alt="Kleidos Boards: Drawings, measurements, schematics and 3D models of the boards'
@@ -254,6 +254,34 @@ def test_check_finds_a_stale_block_or_a_leftover_copy(
     assert sync.main(["--check", str(clone)]) == 1
 
 
+def test_a_block_that_still_reads_from_the_social_repository_is_stale(
+    tmp_path: Path, data: dict[str, Any]
+) -> None:
+    # The block every README carried while the pack was kleidos-dev/social: found, and named.
+    clone = _clone(tmp_path)
+    old = (
+        sync.block(data, sync.row(data, "boards"))
+        .replace(sync.BEGIN, sync.OLD_BEGIN)
+        .replace(sync.RAW, "https://raw.githubusercontent.com/kleidos-dev/social/main/")
+    )
+    (clone / "README.md").write_text(f"{old}\n\n# boards\n", encoding="utf-8")
+    found = sync.findings(clone)
+    assert len(found) == 1 and "reads from kleidos-dev/social" in found[0], found
+    # The block the tool prints replaces it where it stands.
+    fixed = sync.with_block(
+        (clone / "README.md").read_text(encoding="utf-8"),
+        sync.block(data, sync.row(data, "boards")),
+    )
+    assert fixed.count("BEGIN GENERATED") == 1 and "kleidos-dev/social" not in fixed
+    (clone / "README.md").write_text(fixed, encoding="utf-8")
+    assert sync.findings(clone) == []
+
+
+def test_a_lone_old_marker_is_refused(tmp_path: Path) -> None:
+    with pytest.raises(ValueError, match="one of the banner's markers"):
+        sync.with_block(f"{sync.OLD_BEGIN}\n\n# boards\n", "block")
+
+
 def test_check_finds_a_missing_block(tmp_path: Path) -> None:
     clone = _clone(tmp_path)
     assert any("no banner block" in line for line in sync.findings(clone))
@@ -270,7 +298,7 @@ def test_the_firmware_is_found_through_its_consumer(tmp_path: Path, data: dict[s
     clone = _clone(tmp_path, "kleidos", "# Kleidos\n\nFirmware.\n", owner="jmrplens")
     _with_block(clone, data, "kleidos")
     assert (
-        'srcset="https://raw.githubusercontent.com/kleidos-dev/social/main/svg/readme/kleidos/banner-dark.svg"'
+        'srcset="https://raw.githubusercontent.com/kleidos-dev/brand/main/social/svg/readme/kleidos/banner-dark.svg"'
         in (clone / "README.md").read_text()
     )
     assert sync.findings(clone) == []

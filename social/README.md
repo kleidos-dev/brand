@@ -15,7 +15,7 @@ SPDX-License-Identifier: GPL-3.0-or-later
 
 # social
 
-The images [Kleidos](https://kleidos.dev) shows where it has a profile, the social preview card of every repository of the project, and the banner at the head of each repository's README. All of them are drawn from the [`brand`](https://github.com/kleidos-dev/brand) repository, which this one holds as a submodule: its mark, its lockup, its colors and its typefaces.
+The images [Kleidos](https://kleidos.dev) shows where it has a profile, the social preview card of every repository of the project, and the banner at the head of each repository's README. All of them are drawn from the rest of the [`brand`](../README.md) repository this folder is in: its mark, its lockup, its colors and its typefaces. The pack was the `kleidos-dev/social` repository until 2026-11-24, when it moved here; [`MOVED.md`](MOVED.md) says what moved and how.
 
 Kleidos is free firmware that turns a small ESP32 board into a hardware password manager.
 
@@ -111,26 +111,26 @@ The text block (the lockup down to the last line) and the motif's box are center
 
 On a 360 px phone (279 px wide) the mark is 24.5 px, the least brand gives it on a dark ground; on a computer (823 px) the line's x-height is 11 px and the label's capitals 17 px. The line is decorative on a phone, as a card's is at 320 px: the alt text carries it. `tools/check.py` holds every banner to those floors and to the middle.
 
-A banner row (`readme_banners.repos` in `pack.json`) takes the label, the line and the motif of the repository's card and adds only the line's break into one or two lines; a repository with no card yet carries its own, and they move to its card row the day it gets one. Each file carries brand's SVG metadata block (title, description, rights, the master's address here as its identifier), written by the exporter from its record.
+A banner row (`readme_banners.repos` in `pack.json`) takes the label, the line and the motif of the repository's card and adds only the line's break into one or two lines; a repository with no card yet carries its own, and they move to its card row the day it gets one. Each file carries brand's SVG metadata block (title, description, rights, the master's address in brand as its identifier), written by the exporter from its record.
 
-**Into a repository**: no copy. Every README reads its two files straight from this repository's `main`, by their absolute raw address, so a banner changed here shows in every README at once, private repositories included:
+**Into a repository**: no copy. Every README reads its two files straight from brand's `main`, under `social/`, by their absolute raw address, so a banner changed here shows in every README at once, private repositories included:
 
 ```html
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/kleidos-dev/social/main/svg/readme/boards/banner-dark.svg">
-  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/kleidos-dev/social/main/svg/readme/boards/banner-light.svg">
-  <img src="https://raw.githubusercontent.com/kleidos-dev/social/main/svg/readme/boards/banner-light.svg" width="100%" alt="Kleidos Boards: Drawings, measurements, schematics and 3D models of the boards Kleidos runs on.">
+  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/kleidos-dev/brand/main/social/svg/readme/boards/banner-dark.svg">
+  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/kleidos-dev/brand/main/social/svg/readme/boards/banner-light.svg">
+  <img src="https://raw.githubusercontent.com/kleidos-dev/brand/main/social/svg/readme/boards/banner-light.svg" width="100%" alt="Kleidos Boards: Drawings, measurements, schematics and 3D models of the boards Kleidos runs on.">
 </picture>
 ```
 
-GitHub serves those files as `image/svg+xml` and shows them without its image proxy. The block stands between two markers right above the README's first level-1 heading, which stays the page's title. `tools/sync_readme_banners.py` (standard library only) prints it and checks it, and never writes a clone; a README changes in its own repository, by its own commit:
+GitHub serves those files as `image/svg+xml` and shows them without its image proxy. The block stands between two markers right above the README's first level-1 heading, which stays the page's title. `tools/sync_readme_banners.py` (standard library only) prints it and checks it, and never writes a clone; a README changes in its own repository, by its own commit. From brand's root:
 
 ```sh
-python3 tools/sync_readme_banners.py --print boards                   # the block to paste
-python3 tools/sync_readme_banners.py --check ../boards ../brand ...    # exit 1 on a missing or stale block, or a leftover .github/readme/ copy
+python3 social/tools/sync_readme_banners.py --print boards              # the block to paste
+python3 social/tools/sync_readme_banners.py --check ../boards . ...     # exit 1 on a missing or stale block (one that still reads from kleidos-dev/social included), or a leftover .github/readme/ copy
 ```
 
-**A public contract.** The paths `svg/readme/<repo>/banner-dark.svg` and `banner-light.svg` (`.github` is `dot-github`) on `main` are read by other repositories: never rename, move or delete one without changing every README that reads it first. `readme_banners.consumers` in `pack.json` lists each of those READMEs (the firmware's is `jmrplens/kleidos`), and `tools/check.py` fails when a file a consumer reads is missing, when a consumer names no banner, or when a banner has no reader. A clone's row is found from its `origin` through that list, or given with `--repo NAME`.
+**A public contract.** The paths `social/svg/readme/<repo>/banner-dark.svg` and `banner-light.svg` (`.github` is `dot-github`) on brand's `main` are read by other repositories: never rename, move or delete one without changing every README that reads it first. `readme_banners.consumers` in `pack.json` lists each of those READMEs (the firmware's is `jmrplens/kleidos`), and `tools/check.py` fails when a file a consumer reads is missing, when a consumer names no banner, or when a banner has no reader. A clone's row is found from its `origin` through that list, or given with `--repo NAME`.
 
 **Caches.** `raw.githubusercontent.com` answers with `Cache-Control: max-age=300`, and GitHub and the browser keep a picture about five minutes; a README may show the old banner that long after a merge here. To force a fresh read, append `?v=N` to the three addresses in that README (raise N each time); the check accepts it.
 
@@ -185,39 +185,29 @@ What each image answers to, read at the address and on the day its row states.
 
 ## Building
 
-```sh
-git submodule update --init          # brand from its public address, https://github.com/kleidos-dev/brand.git
-# a local brand beside this clone instead:
-#   git config submodule.brand.url ../brand && git -c protocol.file.allow=always submodule update --init
-python3 -m venv .venv
-.venv/bin/pip install --require-hashes -r requirements.txt
-.venv/bin/python -m playwright install chromium
-# the quality kit's tools (pre-commit, mypy, ruff, ...), from kleidos-dev/.github beside this clone
-git clone https://github.com/kleidos-dev/.github.git ../.github
-.venv/bin/pip install --require-hashes -r ../.github/quality/requirements-tools.txt
-.venv/bin/pre-commit install --hook-type pre-commit --hook-type commit-msg
+From the root of a clone of brand, with brand's virtual environment (brand's `README.md` and `AGENTS.md` say how to make it; the pack needs nothing more):
 
-.venv/bin/python tools/export.py                     # draw every image, card and preview
-.venv/bin/python tools/export.py --check             # draw everything again, compare pixel for pixel
-.venv/bin/python tools/export.py --check --static    # what needs no browser
-.venv/bin/python tools/export.py --check --tolerant  # draw again under any browser, fail on gross drift
-.venv/bin/python tools/check.py                      # the tree's rules
-.venv/bin/python tools/check_metadata.py             # the metadata rule alone (--json, or some paths)
-.venv/bin/python -m pytest tests
-PATH="$PWD/.venv/bin:$PATH" pre-commit run --all-files  # the quality kit's hooks (reuse lint included); they call mypy from the environment
+```sh
+.venv/bin/python social/tools/export.py                     # draw every image, card and preview
+.venv/bin/python social/tools/export.py --check             # draw everything again, compare pixel for pixel
+.venv/bin/python social/tools/export.py --check --static    # what needs no browser
+.venv/bin/python social/tools/export.py --check --tolerant  # draw again under any browser, fail on gross drift
+.venv/bin/python social/tools/check.py                      # the pack's rules
+.venv/bin/python social/tools/check_metadata.py             # the metadata rule alone (--json, or some paths)
+.venv/bin/python -m pytest social/tests                     # in a pytest of its own: brand's tests import modules of the same names
 ```
 
-Python 3.15. The sources under `src/` are small SVG files with three layers (`ground`, `content`, `guides`) and live words in Mona Sans, so they open in any SVG editor that has brand's fonts. The exporter fills in the lockup from brand, turns the words into outlines, drops the guides, and has Playwright's Chromium draw the result, headless; Pillow encodes again from the pixels alone, so no file carries a time or a trace of the machine that drew it. Each PNG then carries brand's metadata profile (`brand/tools/kleidos_brand/meta.py`), and nothing else, right before its pixels: a title, a description, the creator, the copyright line, the license with its address, where the file lives, the credits (Mona Sans, and the board drawings where the boards appear) and the trademark notes, as PNG text chunks and one XMP packet that indexers and tools such as exiftool read. `tools/records.py` builds each file's record from `pack.json` and the source's `<desc>`, with the license and holders that `REUSE.toml` gives for its path; it holds no date. `exports.json` records the browser's version and, for each picture, its bytes and the bytes of everything it was drawn from, the brand files included: when the submodule moves and one of them changed, every picture is stale until it is exported again and looked at.
+Python 3.15. The sources under `src/` are small SVG files with three layers (`ground`, `content`, `guides`) and live words in Mona Sans, so they open in any SVG editor that has brand's fonts. The exporter fills in the lockup from brand, turns the words into outlines, drops the guides, and has Playwright's Chromium draw the result, headless; Pillow encodes again from the pixels alone, so no file carries a time or a trace of the machine that drew it. Each PNG then carries brand's metadata profile (`tools/kleidos_brand/meta.py` at brand's root), and nothing else, right before its pixels: a title, a description, the creator, the copyright line, the license with its address, where the file lives (its address in brand), the credits (Mona Sans, and the board drawings where the boards appear) and the trademark notes, as PNG text chunks and one XMP packet that indexers and tools such as exiftool read. `tools/records.py` builds each file's record from `pack.json` and the source's `<desc>`, with the license and holders that brand's `REUSE.toml` gives for its path; it holds no date. `exports.json` records the browser's version and, for each picture, its bytes and the bytes of everything it was drawn from, the brand files included (named from here, `../...`): when one of them changes, every picture drawn from it is stale until it is exported again and looked at.
 
-The pins (Pillow, Playwright, fontTools, HarfBuzz) are brand's, in `brand/requirements.txt`, so both repositories draw with one browser and one encoder. The exact comparison is the exporting machine's: another Chromium draws an edge a shade apart, so `--check` refuses to compare under a different version, and CI runs the static and the tolerant checks.
+The pins (Pillow, Playwright, fontTools, HarfBuzz) are brand's, in its `requirements.txt`, so brand and the pack draw with one browser and one encoder. The exact comparison is the exporting machine's: another Chromium draws an edge a shade apart, so `--check` refuses to compare under a different version, and CI runs the static and the tolerant checks.
 
-Pull requests are reviewed by two bots, CodeRabbit (`.coderabbit.yaml`) and Greptile (`.greptile/`): both post inline comments and suggestions against the rules of `AGENTS.md`, never touch a pull request's title or description, and post no summary; neither reviews the generated files. Every check CI runs, but the pictures job, comes from the Kleidos quality kit (kleidos-dev/.github, `docs/quality.md`): its lint, licensing, mypy, test, OSV and secrets jobs are called from `.github/workflows/check.yml` at the kit release `.github/quality/SOURCE.json` records. After the tests, CI's `📊 SonarCloud` job analyses the tooling under `tools/` with the coverage the tests measured (`.coveragerc`), on every push to `main` and every pull request against it, and fails unless SonarCloud accepted the analysis. It is secretless: the job's GitHub OIDC token is exchanged for a short-lived SonarQube Cloud token (`SonarSource/sonarqube-auth-action`), so no `SONAR_TOKEN` is stored anywhere, and a pull request from a fork, which gets no OIDC token, skips it with a notice. Every setting a file can carry (scope, coverage report, Python version, description and links) is in `sonar-project.properties`; the rest (new code over 30 days, the default quality gate and profiles, Automatic Analysis off, the pull request decoration) is set by hand in the SonarQube Cloud organization `kleidos-dev`.
+CI is brand's (`.github/workflows/check.yml` at brand's root): its tree job runs `social/tools/check.py` with the deny-list, its check job runs `social/tests` in a pytest of its own after brand's tests, appended to the same coverage, and `social/tools/export.py --check --tolerant`; the quality kit's mypy checks the pack as a group of its own, and SonarQube Cloud analyses `social/tools` in brand's project. The review bots are brand's too, with a rule for `social/**`.
 
 ## License
 
-The artwork (the SVG sources, the motifs, the exported images, the README banners and their previews) and the pack's data are licensed under the [GNU General Public License, version 3 or any later version](LICENSE) (GPL-3.0-or-later), the firmware's license. The tooling (the code under `tools/`, the tests, the CI, the pins and the configuration, with the commit-message gate copied from the project's `agents` repository) is under the [MIT License](LICENSES/MIT.txt), as brand's is. Both are approved by the Open Source Initiative; nothing in this repository is under any other license. Credits: [`NOTICE.md`](NOTICE.md); file by file: `REUSE.toml`.
+The artwork (the SVG sources, the motifs, the exported images, the README banners and their previews) and the pack's data are licensed under the [GNU General Public License, version 3 or any later version](../LICENSE) (GPL-3.0-or-later), the firmware's license. The tooling (the code under `tools/` and the tests) is under the [MIT License](../LICENSES/MIT.txt), as the rest of brand's is. Both are approved by the Open Source Initiative; nothing in the pack is under any other license. Credits: [`NOTICE.md`](NOTICE.md); file by file: brand's `REUSE.toml`.
 
-Kleidos is not a registered trademark. As section 7(e) of the GPL allows, the license grants no rights under trademark law in the name "Kleidos" or in the Kleidos mark. As section 7(c) allows, a modified version of a file under the GPL here must be marked as different from the original and must not misrepresent its origin; a file passed on unchanged needs nothing. [`TRADEMARKS.md`](TRADEMARKS.md), a copy of brand's, says what that means and what the project asks of those who use its name. Writing about Kleidos? The images made for that are brand's press kit, not these.
+Kleidos is not a registered trademark. As section 7(e) of the GPL allows, the license grants no rights under trademark law in the name "Kleidos" or in the Kleidos mark. As section 7(c) allows, a modified version of a file under the GPL here must be marked as different from the original and must not misrepresent its origin; a file passed on unchanged needs nothing. Brand's [`TRADEMARKS.md`](../TRADEMARKS.md) says what that means and what the project asks of those who use its name. Writing about Kleidos? The images made for that are brand's press kit, not these.
 
 ## Contact
 

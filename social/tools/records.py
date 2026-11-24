@@ -9,8 +9,8 @@ rule's platform and asset, a card's repository and line, a preview's title and
 lede) and from the source's ``<desc>``; nothing is typed per file here, and no
 date or machine trace goes in.
 
-The license and the holders are this repository's ``REUSE.toml`` for the
-picture's path: the artwork is GPL-3.0-or-later, the work of José M. Requena
+The license and the holders are the brand repository's ``REUSE.toml`` for the
+picture's path there (``social/...``): the artwork is GPL-3.0-or-later, the work of José M. Requena
 Plens. What the pictures draw from others is credited, not licensed: the words
 are set in Mona Sans (SIL Open Font License 1.1), and the nine boards are
 brand's copies of the boards repository's drawings (MIT, the same author), of
@@ -23,10 +23,11 @@ import xml.etree.ElementTree as ET
 from pathlib import Path
 from typing import Any
 
-import pack  # noqa: F401  puts brand/tools on the path
+import pack  # puts brand's tools on the path
 from kleidos_brand import meta
 
-REPO = "social"
+#: The repository the pack is in: its pictures' public addresses and their terms are brand's.
+REPO = "brand"
 #: The license of everything the pack draws; REUSE.toml must agree (tools/check.py).
 OWN_LICENSE = "GPL-3.0-or-later"
 
@@ -72,7 +73,7 @@ def build(
     :param boards: Whether the picture shows the nine boards, which brings their credit and the
     vendors' trademark notes.
     """
-    spdx, holders = meta.reuse_truth(root, path)
+    spdx, holders = meta.reuse_truth(pack.brand_root(root), pack.in_brand(path))
     credits = (FONT_CREDIT, *((BOARDS_CREDIT,) if boards else ()))
     trademarks = (
         meta.TRADEMARK_NOTE_KLEIDOS,
@@ -90,7 +91,7 @@ def build(
         credits=credits,
         trademarks=trademarks,
         extra_terms=(EXTRA_TERMS,),
-        identifier_url=meta.identifier_url(REPO, path),
+        identifier_url=meta.identifier_url(REPO, pack.in_brand(path)),
         rights_url=meta.RIGHTS_URLS[REPO],
         language="en",
         repo=REPO,
@@ -168,7 +169,7 @@ def readme_banner(
 ) -> meta.MediaMeta:
     """Return the record of a README banner: its repository, its label, its line and its theme.
 
-    Every README reads the master itself, by its address on this repository's main branch, so its
+    Every README reads the master itself, by its address on brand's main branch, so its
     identifier names the master here, the one public address it has.
     """
     owner = data["cards"]["owner"]

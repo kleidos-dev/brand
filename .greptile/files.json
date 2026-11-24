@@ -23,6 +23,13 @@
         "tools/kleidos_brand/mark.py",
         "tools/kleidos_brand/logo.py"
       ]
+    },
+    {
+      "path": "social/AGENTS.md",
+      "description": "The social pack's rules: the profile images, repository cards and README banners drawn from brand, the banner contract with every README, and the pack's checks.",
+      "scope": [
+        "social/**"
+      ]
     }
   ]
 }

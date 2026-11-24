@@ -4,10 +4,12 @@
 # coverage.py for the CI's test job (pytest --cov), whose report SonarQube
 # Cloud reads. Paths are written relative to the repository root, as the
 # scanner on GitHub Actions needs, and branches are measured too. The sources
-# are the two code roots of sonar-project.properties.
+# are the code roots of sonar-project.properties: brand's, the KiCad helper's
+# and the social pack's (its tests run in a second pytest, appended).
 [run]
 relative_files = True
 branch = True
 source =
     tools
     kicad
+    social/tools

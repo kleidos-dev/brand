@@ -25,7 +25,6 @@ ROOT = Path(__file__).resolve().parents[1]
 HOME_PATH = "/Us" + "ers/" + "someone/notes.txt"
 PRIVATE_ADDRESS = "192." + "168.1.20"
 OTHER_EMAIL = "someone" + "@" + "elsewhere.org"
-LOCAL_BRAND = "/Us" + "ers/" + "someone/GIT/brand"
 # REUSE-IgnoreStart
 CC_TAG = "SPDX-License-Identifier: CC-BY-SA-4.0"
 # REUSE-IgnoreEnd
@@ -75,7 +74,7 @@ def test_a_ringless_glyph_is_refused(tree: Path) -> None:
 
 
 def test_a_keyhole_made_of_the_marks_own_shapes_is_refused(tree: Path) -> None:
-    drawing = (tree / "brand/logo/src/mark.svg").read_text(encoding="utf-8")
+    drawing = (tree.parent / "logo/src/mark.svg").read_text(encoding="utf-8")
     ring = next(line for line in drawing.splitlines() if 'r="42"' in line)
     (tree / "keyhole.svg").write_text(drawing.replace(ring + "\n", ""), encoding="utf-8")
     assert found(tree, "keyhole.svg", "never drawn without its ring")
@@ -268,10 +267,10 @@ def test_a_changed_source_makes_its_pictures_stale(tree: Path) -> None:
 
 
 def test_a_changed_brand_file_makes_every_picture_stale(tree_with_brand: Path) -> None:
-    tokens = tree_with_brand / "brand/tokens/tokens.json"
+    tokens = tree_with_brand.parent / "tokens/tokens.json"
     tokens.write_text(tokens.read_text(encoding="utf-8") + "\n", encoding="utf-8")
     for name in ("png/youtube/avatar.png", "png/github/social.png", "previews/cards.png"):
-        assert found(tree_with_brand, name, "stale: brand/tokens/tokens.json changed")
+        assert found(tree_with_brand, name, "stale: ../tokens/tokens.json changed")
 
 
 def test_a_changed_picture_makes_its_preview_stale(tree: Path) -> None:
@@ -412,9 +411,11 @@ def test_the_metadata_checker_alone_passes_a_clean_tree_and_names_each_defect(
     assert check_metadata.main(["--root", str(tree), "png/github/agents.png"]) == 0
 
 
-def test_a_license_that_reuse_does_not_give_is_refused(tree: Path) -> None:
+def test_a_license_that_reuse_does_not_give_is_refused(tree_with_brand: Path) -> None:
+    # The pack's lines are brand's REUSE.toml: its catch-all gives the artwork its license.
+    tree = tree_with_brand
     edit(
-        tree / "REUSE.toml",
+        tree.parent / "REUSE.toml",
         'path = ["**"]\nprecedence = "aggregate"\nSPDX-FileCopyrightText = "2026 José M. Requena'
         ' Plens"\nSPDX-License-Identifier = "GPL-3.0-or-later"',
         'path = ["**"]\nprecedence = "aggregate"\nSPDX-FileCopyrightText = "2026 José M. Requena'
@@ -423,34 +424,12 @@ def test_a_license_that_reuse_does_not_give_is_refused(tree: Path) -> None:
     assert found(tree, "GPL-3.0-or-later is not in the expression 'MIT'")
 
 
-# --- Brand, licenses, the public tree ----------------------------------------------------
-
-
-def test_a_changed_trademarks_page_is_refused(tree: Path) -> None:
-    edit(tree / "TRADEMARKS.md", "This part is a request.", "This part is a condition.")
-    assert found(tree, "TRADEMARKS.md", "byte for byte")
-
-
-def test_a_local_path_to_brand_is_refused(tree: Path) -> None:
-    edit(
-        tree / ".gitmodules",
-        "url = https://github.com/kleidos-dev/brand.git",
-        f"url = {LOCAL_BRAND}",
-    )
-    assert found(
-        tree, ".gitmodules", "the address https://github.com/kleidos-dev/brand.git and no other"
-    )
-    assert found(tree, ".gitmodules", "a home-directory path")
+# --- Licenses, the public tree ------------------------------------------------------------
 
 
 def test_a_creative_commons_tag_is_refused(tree: Path) -> None:
     (tree / "src/extra.md").write_text(f"<!-- {CC_TAG} -->\n", encoding="utf-8")
     assert found(tree, "src/extra.md", "its license tag reads")
-
-
-def test_another_license_text_is_refused(tree: Path) -> None:
-    shutil.copy(tree / "LICENSES/GPL-3.0-or-later.txt", tree / "LICENSES/CC-BY-SA-4.0.txt")
-    assert found(tree, "LICENSES/CC-BY-SA-4.0.txt", "only GPL-3.0-or-later")
 
 
 def test_a_font_file_is_refused(tree: Path) -> None:

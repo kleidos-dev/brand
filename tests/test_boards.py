@@ -9,9 +9,9 @@ import json
 import xml.etree.ElementTree as ET
 from pathlib import Path
 
-import check
 import pytest
 
+import check
 from kleidos_brand import boards, xmlsafe
 
 ROOT = Path(__file__).resolve().parents[1]
