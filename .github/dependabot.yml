@@ -1,11 +1,12 @@
 # SPDX-FileCopyrightText: 2026 José M. Requena Plens
 # SPDX-License-Identifier: MIT
 #
-# Keeps the GitHub Actions this repository pins by commit and the Python
-# stack pinned in requirements.txt current. Those are the only two
-# ecosystems in the tree: pyproject.toml holds tool settings and no
-# dependency. Dependabot authors its own commit messages, so the
-# commit-message gate skips its pull requests.
+# Keeps three things current: the GitHub Actions this repository pins by
+# commit, the Python stack pinned in requirements.txt, and the hook
+# revisions of .pre-commit-config.yaml. Nothing else in the tree pins a
+# dependency: pyproject.toml holds tool settings only. Dependabot
+# authors its own commit messages, so the commit-message gate skips its
+# pull requests.
 #
 # requirements.txt holds every dependency with its hashes and no .in file,
 # so each line is a direct pin here: Dependabot bumps every one of them,

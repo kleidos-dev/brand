@@ -113,7 +113,7 @@
     },
     {
       "id": "pinned-actions",
-      "rule": "Workflow actions are pinned to a full commit SHA with the version in a comment, checkout sets persist-credentials: false, every job has an emoji name and timeout-minutes, and slow jobs wait for the cheap gates through needs.",
+      "rule": "Workflow actions are pinned to a full commit SHA with the version in a comment, checkout sets persist-credentials: false, every job has an emoji name and timeout-minutes, and slow jobs wait for the cheap gates through needs. The quality kit's workflows are called by its name, @v3, never by a commit; the last job, ✅ Check, follows the kit's model word for word.",
       "scope": [
         ".github/workflows/**"
       ],
