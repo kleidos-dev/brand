@@ -2,12 +2,26 @@
 # SPDX-License-Identifier: MIT
 #
 # coverage.py for the CI's test job (pytest --cov), whose report SonarQube
-# Cloud reads. Paths are written relative to the repository root, as the
-# scanner on GitHub Actions needs, and branches are measured too. The sources
-# are the two code roots of sonar-project.properties.
+# Cloud reads. The source is the repository root, so the report names every
+# file from there (tools/check.py, social/tools/check.py): brand and its
+# social pack both have a check.py and a check_metadata.py, and a report
+# relative to each code root would name both "check.py", keep one and leave
+# the scanner unable to place either (tests/test_coverage_report.py). The
+# tests are left out; everything else that is Python is code, the code roots
+# of sonar-project.properties (brand's tools/, the KiCad helper and the
+# social pack's tools/, whose tests run in a second pytest, appended).
+# Branches are measured too, and paths are relative, as the scanner on GitHub
+# Actions needs.
 [run]
 relative_files = True
 branch = True
-source =
-    tools
-    kicad
+source = .
+omit =
+    tests/*
+    social/tests/*
+    .venv/*
+
+[report]
+# Report a file no test imports too (at 0 %), in a folder without
+# __init__.py as well: tools/ and social/tools/ are not packages.
+include_namespace_packages = True

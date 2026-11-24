@@ -39,8 +39,8 @@ value that holds a local path, a private host, a machine's time, a tool's
 name or an e-mail address, and the identity patterns kept out of the tree
 (``tools/deny-local.txt`` or ``KLEIDOS_DENY_EXTRA``).
 
-``brand`` and ``social`` share this file (``social`` through its submodule).
-The other repositories keep a copy of it, and the golden files under
+``brand`` and its social pack (``social/``) share this file. The other
+repositories keep a copy of it, and the golden files under
 ``tests/fixtures/meta/`` hold every copy to the same bytes.
 """
 
@@ -82,7 +82,6 @@ TRADEMARK_NOTE_KLEIDOS = "The Kleidos name and logo are subject to the terms in 
 #: The page that states each repository's terms: IPTC's Licensor URL.
 RIGHTS_URLS = {
     "brand": f"{ORG_URL}/brand/blob/main/TRADEMARKS.md",
-    "social": f"{ORG_URL}/social/blob/main/TRADEMARKS.md",
     "boards": f"{ORG_URL}/boards/blob/main/NOTICE.md",
     ".github": f"{ORG_URL}/.github/blob/main/LICENSE",
 }
@@ -120,11 +119,10 @@ def extra_terms(repo: str) -> str:
     return f"Additional terms under GPL section 7 and the press permission: {RIGHTS_URLS[repo]}."
 
 
-for _repo in ("brand", "social"):
-    SPANISH[extra_terms(_repo)] = (
-        "Condiciones adicionales según la sección 7 de la GPL y el permiso de prensa: "
-        f"{RIGHTS_URLS[_repo]}."
-    )
+SPANISH[extra_terms("brand")] = (
+    "Condiciones adicionales según la sección 7 de la GPL y el permiso de prensa: "
+    f"{RIGHTS_URLS['brand']}."
+)
 
 
 # --- Licenses ------------------------------------------------------------------------------

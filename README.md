@@ -3,12 +3,12 @@ SPDX-FileCopyrightText: 2026 José M. Requena Plens
 SPDX-License-Identifier: GPL-3.0-or-later
 -->
 
-<!-- BEGIN GENERATED: banner (kleidos-dev/social, tools/sync_readme_banners.py); do not edit by hand -->
+<!-- BEGIN GENERATED: banner (kleidos-dev/brand, social/tools/sync_readme_banners.py); do not edit by hand -->
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/kleidos-dev/social/main/svg/readme/brand/banner-dark.svg">
-  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/kleidos-dev/social/main/svg/readme/brand/banner-light.svg">
-  <img src="https://raw.githubusercontent.com/kleidos-dev/social/main/svg/readme/brand/banner-light.svg" width="100%" alt="Kleidos Brand: The logo, type, colors, tokens and press kit.">
+  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/kleidos-dev/brand/main/social/svg/readme/brand/banner-dark.svg">
+  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/kleidos-dev/brand/main/social/svg/readme/brand/banner-light.svg">
+  <img src="https://raw.githubusercontent.com/kleidos-dev/brand/main/social/svg/readme/brand/banner-light.svg" width="100%" alt="Kleidos Brand: The logo, type, colors, tokens and press kit.">
 </picture>
 
 <!-- END GENERATED: banner -->
@@ -33,6 +33,7 @@ The identity of [Kleidos](https://kleidos.dev), free firmware that turns a small
 | [`kicad/`](kicad/) | The Kleidos KiCad style: the drawing sheet with the mark in its title block and the color theme, for a dark and a light ground, the numbers and rules every Kleidos schematic is drawn to, the helper that runs kicad-cli with them, and the tool that copies the kit into the repositories that draw with it |
 | [`boards/`](boards/) | The nine boards' fronts, copied from the [`boards`](https://github.com/kleidos-dev/boards) repository with the commit they were taken at, for the line-up images |
 | [`press-kit/`](press-kit/) | Ready images (16:9, 1:1 and 4:5, dark and light, English and Spanish), the nine boards at one scale on their unlock screens, real captures of the product's screens, a photograph of four boards running Kleidos, a fact sheet, and how all of it may be used |
+| [`social/`](social/) | The social pack: the profile images for YouTube and MakerTube, the social preview card of every kleidos-dev repository and the banner at the top of every kleidos-dev README, all drawn from this repository, with the tooling that exports and checks them; it was the `kleidos-dev/social` repository until 2026-11-24 ([`social/MOVED.md`](social/MOVED.md)) |
 | [`tools/`](tools/), [`tests/`](tests/) | The builder, the checks and their tests |
 
 ## Building
@@ -60,7 +61,7 @@ python3 -m venv .venv
 
 Python 3.15. Pictures are drawn by Playwright's Chromium, headless, from SVG files that hold outlines only (no picture depends on an installed font), and re-encoded from their pixels alone. The small marks are the exception: each of their pixels is counted from the fit (its alpha is the share of 256 sample points inside the shapes), so their PNG files are the same bytes on every machine. Every PNG and JPEG file also comes as WebP, encoded by Pillow's pinned libwebp from its decoded pixels (lossless for the artwork and the captures, quality 90 for the photograph), and every logo PNG on transparency also comes flattened on white or black. `exports.json` records the browser's version, the WebP encoder's version and settings, and what each picture was drawn from. Every published picture and SVG also says what it is, for desktop tools and indexers alike: title, description, alt text, author, copyright line, license with its URL, keywords, its public URL and how it was made, in XMP and the format's own slots (PNG text, IPTC in the JPEG files, the XMP chunk of the WebP files, Dublin Core in the SVG files), written by the builder from one record per file (`tools/kleidos_brand/meta.py`) and checked by `tools/check_metadata.py`. The exact comparison is the exporting machine's: another Chromium draws an edge a shade apart, so `--check` refuses to compare under a different version, and CI runs the static and the tolerant checks.
 
-The [`social`](https://github.com/kleidos-dev/social) repository takes this one as a submodule and imports `tools/kleidos_brand/` from it, so both draw with one set of rules, one browser and one encoder.
+The social pack under [`social/`](social/) imports `tools/kleidos_brand/` too, so brand and the pack draw with one set of rules, one browser and one encoder. It has its own check and tests, which CI runs beside brand's: `.venv/bin/python social/tools/check.py` and `.venv/bin/python -m pytest social/tests` (a pytest of its own, since both have a `check` module); [`social/README.md`](social/README.md) says how it is built.
 
 ## License
 

@@ -9,10 +9,14 @@ SPDX-License-Identifier: GPL-3.0-or-later
 
 Everything in this repository is the work of José M. Requena Plens, except the font files under `fonts/` (below). It is under one of two licenses:
 
-- **GNU General Public License, version 3 or any later version** (GPL-3.0-or-later), the firmware's license: the artwork. The mark, the lockups and their PNG files, the KiCad drawing sheets that embed the mark and their previews, the press images, their templates and words, the screen captures, the photographs, the palette's page and sheet, and the pages about them.
-- **MIT License**: what is more useful to everyone under a permissive license. The tokens and the files generated from them (`tokens/`), the KiCad kit's numbers, themes, helper and fixture (`kicad/`, below), the code, the checks and their tests (`tools/`, `tests/`), the CI (`.github/`), the pins and the configuration files, the texts that describe the project (`about/`, `press-kit/en/fact-sheet.md`, `press-kit/es/fact-sheet.md`), so anyone may quote them freely, and the board fronts under `boards/` (below).
+- **GNU General Public License, version 3 or any later version** (GPL-3.0-or-later), the firmware's license: the artwork. The mark, the lockups and their PNG files, the KiCad drawing sheets that embed the mark and their previews, the press images, their templates and words, the screen captures, the photographs, the palette's page and sheet, the pages about them, and the social pack's artwork and data (`social/`: its SVG sources and motifs, the profile images, repository cards and README banners, their previews, `pack.json` and the export record).
+- **MIT License**: what is more useful to everyone under a permissive license. The tokens and the files generated from them (`tokens/`), the KiCad kit's numbers, themes, helper and fixture (`kicad/`, below), the code, the checks and their tests (`tools/`, `tests/`, and the social pack's `social/tools/` and `social/tests/`), the CI (`.github/`), the pins and the configuration files, the texts that describe the project (`about/`, `press-kit/en/fact-sheet.md`, `press-kit/es/fact-sheet.md`), so anyone may quote them freely, and the board fronts under `boards/` (below).
 
 `REUSE.toml` states it file by file and `LICENSES/` holds the three license texts. All three licenses here are approved by the Open Source Initiative; nothing in this repository is under any other license.
+
+## The social pack
+
+`social/` is the social pack, which was the `kleidos-dev/social` repository until 2026-11-24 (`social/MOVED.md`): the work of the same author, drawn from this repository's mark, lockup, tokens, Mona Sans and board fronts, and under its licenses as above. Its own notice, [`social/NOTICE.md`](social/NOTICE.md), says what its images draw from and credits.
 
 ## The name and the mark
 

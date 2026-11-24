@@ -31,8 +31,8 @@
   },
   "fixWithAI": true,
   "hideFooter": true,
-  "instructions": "Review the diff and post inline comments with concrete suggestions. The rules of this repository are in AGENTS.md, kicad/README.md and logo/README.md (listed in files.json): cite the rule a finding breaks. Generated files are reviewed through their sources (tools/build.py writes them and CI fails when one is stale), so the ignored paths are not missing from the review. Never comment on the pull request's title or description.",
-  "ignorePatterns": "*.png\n*.webp\n*.jpg\nfonts/**/*.ttf\nfonts/**/OFL.txt\nLICENSE\nLICENSES/\nlogo/svg/\npress-kit/svg/\ncolors/palette.svg\ntokens/dist/\nexports.json\nkicad/style.json\nkicad/kleidos-*.json\nkicad/kleidos-*.kicad_wks\ntokens/mirror.json\nboards/\n.github/quality/*.jsonc\n.github/quality/ruff.toml\n.github/quality/SOURCE.json\n.github/zizmor.yml\n.gitleaks-mac.toml",
+  "instructions": "Review the diff and post inline comments with concrete suggestions. The rules of this repository are in AGENTS.md, kicad/README.md, logo/README.md and, for the social pack under social/, social/AGENTS.md (listed in files.json): cite the rule a finding breaks. Generated files are reviewed through their sources (tools/build.py writes them and CI fails when one is stale), so the ignored paths are not missing from the review. Never comment on the pull request's title or description.",
+  "ignorePatterns": "*.png\n*.webp\n*.jpg\nfonts/**/*.ttf\nfonts/**/OFL.txt\nLICENSE\nLICENSES/\nlogo/svg/\npress-kit/svg/\ncolors/palette.svg\ntokens/dist/\nexports.json\nkicad/style.json\nkicad/kleidos-*.json\nkicad/kleidos-*.kicad_wks\ntokens/mirror.json\nboards/\n.github/quality/*.jsonc\n.github/quality/ruff.toml\n.github/quality/SOURCE.json\n.github/zizmor.yml\n.gitleaks-mac.toml\nsocial/svg/readme/\nsocial/exports.json",
   "rules": [
     {
       "id": "mark-whole",
@@ -104,7 +104,7 @@
     },
     {
       "id": "shared-package",
-      "rule": "tools/kleidos_brand/ is imported by the social repository from its submodule: a rename or signature change of a public name breaks social. A new rule of tools/check.py comes with a test in tests/ that plants the defect in the throwaway tree copy.",
+      "rule": "tools/kleidos_brand/ is imported by the social pack (social/tools/): a rename or signature change of a public name breaks the pack unless it changes with it. A new rule of tools/check.py comes with a test in tests/ that plants the defect in the throwaway tree copy.",
       "scope": [
         "tools/**",
         "tests/**"
@@ -118,6 +118,12 @@
         ".github/workflows/**"
       ],
       "severity": "medium"
+    },
+    {
+      "scope": [
+        "social/**"
+      ],
+      "rule": "The social pack, moved here from the kleidos-dev/social repository (social/MOVED.md): its rules are social/AGENTS.md and its check social/tools/check.py. Everything is drawn from brand (mark always whole with its ring, token colors, Mona Sans, no opacity, tint, gradient, shadow, filter, font file or embedded picture). social/png/, social/svg/readme/, social/previews/, social/exports.json and social/README.md's generated blocks are written by social/tools/export.py only. The banner paths under readme_banners.consumers in social/pack.json are a public contract read by every README: flag a rename, move or removal."
     }
   ]
 }

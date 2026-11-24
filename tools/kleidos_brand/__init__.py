@@ -3,8 +3,8 @@
 """The Kleidos brand's builders and checks, as one importable package.
 
 ``brand`` builds its own files with it (``tools/build.py``, ``tools/check.py``)
-and ``social`` imports it from its ``brand/`` submodule, so both repositories
-draw with one set of rules, one browser and one encoder:
+and the social pack (``social/``) imports it, so both draw with one set of
+rules, one browser and one encoder:
 
 - :mod:`.tokens`: the palette, read from ``tokens/tokens.json``;
 - :mod:`.lettering`: words shaped with HarfBuzz and outlined from the pinned
@@ -18,14 +18,14 @@ draw with one set of rules, one browser and one encoder:
 - :mod:`.record`: the record of what each generated file was built from.
 
 ``sys.path`` needs the ``tools`` folder: ``tools/build.py`` adds it for
-itself, and ``social`` adds ``brand/tools``.
+itself, and the social pack's ``social/tools/pack.py`` adds it for the pack.
 """
 
 from __future__ import annotations
 
 from pathlib import Path
 
-#: The repository this package is in: ``brand``, or ``social``'s ``brand/``.
+#: The repository this package is in: ``brand``.
 BRAND_ROOT = Path(__file__).resolve().parents[2]
 
 #: The project's contact, one of the two addresses a published file may hold.

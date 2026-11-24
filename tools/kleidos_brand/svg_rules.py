@@ -1,6 +1,6 @@
 # SPDX-FileCopyrightText: 2026 José M. Requena Plens
 # SPDX-License-Identifier: MIT
-"""What an SVG source of a brand or social image may hold.
+"""What an SVG source of a brand image or of the social pack may hold.
 
 A source is a small, flat drawing: three layers in order (``ground``,
 ``content``, ``guides``), plain shapes and live text, token colors only. No

@@ -12,20 +12,40 @@ extend = ".github/quality/ruff.toml"
 target-version = "py315"
 
 [tool.ruff.lint.isort]
-# The builders' package, imported by tools/, the tests and kicad/.
-known-first-party = ["kleidos_brand"]
+# The builders' package, imported by tools/, the tests and kicad/; and the
+# social pack's modules, which social/tools/ puts on the path as plain
+# modules (social/src/cards/ is artwork, not the cards module), so they form
+# one section with kleidos_brand, where the from-imports follow the plain
+# ones.
+known-first-party = [
+  "kleidos_brand",
+  "cards", "check", "check_metadata", "export", "pack", "previews",
+  "readme_banners", "records", "source", "sync_readme_banners",
+]
 
 [tool.mypy]
 strict = true
 # An ignore names the error it silences, so it cannot hide a second one.
 enable_error_code = ["ignore-without-code"]
 python_version = "3.15"
-# The builders and checks, their tests and the KiCad helper: every Python
-# file of the tree.
-files = ["tools", "tests", "kicad"]
-# tools/ is the root the commands and the tests import kleidos_brand from.
-mypy_path = ["tools"]
+# tools/ is the root the commands and the tests import kleidos_brand from;
+# social/tools/ is the social pack's, whose modules its code and tests
+# import by name.
+mypy_path = ["tools", "social/tools"]
 explicit_package_bases = true
+
+# Two mypy runs, one per group (the quality kit's mypy groups, kleidos-dev/
+# .github docs/quality.md): brand's builders and checks, their tests and the
+# KiCad helper; and the social pack's exporter, checks and tests. Both have
+# a check.py, a check_metadata.py and a conftest.py, which one run would
+# hold twice. Together they are every Python file of the tree.
+[[tool.kleidos-quality.mypy-groups]]
+name = "brand"
+files = ["tools", "tests", "kicad"]
+
+[[tool.kleidos-quality.mypy-groups]]
+name = "social"
+files = ["social/tools", "social/tests"]
 
 # Packages that ship no type information and have no types-* stub package
 # on PyPI (read 2026-11-23): fontTools (no py.typed marker) and uharfbuzz

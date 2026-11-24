@@ -7,8 +7,10 @@ __pycache__/
 .ruff_cache/
 .venv/
 .DS_Store
-# Build output that is not committed: the press-kit archive
+# Build output that is not committed: the press-kit archive, and the social
+# pack's one-off exports (a video's thumbnail)
 /dist/
+/social/dist/
 
 # Coverage written by pytest --cov (CI hands coverage.xml to SonarQube Cloud)
 .coverage

@@ -33,6 +33,9 @@ What it holds:
              stated in TRADEMARKS.md;
 - public:    nothing private, no picture out of place, no board drawing outside boards/, no
              registered-trademark sign but a board's own print;
+- social:    the social pack under social/ is a project of its own inside this tree: its files are
+             held by its own check (social/tools/check.py) and left out of every rule here, the
+             licensing of brand's REUSE.toml and LICENSES/ excepted;
 - metadata:  every published picture and SVG carries exactly the metadata its record gives
              (kleidos_brand.meta: title, description, alt text, creator, copyright line, license
              and its URL, keywords, how it was made), its license and holders are what REUSE says
@@ -75,6 +78,9 @@ from kleidos_brand import (
 )
 
 ALLOWED_LICENSES = frozenset({"GPL-3.0-or-later", "MIT", "OFL-1.1"})
+#: The folders that hold a project with a check of its own, which every rule here leaves out: the
+#: social pack (social/tools/check.py), which CI and the pre-commit hook run beside this one.
+OWN_CHECKS = ("social",)
 PICTURE_DIRS = (
     "logo/png",
     "logo/webp",
@@ -265,6 +271,12 @@ def generated_findings(root: Path) -> list[str]:
         if path != root / mark.MARK_SVG:
             found += svg_rules.outlined_findings(path, colors, name)
     return found
+
+
+def brand_files(root: Path) -> list[Path]:
+    """Return every file of the tree at *root* that the rules here hold: all but the folders of
+    OWN_CHECKS."""
+    return [path for path in public_tree.tracked(root) if path.parts[0] not in OWN_CHECKS]
 
 
 def license_findings(root: Path, files: list[Path]) -> list[str]:
@@ -496,7 +508,7 @@ def metadata_findings(
 
     :param only: Check these paths alone (as the repository names them).
     """
-    files = public_tree.tracked(root) if files is None else files
+    files = brand_files(root) if files is None else files
     texts, pictures = build.collect(root)
     records_by_path: dict[str, meta.MediaMeta] = {
         text.path.as_posix(): text.meta for text in texts if text.meta is not None
@@ -579,7 +591,7 @@ def metadata_findings(
 
 def findings(root: Path = BRAND_ROOT) -> list[str]:
     """Return everything in the tree at *root* that breaks a rule."""
-    files = public_tree.tracked(root)
+    files = brand_files(root)
     try:
         found = build.static_findings(root)
     except (ValueError, KeyError, ET.ParseError, OSError) as error:

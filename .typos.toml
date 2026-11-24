@@ -12,6 +12,11 @@ locale = "en-us"
 extend-ignore-re = [
   "\"[A-Za-z0-9+/]{60,}={0,2}\"",
   "\\b[0-9a-f]{64}\\b",
+  # "PNGs", the plural of the format's name, which typos splits into "PN".
+  "\\bPNGs\\b",
+  # A commit subject of the kleidos-dev/social repository, quoted as it was
+  # written in the history social/MOVED.md lists.
+  "Analyse with SonarCloud without a stored token",
 ]
 
 [default.extend-identifiers]
