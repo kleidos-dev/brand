@@ -68,7 +68,7 @@
     },
     {
       "id": "nothing-private",
-      "rule": "Nothing private: no home-directory path, private network or hardware address, serial port, host name, token, key, private setting, or e-mail address other than mail@kleidos.dev and jmrplens@kleidos.dev; metadata records hold no date, tool name, path, host or camera data.",
+      "rule": "Nothing private: no home-directory path, private network or hardware address, serial port, host name, token, key, private setting, or e-mail address other than mail@kleidos.dev; metadata records hold no date, tool name, path, host or camera data.",
       "severity": "high"
     },
     {
