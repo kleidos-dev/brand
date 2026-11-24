@@ -63,11 +63,11 @@ import pack
 import readme_banners
 import records
 import source
-from kleidos_brand import SVG_HEADER, mark, meta, public_tree, svg_rules, tokens
+from kleidos_brand import PROJECT_CONTACT, SVG_HEADER, mark, meta, public_tree, svg_rules, tokens
 
 ALLOWED_LICENSES = frozenset({"GPL-3.0-or-later", "MIT"})
-#: The project's contact and the supplier REUSE.toml names: the two addresses a file may hold.
-ALLOWED_EMAILS = frozenset({"mail@kleidos.dev", "jmrplens@kleidos.dev"})
+#: The project's contact: the one address a file may hold (brand's ``PROJECT_CONTACT``).
+ALLOWED_EMAILS = frozenset({PROJECT_CONTACT})
 PICTURE_DIRS = ("png", "previews")
 #: The folder of generated pictures that draw the board fronts, screens embedded: the boards banner.
 BOARD_PICTURES = ("svg/readme/boards",)
