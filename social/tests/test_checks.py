@@ -17,7 +17,7 @@ import pytest
 
 import check
 import pack
-from kleidos_brand import SVG_HEADER, meta
+from kleidos_brand import PROJECT_CONTACT, SVG_HEADER, meta
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -25,6 +25,8 @@ ROOT = Path(__file__).resolve().parents[1]
 HOME_PATH = "/Us" + "ers/" + "someone/notes.txt"
 PRIVATE_ADDRESS = "192." + "168.1.20"
 OTHER_EMAIL = "someone" + "@" + "elsewhere.org"
+# The address the owner commits with: in each commit's metadata, never in a file.
+COMMIT_EMAIL = "jmrplens" + "@" + "kleidos.dev"
 # REUSE-IgnoreStart
 CC_TAG = "SPDX-License-Identifier: CC-BY-SA-4.0"
 # REUSE-IgnoreEnd
@@ -471,6 +473,15 @@ def test_private_data_is_refused(tree: Path) -> None:
     assert found(tree, "notes.md", "a home-directory path")
     assert found(tree, "notes.md", "a private network address")
     assert found(tree, "notes.md", "an e-mail address that is not the project's contact")
+
+
+def test_the_contact_is_the_one_address_a_file_may_hold(tree: Path) -> None:
+    assert frozenset({PROJECT_CONTACT}) == check.ALLOWED_EMAILS
+    (tree / "notes.md").write_text(
+        f"Write to {PROJECT_CONTACT}, not to {COMMIT_EMAIL}.\n", encoding="utf-8"
+    )
+    assert found(tree, "notes.md", "not the project's contact", COMMIT_EMAIL)
+    assert not found(tree, "notes.md", f"({PROJECT_CONTACT})")
 
 
 def test_a_license_text_license_or_reuse_file_of_the_pack_s_own_is_refused(tree: Path) -> None:

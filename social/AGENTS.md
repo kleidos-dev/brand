@@ -56,7 +56,7 @@ pre-commit run --all-files                       # the quality kit's hooks, bran
 - **Only what is needed now.** YouTube, MakerTube, the repository cards and the README banners. Another platform is added when the owner asks for it: a source, a row and an export.
 - **The vendors** are written "M5Stack" and "LILYGO" (owner, 2026-11-18), as `kleidos-dev/brand/about/facts.json` lists them.
 - **Spanish terms.** If a Spanish text is ever added, it never says "vault" or "bóveda": the container is "llavero", its content "tus contraseñas".
-- **Nothing private, here too:** an e-mail address appears only as `mail@kleidos.dev` (the contact) and in the supplier line of brand's `REUSE.toml`.
+- **Nothing private, here too:** an e-mail address appears only as `mail@kleidos.dev` (the contact); brand's `REUSE.toml` names its supplier by name only.
 - **Nothing is published or uploaded without the owner's yes.** `main` only moves forward, by pull request. Uploading an image to a profile or a repository's settings is his to do or to ask for.
 
 ## Organization rules

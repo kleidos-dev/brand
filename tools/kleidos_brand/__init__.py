@@ -28,10 +28,11 @@ from pathlib import Path
 #: The repository this package is in: ``brand``.
 BRAND_ROOT = Path(__file__).resolve().parents[2]
 
-#: The project's contact, one of the two addresses a published file may hold.
+#: The project's contact: the one e-mail address a published file may hold. The
+#: supplier ``REUSE.toml`` names is a name only, as in the boards repository, and
+#: no check needs the commit address: it is in each commit's metadata, which no
+#: check of this tree reads, so no file may hold it.
 PROJECT_CONTACT = "mail@kleidos.dev"
-#: The other one: the supplier REUSE.toml names, as in the boards repository.
-PROJECT_SUPPLIER = "jmrplens@kleidos.dev"
 
 #: The first lines of every SVG this project writes. The tag stands alone on
 #: its line: REUSE reads the rest of a tag's line as part of the expression.

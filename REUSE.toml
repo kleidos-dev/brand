@@ -1,6 +1,6 @@
 version = 1
 SPDX-PackageName = "brand"
-SPDX-PackageSupplier = "José M. Requena Plens <jmrplens@kleidos.dev>"
+SPDX-PackageSupplier = "José M. Requena Plens"
 SPDX-PackageDownloadLocation = "https://github.com/kleidos-dev/brand"
 
 # The artwork: the mark, the lockups and their PNG files, the palette's sheet,

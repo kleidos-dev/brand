@@ -109,7 +109,7 @@ reviews:
         Flag anything private: a home-directory path, a private network or
         hardware address, a serial port, a host name, a token or key, the name
         or value of a private setting, or an e-mail address other than
-        mail@kleidos.dev and jmrplens@kleidos.dev. Files are in English except
+        mail@kleidos.dev. Files are in English except
         the Spanish texts. Never the registered-trademark sign beside the name
         Kleidos.
     - path: "**/*.md"

@@ -9,12 +9,13 @@ import shutil
 import subprocess
 import sys
 import time
+import tomllib
 from pathlib import Path
 
 import pytest
 
 import check
-from kleidos_brand import SVG_HEADER, public_tree
+from kleidos_brand import PROJECT_CONTACT, SVG_HEADER, public_tree
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -23,6 +24,8 @@ HOME_PATH = "/Us" + "ers/" + "someone/notes.txt"
 PRIVATE_ADDRESS = "192." + "168.1.20"
 HARDWARE_ADDRESS = "aa:bb:cc:" + "dd:ee:ff"
 OTHER_EMAIL = "someone" + "@" + "elsewhere.org"
+# The address the owner commits with: in each commit's metadata, never in a file.
+COMMIT_EMAIL = "jmrplens" + "@" + "kleidos.dev"
 REGISTERED = chr(0xAE)
 # REUSE-IgnoreStart
 CC_TAG = "SPDX-License-Identifier: CC-BY-SA-4.0"
@@ -595,6 +598,29 @@ def test_private_data_is_refused(tree: Path) -> None:
         "not the project's contact",
     ):
         assert found(tree, "notes/notes.md", what), what
+
+
+def test_the_contact_is_the_one_address_a_file_may_hold() -> None:
+    assert public_tree.private_findings("x", f"Write to {PROJECT_CONTACT}.") == []
+    assert public_tree.private_findings("x", f"Write to {COMMIT_EMAIL}.") == [
+        f"x: holds an e-mail address that is not the project's contact ({COMMIT_EMAIL})"
+    ]
+
+
+def test_the_commit_address_in_a_file_is_refused(tree: Path) -> None:
+    planted(tree, "notes/notes.md").write_text(
+        f"Commits come from {COMMIT_EMAIL}.\n", encoding="utf-8"
+    )
+    assert found(tree, "notes/notes.md", "not the project's contact", COMMIT_EMAIL)
+
+
+def test_the_supplier_is_named_without_an_address(tree: Path) -> None:
+    supplier = tomllib.loads((ROOT / "REUSE.toml").read_text(encoding="utf-8"))[
+        "SPDX-PackageSupplier"
+    ]
+    assert supplier == "José M. Requena Plens"
+    edit(tree / "REUSE.toml", f'"{supplier}"', f'"{supplier} <{COMMIT_EMAIL}>"')
+    assert found(tree, "REUSE.toml", "not the project's contact", COMMIT_EMAIL)
 
 
 @pytest.mark.parametrize(

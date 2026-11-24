@@ -7,7 +7,7 @@ calls this module with its own lists:
 
 - nothing private: no home-directory path, private address, hardware
   address, serial port of one machine, local host name, token or key, and no
-  e-mail address but the project's contact, its supplier and ``example.com``;
+  e-mail address but the project's contact and ``example.com``;
 - licenses are declared, not mentioned: every SPDX tag, every identifier of
   ``REUSE.toml`` and every text under ``LICENSES/`` is one of the allowed
   ones, all approved by the OSI. Prose may name any license (a notice has to
@@ -31,7 +31,7 @@ import subprocess
 import tomllib
 from pathlib import Path
 
-from . import PROJECT_CONTACT, PROJECT_SUPPLIER, meta
+from . import PROJECT_CONTACT, meta
 
 TEXT_SUFFIXES = frozenset(
     {
@@ -156,7 +156,7 @@ def tracked(root: Path) -> list[Path]:
 def private_findings(
     name: str,
     text: str,
-    allowed_emails: frozenset[str] = frozenset({PROJECT_CONTACT, PROJECT_SUPPLIER}),
+    allowed_emails: frozenset[str] = frozenset({PROJECT_CONTACT}),
 ) -> list[str]:
     """Return the private data in one file's text."""
     found = [
@@ -277,7 +277,7 @@ def findings(
     root: Path,
     files: list[Path],
     picture_dirs: tuple[str, ...],
-    allowed_emails: frozenset[str] = frozenset({PROJECT_CONTACT, PROJECT_SUPPLIER}),
+    allowed_emails: frozenset[str] = frozenset({PROJECT_CONTACT}),
     skip_private: tuple[str, ...] = (),
     board_dirs: tuple[str, ...] = (),
     license_texts: bool = True,
