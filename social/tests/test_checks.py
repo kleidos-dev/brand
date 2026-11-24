@@ -473,6 +473,36 @@ def test_private_data_is_refused(tree: Path) -> None:
     assert found(tree, "notes.md", "an e-mail address that is not the project's contact")
 
 
+def test_a_license_text_license_or_reuse_file_of_the_pack_s_own_is_refused(tree: Path) -> None:
+    # brand's LICENSES/, LICENSE and REUSE.toml cover the pack; it holds none of its own.
+    (tree / "LICENSES").mkdir()
+    (tree / "LICENSES/notes.txt").write_text("Plain notes.\n", encoding="utf-8")
+    (tree / "src/LICENSE").write_text("Plain notes.\n", encoding="utf-8")
+    (tree / "src/REUSE.toml").write_text("version = 1\n", encoding="utf-8")
+    for name in ("LICENSES/notes.txt", "src/LICENSE", "src/REUSE.toml"):
+        assert found(tree, f"{name}: the pack holds no license text"), name
+
+
+def test_private_data_under_licenses_is_refused(tree: Path) -> None:
+    # The folder's name exempts nothing in the pack: brand's license texts are not in it.
+    (tree / "LICENSES/sub").mkdir(parents=True)
+    (tree / "LICENSES/notes.txt").write_text(
+        f"See {HOME_PATH}, at {PRIVATE_ADDRESS}, or write to {OTHER_EMAIL}.\n", encoding="utf-8"
+    )
+    (tree / "LICENSES/sub/evil.svg").write_text(
+        SVG_HEADER + '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10"><desc>'
+        f"{OTHER_EMAIL} {HOME_PATH}</desc>"
+        '<image href="data:image/png;base64,AAAA"/></svg>\n',
+        encoding="utf-8",
+    )
+    assert found(tree, "LICENSES/notes.txt", "a home-directory path")
+    assert found(tree, "LICENSES/notes.txt", "a private network address")
+    assert found(tree, "LICENSES/notes.txt", "an e-mail address that is not the project's")
+    assert found(tree, "LICENSES/sub/evil.svg", "a home-directory path")
+    assert found(tree, "LICENSES/sub/evil.svg", "an e-mail address that is not the project's")
+    assert found(tree, "LICENSES/sub/evil.svg", "embeds a picture")
+
+
 def test_an_off_palette_color_is_refused(tree: Path) -> None:
     edit(
         tree / "src/youtube/banner.svg",

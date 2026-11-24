@@ -280,6 +280,7 @@ def findings(
     allowed_emails: frozenset[str] = frozenset({PROJECT_CONTACT, PROJECT_SUPPLIER}),
     skip_private: tuple[str, ...] = (),
     board_dirs: tuple[str, ...] = (),
+    license_texts: bool = True,
 ) -> list[str]:
     """Return what in the tree at *root* must not be published.
 
@@ -288,6 +289,10 @@ def findings(
         repository's drawings, which keep their markers and their print.
     :param skip_private: Files whose text is not scanned for private data
         (the tests that plant it, the gate copied from another repository).
+    :param license_texts: Whether *root* holds license texts (``LICENSES/``
+        and ``LICENSE``), which are the licenses' own words and are not
+        scanned. A tree that holds none (the social pack) passes False, and
+        every file of it is scanned whatever its name.
     """
     found = []
     for path in files:
@@ -297,7 +302,9 @@ def findings(
             name.startswith(f"{folder}/") for folder in picture_dirs
         ):
             found.append(f"{name}: a picture or a PDF outside {', '.join(picture_dirs)}")
-        if suffix not in TEXT_SUFFIXES or path.parts[0] == "LICENSES" or name == "LICENSE":
+        if suffix not in TEXT_SUFFIXES or (
+            license_texts and (path.parts[0] == "LICENSES" or name == "LICENSE")
+        ):
             continue
         try:
             text = (root / path).read_text(encoding="utf-8")

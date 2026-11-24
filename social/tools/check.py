@@ -31,17 +31,19 @@ What it holds:
             listed under readme_banners.consumers reads by its address is here, and every banner has
             a reader;
 - licenses: every license tag of the pack is GPL-3.0-or-later (the artwork and the pack's data) or
-            MIT (the tooling); no font file and no picture out of place (the texts under
-            LICENSES/ and REUSE.toml are brand's, held by brand's tools/check.py);
+            MIT (the tooling); no font file and no picture out of place; the pack holds no
+            LICENSES/ folder, LICENSE or REUSE.toml of its own (brand's, at its root, cover it,
+            held by brand's tools/check.py);
 - metadata: every picture carries brand's metadata profile (kleidos_brand.meta), exactly as its
             record in tools/records.py gives it, before its pixels; its license and holders are
             brand's REUSE.toml for its path; no value holds an address, a path, a host, a machine's
             time or a tool's name, nor an identity pattern of the private deny-list (the
             KLEIDOS_DENY_EXTRA secret, or brand's tools/deny-local.txt; CI fails without it, a local
             run warns); tools/check_metadata.py runs this rule alone;
-- public:   nothing private, no board drawing (the fronts are brand's copies under boards/, read
-            from there; the boards banner, svg/readme/boards/, draws them with their unlock screens
-            as inner PNGs, as the boards card does in pixels), no registered-trademark sign.
+- public:   nothing private in any file of the pack, whatever its folder; no board drawing (the
+            fronts are brand's copies under boards/, read from there; the boards banner,
+            svg/readme/boards/, draws them with their unlock screens as inner PNGs, as the boards
+            card does in pixels); no registered-trademark sign.
 """
 
 from __future__ import annotations
@@ -71,11 +73,27 @@ PICTURE_DIRS = ("png", "previews")
 BOARD_PICTURES = ("svg/readme/boards",)
 #: The share of the canvas an image of the mark alone must fill with its ring, at least.
 MARK_ALONE_FILL = 0.69
+#: The names of brand's licensing files, which the pack holds none of: brand's cover it.
+BRAND_LICENSING = frozenset({"LICENSES", "LICENSE", "REUSE.toml"})
+#: What brand's license_findings says of a tree with no licensing files: the pack is one.
+NO_LICENSING_OF_ITS_OWN = frozenset(
+    {"REUSE.toml: missing", *(f"LICENSES/{name}.txt: missing" for name in ALLOWED_LICENSES)}
+)
 
 
 def tracked(root: Path) -> list[Path]:
     """Return the pack's own files, relative to it: the rest of brand is held by brand's checks."""
     return public_tree.tracked(root)
+
+
+def licensing_findings(files: list[Path]) -> list[str]:
+    """Return every file of the pack that is a licensing file of its own, at any depth."""
+    return [
+        f"{path.as_posix()}: the pack holds no license text, LICENSE or REUSE.toml of its own;"
+        " brand's, at its root, cover it"
+        for path in files
+        if BRAND_LICENSING & set(path.parts)
+    ]
 
 
 def sources(root: Path) -> list[Path]:
@@ -301,18 +319,24 @@ def findings(root: Path = pack.ROOT) -> list[str]:
         found += metadata_findings(root, collected)
     except (ValueError, KeyError, ET.ParseError, OSError, StopIteration) as error:
         found.append(f"the sources cannot be made ready, so nothing drawn was compared: {error}")
-    # The license tags of the pack's own files: the texts under LICENSES/ and the lines of
-    # REUSE.toml are brand's, held by brand's tools/check.py.
+    # The license tags of the pack's own files. The pack has no LICENSES/ or REUSE.toml (brand's
+    # cover it), so only their absence is left out; any it holds is refused.
+    found += licensing_findings(files)
     found += [
         line
         for line in public_tree.license_findings(root, files, ALLOWED_LICENSES)
-        if not line.startswith(("LICENSES/", "REUSE.toml:"))
+        if line not in NO_LICENSING_OF_ITS_OWN
     ]
     found += public_tree.font_findings(root, files, {})
     found += [
         line
         for line in public_tree.findings(
-            root, files, PICTURE_DIRS, ALLOWED_EMAILS, board_dirs=BOARD_PICTURES
+            root,
+            files,
+            PICTURE_DIRS,
+            ALLOWED_EMAILS,
+            board_dirs=BOARD_PICTURES,
+            license_texts=False,
         )
         if not (
             line.endswith(": embeds a picture")
