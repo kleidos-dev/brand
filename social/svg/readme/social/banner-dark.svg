@@ -4,8 +4,8 @@
   Additional terms under section 7 of the GNU GPL version 3: https://github.com/kleidos-dev/brand/blob/main/TRADEMARKS.md
 -->
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2560 800" width="1280" height="400" role="img" aria-labelledby="kl-readme-social-dark-t kl-readme-social-dark-d" lang="en">
-  <title id="kl-readme-social-dark-t">kleidos-dev/social README banner, dark theme</title>
-  <desc id="kl-readme-social-dark-d">The README banner of kleidos-dev/social: the Kleidos logo, the label &quot;Social&quot; and the line &quot;The images of every profile and repository card, generated from brand.&quot;</desc>
+  <title id="kl-readme-social-dark-t">kleidos-dev/brand/social README banner, dark theme</title>
+  <desc id="kl-readme-social-dark-d">The README banner of kleidos-dev/brand/social: the Kleidos logo, the label &quot;Social&quot; and the line &quot;The images of every profile and repository card, generated from brand.&quot;</desc>
   <!-- REUSE-IgnoreStart -->
   <metadata id="kl-readme-social-dark-m">
     <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
@@ -15,14 +15,14 @@
       <cc:Work rdf:about="">
         <dc:format>image/svg+xml</dc:format>
         <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
-        <dc:title>kleidos-dev/social README banner, dark theme</dc:title>
-        <dc:description>The README banner of kleidos-dev/social: the Kleidos logo, the label &quot;Social&quot; and the line &quot;The images of every profile and repository card, generated from brand.&quot;</dc:description>
+        <dc:title>kleidos-dev/brand/social README banner, dark theme</dc:title>
+        <dc:description>The README banner of kleidos-dev/brand/social: the Kleidos logo, the label &quot;Social&quot; and the line &quot;The images of every profile and repository card, generated from brand.&quot;</dc:description>
         <dc:creator><cc:Agent><dc:title>José M. Requena Plens</dc:title></cc:Agent></dc:creator>
         <dc:publisher><cc:Agent><dc:title>Kleidos</dc:title></cc:Agent></dc:publisher>
         <dc:rights><cc:Agent><dc:title>© 2026 José M. Requena Plens. GPL-3.0-or-later.</dc:title></cc:Agent></dc:rights>
         <dc:identifier>https://github.com/kleidos-dev/brand/blob/main/social/svg/readme/social/banner-dark.svg</dc:identifier>
         <dc:language>en</dc:language>
-        <dc:subject><rdf:Bag><rdf:li>Kleidos</rdf:li><rdf:li>hardware password manager</rdf:li><rdf:li>open source</rdf:li><rdf:li>kleidos-dev/social</rdf:li><rdf:li>GitHub</rdf:li><rdf:li>README banner</rdf:li></rdf:Bag></dc:subject>
+        <dc:subject><rdf:Bag><rdf:li>Kleidos</rdf:li><rdf:li>hardware password manager</rdf:li><rdf:li>open source</rdf:li><rdf:li>kleidos-dev/brand/social</rdf:li><rdf:li>GitHub</rdf:li><rdf:li>README banner</rdf:li></rdf:Bag></dc:subject>
         <Iptc4xmpExt:DigitalSourceType rdf:resource="http://cv.iptc.org/newscodes/digitalsourcetype/digitalCreation"/>
         <cc:license rdf:resource="https://spdx.org/licenses/GPL-3.0-or-later.html"/>
       </cc:Work>

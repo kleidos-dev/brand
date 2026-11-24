@@ -270,7 +270,7 @@ def collect(root: Path = ROOT) -> Collected:
                 drawn_from(banner.svg, banner.record),
                 (*banner.inputs, *brand_inputs(), *board_inputs(banner.drawing)),
                 _written(body),
-                f"the README banner of {data['cards']['owner']}/{banner.row.repo}, {banner.theme}"
+                f"the README banner of {records.banner_subject(data, banner.row)}, {banner.theme}"
                 " theme",
                 "banner",
                 banner.record,
@@ -417,7 +417,7 @@ def blocks(collected: Collected, files: dict[str, Any]) -> dict[str, str]:
             else ", ".join(readers.get(banner_row.repo, ["none"]))
         )
         banner_rows.append(
-            f"| `{data['cards']['owner']}/{banner_row.repo}` | {cells[0]} | {cells[1]} |"
+            f"| `{records.banner_subject(data, banner_row)}` | {cells[0]} | {cells[1]} |"
             f" {banner_row.label.upper()} | {banner_row.line} |"
             f" [`{banner_row.motif}`]({cards.motif_path(data, banner_row.motif)}) |"
             f" {readers_of} |"

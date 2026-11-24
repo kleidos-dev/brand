@@ -135,6 +135,23 @@ def test_the_metadata_is_the_record(built: list[readme_banners.Banner]) -> None:
     assert meta.svg_findings("x.svg", tampered, first.record, first.slug) != []
 
 
+def test_the_packs_own_banner_names_its_folder_of_brand(
+    built: list[readme_banners.Banner],
+) -> None:
+    own = [banner for banner in built if banner.row.mode == "self"]
+    assert own and all(
+        f"<dc:title>kleidos-dev/brand/social README banner, {banner.theme} theme</dc:title>"
+        in banner.svg
+        for banner in own
+    )
+    assert all(
+        f"<dc:title>kleidos-dev/{banner.row.repo} README banner, {banner.theme} theme</dc:title>"
+        in banner.svg
+        for banner in built
+        if banner.row.mode != "self"
+    )
+
+
 def test_the_files_are_published_at_their_rule_and_under_its_weight(
     data: dict[str, Any], built: list[readme_banners.Banner]
 ) -> None:
@@ -364,10 +381,10 @@ def test_a_banner_a_readme_reads_cannot_go(tmp_path: Path, data: dict[str, Any])
 def test_a_banner_no_readme_reads_is_found(data: dict[str, Any]) -> None:
     changed = json.loads(json.dumps(data))
     changed["readme_banners"]["consumers"] = [
-        c for c in changed["readme_banners"]["consumers"] if c["banner"] != "posts"
+        c for c in changed["readme_banners"]["consumers"] if c["banner"] != "videos"
     ]
     assert any(
-        "no consumer reads the banner of posts" in line
+        "no consumer reads the banner of videos" in line
         for line in readme_banners.consumer_findings(ROOT, changed)
     )
 

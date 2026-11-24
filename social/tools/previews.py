@@ -450,12 +450,19 @@ class Sheet:
             by_repo.setdefault(picture.path.parent.name, {})[
                 picture.path.stem.removeprefix("banner-")
             ] = picture
+        # The pack's own row heads a folder of brand, not a repository of its own.
+        own = {
+            entry["repo"]
+            for entry in self.data["readme_banners"]["repos"]
+            if entry.get("mode") == "self"
+        }
         y = top
         for name, themes in by_repo.items():
+            repo = name.replace("dot-", ".", 1) if name.startswith("dot-") else name
             layout.label(
                 MARGIN,
                 y,
-                f"{owner}/{name.replace('dot-', '.', 1) if name.startswith('dot-') else name}",
+                f"{owner}/brand/{repo}" if repo in own else f"{owner}/{repo}",
                 values["social.ink"],
             )
             y += LABEL_BAND
