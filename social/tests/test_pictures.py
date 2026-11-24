@@ -220,7 +220,9 @@ def test_a_title_that_does_not_fit_is_refused(chromium: Browser) -> None:
 
 def test_a_one_off_is_named_for_its_title_and_kept_out_of_the_pack() -> None:
     assert export.slug(["One sign-in,", "uncut"]) == "one-sign-in-uncut"
-    assert "/dist/" in (ROOT / ".gitignore").read_text(encoding="utf-8").splitlines()
+    # Brand's .gitignore keeps the pack's one-offs out: social/dist/, named from brand's root.
+    ignored = (pack.brand_root(ROOT) / ".gitignore").read_text(encoding="utf-8").splitlines()
+    assert f"/{pack.in_brand(Path('dist')).as_posix()}/" in ignored
 
 
 class NoBrowser:
