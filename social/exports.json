@@ -1,0 +1,844 @@
+{
+  "$comment": "Written by tools/export.py: the browser the pictures were drawn with, and the bytes of each picture and of what it was drawn from, the brand files included. Do not edit; run the exporter.",
+  "chromium": "159.0.8154.6",
+  "files": {
+    "png/youtube/avatar.png": {
+      "sha256": "2c12587814bcffbd85f1041fa76768c1093aab7a1e5db05bb0fee55609f8ccc9",
+      "bytes": 35470,
+      "size": [
+        800,
+        800
+      ],
+      "drawn_from": "1958e81c0ba3e5d2a52556a284491f969183cbea2bb695430723a96868c273d8",
+      "inputs": {
+        "src/shared/avatar.svg": "cb0373e11dca30d7c8f8df952103586034c12da381a9dd68d27861b451bd062c",
+        "pack.json": "9ef8f2babfde82a07db9c3fb802bfb1889612e52bdacce10af26ae992f96e34f",
+        "brand/logo/src/mark.svg": "ee59e2c773b2a540639a74d5980734a6b08193c99aa5714f65d7510423480825",
+        "brand/logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
+        "brand/tokens/tokens.json": "07d2aa8c3ae6df685c580ef1ee83a51c6111a06b9c2d8b8174b2170781534666",
+        "brand/fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435",
+        "brand/fonts/mona-sans/MonaSansMonoVF[wght].ttf": "e1d0ba93b9abf682de1bd67d20b58d312fab5d0cbe8fe012e2b1ab7687b42219",
+        "brand/tools/kleidos_brand/meta.py": "01dbaa16e26b838f2bff389db36bbc6bdd6b06920f0596b9d251bbbfc2582765"
+      }
+    },
+    "png/makertube/avatar.png": {
+      "sha256": "4829b385d03cf3ff923778f79f38972c1cc280909401c9135ebcf1e9e999e7e1",
+      "bytes": 68127,
+      "size": [
+        1500,
+        1500
+      ],
+      "drawn_from": "234de1761033da1f497b81600c88c584a3d2f9f6eaaaed275e158c06d64c9ca1",
+      "inputs": {
+        "src/shared/avatar.svg": "cb0373e11dca30d7c8f8df952103586034c12da381a9dd68d27861b451bd062c",
+        "pack.json": "9ef8f2babfde82a07db9c3fb802bfb1889612e52bdacce10af26ae992f96e34f",
+        "brand/logo/src/mark.svg": "ee59e2c773b2a540639a74d5980734a6b08193c99aa5714f65d7510423480825",
+        "brand/logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
+        "brand/tokens/tokens.json": "07d2aa8c3ae6df685c580ef1ee83a51c6111a06b9c2d8b8174b2170781534666",
+        "brand/fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435",
+        "brand/fonts/mona-sans/MonaSansMonoVF[wght].ttf": "e1d0ba93b9abf682de1bd67d20b58d312fab5d0cbe8fe012e2b1ab7687b42219",
+        "brand/tools/kleidos_brand/meta.py": "01dbaa16e26b838f2bff389db36bbc6bdd6b06920f0596b9d251bbbfc2582765"
+      }
+    },
+    "png/youtube/banner.png": {
+      "sha256": "2256dd7311063be6ebf9b5b6f9f88583f1e5d9ba5b43c9aa71afb5b63fd66e0f",
+      "bytes": 188563,
+      "size": [
+        2560,
+        1440
+      ],
+      "drawn_from": "7935e44c4539895d2be670b727564fc9313dc68ad23742e9228445f9030d3196",
+      "inputs": {
+        "src/youtube/banner.svg": "2d4c7bad81dee55cc32b61fea7d673bb8a979085b5ab9704daae491326ac80a9",
+        "pack.json": "9ef8f2babfde82a07db9c3fb802bfb1889612e52bdacce10af26ae992f96e34f",
+        "brand/logo/src/mark.svg": "ee59e2c773b2a540639a74d5980734a6b08193c99aa5714f65d7510423480825",
+        "brand/logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
+        "brand/tokens/tokens.json": "07d2aa8c3ae6df685c580ef1ee83a51c6111a06b9c2d8b8174b2170781534666",
+        "brand/fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435",
+        "brand/fonts/mona-sans/MonaSansMonoVF[wght].ttf": "e1d0ba93b9abf682de1bd67d20b58d312fab5d0cbe8fe012e2b1ab7687b42219",
+        "brand/tools/kleidos_brand/meta.py": "01dbaa16e26b838f2bff389db36bbc6bdd6b06920f0596b9d251bbbfc2582765",
+        "brand/boards/boards.json": "2fc93598d2f55a45e56618cf53496ffc3eb1d1b6c4d17efe6f4937796f2358f1",
+        "brand/boards/sticks3.svg": "0c893adb838469d0a5b503130061349feaeeb0d6064d1d62e8a69fa03c2c855f",
+        "brand/boards/m5stickc-plus2.svg": "170040d38f2c50673eb334000859a443728ca72bcc36b6045c2c99739c0d7c0d",
+        "brand/boards/m5stickc-plus1.svg": "4ce11832f7ef5bbb27a1433876c2b089653f676599afc89fea0e6ddbfb0e9071",
+        "brand/boards/m5stickc-plus-se.svg": "34ec8bc51f51f1a4e3fcccdf89cab657dc89985ccbecc2037b9989187873db38",
+        "brand/boards/coreink.svg": "edce2ac26f6821820b2771396ba0b4286592b30563acf706c839dcff1e6cf292",
+        "brand/boards/cores3-se.svg": "3ee6a8ee427f20096cbb91bbc27c45206758be2c01bcae98e24b1c5e1f175545",
+        "brand/boards/m5stack-core2-v13.svg": "ac4cbd3e8f91d643dbe987fb9c4ff164a363edd486a1ae95be4bf388ab153fa2",
+        "brand/boards/cardputer.svg": "38b711a307e4ca32a3b07e5955346c43e6e2912d90b5d2770384d47ec15dd127",
+        "brand/boards/tdeck-plus.svg": "068a289dd46121f4dcaa92046ab38bcf75ee735ae514d6a1831f95b636f6286c",
+        "brand/press-kit/screens/kleidos-screen-sticks3.png": "ce4548cfe238ff251a58f349e600078064e4da37f02174493b5eab8b06012660",
+        "brand/press-kit/screens/kleidos-screen-m5stickc-plus2.png": "83f080ae27414d761a63c3ef42be67fb9393ce522ea2af3174c24b2f2f506915",
+        "brand/press-kit/screens/kleidos-screen-m5stickc-plus1.png": "f797eae6a35fc5cbba40e6ad489340d9ae30e7a8ceaf93116c8474bfd029179f",
+        "brand/press-kit/screens/kleidos-screen-m5stickc-plus-se.png": "d666c92ed10d9a7355bf193e07a188457c72fc368c0cad42c11523a7bd8205d3",
+        "brand/press-kit/screens/kleidos-screen-coreink.png": "424536b9dffe1271faaebdf1c7ff936459e636d779b24cd19c1aa26a6e03cea9",
+        "brand/press-kit/screens/kleidos-screen-cores3-se.png": "9cb7831e0dec53bc7d2de8bf86bec333d1f78e50b468d92c4d3234ea009755e0",
+        "brand/press-kit/screens/kleidos-screen-m5stack-core2-v13.png": "a73016793851d0a46c9853dade250beb9a920e92129998a86374d6e48f52ca93",
+        "brand/press-kit/screens/kleidos-screen-cardputer.png": "57d77d274dff42c4cb4d10f6c484745bfe456a764c4f37de16f987002342efc9",
+        "brand/press-kit/screens/kleidos-screen-tdeck-plus.png": "802cdf42c4676770e3bea58e5f6fd679a510b9c2e06582ae52abd4a7a572e0f7",
+        "brand/fonts/inter/Inter-Regular.ttf": "40d692fce188e4471e2b3cba937be967878f631ad3ebbbdcd587687c7ebe0c82",
+        "brand/fonts/inter/Inter-Medium.ttf": "97ad806f526e41546d46365bb3a393145f75b7b1568913db74549ad8b8dba872",
+        "brand/fonts/inter/Inter-Bold.ttf": "288316099b1e0a47a4716d159098005eef7c0066921f34e3200393dbdb01947f"
+      }
+    },
+    "png/youtube/watermark.png": {
+      "sha256": "816f22582895e9d5a0ff7130b6322e12d59940d3aa4edea1bd07c586eaac838e",
+      "bytes": 30386,
+      "size": [
+        600,
+        600
+      ],
+      "drawn_from": "fe88e764cc9d1913ee1480278a0b0bc682e5a6fbbcc608416cc2390b9264e000",
+      "inputs": {
+        "src/youtube/watermark.svg": "bf7e3b5dda8b64d6e5e3f6392ed1227790cc4dbf1b068b97f2f20552375f96f3",
+        "pack.json": "9ef8f2babfde82a07db9c3fb802bfb1889612e52bdacce10af26ae992f96e34f",
+        "brand/logo/src/mark.svg": "ee59e2c773b2a540639a74d5980734a6b08193c99aa5714f65d7510423480825",
+        "brand/logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
+        "brand/tokens/tokens.json": "07d2aa8c3ae6df685c580ef1ee83a51c6111a06b9c2d8b8174b2170781534666",
+        "brand/fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435",
+        "brand/fonts/mona-sans/MonaSansMonoVF[wght].ttf": "e1d0ba93b9abf682de1bd67d20b58d312fab5d0cbe8fe012e2b1ab7687b42219",
+        "brand/tools/kleidos_brand/meta.py": "01dbaa16e26b838f2bff389db36bbc6bdd6b06920f0596b9d251bbbfc2582765"
+      }
+    },
+    "png/youtube/thumbnail.png": {
+      "sha256": "6ebe5a2954947880ee4a9162b37c262d0d6a0fb587fbe49b1cfef980ce4149b7",
+      "bytes": 174086,
+      "size": [
+        3840,
+        2160
+      ],
+      "drawn_from": "5a87204978253b6f5f59429154441b29e454c34bef5034e87f4791a1bf0064bd",
+      "inputs": {
+        "src/youtube/thumbnail.svg": "01ecd7b8881cadcf3cb9b39fa5e5244bb74a50a17b31098855ee3ad839c8a987",
+        "pack.json": "9ef8f2babfde82a07db9c3fb802bfb1889612e52bdacce10af26ae992f96e34f",
+        "brand/logo/src/mark.svg": "ee59e2c773b2a540639a74d5980734a6b08193c99aa5714f65d7510423480825",
+        "brand/logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
+        "brand/tokens/tokens.json": "07d2aa8c3ae6df685c580ef1ee83a51c6111a06b9c2d8b8174b2170781534666",
+        "brand/fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435",
+        "brand/fonts/mona-sans/MonaSansMonoVF[wght].ttf": "e1d0ba93b9abf682de1bd67d20b58d312fab5d0cbe8fe012e2b1ab7687b42219",
+        "brand/tools/kleidos_brand/meta.py": "01dbaa16e26b838f2bff389db36bbc6bdd6b06920f0596b9d251bbbfc2582765"
+      }
+    },
+    "png/makertube/banner.png": {
+      "sha256": "8e89a4de63f08b184da9612286787750cccd3135181ccd3ad542b257dbfdc474",
+      "bytes": 35854,
+      "size": [
+        1920,
+        317
+      ],
+      "drawn_from": "148c9cadc3ec6d5781e362b2709374b4745909cb5911896dea613c4338d0c52d",
+      "inputs": {
+        "src/makertube/banner.svg": "4cd50a87019e5edd1b07105c7cb322917b7f86bca08b0bc1882d921278a53961",
+        "pack.json": "9ef8f2babfde82a07db9c3fb802bfb1889612e52bdacce10af26ae992f96e34f",
+        "brand/logo/src/mark.svg": "ee59e2c773b2a540639a74d5980734a6b08193c99aa5714f65d7510423480825",
+        "brand/logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
+        "brand/tokens/tokens.json": "07d2aa8c3ae6df685c580ef1ee83a51c6111a06b9c2d8b8174b2170781534666",
+        "brand/fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435",
+        "brand/fonts/mona-sans/MonaSansMonoVF[wght].ttf": "e1d0ba93b9abf682de1bd67d20b58d312fab5d0cbe8fe012e2b1ab7687b42219",
+        "brand/tools/kleidos_brand/meta.py": "01dbaa16e26b838f2bff389db36bbc6bdd6b06920f0596b9d251bbbfc2582765"
+      }
+    },
+    "png/github/kleidos.png": {
+      "sha256": "88bed9cc5f3d7237a1b68a4a35544da94f0a3d4cf524bebc3fd94af2aaa1df5f",
+      "bytes": 134014,
+      "size": [
+        2560,
+        1280
+      ],
+      "drawn_from": "244d7abd289ccd6f3df861966c5f30d3f3c105b04aeb2c6207d757432b78d46d",
+      "inputs": {
+        "src/cards/card.svg": "82b844499ea0d280ef75cdb6a44d6a63c5227c47913534172a054e604c4362dd",
+        "src/cards/motifs/typing.svg": "616376e22a7952620e60cf242acaf9d1fb2e5d6e61277739fd88933a30c476dc",
+        "pack.json": "9ef8f2babfde82a07db9c3fb802bfb1889612e52bdacce10af26ae992f96e34f",
+        "brand/logo/src/mark.svg": "ee59e2c773b2a540639a74d5980734a6b08193c99aa5714f65d7510423480825",
+        "brand/logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
+        "brand/tokens/tokens.json": "07d2aa8c3ae6df685c580ef1ee83a51c6111a06b9c2d8b8174b2170781534666",
+        "brand/fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435",
+        "brand/fonts/mona-sans/MonaSansMonoVF[wght].ttf": "e1d0ba93b9abf682de1bd67d20b58d312fab5d0cbe8fe012e2b1ab7687b42219",
+        "brand/tools/kleidos_brand/meta.py": "01dbaa16e26b838f2bff389db36bbc6bdd6b06920f0596b9d251bbbfc2582765"
+      }
+    },
+    "png/github/boards.png": {
+      "sha256": "fd58f41f2b6b8627d9d1a66c0a97453d7ee1d056140a120ac2a0a7fcb555dd9e",
+      "bytes": 262211,
+      "size": [
+        2560,
+        1280
+      ],
+      "drawn_from": "7532657e34e9f5fcfa1324152a9ad3e427ad117f76509900184fdc0e3940c2d5",
+      "inputs": {
+        "src/cards/card.svg": "82b844499ea0d280ef75cdb6a44d6a63c5227c47913534172a054e604c4362dd",
+        "src/cards/motifs/shelf.svg": "9585a2e2bc6291e2899c8c700e482b576af4175acbe3edf1d70a02d6c06efe80",
+        "pack.json": "9ef8f2babfde82a07db9c3fb802bfb1889612e52bdacce10af26ae992f96e34f",
+        "brand/logo/src/mark.svg": "ee59e2c773b2a540639a74d5980734a6b08193c99aa5714f65d7510423480825",
+        "brand/logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
+        "brand/tokens/tokens.json": "07d2aa8c3ae6df685c580ef1ee83a51c6111a06b9c2d8b8174b2170781534666",
+        "brand/fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435",
+        "brand/fonts/mona-sans/MonaSansMonoVF[wght].ttf": "e1d0ba93b9abf682de1bd67d20b58d312fab5d0cbe8fe012e2b1ab7687b42219",
+        "brand/tools/kleidos_brand/meta.py": "01dbaa16e26b838f2bff389db36bbc6bdd6b06920f0596b9d251bbbfc2582765",
+        "brand/boards/boards.json": "2fc93598d2f55a45e56618cf53496ffc3eb1d1b6c4d17efe6f4937796f2358f1",
+        "brand/boards/sticks3.svg": "0c893adb838469d0a5b503130061349feaeeb0d6064d1d62e8a69fa03c2c855f",
+        "brand/boards/m5stickc-plus2.svg": "170040d38f2c50673eb334000859a443728ca72bcc36b6045c2c99739c0d7c0d",
+        "brand/boards/m5stickc-plus1.svg": "4ce11832f7ef5bbb27a1433876c2b089653f676599afc89fea0e6ddbfb0e9071",
+        "brand/boards/m5stickc-plus-se.svg": "34ec8bc51f51f1a4e3fcccdf89cab657dc89985ccbecc2037b9989187873db38",
+        "brand/boards/coreink.svg": "edce2ac26f6821820b2771396ba0b4286592b30563acf706c839dcff1e6cf292",
+        "brand/boards/cores3-se.svg": "3ee6a8ee427f20096cbb91bbc27c45206758be2c01bcae98e24b1c5e1f175545",
+        "brand/boards/m5stack-core2-v13.svg": "ac4cbd3e8f91d643dbe987fb9c4ff164a363edd486a1ae95be4bf388ab153fa2",
+        "brand/boards/cardputer.svg": "38b711a307e4ca32a3b07e5955346c43e6e2912d90b5d2770384d47ec15dd127",
+        "brand/boards/tdeck-plus.svg": "068a289dd46121f4dcaa92046ab38bcf75ee735ae514d6a1831f95b636f6286c",
+        "brand/press-kit/screens/kleidos-screen-sticks3.png": "ce4548cfe238ff251a58f349e600078064e4da37f02174493b5eab8b06012660",
+        "brand/press-kit/screens/kleidos-screen-m5stickc-plus2.png": "83f080ae27414d761a63c3ef42be67fb9393ce522ea2af3174c24b2f2f506915",
+        "brand/press-kit/screens/kleidos-screen-m5stickc-plus1.png": "f797eae6a35fc5cbba40e6ad489340d9ae30e7a8ceaf93116c8474bfd029179f",
+        "brand/press-kit/screens/kleidos-screen-m5stickc-plus-se.png": "d666c92ed10d9a7355bf193e07a188457c72fc368c0cad42c11523a7bd8205d3",
+        "brand/press-kit/screens/kleidos-screen-coreink.png": "424536b9dffe1271faaebdf1c7ff936459e636d779b24cd19c1aa26a6e03cea9",
+        "brand/press-kit/screens/kleidos-screen-cores3-se.png": "9cb7831e0dec53bc7d2de8bf86bec333d1f78e50b468d92c4d3234ea009755e0",
+        "brand/press-kit/screens/kleidos-screen-m5stack-core2-v13.png": "a73016793851d0a46c9853dade250beb9a920e92129998a86374d6e48f52ca93",
+        "brand/press-kit/screens/kleidos-screen-cardputer.png": "57d77d274dff42c4cb4d10f6c484745bfe456a764c4f37de16f987002342efc9",
+        "brand/press-kit/screens/kleidos-screen-tdeck-plus.png": "802cdf42c4676770e3bea58e5f6fd679a510b9c2e06582ae52abd4a7a572e0f7",
+        "brand/fonts/inter/Inter-Regular.ttf": "40d692fce188e4471e2b3cba937be967878f631ad3ebbbdcd587687c7ebe0c82",
+        "brand/fonts/inter/Inter-Medium.ttf": "97ad806f526e41546d46365bb3a393145f75b7b1568913db74549ad8b8dba872",
+        "brand/fonts/inter/Inter-Bold.ttf": "288316099b1e0a47a4716d159098005eef7c0066921f34e3200393dbdb01947f"
+      }
+    },
+    "png/github/brand.png": {
+      "sha256": "8878057b48fe00655dc32f7e0f61f0889ea549b21e6a6b1be719f38db4166c62",
+      "bytes": 109346,
+      "size": [
+        2560,
+        1280
+      ],
+      "drawn_from": "248f3722e56b77845efd1fcd1ad558d5f60ddabfa7266bdce24db84b2c39ccd5",
+      "inputs": {
+        "src/cards/card.svg": "82b844499ea0d280ef75cdb6a44d6a63c5227c47913534172a054e604c4362dd",
+        "src/cards/motifs/swatches.svg": "0128cfe40dfb6352e72ce716f86f0042477314036da30a4c3e86942e2f9f29f5",
+        "pack.json": "9ef8f2babfde82a07db9c3fb802bfb1889612e52bdacce10af26ae992f96e34f",
+        "brand/logo/src/mark.svg": "ee59e2c773b2a540639a74d5980734a6b08193c99aa5714f65d7510423480825",
+        "brand/logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
+        "brand/tokens/tokens.json": "07d2aa8c3ae6df685c580ef1ee83a51c6111a06b9c2d8b8174b2170781534666",
+        "brand/fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435",
+        "brand/fonts/mona-sans/MonaSansMonoVF[wght].ttf": "e1d0ba93b9abf682de1bd67d20b58d312fab5d0cbe8fe012e2b1ab7687b42219",
+        "brand/tools/kleidos_brand/meta.py": "01dbaa16e26b838f2bff389db36bbc6bdd6b06920f0596b9d251bbbfc2582765"
+      }
+    },
+    "png/github/social.png": {
+      "sha256": "dcb71c0d505b052a537d0ab7d6bc5b0a8b90954ff6ed28ade15ae57b704bff62",
+      "bytes": 133241,
+      "size": [
+        2560,
+        1280
+      ],
+      "drawn_from": "9ea9c07b27fb3d3f5ff516883c256b278dae6a1d112927827340a71c436f2345",
+      "inputs": {
+        "src/cards/card.svg": "82b844499ea0d280ef75cdb6a44d6a63c5227c47913534172a054e604c4362dd",
+        "src/cards/motifs/frames.svg": "b940985110af1a82b3a6b68d0c817623cc9d676153bd20bf957bd2a03d2cc617",
+        "pack.json": "9ef8f2babfde82a07db9c3fb802bfb1889612e52bdacce10af26ae992f96e34f",
+        "brand/logo/src/mark.svg": "ee59e2c773b2a540639a74d5980734a6b08193c99aa5714f65d7510423480825",
+        "brand/logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
+        "brand/tokens/tokens.json": "07d2aa8c3ae6df685c580ef1ee83a51c6111a06b9c2d8b8174b2170781534666",
+        "brand/fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435",
+        "brand/fonts/mona-sans/MonaSansMonoVF[wght].ttf": "e1d0ba93b9abf682de1bd67d20b58d312fab5d0cbe8fe012e2b1ab7687b42219",
+        "brand/tools/kleidos_brand/meta.py": "01dbaa16e26b838f2bff389db36bbc6bdd6b06920f0596b9d251bbbfc2582765"
+      }
+    },
+    "png/github/agents.png": {
+      "sha256": "e9d57e307436993cc68a2a3ecc9102bd75ef1eec2dde110371e0259daed46fab",
+      "bytes": 121706,
+      "size": [
+        2560,
+        1280
+      ],
+      "drawn_from": "c849cbcb5c40af3a3b1df53b007e52ec21d09dfc7a9520f23d4a87ece8265b70",
+      "inputs": {
+        "src/cards/card.svg": "82b844499ea0d280ef75cdb6a44d6a63c5227c47913534172a054e604c4362dd",
+        "src/cards/motifs/checklist.svg": "4d7d9faa07f829ce86f07d44161b52552225a309ff0a9df3bba8350dae3ecdea",
+        "pack.json": "9ef8f2babfde82a07db9c3fb802bfb1889612e52bdacce10af26ae992f96e34f",
+        "brand/logo/src/mark.svg": "ee59e2c773b2a540639a74d5980734a6b08193c99aa5714f65d7510423480825",
+        "brand/logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
+        "brand/tokens/tokens.json": "07d2aa8c3ae6df685c580ef1ee83a51c6111a06b9c2d8b8174b2170781534666",
+        "brand/fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435",
+        "brand/fonts/mona-sans/MonaSansMonoVF[wght].ttf": "e1d0ba93b9abf682de1bd67d20b58d312fab5d0cbe8fe012e2b1ab7687b42219",
+        "brand/tools/kleidos_brand/meta.py": "01dbaa16e26b838f2bff389db36bbc6bdd6b06920f0596b9d251bbbfc2582765"
+      }
+    },
+    "png/github/dot-github.png": {
+      "sha256": "d79ef02fde4a68a301c68d051aa7dbf1109f7a1eb1dfe0921e2ee987553fa33e",
+      "bytes": 136174,
+      "size": [
+        2560,
+        1280
+      ],
+      "drawn_from": "fec46fc6a73e72c5b0a65a200addb5df68311ed67a0eef2267c7a00f65a8f371",
+      "inputs": {
+        "src/cards/card.svg": "82b844499ea0d280ef75cdb6a44d6a63c5227c47913534172a054e604c4362dd",
+        "src/cards/motifs/bubbles.svg": "2f77451df71d2216a3b77cd6bee491e99263bc55e9c0f254d9e23bce549cff51",
+        "pack.json": "9ef8f2babfde82a07db9c3fb802bfb1889612e52bdacce10af26ae992f96e34f",
+        "brand/logo/src/mark.svg": "ee59e2c773b2a540639a74d5980734a6b08193c99aa5714f65d7510423480825",
+        "brand/logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
+        "brand/tokens/tokens.json": "07d2aa8c3ae6df685c580ef1ee83a51c6111a06b9c2d8b8174b2170781534666",
+        "brand/fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435",
+        "brand/fonts/mona-sans/MonaSansMonoVF[wght].ttf": "e1d0ba93b9abf682de1bd67d20b58d312fab5d0cbe8fe012e2b1ab7687b42219",
+        "brand/tools/kleidos_brand/meta.py": "01dbaa16e26b838f2bff389db36bbc6bdd6b06920f0596b9d251bbbfc2582765"
+      }
+    },
+    "svg/readme/kleidos/banner-dark.svg": {
+      "sha256": "ce600c0874eccb5a2334711b2aef6588c214382226bf9e7f42638d49befc7a2a",
+      "bytes": 30571,
+      "size": [
+        1280,
+        400
+      ],
+      "drawn_from": "d12a9165af433308a537c2cc60b8166ae5f426e8b2d93207597319c9aa5088ef",
+      "inputs": {
+        "src/readme/banner.svg": "fb1a9b6795d1064c5f75df88d0e476a0e58171883110dda6bdd5fb5ae733710b",
+        "src/cards/motifs/typing.svg": "616376e22a7952620e60cf242acaf9d1fb2e5d6e61277739fd88933a30c476dc",
+        "pack.json": "9ef8f2babfde82a07db9c3fb802bfb1889612e52bdacce10af26ae992f96e34f",
+        "brand/logo/src/mark.svg": "ee59e2c773b2a540639a74d5980734a6b08193c99aa5714f65d7510423480825",
+        "brand/logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
+        "brand/tokens/tokens.json": "07d2aa8c3ae6df685c580ef1ee83a51c6111a06b9c2d8b8174b2170781534666",
+        "brand/fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435",
+        "brand/fonts/mona-sans/MonaSansMonoVF[wght].ttf": "e1d0ba93b9abf682de1bd67d20b58d312fab5d0cbe8fe012e2b1ab7687b42219",
+        "brand/tools/kleidos_brand/meta.py": "01dbaa16e26b838f2bff389db36bbc6bdd6b06920f0596b9d251bbbfc2582765"
+      }
+    },
+    "svg/readme/kleidos/banner-light.svg": {
+      "sha256": "464ec83b033a470c92c95d1ab2872550e3bc4bb63b6ea6953603692e9ca372fa",
+      "bytes": 30678,
+      "size": [
+        1280,
+        400
+      ],
+      "drawn_from": "4f817772b24e4f7ec6889583411e84c5af0b406c80a17a21ad34044b6cfaf1b2",
+      "inputs": {
+        "src/readme/banner.svg": "fb1a9b6795d1064c5f75df88d0e476a0e58171883110dda6bdd5fb5ae733710b",
+        "src/cards/motifs/typing.svg": "616376e22a7952620e60cf242acaf9d1fb2e5d6e61277739fd88933a30c476dc",
+        "pack.json": "9ef8f2babfde82a07db9c3fb802bfb1889612e52bdacce10af26ae992f96e34f",
+        "brand/logo/src/mark.svg": "ee59e2c773b2a540639a74d5980734a6b08193c99aa5714f65d7510423480825",
+        "brand/logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
+        "brand/tokens/tokens.json": "07d2aa8c3ae6df685c580ef1ee83a51c6111a06b9c2d8b8174b2170781534666",
+        "brand/fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435",
+        "brand/fonts/mona-sans/MonaSansMonoVF[wght].ttf": "e1d0ba93b9abf682de1bd67d20b58d312fab5d0cbe8fe012e2b1ab7687b42219",
+        "brand/tools/kleidos_brand/meta.py": "01dbaa16e26b838f2bff389db36bbc6bdd6b06920f0596b9d251bbbfc2582765"
+      }
+    },
+    "svg/readme/boards/banner-dark.svg": {
+      "sha256": "155fd17f6114010e94ee54704b49694ecc51616b815a423a8762b2e386b5b627",
+      "bytes": 406727,
+      "size": [
+        1280,
+        400
+      ],
+      "drawn_from": "11b1413eeeddb9366e138dd12e04f59e67a6d109c952be09290523df48e48978",
+      "inputs": {
+        "src/readme/banner.svg": "fb1a9b6795d1064c5f75df88d0e476a0e58171883110dda6bdd5fb5ae733710b",
+        "src/cards/motifs/shelf.svg": "9585a2e2bc6291e2899c8c700e482b576af4175acbe3edf1d70a02d6c06efe80",
+        "pack.json": "9ef8f2babfde82a07db9c3fb802bfb1889612e52bdacce10af26ae992f96e34f",
+        "brand/logo/src/mark.svg": "ee59e2c773b2a540639a74d5980734a6b08193c99aa5714f65d7510423480825",
+        "brand/logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
+        "brand/tokens/tokens.json": "07d2aa8c3ae6df685c580ef1ee83a51c6111a06b9c2d8b8174b2170781534666",
+        "brand/fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435",
+        "brand/fonts/mona-sans/MonaSansMonoVF[wght].ttf": "e1d0ba93b9abf682de1bd67d20b58d312fab5d0cbe8fe012e2b1ab7687b42219",
+        "brand/tools/kleidos_brand/meta.py": "01dbaa16e26b838f2bff389db36bbc6bdd6b06920f0596b9d251bbbfc2582765",
+        "brand/boards/boards.json": "2fc93598d2f55a45e56618cf53496ffc3eb1d1b6c4d17efe6f4937796f2358f1",
+        "brand/boards/sticks3.svg": "0c893adb838469d0a5b503130061349feaeeb0d6064d1d62e8a69fa03c2c855f",
+        "brand/boards/m5stickc-plus2.svg": "170040d38f2c50673eb334000859a443728ca72bcc36b6045c2c99739c0d7c0d",
+        "brand/boards/m5stickc-plus1.svg": "4ce11832f7ef5bbb27a1433876c2b089653f676599afc89fea0e6ddbfb0e9071",
+        "brand/boards/m5stickc-plus-se.svg": "34ec8bc51f51f1a4e3fcccdf89cab657dc89985ccbecc2037b9989187873db38",
+        "brand/boards/coreink.svg": "edce2ac26f6821820b2771396ba0b4286592b30563acf706c839dcff1e6cf292",
+        "brand/boards/cores3-se.svg": "3ee6a8ee427f20096cbb91bbc27c45206758be2c01bcae98e24b1c5e1f175545",
+        "brand/boards/m5stack-core2-v13.svg": "ac4cbd3e8f91d643dbe987fb9c4ff164a363edd486a1ae95be4bf388ab153fa2",
+        "brand/boards/cardputer.svg": "38b711a307e4ca32a3b07e5955346c43e6e2912d90b5d2770384d47ec15dd127",
+        "brand/boards/tdeck-plus.svg": "068a289dd46121f4dcaa92046ab38bcf75ee735ae514d6a1831f95b636f6286c",
+        "brand/press-kit/screens/kleidos-screen-sticks3.png": "ce4548cfe238ff251a58f349e600078064e4da37f02174493b5eab8b06012660",
+        "brand/press-kit/screens/kleidos-screen-m5stickc-plus2.png": "83f080ae27414d761a63c3ef42be67fb9393ce522ea2af3174c24b2f2f506915",
+        "brand/press-kit/screens/kleidos-screen-m5stickc-plus1.png": "f797eae6a35fc5cbba40e6ad489340d9ae30e7a8ceaf93116c8474bfd029179f",
+        "brand/press-kit/screens/kleidos-screen-m5stickc-plus-se.png": "d666c92ed10d9a7355bf193e07a188457c72fc368c0cad42c11523a7bd8205d3",
+        "brand/press-kit/screens/kleidos-screen-coreink.png": "424536b9dffe1271faaebdf1c7ff936459e636d779b24cd19c1aa26a6e03cea9",
+        "brand/press-kit/screens/kleidos-screen-cores3-se.png": "9cb7831e0dec53bc7d2de8bf86bec333d1f78e50b468d92c4d3234ea009755e0",
+        "brand/press-kit/screens/kleidos-screen-m5stack-core2-v13.png": "a73016793851d0a46c9853dade250beb9a920e92129998a86374d6e48f52ca93",
+        "brand/press-kit/screens/kleidos-screen-cardputer.png": "57d77d274dff42c4cb4d10f6c484745bfe456a764c4f37de16f987002342efc9",
+        "brand/press-kit/screens/kleidos-screen-tdeck-plus.png": "802cdf42c4676770e3bea58e5f6fd679a510b9c2e06582ae52abd4a7a572e0f7",
+        "brand/fonts/inter/Inter-Regular.ttf": "40d692fce188e4471e2b3cba937be967878f631ad3ebbbdcd587687c7ebe0c82",
+        "brand/fonts/inter/Inter-Medium.ttf": "97ad806f526e41546d46365bb3a393145f75b7b1568913db74549ad8b8dba872",
+        "brand/fonts/inter/Inter-Bold.ttf": "288316099b1e0a47a4716d159098005eef7c0066921f34e3200393dbdb01947f"
+      }
+    },
+    "svg/readme/boards/banner-light.svg": {
+      "sha256": "c4aabcad45ce65ca9258686e3a3c37e7793859a9ee45464f9578a920847c638b",
+      "bytes": 406834,
+      "size": [
+        1280,
+        400
+      ],
+      "drawn_from": "7e815ae0b9cb376269bbc0fed23def446ff8b20f8a57fccf9e2d2aecf72d1ee7",
+      "inputs": {
+        "src/readme/banner.svg": "fb1a9b6795d1064c5f75df88d0e476a0e58171883110dda6bdd5fb5ae733710b",
+        "src/cards/motifs/shelf.svg": "9585a2e2bc6291e2899c8c700e482b576af4175acbe3edf1d70a02d6c06efe80",
+        "pack.json": "9ef8f2babfde82a07db9c3fb802bfb1889612e52bdacce10af26ae992f96e34f",
+        "brand/logo/src/mark.svg": "ee59e2c773b2a540639a74d5980734a6b08193c99aa5714f65d7510423480825",
+        "brand/logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
+        "brand/tokens/tokens.json": "07d2aa8c3ae6df685c580ef1ee83a51c6111a06b9c2d8b8174b2170781534666",
+        "brand/fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435",
+        "brand/fonts/mona-sans/MonaSansMonoVF[wght].ttf": "e1d0ba93b9abf682de1bd67d20b58d312fab5d0cbe8fe012e2b1ab7687b42219",
+        "brand/tools/kleidos_brand/meta.py": "01dbaa16e26b838f2bff389db36bbc6bdd6b06920f0596b9d251bbbfc2582765",
+        "brand/boards/boards.json": "2fc93598d2f55a45e56618cf53496ffc3eb1d1b6c4d17efe6f4937796f2358f1",
+        "brand/boards/sticks3.svg": "0c893adb838469d0a5b503130061349feaeeb0d6064d1d62e8a69fa03c2c855f",
+        "brand/boards/m5stickc-plus2.svg": "170040d38f2c50673eb334000859a443728ca72bcc36b6045c2c99739c0d7c0d",
+        "brand/boards/m5stickc-plus1.svg": "4ce11832f7ef5bbb27a1433876c2b089653f676599afc89fea0e6ddbfb0e9071",
+        "brand/boards/m5stickc-plus-se.svg": "34ec8bc51f51f1a4e3fcccdf89cab657dc89985ccbecc2037b9989187873db38",
+        "brand/boards/coreink.svg": "edce2ac26f6821820b2771396ba0b4286592b30563acf706c839dcff1e6cf292",
+        "brand/boards/cores3-se.svg": "3ee6a8ee427f20096cbb91bbc27c45206758be2c01bcae98e24b1c5e1f175545",
+        "brand/boards/m5stack-core2-v13.svg": "ac4cbd3e8f91d643dbe987fb9c4ff164a363edd486a1ae95be4bf388ab153fa2",
+        "brand/boards/cardputer.svg": "38b711a307e4ca32a3b07e5955346c43e6e2912d90b5d2770384d47ec15dd127",
+        "brand/boards/tdeck-plus.svg": "068a289dd46121f4dcaa92046ab38bcf75ee735ae514d6a1831f95b636f6286c",
+        "brand/press-kit/screens/kleidos-screen-sticks3.png": "ce4548cfe238ff251a58f349e600078064e4da37f02174493b5eab8b06012660",
+        "brand/press-kit/screens/kleidos-screen-m5stickc-plus2.png": "83f080ae27414d761a63c3ef42be67fb9393ce522ea2af3174c24b2f2f506915",
+        "brand/press-kit/screens/kleidos-screen-m5stickc-plus1.png": "f797eae6a35fc5cbba40e6ad489340d9ae30e7a8ceaf93116c8474bfd029179f",
+        "brand/press-kit/screens/kleidos-screen-m5stickc-plus-se.png": "d666c92ed10d9a7355bf193e07a188457c72fc368c0cad42c11523a7bd8205d3",
+        "brand/press-kit/screens/kleidos-screen-coreink.png": "424536b9dffe1271faaebdf1c7ff936459e636d779b24cd19c1aa26a6e03cea9",
+        "brand/press-kit/screens/kleidos-screen-cores3-se.png": "9cb7831e0dec53bc7d2de8bf86bec333d1f78e50b468d92c4d3234ea009755e0",
+        "brand/press-kit/screens/kleidos-screen-m5stack-core2-v13.png": "a73016793851d0a46c9853dade250beb9a920e92129998a86374d6e48f52ca93",
+        "brand/press-kit/screens/kleidos-screen-cardputer.png": "57d77d274dff42c4cb4d10f6c484745bfe456a764c4f37de16f987002342efc9",
+        "brand/press-kit/screens/kleidos-screen-tdeck-plus.png": "802cdf42c4676770e3bea58e5f6fd679a510b9c2e06582ae52abd4a7a572e0f7",
+        "brand/fonts/inter/Inter-Regular.ttf": "40d692fce188e4471e2b3cba937be967878f631ad3ebbbdcd587687c7ebe0c82",
+        "brand/fonts/inter/Inter-Medium.ttf": "97ad806f526e41546d46365bb3a393145f75b7b1568913db74549ad8b8dba872",
+        "brand/fonts/inter/Inter-Bold.ttf": "288316099b1e0a47a4716d159098005eef7c0066921f34e3200393dbdb01947f"
+      }
+    },
+    "svg/readme/brand/banner-dark.svg": {
+      "sha256": "385f75de2c06bd75b7504ae7c61bed95828659a4bdea8441dc4119dd59519d3d",
+      "bytes": 22648,
+      "size": [
+        1280,
+        400
+      ],
+      "drawn_from": "8263aa510d464428fe6f3e6d07261b48ec8d2899be37d965e90c389dbdeefca6",
+      "inputs": {
+        "src/readme/banner.svg": "fb1a9b6795d1064c5f75df88d0e476a0e58171883110dda6bdd5fb5ae733710b",
+        "src/cards/motifs/swatches.svg": "0128cfe40dfb6352e72ce716f86f0042477314036da30a4c3e86942e2f9f29f5",
+        "pack.json": "9ef8f2babfde82a07db9c3fb802bfb1889612e52bdacce10af26ae992f96e34f",
+        "brand/logo/src/mark.svg": "ee59e2c773b2a540639a74d5980734a6b08193c99aa5714f65d7510423480825",
+        "brand/logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
+        "brand/tokens/tokens.json": "07d2aa8c3ae6df685c580ef1ee83a51c6111a06b9c2d8b8174b2170781534666",
+        "brand/fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435",
+        "brand/fonts/mona-sans/MonaSansMonoVF[wght].ttf": "e1d0ba93b9abf682de1bd67d20b58d312fab5d0cbe8fe012e2b1ab7687b42219",
+        "brand/tools/kleidos_brand/meta.py": "01dbaa16e26b838f2bff389db36bbc6bdd6b06920f0596b9d251bbbfc2582765"
+      }
+    },
+    "svg/readme/brand/banner-light.svg": {
+      "sha256": "ab0e8e80907317fcc4a52e54b17d86aa3b9ea322c1a330f84e7c21bf7920a633",
+      "bytes": 22755,
+      "size": [
+        1280,
+        400
+      ],
+      "drawn_from": "3e5487c3b527902aef03d9d16b31a73b4ed840eab7c04ea8e5f4d773dece1ae1",
+      "inputs": {
+        "src/readme/banner.svg": "fb1a9b6795d1064c5f75df88d0e476a0e58171883110dda6bdd5fb5ae733710b",
+        "src/cards/motifs/swatches.svg": "0128cfe40dfb6352e72ce716f86f0042477314036da30a4c3e86942e2f9f29f5",
+        "pack.json": "9ef8f2babfde82a07db9c3fb802bfb1889612e52bdacce10af26ae992f96e34f",
+        "brand/logo/src/mark.svg": "ee59e2c773b2a540639a74d5980734a6b08193c99aa5714f65d7510423480825",
+        "brand/logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
+        "brand/tokens/tokens.json": "07d2aa8c3ae6df685c580ef1ee83a51c6111a06b9c2d8b8174b2170781534666",
+        "brand/fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435",
+        "brand/fonts/mona-sans/MonaSansMonoVF[wght].ttf": "e1d0ba93b9abf682de1bd67d20b58d312fab5d0cbe8fe012e2b1ab7687b42219",
+        "brand/tools/kleidos_brand/meta.py": "01dbaa16e26b838f2bff389db36bbc6bdd6b06920f0596b9d251bbbfc2582765"
+      }
+    },
+    "svg/readme/social/banner-dark.svg": {
+      "sha256": "ab4d2e3ac579a5aed675f9d83f974d1a62f316d7e4f55b943e52a15751c12b47",
+      "bytes": 29832,
+      "size": [
+        1280,
+        400
+      ],
+      "drawn_from": "1578dfd8cc4d89f8bf065addb65f7416d06558a1af9e9209f260972792f0ca80",
+      "inputs": {
+        "src/readme/banner.svg": "fb1a9b6795d1064c5f75df88d0e476a0e58171883110dda6bdd5fb5ae733710b",
+        "src/cards/motifs/frames.svg": "b940985110af1a82b3a6b68d0c817623cc9d676153bd20bf957bd2a03d2cc617",
+        "pack.json": "9ef8f2babfde82a07db9c3fb802bfb1889612e52bdacce10af26ae992f96e34f",
+        "brand/logo/src/mark.svg": "ee59e2c773b2a540639a74d5980734a6b08193c99aa5714f65d7510423480825",
+        "brand/logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
+        "brand/tokens/tokens.json": "07d2aa8c3ae6df685c580ef1ee83a51c6111a06b9c2d8b8174b2170781534666",
+        "brand/fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435",
+        "brand/fonts/mona-sans/MonaSansMonoVF[wght].ttf": "e1d0ba93b9abf682de1bd67d20b58d312fab5d0cbe8fe012e2b1ab7687b42219",
+        "brand/tools/kleidos_brand/meta.py": "01dbaa16e26b838f2bff389db36bbc6bdd6b06920f0596b9d251bbbfc2582765"
+      }
+    },
+    "svg/readme/social/banner-light.svg": {
+      "sha256": "0e66b6baf8a7c3d547733c4f4488f06a5f726b48ce54869f17ed25b5483d03d6",
+      "bytes": 29939,
+      "size": [
+        1280,
+        400
+      ],
+      "drawn_from": "b39f2db288ce6caa3a26dc535d706563c79fc8d3425735af234e741f41085588",
+      "inputs": {
+        "src/readme/banner.svg": "fb1a9b6795d1064c5f75df88d0e476a0e58171883110dda6bdd5fb5ae733710b",
+        "src/cards/motifs/frames.svg": "b940985110af1a82b3a6b68d0c817623cc9d676153bd20bf957bd2a03d2cc617",
+        "pack.json": "9ef8f2babfde82a07db9c3fb802bfb1889612e52bdacce10af26ae992f96e34f",
+        "brand/logo/src/mark.svg": "ee59e2c773b2a540639a74d5980734a6b08193c99aa5714f65d7510423480825",
+        "brand/logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
+        "brand/tokens/tokens.json": "07d2aa8c3ae6df685c580ef1ee83a51c6111a06b9c2d8b8174b2170781534666",
+        "brand/fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435",
+        "brand/fonts/mona-sans/MonaSansMonoVF[wght].ttf": "e1d0ba93b9abf682de1bd67d20b58d312fab5d0cbe8fe012e2b1ab7687b42219",
+        "brand/tools/kleidos_brand/meta.py": "01dbaa16e26b838f2bff389db36bbc6bdd6b06920f0596b9d251bbbfc2582765"
+      }
+    },
+    "svg/readme/agents/banner-dark.svg": {
+      "sha256": "0a3a7dec93681d46f1512761309edd9c7190cf3dfbe9710b1fb264789445c3a2",
+      "bytes": 25265,
+      "size": [
+        1280,
+        400
+      ],
+      "drawn_from": "44193388007a08fcbc39f05b1189bbcaaa369ea3f0fe810de7a6b2a98dc758e4",
+      "inputs": {
+        "src/readme/banner.svg": "fb1a9b6795d1064c5f75df88d0e476a0e58171883110dda6bdd5fb5ae733710b",
+        "src/cards/motifs/checklist.svg": "4d7d9faa07f829ce86f07d44161b52552225a309ff0a9df3bba8350dae3ecdea",
+        "pack.json": "9ef8f2babfde82a07db9c3fb802bfb1889612e52bdacce10af26ae992f96e34f",
+        "brand/logo/src/mark.svg": "ee59e2c773b2a540639a74d5980734a6b08193c99aa5714f65d7510423480825",
+        "brand/logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
+        "brand/tokens/tokens.json": "07d2aa8c3ae6df685c580ef1ee83a51c6111a06b9c2d8b8174b2170781534666",
+        "brand/fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435",
+        "brand/fonts/mona-sans/MonaSansMonoVF[wght].ttf": "e1d0ba93b9abf682de1bd67d20b58d312fab5d0cbe8fe012e2b1ab7687b42219",
+        "brand/tools/kleidos_brand/meta.py": "01dbaa16e26b838f2bff389db36bbc6bdd6b06920f0596b9d251bbbfc2582765"
+      }
+    },
+    "svg/readme/agents/banner-light.svg": {
+      "sha256": "0336e5ce18eff5260159cec93c02fd18325c7a5cbe6eaf213eba220b177393ef",
+      "bytes": 25372,
+      "size": [
+        1280,
+        400
+      ],
+      "drawn_from": "5b07afc355012a7ec246d7c6581802a3f41a7e47b8ce9ce8a7250a727c91ba12",
+      "inputs": {
+        "src/readme/banner.svg": "fb1a9b6795d1064c5f75df88d0e476a0e58171883110dda6bdd5fb5ae733710b",
+        "src/cards/motifs/checklist.svg": "4d7d9faa07f829ce86f07d44161b52552225a309ff0a9df3bba8350dae3ecdea",
+        "pack.json": "9ef8f2babfde82a07db9c3fb802bfb1889612e52bdacce10af26ae992f96e34f",
+        "brand/logo/src/mark.svg": "ee59e2c773b2a540639a74d5980734a6b08193c99aa5714f65d7510423480825",
+        "brand/logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
+        "brand/tokens/tokens.json": "07d2aa8c3ae6df685c580ef1ee83a51c6111a06b9c2d8b8174b2170781534666",
+        "brand/fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435",
+        "brand/fonts/mona-sans/MonaSansMonoVF[wght].ttf": "e1d0ba93b9abf682de1bd67d20b58d312fab5d0cbe8fe012e2b1ab7687b42219",
+        "brand/tools/kleidos_brand/meta.py": "01dbaa16e26b838f2bff389db36bbc6bdd6b06920f0596b9d251bbbfc2582765"
+      }
+    },
+    "svg/readme/dot-github/banner-dark.svg": {
+      "sha256": "008b1149b498fad468d590266d19c814b25ff614bf59d640201c514876ba2ab4",
+      "bytes": 31749,
+      "size": [
+        1280,
+        400
+      ],
+      "drawn_from": "04497d625b6acad53a8b8d9c6a6a600a0946a353964ff10afc94eb8d2e061929",
+      "inputs": {
+        "src/readme/banner.svg": "fb1a9b6795d1064c5f75df88d0e476a0e58171883110dda6bdd5fb5ae733710b",
+        "src/cards/motifs/bubbles.svg": "2f77451df71d2216a3b77cd6bee491e99263bc55e9c0f254d9e23bce549cff51",
+        "pack.json": "9ef8f2babfde82a07db9c3fb802bfb1889612e52bdacce10af26ae992f96e34f",
+        "brand/logo/src/mark.svg": "ee59e2c773b2a540639a74d5980734a6b08193c99aa5714f65d7510423480825",
+        "brand/logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
+        "brand/tokens/tokens.json": "07d2aa8c3ae6df685c580ef1ee83a51c6111a06b9c2d8b8174b2170781534666",
+        "brand/fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435",
+        "brand/fonts/mona-sans/MonaSansMonoVF[wght].ttf": "e1d0ba93b9abf682de1bd67d20b58d312fab5d0cbe8fe012e2b1ab7687b42219",
+        "brand/tools/kleidos_brand/meta.py": "01dbaa16e26b838f2bff389db36bbc6bdd6b06920f0596b9d251bbbfc2582765"
+      }
+    },
+    "svg/readme/dot-github/banner-light.svg": {
+      "sha256": "5a8066ac0b7768dd72b5c6c3dba57fff2380b0775c2b7939747b66a5806da48c",
+      "bytes": 31856,
+      "size": [
+        1280,
+        400
+      ],
+      "drawn_from": "96aef71804d6416b3e316ddbab737b831f79164a654f29f1c07d046948072cab",
+      "inputs": {
+        "src/readme/banner.svg": "fb1a9b6795d1064c5f75df88d0e476a0e58171883110dda6bdd5fb5ae733710b",
+        "src/cards/motifs/bubbles.svg": "2f77451df71d2216a3b77cd6bee491e99263bc55e9c0f254d9e23bce549cff51",
+        "pack.json": "9ef8f2babfde82a07db9c3fb802bfb1889612e52bdacce10af26ae992f96e34f",
+        "brand/logo/src/mark.svg": "ee59e2c773b2a540639a74d5980734a6b08193c99aa5714f65d7510423480825",
+        "brand/logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
+        "brand/tokens/tokens.json": "07d2aa8c3ae6df685c580ef1ee83a51c6111a06b9c2d8b8174b2170781534666",
+        "brand/fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435",
+        "brand/fonts/mona-sans/MonaSansMonoVF[wght].ttf": "e1d0ba93b9abf682de1bd67d20b58d312fab5d0cbe8fe012e2b1ab7687b42219",
+        "brand/tools/kleidos_brand/meta.py": "01dbaa16e26b838f2bff389db36bbc6bdd6b06920f0596b9d251bbbfc2582765"
+      }
+    },
+    "svg/readme/meter/banner-dark.svg": {
+      "sha256": "97cc420ab2f76ab0df64caa29b5bbe01808979cfdfc7325e2459e0c658c6691e",
+      "bytes": 27944,
+      "size": [
+        1280,
+        400
+      ],
+      "drawn_from": "4dd3c15eab5b4344aa7f6805f2a52ba9dd2aab8e9467e8b507c9aae306638952",
+      "inputs": {
+        "src/readme/banner.svg": "fb1a9b6795d1064c5f75df88d0e476a0e58171883110dda6bdd5fb5ae733710b",
+        "src/cards/motifs/gauge.svg": "987812788c384f77049d0c32912ca5e41d2b07e6130ca7ae766d38cfbdf1817d",
+        "pack.json": "9ef8f2babfde82a07db9c3fb802bfb1889612e52bdacce10af26ae992f96e34f",
+        "brand/logo/src/mark.svg": "ee59e2c773b2a540639a74d5980734a6b08193c99aa5714f65d7510423480825",
+        "brand/logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
+        "brand/tokens/tokens.json": "07d2aa8c3ae6df685c580ef1ee83a51c6111a06b9c2d8b8174b2170781534666",
+        "brand/fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435",
+        "brand/fonts/mona-sans/MonaSansMonoVF[wght].ttf": "e1d0ba93b9abf682de1bd67d20b58d312fab5d0cbe8fe012e2b1ab7687b42219",
+        "brand/tools/kleidos_brand/meta.py": "01dbaa16e26b838f2bff389db36bbc6bdd6b06920f0596b9d251bbbfc2582765"
+      }
+    },
+    "svg/readme/meter/banner-light.svg": {
+      "sha256": "4973b35fdf5ad06263a07fc83ed1800bce07f1a525139d24877172a0efe4369f",
+      "bytes": 28051,
+      "size": [
+        1280,
+        400
+      ],
+      "drawn_from": "dd8d59f8d93d30b900b214f22a2f62d90f1e24fec5e1b450ac336e6e9edd7ee2",
+      "inputs": {
+        "src/readme/banner.svg": "fb1a9b6795d1064c5f75df88d0e476a0e58171883110dda6bdd5fb5ae733710b",
+        "src/cards/motifs/gauge.svg": "987812788c384f77049d0c32912ca5e41d2b07e6130ca7ae766d38cfbdf1817d",
+        "pack.json": "9ef8f2babfde82a07db9c3fb802bfb1889612e52bdacce10af26ae992f96e34f",
+        "brand/logo/src/mark.svg": "ee59e2c773b2a540639a74d5980734a6b08193c99aa5714f65d7510423480825",
+        "brand/logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
+        "brand/tokens/tokens.json": "07d2aa8c3ae6df685c580ef1ee83a51c6111a06b9c2d8b8174b2170781534666",
+        "brand/fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435",
+        "brand/fonts/mona-sans/MonaSansMonoVF[wght].ttf": "e1d0ba93b9abf682de1bd67d20b58d312fab5d0cbe8fe012e2b1ab7687b42219",
+        "brand/tools/kleidos_brand/meta.py": "01dbaa16e26b838f2bff389db36bbc6bdd6b06920f0596b9d251bbbfc2582765"
+      }
+    },
+    "svg/readme/videos/banner-dark.svg": {
+      "sha256": "82f071e49b31119b169066a4cc03870a0a5c67635129f74a5f906005719c8f99",
+      "bytes": 27991,
+      "size": [
+        1280,
+        400
+      ],
+      "drawn_from": "54c2fdb02caa42f548313efbed12494b9bf52105191ea50df18f7079b17a8d46",
+      "inputs": {
+        "src/readme/banner.svg": "fb1a9b6795d1064c5f75df88d0e476a0e58171883110dda6bdd5fb5ae733710b",
+        "src/cards/motifs/reel.svg": "59f319b7bf65387e1367cb2588d9e61eea722273180d979ef1a0264b325fb16a",
+        "pack.json": "9ef8f2babfde82a07db9c3fb802bfb1889612e52bdacce10af26ae992f96e34f",
+        "brand/logo/src/mark.svg": "ee59e2c773b2a540639a74d5980734a6b08193c99aa5714f65d7510423480825",
+        "brand/logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
+        "brand/tokens/tokens.json": "07d2aa8c3ae6df685c580ef1ee83a51c6111a06b9c2d8b8174b2170781534666",
+        "brand/fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435",
+        "brand/fonts/mona-sans/MonaSansMonoVF[wght].ttf": "e1d0ba93b9abf682de1bd67d20b58d312fab5d0cbe8fe012e2b1ab7687b42219",
+        "brand/tools/kleidos_brand/meta.py": "01dbaa16e26b838f2bff389db36bbc6bdd6b06920f0596b9d251bbbfc2582765"
+      }
+    },
+    "svg/readme/videos/banner-light.svg": {
+      "sha256": "d42eb8a7d8c1477caa19bd6726859dcfee26d7b59475f11a455fe34889c2e672",
+      "bytes": 28098,
+      "size": [
+        1280,
+        400
+      ],
+      "drawn_from": "4a3e940633570b45426d3e78ffb4e04ad6a64a953c10a9da28f3b095443a130d",
+      "inputs": {
+        "src/readme/banner.svg": "fb1a9b6795d1064c5f75df88d0e476a0e58171883110dda6bdd5fb5ae733710b",
+        "src/cards/motifs/reel.svg": "59f319b7bf65387e1367cb2588d9e61eea722273180d979ef1a0264b325fb16a",
+        "pack.json": "9ef8f2babfde82a07db9c3fb802bfb1889612e52bdacce10af26ae992f96e34f",
+        "brand/logo/src/mark.svg": "ee59e2c773b2a540639a74d5980734a6b08193c99aa5714f65d7510423480825",
+        "brand/logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
+        "brand/tokens/tokens.json": "07d2aa8c3ae6df685c580ef1ee83a51c6111a06b9c2d8b8174b2170781534666",
+        "brand/fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435",
+        "brand/fonts/mona-sans/MonaSansMonoVF[wght].ttf": "e1d0ba93b9abf682de1bd67d20b58d312fab5d0cbe8fe012e2b1ab7687b42219",
+        "brand/tools/kleidos_brand/meta.py": "01dbaa16e26b838f2bff389db36bbc6bdd6b06920f0596b9d251bbbfc2582765"
+      }
+    },
+    "svg/readme/posts/banner-dark.svg": {
+      "sha256": "bff4ddda1c56b4ec0f209301d6935aaa443fed6a01f28b73764822d37c10ca24",
+      "bytes": 23287,
+      "size": [
+        1280,
+        400
+      ],
+      "drawn_from": "2f5edea86173747c764b2c258ecf295c540cd26700aa2805670d4d1dc425ee0a",
+      "inputs": {
+        "src/readme/banner.svg": "fb1a9b6795d1064c5f75df88d0e476a0e58171883110dda6bdd5fb5ae733710b",
+        "src/cards/motifs/sheets.svg": "e88bbcea03bde1121296fb7a595c8309385e4c6cd75346cdf2f89fef97e6d00c",
+        "pack.json": "9ef8f2babfde82a07db9c3fb802bfb1889612e52bdacce10af26ae992f96e34f",
+        "brand/logo/src/mark.svg": "ee59e2c773b2a540639a74d5980734a6b08193c99aa5714f65d7510423480825",
+        "brand/logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
+        "brand/tokens/tokens.json": "07d2aa8c3ae6df685c580ef1ee83a51c6111a06b9c2d8b8174b2170781534666",
+        "brand/fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435",
+        "brand/fonts/mona-sans/MonaSansMonoVF[wght].ttf": "e1d0ba93b9abf682de1bd67d20b58d312fab5d0cbe8fe012e2b1ab7687b42219",
+        "brand/tools/kleidos_brand/meta.py": "01dbaa16e26b838f2bff389db36bbc6bdd6b06920f0596b9d251bbbfc2582765"
+      }
+    },
+    "svg/readme/posts/banner-light.svg": {
+      "sha256": "2a0d581e1fd684ab417c521212c5b6e15381d6344b6dfae729bdb6aa5ce2598e",
+      "bytes": 23394,
+      "size": [
+        1280,
+        400
+      ],
+      "drawn_from": "0764a3661ebee454beb0eac339f0f1c1e58e6a4a3de7bd783883a941af9fcfcd",
+      "inputs": {
+        "src/readme/banner.svg": "fb1a9b6795d1064c5f75df88d0e476a0e58171883110dda6bdd5fb5ae733710b",
+        "src/cards/motifs/sheets.svg": "e88bbcea03bde1121296fb7a595c8309385e4c6cd75346cdf2f89fef97e6d00c",
+        "pack.json": "9ef8f2babfde82a07db9c3fb802bfb1889612e52bdacce10af26ae992f96e34f",
+        "brand/logo/src/mark.svg": "ee59e2c773b2a540639a74d5980734a6b08193c99aa5714f65d7510423480825",
+        "brand/logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
+        "brand/tokens/tokens.json": "07d2aa8c3ae6df685c580ef1ee83a51c6111a06b9c2d8b8174b2170781534666",
+        "brand/fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435",
+        "brand/fonts/mona-sans/MonaSansMonoVF[wght].ttf": "e1d0ba93b9abf682de1bd67d20b58d312fab5d0cbe8fe012e2b1ab7687b42219",
+        "brand/tools/kleidos_brand/meta.py": "01dbaa16e26b838f2bff389db36bbc6bdd6b06920f0596b9d251bbbfc2582765"
+      }
+    },
+    "previews/contact-sheet.png": {
+      "sha256": "e835846e299aa87e239ce07f912ec623607813b1b1307e9c1bfdb4884c94e2cc",
+      "bytes": 314011,
+      "size": [
+        1600,
+        1174
+      ],
+      "drawn_from": "13b1dec03b6cf1992b582bd421bdb4547ffbf396dfad173706b569997fc89a6f",
+      "inputs": {
+        "pack.json": "9ef8f2babfde82a07db9c3fb802bfb1889612e52bdacce10af26ae992f96e34f",
+        "tools/previews.py": "a054c0b32fa0d8bde70de146d0474f90d01667057c6b84d5ed38c26e80e13300",
+        "png/youtube/avatar.png": "2c12587814bcffbd85f1041fa76768c1093aab7a1e5db05bb0fee55609f8ccc9",
+        "png/makertube/avatar.png": "4829b385d03cf3ff923778f79f38972c1cc280909401c9135ebcf1e9e999e7e1",
+        "png/youtube/banner.png": "2256dd7311063be6ebf9b5b6f9f88583f1e5d9ba5b43c9aa71afb5b63fd66e0f",
+        "png/youtube/watermark.png": "816f22582895e9d5a0ff7130b6322e12d59940d3aa4edea1bd07c586eaac838e",
+        "png/youtube/thumbnail.png": "6ebe5a2954947880ee4a9162b37c262d0d6a0fb587fbe49b1cfef980ce4149b7",
+        "png/makertube/banner.png": "8e89a4de63f08b184da9612286787750cccd3135181ccd3ad542b257dbfdc474",
+        "png/github/kleidos.png": "88bed9cc5f3d7237a1b68a4a35544da94f0a3d4cf524bebc3fd94af2aaa1df5f",
+        "png/github/boards.png": "fd58f41f2b6b8627d9d1a66c0a97453d7ee1d056140a120ac2a0a7fcb555dd9e",
+        "png/github/brand.png": "8878057b48fe00655dc32f7e0f61f0889ea549b21e6a6b1be719f38db4166c62",
+        "png/github/social.png": "dcb71c0d505b052a537d0ab7d6bc5b0a8b90954ff6ed28ade15ae57b704bff62",
+        "png/github/agents.png": "e9d57e307436993cc68a2a3ecc9102bd75ef1eec2dde110371e0259daed46fab",
+        "png/github/dot-github.png": "d79ef02fde4a68a301c68d051aa7dbf1109f7a1eb1dfe0921e2ee987553fa33e",
+        "brand/logo/src/mark.svg": "ee59e2c773b2a540639a74d5980734a6b08193c99aa5714f65d7510423480825",
+        "brand/logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
+        "brand/tokens/tokens.json": "07d2aa8c3ae6df685c580ef1ee83a51c6111a06b9c2d8b8174b2170781534666",
+        "brand/fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435",
+        "brand/fonts/mona-sans/MonaSansMonoVF[wght].ttf": "e1d0ba93b9abf682de1bd67d20b58d312fab5d0cbe8fe012e2b1ab7687b42219",
+        "brand/tools/kleidos_brand/meta.py": "01dbaa16e26b838f2bff389db36bbc6bdd6b06920f0596b9d251bbbfc2582765"
+      }
+    },
+    "previews/avatars.png": {
+      "sha256": "c12e00a0a402940dcd1d0e3496bc066113f942645f473c9582e1f2aaa0bebf10",
+      "bytes": 147304,
+      "size": [
+        1360,
+        942
+      ],
+      "drawn_from": "18ef48e7e623cafe9e89c556232d86fc51f5bc0f8a0f0803ed82020295026c59",
+      "inputs": {
+        "pack.json": "9ef8f2babfde82a07db9c3fb802bfb1889612e52bdacce10af26ae992f96e34f",
+        "tools/previews.py": "a054c0b32fa0d8bde70de146d0474f90d01667057c6b84d5ed38c26e80e13300",
+        "png/youtube/avatar.png": "2c12587814bcffbd85f1041fa76768c1093aab7a1e5db05bb0fee55609f8ccc9",
+        "png/makertube/avatar.png": "4829b385d03cf3ff923778f79f38972c1cc280909401c9135ebcf1e9e999e7e1",
+        "brand/logo/src/mark.svg": "ee59e2c773b2a540639a74d5980734a6b08193c99aa5714f65d7510423480825",
+        "brand/logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
+        "brand/tokens/tokens.json": "07d2aa8c3ae6df685c580ef1ee83a51c6111a06b9c2d8b8174b2170781534666",
+        "brand/fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435",
+        "brand/fonts/mona-sans/MonaSansMonoVF[wght].ttf": "e1d0ba93b9abf682de1bd67d20b58d312fab5d0cbe8fe012e2b1ab7687b42219",
+        "brand/tools/kleidos_brand/meta.py": "01dbaa16e26b838f2bff389db36bbc6bdd6b06920f0596b9d251bbbfc2582765"
+      }
+    },
+    "previews/youtube-banner.png": {
+      "sha256": "ca5c05e92478cef03eae56e9642b19d3108697a1ce03277ff6108a903f3a4ea7",
+      "bytes": 457805,
+      "size": [
+        1360,
+        1800
+      ],
+      "drawn_from": "a17fe12bb583ee5e73a233be5ec6fae1238fd9c027a5338dd2435cc50515a375",
+      "inputs": {
+        "pack.json": "9ef8f2babfde82a07db9c3fb802bfb1889612e52bdacce10af26ae992f96e34f",
+        "tools/previews.py": "a054c0b32fa0d8bde70de146d0474f90d01667057c6b84d5ed38c26e80e13300",
+        "png/youtube/banner.png": "2256dd7311063be6ebf9b5b6f9f88583f1e5d9ba5b43c9aa71afb5b63fd66e0f",
+        "brand/logo/src/mark.svg": "ee59e2c773b2a540639a74d5980734a6b08193c99aa5714f65d7510423480825",
+        "brand/logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
+        "brand/tokens/tokens.json": "07d2aa8c3ae6df685c580ef1ee83a51c6111a06b9c2d8b8174b2170781534666",
+        "brand/fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435",
+        "brand/fonts/mona-sans/MonaSansMonoVF[wght].ttf": "e1d0ba93b9abf682de1bd67d20b58d312fab5d0cbe8fe012e2b1ab7687b42219",
+        "brand/tools/kleidos_brand/meta.py": "01dbaa16e26b838f2bff389db36bbc6bdd6b06920f0596b9d251bbbfc2582765"
+      }
+    },
+    "previews/makertube-banner.png": {
+      "sha256": "dded6546690d02eff66e99d4109d6994e9b688d89d843cee9a48059bc6f61cf1",
+      "bytes": 119928,
+      "size": [
+        1360,
+        710
+      ],
+      "drawn_from": "a3a68f2e1c46244ff1244e84607054f22a1d47695755e0b732ab0c6e6e62c1c8",
+      "inputs": {
+        "pack.json": "9ef8f2babfde82a07db9c3fb802bfb1889612e52bdacce10af26ae992f96e34f",
+        "tools/previews.py": "a054c0b32fa0d8bde70de146d0474f90d01667057c6b84d5ed38c26e80e13300",
+        "png/makertube/banner.png": "8e89a4de63f08b184da9612286787750cccd3135181ccd3ad542b257dbfdc474",
+        "brand/logo/src/mark.svg": "ee59e2c773b2a540639a74d5980734a6b08193c99aa5714f65d7510423480825",
+        "brand/logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
+        "brand/tokens/tokens.json": "07d2aa8c3ae6df685c580ef1ee83a51c6111a06b9c2d8b8174b2170781534666",
+        "brand/fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435",
+        "brand/fonts/mona-sans/MonaSansMonoVF[wght].ttf": "e1d0ba93b9abf682de1bd67d20b58d312fab5d0cbe8fe012e2b1ab7687b42219",
+        "brand/tools/kleidos_brand/meta.py": "01dbaa16e26b838f2bff389db36bbc6bdd6b06920f0596b9d251bbbfc2582765"
+      }
+    },
+    "previews/cards.png": {
+      "sha256": "79fb51949aa9de70a211755b05d323b52944764ef58f093343ddbea5f5e61ee3",
+      "bytes": 2279739,
+      "size": [
+        2691,
+        5149
+      ],
+      "drawn_from": "4d8259783074e9cb34bee5fcc6441a16c70042a04efa96005ea6c98aa6e8f724",
+      "inputs": {
+        "pack.json": "9ef8f2babfde82a07db9c3fb802bfb1889612e52bdacce10af26ae992f96e34f",
+        "tools/previews.py": "a054c0b32fa0d8bde70de146d0474f90d01667057c6b84d5ed38c26e80e13300",
+        "src/cards/card.svg": "82b844499ea0d280ef75cdb6a44d6a63c5227c47913534172a054e604c4362dd",
+        "src/cards/motifs/shelf.svg": "9585a2e2bc6291e2899c8c700e482b576af4175acbe3edf1d70a02d6c06efe80",
+        "png/github/kleidos.png": "88bed9cc5f3d7237a1b68a4a35544da94f0a3d4cf524bebc3fd94af2aaa1df5f",
+        "png/github/boards.png": "fd58f41f2b6b8627d9d1a66c0a97453d7ee1d056140a120ac2a0a7fcb555dd9e",
+        "png/github/brand.png": "8878057b48fe00655dc32f7e0f61f0889ea549b21e6a6b1be719f38db4166c62",
+        "png/github/social.png": "dcb71c0d505b052a537d0ab7d6bc5b0a8b90954ff6ed28ade15ae57b704bff62",
+        "png/github/agents.png": "e9d57e307436993cc68a2a3ecc9102bd75ef1eec2dde110371e0259daed46fab",
+        "png/github/dot-github.png": "d79ef02fde4a68a301c68d051aa7dbf1109f7a1eb1dfe0921e2ee987553fa33e",
+        "brand/logo/src/mark.svg": "ee59e2c773b2a540639a74d5980734a6b08193c99aa5714f65d7510423480825",
+        "brand/logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
+        "brand/tokens/tokens.json": "07d2aa8c3ae6df685c580ef1ee83a51c6111a06b9c2d8b8174b2170781534666",
+        "brand/fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435",
+        "brand/fonts/mona-sans/MonaSansMonoVF[wght].ttf": "e1d0ba93b9abf682de1bd67d20b58d312fab5d0cbe8fe012e2b1ab7687b42219",
+        "brand/tools/kleidos_brand/meta.py": "01dbaa16e26b838f2bff389db36bbc6bdd6b06920f0596b9d251bbbfc2582765"
+      }
+    },
+    "previews/readme-banners.png": {
+      "sha256": "2b47a240f327e8e39d619cbcb2de9f87a019b0aa8e9c22e1097f7903973d31ba",
+      "bytes": 1134756,
+      "size": [
+        1938,
+        5679
+      ],
+      "drawn_from": "6dcaecca196a479af8a70d9a8219ea0be47a9635e867b56ac0d0fa1363757781",
+      "inputs": {
+        "pack.json": "9ef8f2babfde82a07db9c3fb802bfb1889612e52bdacce10af26ae992f96e34f",
+        "tools/previews.py": "a054c0b32fa0d8bde70de146d0474f90d01667057c6b84d5ed38c26e80e13300",
+        "svg/readme/kleidos/banner-dark.svg": "ce600c0874eccb5a2334711b2aef6588c214382226bf9e7f42638d49befc7a2a",
+        "svg/readme/kleidos/banner-light.svg": "464ec83b033a470c92c95d1ab2872550e3bc4bb63b6ea6953603692e9ca372fa",
+        "svg/readme/boards/banner-dark.svg": "155fd17f6114010e94ee54704b49694ecc51616b815a423a8762b2e386b5b627",
+        "svg/readme/boards/banner-light.svg": "c4aabcad45ce65ca9258686e3a3c37e7793859a9ee45464f9578a920847c638b",
+        "svg/readme/brand/banner-dark.svg": "385f75de2c06bd75b7504ae7c61bed95828659a4bdea8441dc4119dd59519d3d",
+        "svg/readme/brand/banner-light.svg": "ab0e8e80907317fcc4a52e54b17d86aa3b9ea322c1a330f84e7c21bf7920a633",
+        "svg/readme/social/banner-dark.svg": "ab4d2e3ac579a5aed675f9d83f974d1a62f316d7e4f55b943e52a15751c12b47",
+        "svg/readme/social/banner-light.svg": "0e66b6baf8a7c3d547733c4f4488f06a5f726b48ce54869f17ed25b5483d03d6",
+        "svg/readme/agents/banner-dark.svg": "0a3a7dec93681d46f1512761309edd9c7190cf3dfbe9710b1fb264789445c3a2",
+        "svg/readme/agents/banner-light.svg": "0336e5ce18eff5260159cec93c02fd18325c7a5cbe6eaf213eba220b177393ef",
+        "svg/readme/dot-github/banner-dark.svg": "008b1149b498fad468d590266d19c814b25ff614bf59d640201c514876ba2ab4",
+        "svg/readme/dot-github/banner-light.svg": "5a8066ac0b7768dd72b5c6c3dba57fff2380b0775c2b7939747b66a5806da48c",
+        "svg/readme/meter/banner-dark.svg": "97cc420ab2f76ab0df64caa29b5bbe01808979cfdfc7325e2459e0c658c6691e",
+        "svg/readme/meter/banner-light.svg": "4973b35fdf5ad06263a07fc83ed1800bce07f1a525139d24877172a0efe4369f",
+        "svg/readme/videos/banner-dark.svg": "82f071e49b31119b169066a4cc03870a0a5c67635129f74a5f906005719c8f99",
+        "svg/readme/videos/banner-light.svg": "d42eb8a7d8c1477caa19bd6726859dcfee26d7b59475f11a455fe34889c2e672",
+        "svg/readme/posts/banner-dark.svg": "bff4ddda1c56b4ec0f209301d6935aaa443fed6a01f28b73764822d37c10ca24",
+        "svg/readme/posts/banner-light.svg": "2a0d581e1fd684ab417c521212c5b6e15381d6344b6dfae729bdb6aa5ce2598e",
+        "brand/logo/src/mark.svg": "ee59e2c773b2a540639a74d5980734a6b08193c99aa5714f65d7510423480825",
+        "brand/logo/src/lockups.json": "2e8f54f5a2926103ac201e800bc10ed639665631e4ba362c0972a4f405010fae",
+        "brand/tokens/tokens.json": "07d2aa8c3ae6df685c580ef1ee83a51c6111a06b9c2d8b8174b2170781534666",
+        "brand/fonts/mona-sans/MonaSansVF[wdth,opsz,wght].ttf": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435",
+        "brand/fonts/mona-sans/MonaSansMonoVF[wght].ttf": "e1d0ba93b9abf682de1bd67d20b58d312fab5d0cbe8fe012e2b1ab7687b42219",
+        "brand/tools/kleidos_brand/meta.py": "01dbaa16e26b838f2bff389db36bbc6bdd6b06920f0596b9d251bbbfc2582765"
+      }
+    }
+  }
+}

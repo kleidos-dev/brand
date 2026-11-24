@@ -1,0 +1,508 @@
+# SPDX-FileCopyrightText: 2026 José M. Requena Plens
+# SPDX-License-Identifier: MIT
+"""The checks catch what they are for: each test plants one defect in a copy of the tree."""
+
+from __future__ import annotations
+
+import io
+import json
+import random
+import shutil
+import zlib
+from collections.abc import Callable
+from pathlib import Path
+from typing import Any
+
+import pytest
+
+import check
+import pack
+from kleidos_brand import SVG_HEADER, meta
+
+ROOT = Path(__file__).resolve().parents[1]
+
+# Private data the tests plant, put together here so that this file holds none.
+HOME_PATH = "/Us" + "ers/" + "someone/notes.txt"
+PRIVATE_ADDRESS = "192." + "168.1.20"
+OTHER_EMAIL = "someone" + "@" + "elsewhere.org"
+LOCAL_BRAND = "/Us" + "ers/" + "someone/GIT/brand"
+# REUSE-IgnoreStart
+CC_TAG = "SPDX-License-Identifier: CC-BY-SA-4.0"
+# REUSE-IgnoreEnd
+
+
+def found(tree: Path, *needles: str) -> bool:
+    """Tell whether the check reports a finding that holds every needle."""
+    return any(all(needle in line for needle in needles) for line in check.findings(tree))
+
+
+def edit(path: Path, old: str, new: str) -> None:
+    text = path.read_text(encoding="utf-8")
+    assert old in text, f"{path.name} does not hold {old!r}"
+    path.write_text(text.replace(old, new, 1), encoding="utf-8")
+
+
+def edit_pack(tree: Path, change: Callable[[dict[str, Any]], None]) -> None:
+    data = json.loads((tree / "pack.json").read_text(encoding="utf-8"))
+    change(data)
+    (tree / "pack.json").write_text(
+        json.dumps(data, indent=2, ensure_ascii=False) + "\n", encoding="utf-8"
+    )
+
+
+def test_the_tree_as_committed_is_clean() -> None:
+    assert check.findings(ROOT) == []
+
+
+def test_a_copy_of_the_tree_is_clean(tree: Path) -> None:
+    assert check.findings(tree) == []
+
+
+def test_a_copy_with_its_own_brand_is_clean(tree_with_brand: Path) -> None:
+    assert check.findings(tree_with_brand) == []
+
+
+# --- The mark ----------------------------------------------------------------------------
+
+
+def test_a_ringless_glyph_is_refused(tree: Path) -> None:
+    edit(
+        tree / "src/youtube/banner.svg",
+        '<g id="guides">',
+        '<g id="guides">\n    <rect x="20" y="20" width="40" height="76" rx="20" fill="#00d2ff"/>',
+    )
+    assert found(tree, "src/youtube/banner.svg", "never drawn without its ring")
+
+
+def test_a_keyhole_made_of_the_marks_own_shapes_is_refused(tree: Path) -> None:
+    drawing = (tree / "brand/logo/src/mark.svg").read_text(encoding="utf-8")
+    ring = next(line for line in drawing.splitlines() if 'r="42"' in line)
+    (tree / "keyhole.svg").write_text(drawing.replace(ring + "\n", ""), encoding="utf-8")
+    assert found(tree, "keyhole.svg", "never drawn without its ring")
+
+
+def test_a_recolored_mark_is_refused(tree: Path) -> None:
+    edit(
+        tree / "src/shared/avatar.svg",
+        'stroke="#00D2FF" stroke-width="3"',
+        'stroke="#51cf66" stroke-width="3"',
+    )
+    assert found(tree, "src/shared/avatar.svg", "recolored")
+
+
+def test_a_redrawn_mark_is_refused(tree: Path) -> None:
+    edit(
+        tree / "src/youtube/watermark.svg",
+        '<circle cx="0" cy="0" r="42"',
+        '<circle cx="0" cy="0" r="40"',
+    )
+    assert found(tree, "src/youtube/watermark.svg", "redrawn")
+
+
+def test_a_lockup_that_is_not_brands_is_refused(tree: Path) -> None:
+    edit(
+        tree / "src/cards/card.svg",
+        'class="lettering" fill="#eceef1"',
+        'class="lettering" fill="#9aa3ad"',
+    )
+    assert found(tree, "src/cards/card.svg", "its lockup is not the one brand's logo files draw")
+
+
+def test_a_mark_alone_with_company_is_refused(tree: Path) -> None:
+    edit(
+        tree / "src/shared/avatar.svg",
+        '  </g>\n  <g id="guides">',
+        '    <rect x="400" y="900" width="200" height="20" fill="#eceef1"/>\n  </g>\n  <g'
+        ' id="guides">',
+    )
+    assert found(tree, "src/shared/avatar.svg", "the mark and nothing else")
+
+
+def test_a_mark_alone_moved_is_refused(tree: Path) -> None:
+    edit(
+        tree / "src/shared/avatar.svg", "translate(500 500) scale(8)", "translate(500 500) scale(7)"
+    )
+    assert found(tree, "src/shared/avatar.svg", "holds the mark once, at")
+
+
+# --- Keep zones --------------------------------------------------------------------------
+
+
+def test_a_word_outside_the_safe_area_is_refused(tree: Path) -> None:
+    edit(tree / "src/youtube/banner.svg", '<text id="line.0" x="615"', '<text id="line.0" x="1615"')
+    assert found(tree, "src/youtube/banner.svg", "'line.0'", "reaches outside the safe area")
+
+
+def test_a_lockup_outside_the_safe_area_is_refused(tree: Path) -> None:
+    edit(tree / "src/makertube/banner.svg", "translate(291 116)", "translate(91 116)")
+    assert found(tree, "src/makertube/banner.svg", "the lockup reaches outside the safe area")
+
+
+def test_pixels_painted_outside_the_safe_area_are_refused(tree: Path) -> None:
+    from PIL import Image
+
+    path = tree / "png/youtube/banner.png"
+    with Image.open(path) as opened:
+        image = opened.convert("RGB")
+    image.putpixel((10, 10), (255, 255, 255))
+    image.save(path)
+    assert found(tree, "png/youtube/banner.png", "outside its safe area")
+
+
+# --- Cards -------------------------------------------------------------------------------
+
+
+def test_a_card_over_the_limit_is_refused(tree: Path) -> None:
+    from PIL import Image
+
+    noise = Image.frombytes(
+        "RGB",
+        (2560, 1280),
+        random.Random(7).randbytes(2560 * 1280 * 3),  # noqa: S311  seeded noise for a reproducible test picture, not a secret
+    )
+    buffer = io.BytesIO()
+    noise.save(buffer, "PNG")
+    assert len(buffer.getvalue()) >= 1_000_000
+    (tree / "png/github/kleidos.png").write_bytes(buffer.getvalue())
+    assert found(tree, "png/github/kleidos.png", "the limit is under 1,000,000")
+
+
+def test_a_motif_off_the_shelf_is_refused(tree: Path) -> None:
+    edit(
+        tree / "src/cards/motifs/typing.svg",
+        'y="254" width="788" height="220"',
+        'y="234" width="788" height="220"',
+    )
+    assert found(tree, "motifs/typing.svg", "does not stand on the shelf")
+
+
+def test_a_motif_outside_its_box_is_refused(tree: Path) -> None:
+    edit(
+        tree / "src/cards/motifs/frames.svg", 'x="6" y="31" width="788"', 'x="6" y="31" width="808"'
+    )
+    assert found(tree, "motifs/frames.svg", "reaches outside its 800 x 480 box")
+
+
+def test_a_motif_in_another_line_is_refused(tree: Path) -> None:
+    path = tree / "src/cards/motifs/checklist.svg"
+    path.write_text(
+        path.read_text(encoding="utf-8").replace('stroke-width="12"', 'stroke-width="5"', 1),
+        encoding="utf-8",
+    )
+    assert found(tree, "motifs/checklist.svg", "a motif's lines are 12 px")
+
+
+def test_a_motif_in_another_color_is_refused(tree: Path) -> None:
+    edit(tree / "src/cards/motifs/bubbles.svg", 'fill="#0f3460"', 'fill="#51cf66"')
+    assert found(tree, "motifs/bubbles.svg", "a motif's fills are the social palette's")
+
+
+def test_a_line_that_reaches_the_motif_is_refused(tree: Path) -> None:
+    def longer(data: dict[str, Any]) -> None:
+        row = data["cards"]["repos"][0]
+        row["line"] = "Free firmware that turns an ESP32 board into a hardware password manager."
+        row["lines"] = [
+            "Free firmware that turns an ESP32 board into a",
+            "hardware password manager.",
+        ]
+
+    edit_pack(tree, longer)
+    assert found(tree, "the card of kleidos", "reach outside the text column")
+
+
+def test_lines_that_do_not_spell_the_line_are_refused(tree: Path) -> None:
+    edit_pack(tree, lambda data: data["cards"]["repos"][1]["lines"].pop())
+    assert found(tree, "the card of boards", "do not join into its line")
+
+
+def test_a_title_too_small_at_320_px_is_refused(tree: Path) -> None:
+    edit(
+        tree / "src/cards/card.svg",
+        '<text id="title" x="160" y="640" font-size="232"',
+        '<text id="title" x="160" y="640" font-size="120"',
+    )
+    assert found(tree, "the title's capitals", "the least is 20")
+
+
+def test_a_mark_too_small_at_320_px_is_refused(tree: Path) -> None:
+    edit(
+        tree / "src/cards/card.svg",
+        "translate(160 128) scale(0.146)",
+        "translate(160 128) scale(0.12)",
+    )
+    assert found(tree, "at 320 px wide the mark is 19.8 px", "the least is 24")
+
+
+def test_a_repository_without_its_card_is_refused(tree: Path) -> None:
+    (tree / "png/github/agents.png").unlink()
+    assert found(tree, "png/github/agents.png", "missing")
+
+
+def test_a_card_without_a_row_is_refused(tree: Path) -> None:
+    shutil.copy(tree / "png/github/agents.png", tree / "png/github/extra.png")
+    assert found(tree, "png/github/extra.png", "nothing generates it")
+
+
+def test_a_card_under_another_name_is_refused(tree: Path) -> None:
+    edit_pack(tree, lambda data: data["cards"]["repos"][5].update(file="png/github/github.png"))
+    assert found(tree, "the card of .github", "a card's file is png/github/dot-github.png")
+
+
+def test_a_motif_no_card_uses_is_refused(tree: Path) -> None:
+    shutil.copy(tree / "src/cards/motifs/typing.svg", tree / "src/cards/motifs/spare.svg")
+    assert found(tree, "motifs/spare.svg", "no card and no banner uses this motif")
+
+
+# --- Stale exports -----------------------------------------------------------------------
+
+
+def test_a_changed_row_makes_its_card_stale(tree: Path) -> None:
+    edit_pack(tree, lambda data: data["cards"]["repos"][2].update(label="Identity"))
+    assert found(tree, "png/github/brand.png", "stale")
+    assert found(tree, "README.md", "its tables are not what pack.json and the record give")
+
+
+def test_a_changed_source_makes_its_pictures_stale(tree: Path) -> None:
+    edit(tree / "src/makertube/banner.svg", 'x="713" y="181"', 'x="715" y="181"')
+    assert found(tree, "png/makertube/banner.png", "stale")
+
+
+def test_a_changed_brand_file_makes_every_picture_stale(tree_with_brand: Path) -> None:
+    tokens = tree_with_brand / "brand/tokens/tokens.json"
+    tokens.write_text(tokens.read_text(encoding="utf-8") + "\n", encoding="utf-8")
+    for name in ("png/youtube/avatar.png", "png/github/social.png", "previews/cards.png"):
+        assert found(tree_with_brand, name, "stale: brand/tokens/tokens.json changed")
+
+
+def test_a_changed_picture_makes_its_preview_stale(tree: Path) -> None:
+    shutil.copy(tree / "png/github/agents.png", tree / "png/github/boards.png")
+    assert found(tree, "previews/cards.png", "stale: png/github/boards.png changed")
+
+
+def _chunk(name: str, body: bytes) -> bytes:
+    kind = name.encode("latin-1")
+    return len(body).to_bytes(4, "big") + kind + body + zlib.crc32(kind + body).to_bytes(4, "big")
+
+
+def _plant(path: Path, name: str, body: bytes) -> None:
+    """Put one chunk into a PNG right before its pixels."""
+    chunks = meta.png_chunks_of(path.read_bytes())
+    first = next(index for index, (chunk, _) in enumerate(chunks) if chunk == "IDAT")
+    chunks.insert(first, (name, body))
+    path.write_bytes(meta.PNG_SIGNATURE + b"".join(_chunk(chunk, data) for chunk, data in chunks))
+
+
+def _replace_text(path: Path, keyword: str, value: str) -> None:
+    chunks = [
+        (
+            name,
+            (
+                f"{keyword}\0{value}".encode("latin-1")
+                if name == "tEXt" and body.startswith(keyword.encode() + b"\0")
+                else body
+            ),
+        )
+        for name, body in meta.png_chunks_of(path.read_bytes())
+    ]
+    path.write_bytes(meta.PNG_SIGNATURE + b"".join(_chunk(name, body) for name, body in chunks))
+
+
+def test_a_picture_with_a_text_chunk_outside_the_profile_is_refused(tree: Path) -> None:
+    _plant(tree / "png/youtube/watermark.png", "tEXt", b"Software\0an editor")
+    assert found(tree, "png/youtube/watermark.png", "M005", "Software")
+
+
+def test_a_picture_with_a_time_compressed_text_or_exif_is_refused(tree: Path) -> None:
+    _plant(tree / "png/youtube/watermark.png", "tIME", bytes([7, 234, 11, 18, 12, 0, 0]))
+    _plant(tree / "png/github/brand.png", "zTXt", b"Comment\0\0" + zlib.compress(b"x"))
+    _plant(tree / "png/github/social.png", "eXIf", b"MM\0*\0\0\0\x08\0\0")
+    assert found(tree, "png/youtube/watermark.png", "M005", "tIME")
+    assert found(tree, "png/github/brand.png", "M005", "zTXt")
+    assert found(tree, "png/github/social.png", "M005", "eXIf")
+
+
+def test_a_picture_whose_metadata_is_not_its_record_s_is_refused(tree: Path) -> None:
+    _replace_text(tree / "png/github/agents.png", "Copyright", "© 2026 Someone else. MIT.")
+    assert found(tree, "png/github/agents.png", "M002", "'Copyright'")
+
+
+def test_a_picture_without_metadata_is_refused(tree: Path) -> None:
+    path = tree / "png/makertube/banner.png"
+    path.write_bytes(meta.png_bare(path.read_bytes()))
+    assert found(tree, "png/makertube/banner.png", "M001", "carries no metadata")
+
+
+def test_metadata_out_of_order_is_refused(tree: Path) -> None:
+    path = tree / "png/youtube/avatar.png"
+    chunks = meta.png_chunks_of(path.read_bytes())
+    texts = [chunk for chunk in chunks if chunk[0] in ("tEXt", "iTXt")]
+    rest = [chunk for chunk in chunks if chunk[0] not in ("tEXt", "iTXt")]
+    reordered = [*rest[:-1], *texts, rest[-1]]  # after the pixels, before IEND
+    path.write_bytes(meta.PNG_SIGNATURE + b"".join(_chunk(name, body) for name, body in reordered))
+    assert found(tree, "png/youtube/avatar.png", "M006")
+
+
+def test_a_private_value_in_a_record_is_refused(tree: Path) -> None:
+    edit(
+        tree / "pack.json",
+        "on a dark and on a light page",
+        "on a dark and on a light page at localhost",
+    )
+    assert found(tree, "previews/avatars.png", "M004", "a private host")
+
+
+def test_ci_without_the_private_deny_list_is_refused(
+    tree: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    monkeypatch.setenv("GITHUB_ACTIONS", "true")
+    monkeypatch.delenv(meta.DENY_ENV, raising=False)
+    monkeypatch.delenv(meta.DENY_OPTIONAL_ENV, raising=False)
+    monkeypatch.setattr(meta, "DENY_LOCAL", tree / "no-deny-list.txt")
+    assert found(tree, "M004", "private deny-list is not loaded")
+
+
+def test_ci_that_cannot_read_the_secret_only_warns(
+    tree: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    monkeypatch.setenv("GITHUB_ACTIONS", "true")
+    monkeypatch.setenv(meta.DENY_OPTIONAL_ENV, "1")
+    monkeypatch.delenv(meta.DENY_ENV, raising=False)
+    monkeypatch.setattr(meta, "DENY_LOCAL", tree / "no-deny-list.txt")
+    assert not found(tree, "M004", "private deny-list is not loaded")
+
+
+def test_an_identity_pattern_in_a_record_is_refused(
+    tree: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    monkeypatch.setenv(meta.DENY_ENV, "# a comment\nzz-private-handle\n")
+    edit(
+        tree / "pack.json",
+        "on a dark and on a light page",
+        "on a dark and on a light page of zz-private-handle",
+    )
+    findings = check.findings(tree)
+    assert any(
+        "previews/avatars.png: M004" in line and "identity pattern" in line for line in findings
+    ), findings
+    assert not any("zz-private-handle" in line for line in findings if "M004" in line), (
+        "an identity match is named"
+    )
+
+
+def test_the_metadata_checker_alone_passes_a_clean_tree_and_names_each_defect(
+    tree: Path, capsys: pytest.CaptureFixture[str]
+) -> None:
+    import check_metadata
+
+    assert check_metadata.main(["--root", str(tree)]) == 0
+    path = tree / "png/makertube/banner.png"
+    path.write_bytes(meta.png_bare(path.read_bytes()))
+    shutil.copyfile(tree / "png/youtube/avatar.png", tree / "png/youtube/stray.png")
+    capsys.readouterr()
+    assert check_metadata.main(["--root", str(tree), "--json"]) == 1
+    rows = json.loads(capsys.readouterr().out)
+    assert {
+        "path": "png/makertube/banner.png",
+        "rule": "M001",
+        "message": "carries no metadata; run tools/build.py",
+    } in rows, rows
+    assert any(row["path"] == "png/youtube/stray.png" and row["rule"] == "M008" for row in rows), (
+        rows
+    )
+    assert check_metadata.main(["--root", str(tree), "png/github/agents.png"]) == 0
+
+
+def test_a_license_that_reuse_does_not_give_is_refused(tree: Path) -> None:
+    edit(
+        tree / "REUSE.toml",
+        'path = ["**"]\nprecedence = "aggregate"\nSPDX-FileCopyrightText = "2026 José M. Requena'
+        ' Plens"\nSPDX-License-Identifier = "GPL-3.0-or-later"',
+        'path = ["**"]\nprecedence = "aggregate"\nSPDX-FileCopyrightText = "2026 José M. Requena'
+        ' Plens"\nSPDX-License-Identifier = "MIT"',
+    )
+    assert found(tree, "GPL-3.0-or-later is not in the expression 'MIT'")
+
+
+# --- Brand, licenses, the public tree ----------------------------------------------------
+
+
+def test_a_changed_trademarks_page_is_refused(tree: Path) -> None:
+    edit(tree / "TRADEMARKS.md", "This part is a request.", "This part is a condition.")
+    assert found(tree, "TRADEMARKS.md", "byte for byte")
+
+
+def test_a_local_path_to_brand_is_refused(tree: Path) -> None:
+    edit(
+        tree / ".gitmodules",
+        "url = https://github.com/kleidos-dev/brand.git",
+        f"url = {LOCAL_BRAND}",
+    )
+    assert found(
+        tree, ".gitmodules", "the address https://github.com/kleidos-dev/brand.git and no other"
+    )
+    assert found(tree, ".gitmodules", "a home-directory path")
+
+
+def test_a_creative_commons_tag_is_refused(tree: Path) -> None:
+    (tree / "src/extra.md").write_text(f"<!-- {CC_TAG} -->\n", encoding="utf-8")
+    assert found(tree, "src/extra.md", "its license tag reads")
+
+
+def test_another_license_text_is_refused(tree: Path) -> None:
+    shutil.copy(tree / "LICENSES/GPL-3.0-or-later.txt", tree / "LICENSES/CC-BY-SA-4.0.txt")
+    assert found(tree, "LICENSES/CC-BY-SA-4.0.txt", "only GPL-3.0-or-later")
+
+
+def test_a_font_file_is_refused(tree: Path) -> None:
+    shutil.copy(
+        pack.brand_root(ROOT) / "fonts/mona-sans/MonaSansMonoVF[wght].ttf",
+        tree / "src/MonaSansMono.ttf",
+    )
+    assert found(tree, "src/MonaSansMono.ttf", "a font file that is not pinned")
+
+
+def test_a_picture_out_of_place_is_refused(tree: Path) -> None:
+    shutil.copy(tree / "png/youtube/avatar.png", tree / "src/shared/avatar.png")
+    assert found(tree, "src/shared/avatar.png", "a picture or a PDF outside")
+
+
+def test_an_embedded_picture_is_refused(tree: Path) -> None:
+    edit(
+        tree / "src/youtube/thumbnail.svg",
+        '<g id="guides">',
+        '<g id="guides">\n    <image x="0" y="0" width="10" height="10" href="x.png"/>',
+    )
+    assert found(tree, "src/youtube/thumbnail.svg", "embeds a picture")
+    assert found(tree, "src/youtube/thumbnail.svg", "a source holds plain shapes and text only")
+
+
+def test_a_board_drawing_is_refused(tree: Path) -> None:
+    (tree / "src/cards/front.svg").write_text(
+        SVG_HEADER + '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10"><g'
+        ' id="screen-active"/></svg>\n',
+        encoding="utf-8",
+    )
+    assert found(tree, "src/cards/front.svg", "a board drawing's markers")
+
+
+def test_private_data_is_refused(tree: Path) -> None:
+    (tree / "notes.md").write_text(
+        f"See {HOME_PATH}, at {PRIVATE_ADDRESS}, or write to {OTHER_EMAIL}.\n", encoding="utf-8"
+    )
+    assert found(tree, "notes.md", "a home-directory path")
+    assert found(tree, "notes.md", "a private network address")
+    assert found(tree, "notes.md", "an e-mail address that is not the project's contact")
+
+
+def test_an_off_palette_color_is_refused(tree: Path) -> None:
+    edit(
+        tree / "src/youtube/banner.svg",
+        'fill="#eceef1">Your passwords',
+        'fill="#ff00ff">Your passwords',
+    )
+    assert found(tree, "src/youtube/banner.svg", "is not a token color")
+
+
+def test_opacity_is_refused(tree: Path) -> None:
+    edit(tree / "src/cards/card.svg", '<line id="shelf"', '<line id="shelf" opacity="0.5"')
+    assert found(tree, "src/cards/card.svg", "carries opacity")
