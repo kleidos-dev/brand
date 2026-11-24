@@ -101,7 +101,7 @@ In all: 22 identical; 18 pixels and image data identical; metadata names brand; 
 | File of `kleidos-dev/social` | Why it is not here |
 | --- | --- |
 | `.coderabbit.yaml` | merged into brand's: the generated paths of the pack left out of the review and a rule for `social/**` |
-| `.coveragerc` | merged into brand's: `social/tools` is a coverage source |
+| `.coveragerc` | merged into brand's, whose source is the root: `social/tools/` is measured, its files named `social/tools/...` |
 | `.editorconfig` | brand's own applies |
 | `.git-blame-ignore-revs` | named a commit of social's history, which did not move |
 | `.github/CODEOWNERS` | brand's applies |

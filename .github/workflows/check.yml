@@ -90,7 +90,8 @@ jobs:
         run: python social/tools/check.py
 
   # The tests, with the coverage report SonarQube Cloud reads (.coveragerc:
-  # the code roots, relative paths, branches): brand's, then the social pack's
+  # every file named from the repository root, so brand's check.py and the
+  # pack's are two files; relative paths; branches): brand's, then the pack's
   # in a second pytest appended to the same data, since both import modules
   # named check and export from their own tools/. Then the pictures of both
   # drawn again within tolerance: exact pixels are the exporting machine's to
