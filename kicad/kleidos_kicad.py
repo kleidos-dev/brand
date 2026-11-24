@@ -251,8 +251,10 @@ def svg_findings(svg: Path, ground: str = "dark", wires: bool = True) -> list[st
     text = svg.read_text(encoding="utf-8")
     palette = theme_colors(ground)
     found = []
+    # [^<>]: an attempt that starts at one group's opening never runs past the
+    # next tag, so a page of unclosed openings is read in linear time.
     background = re.search(
-        r'<g style="fill:(#[0-9A-F]{6});[^>]*>\s*<rect x="0\.0+" y="0\.0+"', text
+        r'<g style="fill:(#[0-9A-F]{6});[^<>]*>\s*<rect x="0\.0+" y="0\.0+"', text
     )
     if not background or background.group(1) != palette["background"]:
         found.append(

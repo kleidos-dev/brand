@@ -6,9 +6,7 @@
 # where it stands (kleidos-dev/.github docs/quality.md, "Overrides": facts).
 
 [default]
-# >>> kleidos-quality typos (synced from kleidos-dev/.github quality/typos/block.toml; do not edit)
 locale = "en-us"
-# <<< kleidos-quality typos
 # Runs that are no words: the base64 of the PNG the KiCad drawing sheets
 # embed (kicad/*.kicad_wks), and the SHA-256 digests of the records.
 extend-ignore-re = [

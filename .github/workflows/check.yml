@@ -2,20 +2,24 @@
 # SPDX-License-Identifier: MIT
 #
 # The repository's gate on every push and pull request, cheapest first
-# (the project's CI convention). Every shared check is a job of the Kleidos
-# quality kit (kleidos-dev/.github, docs/quality.md), called at the kit
-# commit .github/quality/SOURCE.json records; the kit's sync.py keeps the
-# references there. What only this repository does (the tree's rules and
-# the generated files, the pictures, the KiCad kit) is a job of its own.
+# (the project's CI convention). The shared checks are the quality kit's,
+# called by its name, @v3 (kleidos-dev/.github, docs/quality.md, "How a
+# repository runs the kit"): no kit code is held here. What only this
+# repository does (the tree's rules and the generated files, the KiCad kit)
+# is a job of its own.
 #
-#   🧹 Lint ──────────┬─ 🔎 Types ───────────────────────────────
-#   ⚖️ Licensing ─────┼─ 🧪 Tests and pictures ── 📊 SonarCloud
-#   🧭 Tree rules ────┼─ 🧫 KiCad kit
-#                     ├─ 🛡️ Dependency vulnerabilities
-#                     └─ 🔐 Secrets and MAC scan
+#   ⚡ Quick ──────────┬─ 🧪 Check ── 📊 Sonar
+#   🧭 Tree rules ─────┴─ 🧫 KiCad kit
 #
-# The weekly run is for OSV: a new advisory against unchanged dependencies
-# turns it red. It skips the slow drawing jobs and SonarCloud.
+# Quick: lint (every hook, the kit's policy), licensing, the secrets and MAC
+# scan, and on a pull request the commit messages. Check: the tests and the
+# pictures, mypy, OSV.
+#
+# The last job, ✅ Check, is the one required check: it needs every other
+# job of this file, always runs, and fails unless each succeeded or was
+# skipped with leave (MAY_SKIP). The weekly run is for OSV: a new advisory
+# against unchanged dependencies turns it red. It skips the KiCad export
+# and SonarCloud.
 name: CI
 
 on:
@@ -36,19 +40,14 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  lint:
-    name: "🧹 Lint (quality kit)"
-    uses: kleidos-dev/.github/.github/workflows/reusable-lint.yml@f3cb9fc380dea5a33c4539f013c0b1dab8ca6b1d # quality-v2.3.0
+  # Every hook but brand-check, which runs tools/check.py from the local
+  # virtual environment: the tree job below runs it with the pinned stack and
+  # the deny-list.
+  quick:
+    name: "⚡ Quick"
+    uses: kleidos-dev/.github/.github/workflows/quick.yml@v3
     with:
-      # brand-check runs tools/check.py from the local virtual environment;
-      # the tree job below runs it with the pinned stack and the deny-list.
       skip: brand-check
-    permissions:
-      contents: read
-
-  reuse:
-    name: "⚖️ Licensing (REUSE)"
-    uses: kleidos-dev/.github/.github/workflows/reusable-reuse.yml@f3cb9fc380dea5a33c4539f013c0b1dab8ca6b1d # quality-v2.3.0
     permissions:
       contents: read
 
@@ -83,30 +82,21 @@ jobs:
           KLEIDOS_DENY_OPTIONAL: ${{ secrets.KLEIDOS_DENY_EXTRA == '' && '1' || '0' }}
         run: python tools/build.py --check --static
 
-  types:
-    name: "🔎 Types (mypy)"
-    needs: [lint, reuse, tree]
-    uses: kleidos-dev/.github/.github/workflows/reusable-mypy.yml@f3cb9fc380dea5a33c4539f013c0b1dab8ca6b1d # quality-v2.3.0
-    with:
-      install: python -m pip install --require-hashes -r requirements.txt
-    permissions:
-      contents: read
-
   # The tests, with the coverage report SonarQube Cloud reads (.coveragerc:
   # the code roots, relative paths, branches), then the pictures drawn again
   # within tolerance: exact pixels are the exporting machine's to compare,
   # since this runner's Chromium draws an edge a shade apart, so gross drift
   # (a shape out of place, a picture not redrawn) fails here. The tree job
   # holds the metadata to the private deny-list, so here identity is only
-  # warned about (KLEIDOS_DENY_OPTIONAL).
-  tests:
-    name: "🧪 Tests and pictures"
-    needs: [lint, reuse, tree]
-    if: github.event_name != 'schedule'
-    uses: kleidos-dev/.github/.github/workflows/reusable-python-tests.yml@f3cb9fc380dea5a33c4539f013c0b1dab8ca6b1d # quality-v2.3.0
+  # warned about (KLEIDOS_DENY_OPTIONAL). The same call runs mypy and OSV.
+  check:
+    name: "🧪 Check"
+    needs: [quick, tree]
+    uses: kleidos-dev/.github/.github/workflows/check.yml@v3
     with:
-      install: python -m pip install --require-hashes -r requirements.txt
-      run: >-
+      # -I: pip is the installed one, never a pip.py of the tree.
+      install: python -I -m pip install --require-hashes -r requirements.txt
+      tests: >-
         python -m playwright install --with-deps chromium
         && export KLEIDOS_DENY_OPTIONAL=1
         && python -m pytest -rs --cov --cov-report=xml:coverage.xml tests
@@ -126,7 +116,7 @@ jobs:
   # boards' schematic job does. Standard library only: nothing else installed.
   kicad:
     name: "🧫 KiCad kit (fixture exported on each ground)"
-    needs: [lint, reuse, tree]
+    needs: [quick, tree]
     if: github.event_name != 'schedule'
     runs-on: ubuntu-latest
     timeout-minutes: 20
@@ -161,30 +151,43 @@ jobs:
       - name: The kit's fixture, exported on each ground
         run: python3 tools/check_kicad.py
 
-  osv:
-    name: "🛡️ Dependency vulnerabilities (OSV)"
-    needs: [lint, reuse]
-    uses: kleidos-dev/.github/.github/workflows/reusable-osv.yml@f3cb9fc380dea5a33c4539f013c0b1dab8ca6b1d # quality-v2.3.0
-    permissions:
-      contents: read
-
-  secrets:
-    name: "🔐 Secrets and MAC scan (gitleaks)"
-    needs: [lint, reuse]
-    uses: kleidos-dev/.github/.github/workflows/reusable-secrets.yml@f3cb9fc380dea5a33c4539f013c0b1dab8ca6b1d # quality-v2.3.0
-    permissions:
-      contents: read
-
   # The Python code (tools/, the KiCad helper and the tests) on SonarQube
-  # Cloud: sonar-project.properties holds the project. Secretless (OIDC), on
-  # every push to main and every pull request against main; a pull request
-  # from a fork or Dependabot, which GitHub gives no OIDC token, ends green
-  # with a notice. Last stage: it reads the coverage the tests job wrote.
-  sonarcloud:
-    name: "📊 SonarCloud"
-    needs: [tests]
+  # Cloud: sonar-project.properties holds the project. Secretless (OIDC); a
+  # pull request from a fork or Dependabot, which GitHub gives no OIDC token,
+  # ends green with a notice. Last stage: it reads the coverage the tests
+  # wrote.
+  sonar:
+    name: "📊 Sonar"
+    needs: check
     if: github.event_name != 'schedule'
-    uses: kleidos-dev/.github/.github/workflows/reusable-sonarcloud.yml@f3cb9fc380dea5a33c4539f013c0b1dab8ca6b1d # quality-v2.3.0
+    uses: kleidos-dev/.github/.github/workflows/sonar.yml@v3
     permissions:
       contents: read
       id-token: write
+
+  done:
+    name: "✅ Check"
+    needs: [quick, check, tree, kicad, sonar]
+    if: always()
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions: {}
+    steps:
+      - name: Every job of this file succeeded
+        # -p: no BASH_ENV, no function and no option from the environment; and
+        # both variables are always set here, so nothing outside the step steers it.
+        shell: /bin/bash --noprofile --norc -p -e -o pipefail {0}
+        env:
+          NEEDS: ${{ toJSON(needs) }}
+          MAY_SKIP: kicad sonar
+        run: |
+          set -euo pipefail
+          export PATH=/usr/bin:/bin HOME=/nonexistent
+          echo "${NEEDS}" | jq -r 'to_entries[] | "\(.key): \(.value.result)"' | tee -a "${GITHUB_STEP_SUMMARY}"
+          echo "${NEEDS}" | jq -e --arg may " ${MAY_SKIP} " '
+            length > 0 and all(to_entries[];
+              .value.result == "success"
+              or (.value.result == "skipped" and (.key as $job | $may | contains(" \($job) "))))' > /dev/null || {
+            echo "::error title=Not every job succeeded::a job that failed, was cancelled or was skipped without leave is listed above"
+            exit 1
+          }
