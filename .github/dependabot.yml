@@ -3,8 +3,10 @@
 #
 # Keeps three things current: the GitHub Actions this repository pins by
 # commit, the Python stack pinned in requirements.txt, and the hook
-# revisions of .pre-commit-config.yaml. Nothing else in the tree pins a
-# dependency: pyproject.toml holds tool settings only. Dependabot
+# revisions of .pre-commit-config.yaml. It does not move the KiCad image
+# digest in .github/workflows/check.yml (its docker ecosystem reads no
+# workflow's container:) nor the fonts pinned in fonts/VERSIONS.md: both
+# are moved by hand. pyproject.toml holds tool settings only. Dependabot
 # authors its own commit messages, so the commit-message gate skips its
 # pull requests.
 #

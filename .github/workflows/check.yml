@@ -109,7 +109,9 @@ jobs:
   # (10.0.8): the fixture on each ground, ERC clean, both exports written with
   # the theme found and one wire width, so a drawing sheet or a theme KiCad
   # cannot read never merges. The image is pinned by digest, its tag beside
-  # it (the quality kit's pins rule holds both to the newest KiCad release).
+  # it: the quality kit holds the pin to that form, and a newer KiCad release
+  # is a note in its report, taken by hand together with boards and the meter
+  # (Dependabot reads no workflow's container:).
   # The image's own Python is Debian's 3.13, older than the one the code is
   # written for, so the script runs on the Python .python-version names,
   # which uv (at the version requirements.txt pins) installs beside it, as
