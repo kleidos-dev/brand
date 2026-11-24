@@ -234,6 +234,57 @@ def test_the_helper_reads_its_own_folder() -> None:
     assert "--default-font" not in kit.export_args("dark")
 
 
+def a_page(background: str, wire: str, width: float) -> str:
+    """Return a page as kicad-cli draws one: the background's group, then a wire."""
+    return (
+        f'<svg>\n<g style="fill:{background}; fill-opacity:1.0;stroke:none">\n'
+        '<rect x="0.0000" y="0.0000" width="297.0000" height="210.0000"/>\n</g>\n'
+        f'<g style="fill:none; stroke:{wire}; stroke-width:{width:.4f}; stroke-linecap:round">\n'
+        '<path d="M 10 10 L 20 10"/>\n</g>\n</svg>\n'
+    )
+
+
+@pytest.mark.parametrize("ground", ["dark", "light"])
+def test_a_page_on_the_theme_s_background_with_one_wire_width_has_no_finding(
+    ground: str, tmp_path: Path
+) -> None:
+    kit = helper()
+    colors = kit.theme_colors(ground)
+    page = tmp_path / "page.svg"
+    page.write_text(
+        a_page(colors["background"], colors["wire"], kit.connection_mm()), encoding="utf-8"
+    )
+    assert kit.svg_findings(page, ground) == []
+
+
+def test_a_page_on_another_background_or_with_none_is_reported(tmp_path: Path) -> None:
+    kit = helper()
+    colors = kit.theme_colors("dark")
+    page = tmp_path / "page.svg"
+    page.write_text(a_page("#123456", colors["wire"], kit.connection_mm()), encoding="utf-8")
+    assert kit.svg_findings(page) == [
+        f"page.svg: background #123456, the theme's is {colors['background']} (was the theme "
+        "found?)"
+    ]
+    # An opening that holds a tag is not the background's group: the background is missing.
+    text = a_page(colors["background"], colors["wire"], kit.connection_mm())
+    page.write_text(text.replace("stroke:none", "stroke:none <b"), encoding="utf-8")
+    assert kit.svg_findings(page) == [
+        f"page.svg: background missing, the theme's is {colors['background']} (was the theme "
+        "found?)"
+    ]
+
+
+def test_a_hostile_page_is_read_in_linear_time(tmp_path: Path) -> None:
+    kit = helper()
+    page = tmp_path / "page.svg"
+    page.write_text('<g style="fill:#000000;' * 20_000, encoding="utf-8")
+    start = time.process_time()
+    found = kit.svg_findings(page, wires=False)
+    assert time.process_time() - start < 1
+    assert found and "background missing" in found[0]
+
+
 def test_the_fixture_s_project_names_the_kit_s_sheet_and_its_variables() -> None:
     pro = json.loads((ROOT / "kicad/fixture/fixture.kicad_pro").read_text(encoding="utf-8"))
     assert pro["schematic"]["page_layout_descr_file"] == "../kleidos-dark.kicad_wks"

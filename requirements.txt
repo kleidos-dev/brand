@@ -21,9 +21,8 @@
 #   Cloud (.coveragerc).
 # - reuse, charset-normalizer: the licensing check, and the one module it
 #   needs to detect a file's encoding.
-# - pyyaml: the quality kit's checker, which the drift test
-#   (tests/test_quality_kit.py) runs, reads workflows and dependabot.yml with
-#   it; the kit's pin.
+# - pyyaml: the quality kit's hooks read workflows and dependabot.yml with
+#   it (kleidos-kit, from the repository's environment); the kit's pin.
 # - uv: the KiCad kit's CI job installs the Python .python-version names
 #   inside KiCad's container with it, from its hashed lines below
 #   (.github/workflows/check.yml).

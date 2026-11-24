@@ -24,8 +24,7 @@ def fromstring(text: str | bytes) -> ET.Element:
     raw = text.encode("utf-8") if isinstance(text, str) else text
     if _DECLARATION.search(raw):
         raise ET.ParseError("a document type or entity declaration is refused")
-    # The declaration check above leaves expat no entity to expand.
-    return ET.fromstring(text)  # noqa: S314
+    return ET.fromstring(text)  # noqa: S314  the check above leaves expat no entity to expand
 
 
 def parse(path: str | Path) -> ET.Element:

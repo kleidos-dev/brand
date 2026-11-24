@@ -3,8 +3,8 @@
 #
 # The shape of a repository's own .gitleaks.toml under the Kleidos quality
 # kit (kleidos-dev/.github quality/gitleaks/default.example.toml). It is not
-# copied: sync.py writes it once when the repository has none, and the file
-# is the repository's from then on, held to these rules by check_quality.py:
+# a copy: the file is the repository's own, held to these rules by the kit's
+# check (the kleidos-kit hook and the lint job):
 #
 #   - [extend] useDefault = true, with no disabledRules: every default rule
 #     (cloud keys, private keys, tokens, generic high-entropy assignments).

@@ -1,5 +1,30 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="-12.0 -6.0 64 76" width="64mm" height="76mm" shape-rendering="geometricPrecision" font-family="Inter, Helvetica, Arial, sans-serif">
-<title>M5Stack CoreInk: front mockup (1 SVG unit = 1 mm)</title>
+<!-- SPDX-License-Identifier: MIT -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-12.0 -6.0 64 76" width="64mm" height="76mm" shape-rendering="geometricPrecision" font-family="Inter, Helvetica, Arial, sans-serif" role="img" aria-labelledby="kl-coreink-front-t kl-coreink-front-d" lang="en">
+<title id="kl-coreink-front-t">M5Stack CoreInk (K048) front drawing, 1:1 mm</title>
+<desc id="kl-coreink-front-d">Front of the M5Stack CoreInk (K048) drawn at 1:1 scale (1 SVG unit = 1 mm): case, screen, keys, ports and printed legends. Part of Kleidos boards. M5Stack and M5 are trademarks of their owner; Kleidos is not affiliated with M5Stack.</desc>
+<!-- REUSE-IgnoreStart -->
+<metadata id="kl-coreink-front-m">
+  <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+           xmlns:dc="http://purl.org/dc/elements/1.1/"
+           xmlns:cc="http://creativecommons.org/ns#"
+           xmlns:Iptc4xmpExt="http://iptc.org/std/Iptc4xmpExt/2008-02-29/">
+    <cc:Work rdf:about="">
+      <dc:format>image/svg+xml</dc:format>
+      <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+      <dc:title>M5Stack CoreInk (K048) front drawing, 1:1 mm</dc:title>
+      <dc:description>Front of the M5Stack CoreInk (K048) drawn at 1:1 scale (1 SVG unit = 1 mm): case, screen, keys, ports and printed legends. Part of Kleidos boards. M5Stack and M5 are trademarks of their owner; Kleidos is not affiliated with M5Stack.</dc:description>
+      <dc:creator><cc:Agent><dc:title>José M. Requena Plens</dc:title></cc:Agent></dc:creator>
+      <dc:publisher><cc:Agent><dc:title>Kleidos</dc:title></cc:Agent></dc:publisher>
+      <dc:rights><cc:Agent><dc:title>© 2026 José M. Requena Plens. MIT.</dc:title></cc:Agent></dc:rights>
+      <dc:identifier>https://github.com/kleidos-dev/boards/blob/main/coreink/svg/front.svg</dc:identifier>
+      <dc:language>en</dc:language>
+      <dc:subject><rdf:Bag><rdf:li>Kleidos</rdf:li><rdf:li>hardware password manager</rdf:li><rdf:li>open source</rdf:li><rdf:li>M5Stack</rdf:li><rdf:li>CoreInk</rdf:li><rdf:li>K048</rdf:li><rdf:li>front drawing</rdf:li><rdf:li>SVG</rdf:li></rdf:Bag></dc:subject>
+      <Iptc4xmpExt:DigitalSourceType rdf:resource="http://cv.iptc.org/newscodes/digitalsourcetype/digitalCreation"/>
+      <cc:license rdf:resource="https://spdx.org/licenses/MIT.html"/>
+    </cc:Work>
+  </rdf:RDF>
+</metadata>
+<!-- REUSE-IgnoreEnd -->
 <defs>
 <filter id="shadow_coreink" x="-10%" y="-10%" width="120%" height="120%">
 <feDropShadow dx="0.3" dy="0.6" stdDeviation="0.6" flood-opacity="0.28"/>

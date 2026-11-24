@@ -86,19 +86,15 @@ reviews:
     # Byte copies of the boards repository's fronts and their manifest,
     # written by tools/sync_from_boards.py --copy: reviewed in boards.
     - "!boards/**"
-    # The commit-message checker synced from kleidos-dev/agents: reviewed there.
-    - "!.github/commit-check/**"
-    # The quality kit's byte copies, synced from kleidos-dev/.github and
-    # recorded in .github/quality/SOURCE.json: reviewed there. The waivers
+    # The quality kit's base configurations, copied from kleidos-dev/.github
+    # and recorded in .github/quality/SOURCE.json: reviewed there. The waivers
     # (.github/quality/waivers.toml) and every config that extends a copy are
     # this repository's own and stay in the review.
-    - "!.github/quality/*.py"
     - "!.github/quality/*.jsonc"
     - "!.github/quality/ruff.toml"
     - "!.github/quality/SOURCE.json"
     - "!.github/zizmor.yml"
     - "!.gitleaks-mac.toml"
-    - "!tests/test_quality_kit.py"
 
   # --- brand's own: the rules of AGENTS.md, by path ---------------------------
   # CodeRabbit also reads AGENTS.md itself (code guidelines, below); these
@@ -204,7 +200,8 @@ reviews:
         checkout with persist-credentials: false, top-level permissions
         read-only, an emoji job name and a timeout-minutes on every job, and
         the cheap gates first with the slow jobs behind them through needs.
-        commit-check*.yml are synced copies from kleidos-dev/agents.
+        The quality kit's workflows are called by its name, @v3, never by a
+        commit; the last job, ✅ Check, follows the kit's model word for word.
 
   # Python is linted by Ruff (the owner's linter here). Flake8 and Pylint are
   # off: with no configuration in the repository they would flag every line
@@ -249,7 +246,7 @@ reviews:
       enabled: false
 
   # These never edit the title or description, but each posts a verdict on
-  # them. Commit messages are already gated by commit-check.yml.
+  # them. Commit messages are already gated by the kit's commit check in CI.
   pre_merge_checks:
     title:
       mode: "off"

@@ -16,15 +16,12 @@ target-version = "py315"
 known-first-party = ["kleidos_brand"]
 
 [tool.mypy]
-# >>> kleidos-quality mypy (synced from kleidos-dev/.github quality/mypy/block.toml; do not edit)
 strict = true
 # An ignore names the error it silences, so it cannot hide a second one.
 enable_error_code = ["ignore-without-code"]
-# <<< kleidos-quality mypy
 python_version = "3.15"
 # The builders and checks, their tests and the KiCad helper: every Python
-# file of the repository's own (the kit's copies under .github/ and the
-# commit-message checker are checked where they come from).
+# file of the tree.
 files = ["tools", "tests", "kicad"]
 # tools/ is the root the commands and the tests import kleidos_brand from.
 mypy_path = ["tools"]
