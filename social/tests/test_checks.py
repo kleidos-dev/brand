@@ -245,7 +245,7 @@ def test_a_card_without_a_row_is_refused(tree: Path) -> None:
 
 
 def test_a_card_under_another_name_is_refused(tree: Path) -> None:
-    edit_pack(tree, lambda data: data["cards"]["repos"][5].update(file="png/github/github.png"))
+    edit_pack(tree, lambda data: data["cards"]["repos"][4].update(file="png/github/github.png"))
     assert found(tree, "the card of .github", "a card's file is png/github/dot-github.png")
 
 
@@ -271,7 +271,7 @@ def test_a_changed_source_makes_its_pictures_stale(tree: Path) -> None:
 def test_a_changed_brand_file_makes_every_picture_stale(tree_with_brand: Path) -> None:
     tokens = tree_with_brand.parent / "tokens/tokens.json"
     tokens.write_text(tokens.read_text(encoding="utf-8") + "\n", encoding="utf-8")
-    for name in ("png/youtube/avatar.png", "png/github/social.png", "previews/cards.png"):
+    for name in ("png/youtube/avatar.png", "png/github/agents.png", "previews/cards.png"):
         assert found(tree_with_brand, name, "stale: ../tokens/tokens.json changed")
 
 
@@ -316,10 +316,10 @@ def test_a_picture_with_a_text_chunk_outside_the_profile_is_refused(tree: Path) 
 def test_a_picture_with_a_time_compressed_text_or_exif_is_refused(tree: Path) -> None:
     _plant(tree / "png/youtube/watermark.png", "tIME", bytes([7, 234, 11, 18, 12, 0, 0]))
     _plant(tree / "png/github/brand.png", "zTXt", b"Comment\0\0" + zlib.compress(b"x"))
-    _plant(tree / "png/github/social.png", "eXIf", b"MM\0*\0\0\0\x08\0\0")
+    _plant(tree / "png/github/agents.png", "eXIf", b"MM\0*\0\0\0\x08\0\0")
     assert found(tree, "png/youtube/watermark.png", "M005", "tIME")
     assert found(tree, "png/github/brand.png", "M005", "zTXt")
-    assert found(tree, "png/github/social.png", "M005", "eXIf")
+    assert found(tree, "png/github/agents.png", "M005", "eXIf")
 
 
 def test_a_picture_whose_metadata_is_not_its_record_s_is_refused(tree: Path) -> None:

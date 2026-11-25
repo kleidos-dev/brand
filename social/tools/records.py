@@ -164,25 +164,32 @@ def thumbnail(root: Path, lines: list[str]) -> meta.MediaMeta:
     )
 
 
+def banner_subject(data: dict[str, Any], row: Any) -> str:
+    """Return what a README banner heads: a repository as ``owner/name``, or, for the pack's own
+    row, this folder of brand (``owner/brand/social``)."""
+    owner = data["cards"]["owner"]
+    return f"{owner}/brand/{row.repo}" if row.mode == "self" else f"{owner}/{row.repo}"
+
+
 def readme_banner(
     root: Path, data: dict[str, Any], row: Any, theme: str, file: Path, boards: bool
 ) -> meta.MediaMeta:
-    """Return the record of a README banner: its repository, its label, its line and its theme.
+    """Return the record of a README banner: what it heads, its label, its line and its theme.
 
     Every README reads the master itself, by its address on brand's main branch, so its
     identifier names the master here, the one public address it has.
     """
-    owner = data["cards"]["owner"]
+    subject = banner_subject(data, row)
     description = (
-        f'The README banner of {owner}/{row.repo}: the Kleidos logo, the label "{row.label}"'
+        f'The README banner of {subject}: the Kleidos logo, the label "{row.label}"'
         f' and the line "{row.line}"'
     )
     return build(
         root,
         file,
-        f"{owner}/{row.repo} README banner, {theme} theme",
+        f"{subject} README banner, {theme} theme",
         description,
-        (f"{owner}/{row.repo}", "GitHub", "README banner"),
+        (subject, "GitHub", "README banner"),
         boards,
         f"Kleidos {row.label}: {row.line}",
     )

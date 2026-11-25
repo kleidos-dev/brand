@@ -35,7 +35,6 @@ def test_every_repository_of_the_project_has_a_card() -> None:
         "kleidos",
         "boards",
         "brand",
-        "social",
         "agents",
         ".github",
     ]

@@ -53,7 +53,6 @@ One card system for every repository, 2560 x 1280 (twice the size GitHub recomme
 | `kleidos-dev/kleidos` | [`png/github/kleidos.png`](png/github/kleidos.png) | 134 kB | FIRMWARE | Free firmware that turns an ESP32 board into a hardware password manager. | [`typing`](src/cards/motifs/typing.svg) |
 | `kleidos-dev/boards` | [`png/github/boards.png`](png/github/boards.png) | 262 kB | BOARDS | Drawings, measurements, schematics and 3D models of the boards Kleidos runs on. | [`shelf`](src/cards/motifs/shelf.svg) |
 | `kleidos-dev/brand` | [`png/github/brand.png`](png/github/brand.png) | 109 kB | BRAND | The logo, type, colors, tokens and press kit. | [`swatches`](src/cards/motifs/swatches.svg) |
-| `kleidos-dev/social` | [`png/github/social.png`](png/github/social.png) | 133 kB | SOCIAL | The images of every profile and repository card, generated from brand. | [`frames`](src/cards/motifs/frames.svg) |
 | `kleidos-dev/agents` | [`png/github/agents.png`](png/github/agents.png) | 122 kB | AGENTS | Skills and rules for the coding agents that work on Kleidos. | [`checklist`](src/cards/motifs/checklist.svg) |
 | `kleidos-dev/.github` | [`png/github/dot-github.png`](png/github/dot-github.png) | 136 kB | COMMUNITY | The organization's profile, contributing guide, security policy and templates. | [`bubbles`](src/cards/motifs/bubbles.svg) |
 
@@ -87,12 +86,11 @@ The repository card laid out again as a wide strip, for the head of each reposit
 | `kleidos-dev/kleidos` | [31 kB](svg/readme/kleidos/banner-dark.svg) | [31 kB](svg/readme/kleidos/banner-light.svg) | FIRMWARE | Free firmware that turns an ESP32 board into a hardware password manager. | [`typing`](src/cards/motifs/typing.svg) | `jmrplens/kleidos` |
 | `kleidos-dev/boards` | [407 kB](svg/readme/boards/banner-dark.svg) | [407 kB](svg/readme/boards/banner-light.svg) | BOARDS | Drawings, measurements, schematics and 3D models of the boards Kleidos runs on. | [`shelf`](src/cards/motifs/shelf.svg) | `kleidos-dev/boards` |
 | `kleidos-dev/brand` | [23 kB](svg/readme/brand/banner-dark.svg) | [23 kB](svg/readme/brand/banner-light.svg) | BRAND | The logo, type, colors, tokens and press kit. | [`swatches`](src/cards/motifs/swatches.svg) | `kleidos-dev/brand` |
-| `kleidos-dev/social` | [30 kB](svg/readme/social/banner-dark.svg) | [30 kB](svg/readme/social/banner-light.svg) | SOCIAL | The images of every profile and repository card, generated from brand. | [`frames`](src/cards/motifs/frames.svg) | this one, by path |
+| `kleidos-dev/brand/social` | [30 kB](svg/readme/social/banner-dark.svg) | [30 kB](svg/readme/social/banner-light.svg) | SOCIAL | The images of every profile and repository card, generated from brand. | [`frames`](src/cards/motifs/frames.svg) | this one, by path |
 | `kleidos-dev/agents` | [25 kB](svg/readme/agents/banner-dark.svg) | [25 kB](svg/readme/agents/banner-light.svg) | AGENTS | Skills and rules for the coding agents that work on Kleidos. | [`checklist`](src/cards/motifs/checklist.svg) | `kleidos-dev/agents` |
 | `kleidos-dev/.github` | [32 kB](svg/readme/dot-github/banner-dark.svg) | [32 kB](svg/readme/dot-github/banner-light.svg) | COMMUNITY | The organization's profile, contributing guide, security policy and templates. | [`bubbles`](src/cards/motifs/bubbles.svg) | `kleidos-dev/.github` |
 | `kleidos-dev/meter` | [28 kB](svg/readme/meter/banner-dark.svg) | [28 kB](svg/readme/meter/banner-light.svg) | INSTRUMENT | The bench meter that measures what each Kleidos board draws. | [`gauge`](src/cards/motifs/gauge.svg) | `kleidos-dev/meter` |
 | `kleidos-dev/videos` | [28 kB](svg/readme/videos/banner-dark.svg) | [28 kB](svg/readme/videos/banner-light.svg) | VIDEOS | The sources, inputs and builds of every Kleidos channel video. | [`reel`](src/cards/motifs/reel.svg) | `kleidos-dev/videos` |
-| `kleidos-dev/posts` | [23 kB](svg/readme/posts/banner-dark.svg) | [23 kB](svg/readme/posts/banner-light.svg) | POSTS | Drafts and records of every Kleidos publication. | [`sheets`](src/cards/motifs/sheets.svg) | `kleidos-dev/posts` |
 
 <!-- END GENERATED: readme-banners -->
 

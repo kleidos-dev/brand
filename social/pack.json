@@ -191,14 +191,6 @@
         "motif": "swatches"
       },
       {
-        "repo": "social",
-        "file": "png/github/social.png",
-        "label": "Social",
-        "line": "The images of every profile and repository card, generated from brand.",
-        "lines": ["The images of every profile", "and repository card,", "generated from brand."],
-        "motif": "frames"
-      },
-      {
         "repo": "agents",
         "file": "png/github/agents.png",
         "label": "Agents",
@@ -236,14 +228,20 @@
       {"repository": "kleidos-dev/agents", "banner": "agents"},
       {"repository": "kleidos-dev/.github", "banner": ".github"},
       {"repository": "kleidos-dev/meter", "banner": "meter"},
-      {"repository": "kleidos-dev/videos", "banner": "videos"},
-      {"repository": "kleidos-dev/posts", "banner": "posts"}
+      {"repository": "kleidos-dev/videos", "banner": "videos"}
     ],
     "repos": [
       {"repo": "kleidos", "lines": ["Free firmware that turns an ESP32 board", "into a hardware password manager."]},
       {"repo": "boards", "lines": ["Drawings, measurements, schematics and", "3D models of the boards Kleidos runs on."]},
       {"repo": "brand", "lines": ["The logo, type, colors, tokens and press kit."]},
-      {"repo": "social", "lines": ["The images of every profile and repository", "card, generated from brand."], "mode": "self"},
+      {
+        "repo": "social",
+        "label": "Social",
+        "line": "The images of every profile and repository card, generated from brand.",
+        "lines": ["The images of every profile and repository", "card, generated from brand."],
+        "motif": "frames",
+        "mode": "self"
+      },
       {"repo": "agents", "lines": ["Skills and rules for the coding agents", "that work on Kleidos."]},
       {"repo": ".github", "lines": ["The organization's profile, contributing", "guide, security policy and templates."]},
       {
@@ -259,13 +257,6 @@
         "line": "The sources, inputs and builds of every Kleidos channel video.",
         "lines": ["The sources, inputs and builds of every", "Kleidos channel video."],
         "motif": "reel"
-      },
-      {
-        "repo": "posts",
-        "label": "Posts",
-        "line": "Drafts and records of every Kleidos publication.",
-        "lines": ["Drafts and records of every", "Kleidos publication."],
-        "motif": "sheets"
       }
     ]
   },
